@@ -20,10 +20,10 @@ const Navbar = () => {
       expand="lg" 
       sticky="top"
       style={{
-        background: 'linear-gradient(135deg, #1e293b 0%, #374151 100%)', // Rich slate gradient
-        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+        background: '#2563eb', // Exact blue color from your image
+        borderBottom: 'none',
         padding: '12px 0',
-        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+        boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)' // Blue shadow to match
       }}
     >
       <Container>
@@ -52,7 +52,7 @@ const Navbar = () => {
               as={Link} 
               to="/find-property"
               style={{ 
-                color: isActive('/find-property') ? '#60a5fa' : 'rgba(255, 255, 255, 0.9)',
+                color: isActive('/find-property') ? '#fbbf24' : 'rgba(255, 255, 255, 0.9)',
                 fontWeight: '500',
                 textDecoration: 'none'
               }}
@@ -66,7 +66,7 @@ const Navbar = () => {
                   as={Link} 
                   to="/my-bookings"
                   style={{ 
-                    color: isActive('/my-bookings') ? '#60a5fa' : 'rgba(255, 255, 255, 0.9)',
+                    color: isActive('/my-bookings') ? '#fbbf24' : 'rgba(255, 255, 255, 0.9)',
                     fontWeight: '500',
                     textDecoration: 'none'
                   }}
@@ -112,7 +112,7 @@ const Navbar = () => {
                   to="/login"
                   style={{
                     background: 'transparent',
-                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                    border: '1px solid rgba(255, 255, 255, 0.4)',
                     color: 'white',
                     padding: '6px 16px',
                     borderRadius: '6px',
@@ -126,8 +126,8 @@ const Navbar = () => {
                 <Link
                   to="/register"
                   style={{
-                    background: '#3b82f6',
-                    border: '1px solid #3b82f6',
+                    background: 'rgba(255, 255, 255, 0.15)',
+                    border: '1px solid rgba(255, 255, 255, 0.3)',
                     color: 'white',
                     padding: '6px 16px',
                     borderRadius: '6px',
