@@ -9,257 +9,230 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // World-Class Professional Styles - Final Version
+  // Final Company-Grade Professional Styles
   const styles = {
     // Professional App Container
     appContainer: {
-      background: 'linear-gradient(180deg, #0a0e27 0%, #1a1d35 50%, #2d3748 100%)',
+      background: 'linear-gradient(180deg, #0f172a 0%, #1e293b 100%)',
       minHeight: '100vh',
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+    },
+
+    // Compact Hero Section - Company Style
+    heroSection: {
+      padding: '60px 0 40px 0', // Much more compact
       position: 'relative'
     },
 
-    // Subtle Professional Background
-    backgroundOverlay: {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      background: `
-        radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.03) 0%, transparent 50%)
-      `,
-      zIndex: -1
-    },
-
-    // Professional Hero Section
-    heroSection: {
-      padding: '120px 0 80px 0',
-      position: 'relative',
-      zIndex: 10
-    },
-
-    // World-Class Hero Container
+    // Compact Professional Hero Container
     heroContainer: {
       background: 'rgba(255, 255, 255, 0.03)',
-      backdropFilter: 'blur(32px) saturate(180%)',
-      WebkitBackdropFilter: 'blur(32px) saturate(180%)',
-      border: '1px solid rgba(255, 255, 255, 0.08)',
-      borderRadius: '32px',
-      padding: '80px 60px',
+      backdropFilter: 'blur(20px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+      border: '1px solid rgba(255, 255, 255, 0.1)',
+      borderRadius: '16px', // Smaller radius
+      padding: '40px 32px', // Much more compact padding
       margin: '0 auto',
-      maxWidth: '1000px',
-      boxShadow: `
-        0 40px 100px rgba(0, 0, 0, 0.3),
-        0 20px 50px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1)
-      `,
-      textAlign: 'center',
-      position: 'relative'
+      maxWidth: '800px', // Smaller max width
+      boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+      textAlign: 'center'
     },
 
-    // Premium Badge - Refined
+    // Compact Premium Badge
     premiumBadge: {
       display: 'inline-flex',
       alignItems: 'center',
-      gap: '10px',
-      padding: '12px 24px',
+      gap: '6px',
+      padding: '6px 16px', // Much smaller
       background: 'rgba(255, 255, 255, 0.08)',
-      backdropFilter: 'blur(16px)',
-      border: '1px solid rgba(255, 255, 255, 0.12)',
-      borderRadius: '50px',
+      backdropFilter: 'blur(8px)',
+      border: '1px solid rgba(255, 255, 255, 0.15)',
+      borderRadius: '20px',
       color: 'rgba(255, 255, 255, 0.9)',
-      fontSize: '0.9rem',
+      fontSize: '0.8rem', // Smaller font
       fontWeight: 600,
-      marginBottom: '48px',
-      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)'
+      marginBottom: '20px' // Much smaller margin
     },
 
-    // World-Class Typography
+    // Company-Grade Typography - Compact
     heroTitle: {
-      fontSize: 'clamp(3rem, 6vw, 4.5rem)',
-      fontWeight: 900,
-      lineHeight: 1.1,
-      marginBottom: '32px',
+      fontSize: 'clamp(2rem, 4vw, 2.8rem)', // Much smaller
+      fontWeight: 800,
+      lineHeight: 1.2,
+      marginBottom: '16px', // Smaller margin
       color: 'white',
-      textShadow: '0 4px 20px rgba(0, 0, 0, 0.4)',
-      letterSpacing: '-0.03em'
+      letterSpacing: '-0.02em'
     },
 
     // Professional Gradient Text
     gradientText: {
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
+      background: 'linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #34d399 100%)',
       backgroundSize: '200% 200%',
       WebkitBackgroundClip: 'text',
       WebkitTextFillColor: 'transparent',
       backgroundClip: 'text',
-      animation: 'gradientFlow 6s ease-in-out infinite'
+      animation: 'gradientFlow 4s ease-in-out infinite'
     },
 
-    // Perfect Description
+    // Compact Description
     heroDescription: {
-      fontSize: '1.25rem',
-      lineHeight: 1.6,
-      color: 'rgba(255, 255, 255, 0.75)',
-      marginBottom: '56px',
-      maxWidth: '700px',
-      margin: '0 auto 56px auto',
-      fontWeight: 400
+      fontSize: '1rem', // Smaller
+      lineHeight: 1.5,
+      color: 'rgba(255, 255, 255, 0.7)',
+      marginBottom: '24px', // Smaller margin
+      maxWidth: '600px',
+      margin: '0 auto 24px auto'
     },
 
-    // Professional Button Container
+    // Compact Button Container
     buttonContainer: {
       display: 'flex',
-      gap: '20px',
+      gap: '12px',
       justifyContent: 'center',
       flexWrap: 'wrap',
-      marginBottom: '64px'
+      marginBottom: '32px' // Smaller margin
     },
 
-    // World-Class Primary Button
+    // Company-Grade Buttons - Compact
     primaryButton: {
       display: 'inline-flex',
       alignItems: 'center',
-      gap: '12px',
-      padding: '18px 36px',
-      background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.1) 100%)',
-      backdropFilter: 'blur(20px) saturate(180%)',
+      gap: '8px',
+      padding: '12px 24px', // Much smaller
+      background: 'rgba(255, 255, 255, 0.12)',
+      backdropFilter: 'blur(8px)',
       border: '1px solid rgba(255, 255, 255, 0.2)',
-      borderRadius: '50px',
+      borderRadius: '8px', // Smaller radius for modern look
       color: 'white',
-      fontSize: '1.1rem',
-      fontWeight: 700,
+      fontSize: '0.95rem', // Smaller font
+      fontWeight: 600,
       textDecoration: 'none',
-      transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
+      transition: 'all 0.3s ease',
       cursor: 'pointer',
-      boxShadow: '0 16px 40px rgba(0, 0, 0, 0.2)',
-      position: 'relative',
-      overflow: 'hidden'
+      userSelect: 'none', // Fix text selection
+      WebkitUserSelect: 'none'
     },
 
-    // Professional Secondary Button
     secondaryButton: {
       display: 'inline-flex',
       alignItems: 'center',
-      gap: '12px',
-      padding: '18px 36px',
+      gap: '8px',
+      padding: '12px 24px',
       background: 'transparent',
-      border: '1px solid rgba(255, 255, 255, 0.25)',
-      borderRadius: '50px',
+      border: '1px solid rgba(255, 255, 255, 0.3)',
+      borderRadius: '8px',
       color: 'rgba(255, 255, 255, 0.9)',
-      fontSize: '1.1rem',
-      fontWeight: 700,
+      fontSize: '0.95rem',
+      fontWeight: 600,
       textDecoration: 'none',
-      transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
+      transition: 'all 0.3s ease',
       cursor: 'pointer',
-      backdropFilter: 'blur(10px)'
+      userSelect: 'none', // Fix text selection
+      WebkitUserSelect: 'none'
     },
 
-    // Professional Trust Metrics
+    // Compact Trust Metrics
     trustMetrics: {
       display: 'flex',
       justifyContent: 'center',
-      gap: '40px',
+      gap: '24px', // Smaller gap
       flexWrap: 'wrap'
     },
 
     trustItem: {
-      background: 'rgba(255, 255, 255, 0.04)',
-      backdropFilter: 'blur(20px)',
-      border: '1px solid rgba(255, 255, 255, 0.08)',
-      borderRadius: '20px',
-      padding: '32px 24px',
+      background: 'rgba(255, 255, 255, 0.05)',
+      backdropFilter: 'blur(8px)',
+      border: '1px solid rgba(255, 255, 255, 0.1)',
+      borderRadius: '12px',
+      padding: '16px 12px', // Much smaller
       textAlign: 'center',
       color: 'white',
-      minWidth: '140px',
-      boxShadow: '0 12px 40px rgba(0, 0, 0, 0.15)'
+      minWidth: '90px' // Smaller width
     },
 
     trustNumber: {
-      fontSize: '2.25rem',
-      fontWeight: 900,
+      fontSize: '1.4rem', // Smaller
+      fontWeight: 800,
       display: 'block',
-      marginBottom: '8px',
-      background: 'linear-gradient(135deg, #667eea, #764ba2)',
+      marginBottom: '4px',
+      background: 'linear-gradient(135deg, #60a5fa, #a78bfa)',
       WebkitBackgroundClip: 'text',
       WebkitTextFillColor: 'transparent',
       backgroundClip: 'text'
     },
 
     trustLabel: {
-      fontSize: '0.85rem',
+      fontSize: '0.75rem', // Smaller
       opacity: 0.8,
       textTransform: 'uppercase',
-      letterSpacing: '1px',
-      fontWeight: 600
+      letterSpacing: '0.5px',
+      fontWeight: 500
     },
 
-    // Professional Categories Section
+    // Categories Section - Professional Spacing
     categoriesSection: {
-      padding: '100px 0',
+      padding: '50px 0', // Much smaller padding
       position: 'relative'
     },
 
-    // World-Class Section Header
+    // Compact Section Header - Fix Gap Issues
     sectionHeader: {
       textAlign: 'center',
-      marginBottom: '80px',
+      marginBottom: '32px', // MUCH smaller margin to fix gap
       background: 'rgba(255, 255, 255, 0.02)',
-      backdropFilter: 'blur(24px)',
-      border: '1px solid rgba(255, 255, 255, 0.06)',
-      borderRadius: '24px',
-      padding: '60px 40px',
-      maxWidth: '800px',
-      margin: '0 auto 80px auto',
-      boxShadow: '0 20px 60px rgba(0, 0, 0, 0.1)'
+      backdropFilter: 'blur(16px)',
+      border: '1px solid rgba(255, 255, 255, 0.08)',
+      borderRadius: '16px',
+      padding: '32px 24px', // Smaller padding
+      maxWidth: '700px',
+      margin: '0 auto 32px auto' // Fixed margin
     },
 
     sectionBadge: {
       display: 'inline-block',
-      padding: '8px 20px',
-      background: 'rgba(255, 255, 255, 0.08)',
-      backdropFilter: 'blur(12px)',
-      borderRadius: '25px',
+      padding: '4px 12px', // Smaller
+      background: 'rgba(255, 255, 255, 0.1)',
+      backdropFilter: 'blur(4px)',
+      borderRadius: '16px',
       color: 'rgba(255, 255, 255, 0.9)',
-      fontSize: '0.85rem',
-      fontWeight: 700,
+      fontSize: '0.75rem', // Smaller
+      fontWeight: 600,
       textTransform: 'uppercase',
-      letterSpacing: '1px',
-      marginBottom: '24px',
-      border: '1px solid rgba(255, 255, 255, 0.12)'
+      letterSpacing: '0.5px',
+      marginBottom: '16px', // Smaller
+      border: '1px solid rgba(255, 255, 255, 0.15)'
     },
 
     sectionTitle: {
-      fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
-      fontWeight: 900,
-      marginBottom: '24px',
+      fontSize: 'clamp(1.8rem, 4vw, 2.2rem)', // Much smaller
+      fontWeight: 800,
+      marginBottom: '12px', // Smaller
       color: 'white',
-      lineHeight: 1.2,
-      textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
+      lineHeight: 1.2
     },
 
     sectionDescription: {
-      fontSize: '1.2rem',
-      lineHeight: 1.5,
+      fontSize: '1rem', // Smaller
+      lineHeight: 1.4,
       color: 'rgba(255, 255, 255, 0.7)',
-      maxWidth: '600px',
+      maxWidth: '500px',
       margin: '0 auto'
     },
 
-    // World-Class Category Cards
+    // Glass Category Cards - Professional
     categoryCard: {
-      background: 'rgba(255, 255, 255, 0.04)',
-      backdropFilter: 'blur(24px) saturate(180%)',
-      border: '1px solid rgba(255, 255, 255, 0.08)',
-      borderRadius: '20px',
+      background: 'rgba(255, 255, 255, 0.06)', // Glass theme
+      backdropFilter: 'blur(16px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+      border: '1px solid rgba(255, 255, 255, 0.12)',
+      borderRadius: '12px',
       overflow: 'hidden',
-      transition: 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
+      transition: 'all 0.3s ease',
       cursor: 'pointer',
       textDecoration: 'none',
       color: 'inherit',
       height: '100%',
-      boxShadow: '0 16px 50px rgba(0, 0, 0, 0.1)',
+      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
       position: 'relative'
     },
 
@@ -268,117 +241,118 @@ const Home = () => {
       top: 0,
       left: 0,
       right: 0,
-      height: '4px',
+      height: '3px',
       background: gradient
     }),
 
     categoryBody: {
-      padding: '32px',
+      padding: '24px', // Compact padding
       height: '100%',
       display: 'flex',
-      flexDirection: 'column',
-      position: 'relative'
+      flexDirection: 'column'
     },
 
     categoryHeader: {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginBottom: '20px'
+      marginBottom: '16px'
     },
 
     categoryIcon: {
-      fontSize: '2.5rem',
-      transition: 'transform 0.4s ease',
-      filter: 'drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3))'
+      fontSize: '2rem', // Smaller
+      transition: 'transform 0.3s ease'
     },
 
     categoryCount: {
-      background: 'rgba(255, 255, 255, 0.1)',
-      backdropFilter: 'blur(8px)',
+      background: 'rgba(255, 255, 255, 0.15)', // Glass theme
+      backdropFilter: 'blur(4px)',
       color: 'white',
-      padding: '6px 12px',
-      borderRadius: '12px',
-      fontSize: '0.75rem',
-      fontWeight: 800,
+      padding: '4px 8px',
+      borderRadius: '8px',
+      fontSize: '0.7rem',
+      fontWeight: 700,
       textTransform: 'uppercase',
-      border: '1px solid rgba(255, 255, 255, 0.15)'
+      border: '1px solid rgba(255, 255, 255, 0.2)'
     },
 
     categoryTitle: {
-      fontSize: '1.4rem',
-      fontWeight: 800,
-      marginBottom: '12px',
-      color: 'white',
-      textShadow: '0 2px 10px rgba(0, 0, 0, 0.3)'
+      fontSize: '1.1rem', // Smaller
+      fontWeight: 700,
+      marginBottom: '8px',
+      color: 'white'
     },
 
     categoryDescription: {
-      color: 'rgba(255, 255, 255, 0.65)',
-      lineHeight: 1.5,
-      fontSize: '1rem',
+      color: 'rgba(255, 255, 255, 0.7)',
+      lineHeight: 1.4,
+      fontSize: '0.9rem', // Smaller
       flexGrow: 1,
-      marginBottom: '20px'
+      marginBottom: '16px'
     },
 
     categoryArrow: {
-      color: 'rgba(255, 255, 255, 0.4)',
-      transition: 'all 0.4s ease',
-      alignSelf: 'flex-start'
+      color: 'rgba(255, 255, 255, 0.5)',
+      transition: 'all 0.3s ease'
     },
 
     // Featured Properties Section
     featuredSection: {
-      padding: '100px 0',
+      padding: '50px 0', // Compact
       background: 'rgba(255, 255, 255, 0.01)'
     },
 
-    // Loading & Error States - Professional
+    // Glass Loading Container
     loadingContainer: {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      padding: '80px 40px',
-      background: 'rgba(255, 255, 255, 0.03)',
-      backdropFilter: 'blur(24px)',
-      borderRadius: '24px',
-      margin: '0 24px',
-      border: '1px solid rgba(255, 255, 255, 0.08)',
-      boxShadow: '0 20px 60px rgba(0, 0, 0, 0.1)'
+      padding: '40px', // Smaller
+      background: 'rgba(255, 255, 255, 0.05)', // Glass theme
+      backdropFilter: 'blur(16px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+      borderRadius: '16px',
+      margin: '0 20px',
+      border: '1px solid rgba(255, 255, 255, 0.1)',
+      boxShadow: '0 16px 40px rgba(0, 0, 0, 0.1)'
     },
 
     loadingSpinner: {
-      width: '50px',
-      height: '50px',
-      border: '3px solid rgba(255, 255, 255, 0.1)',
-      borderTop: '3px solid white',
+      width: '32px', // Smaller
+      height: '32px',
+      border: '2px solid rgba(255, 255, 255, 0.2)',
+      borderTop: '2px solid white',
       borderRadius: '50%',
       animation: 'spin 1s linear infinite',
-      marginBottom: '24px'
+      marginBottom: '16px'
     },
 
     loadingText: {
       color: 'white',
-      fontSize: '1.1rem',
-      fontWeight: 600
+      fontSize: '0.95rem', // Smaller
+      fontWeight: 500
     },
 
-    // World-Class Explore Button
+    // Professional Explore Button - Fix Selection
     exploreButton: {
       display: 'inline-flex',
       alignItems: 'center',
-      gap: '12px',
-      padding: '20px 40px',
-      background: 'rgba(255, 255, 255, 0.08)',
-      backdropFilter: 'blur(24px) saturate(180%)',
-      border: '1px solid rgba(255, 255, 255, 0.15)',
-      borderRadius: '50px',
+      gap: '10px',
+      padding: '14px 28px',
+      background: 'rgba(255, 255, 255, 0.08)', // Glass theme
+      backdropFilter: 'blur(16px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+      border: '1px solid rgba(255, 255, 255, 0.2)',
+      borderRadius: '8px',
       color: 'white',
-      fontSize: '1.1rem',
-      fontWeight: 700,
+      fontSize: '0.95rem',
+      fontWeight: 600,
       textDecoration: 'none',
-      transition: 'all 0.5s cubic-bezier(0.23, 1, 0.32, 1)',
-      boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15)'
+      transition: 'all 0.3s ease',
+      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+      userSelect: 'none', // Fix text selection issue
+      WebkitUserSelect: 'none',
+      cursor: 'pointer'
     }
   };
 
@@ -388,6 +362,18 @@ const Home = () => {
     styleSheet.innerText = `
       @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
       
+      /* Fix text selection globally */
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+      
+      button, a {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      
       @keyframes gradientFlow {
         0%, 100% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }
@@ -396,11 +382,6 @@ const Home = () => {
       @keyframes spin {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
-      }
-      
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(30px); }
-        to { opacity: 1; transform: translateY(0); }
       }
     `;
     document.head.appendChild(styleSheet);
@@ -424,25 +405,23 @@ const Home = () => {
     }
   };
 
-  // World-Class Hover Effects
+  // Professional Hover Effects
   const handleButtonHover = (e, isEntering, type = 'primary') => {
     if (isEntering) {
-      e.currentTarget.style.transform = 'translateY(-4px) scale(1.02)';
+      e.currentTarget.style.transform = 'translateY(-2px)';
       if (type === 'primary') {
-        e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.15) 100%)';
-        e.currentTarget.style.boxShadow = '0 25px 60px rgba(0, 0, 0, 0.3)';
+        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.18)';
+        e.currentTarget.style.boxShadow = '0 12px 30px rgba(0, 0, 0, 0.15)';
       } else {
-        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
-        e.currentTarget.style.boxShadow = '0 16px 40px rgba(0, 0, 0, 0.2)';
+        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
       }
     } else {
-      e.currentTarget.style.transform = 'translateY(0) scale(1)';
+      e.currentTarget.style.transform = 'translateY(0)';
       if (type === 'primary') {
-        e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.1) 100%)';
-        e.currentTarget.style.boxShadow = '0 16px 40px rgba(0, 0, 0, 0.2)';
+        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)';
+        e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.1)';
       } else {
         e.currentTarget.style.background = 'transparent';
-        e.currentTarget.style.boxShadow = 'none';
       }
     }
   };
@@ -452,21 +431,21 @@ const Home = () => {
     const arrow = e.currentTarget.querySelector('[data-arrow]');
     
     if (isEntering) {
-      e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
-      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-      e.currentTarget.style.boxShadow = '0 30px 80px rgba(0, 0, 0, 0.2)';
-      if (icon) icon.style.transform = 'scale(1.1) rotate(3deg)';
+      e.currentTarget.style.transform = 'translateY(-4px)';
+      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'; // Enhanced glass
+      e.currentTarget.style.boxShadow = '0 16px 40px rgba(0, 0, 0, 0.15)';
+      if (icon) icon.style.transform = 'scale(1.05)';
       if (arrow) {
         arrow.style.color = 'white';
-        arrow.style.transform = 'translateX(8px)';
+        arrow.style.transform = 'translateX(4px)';
       }
     } else {
-      e.currentTarget.style.transform = 'translateY(0) scale(1)';
-      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)';
-      e.currentTarget.style.boxShadow = '0 16px 50px rgba(0, 0, 0, 0.1)';
-      if (icon) icon.style.transform = 'scale(1) rotate(0deg)';
+      e.currentTarget.style.transform = 'translateY(0)';
+      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)';
+      e.currentTarget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.1)';
+      if (icon) icon.style.transform = 'scale(1)';
       if (arrow) {
-        arrow.style.color = 'rgba(255, 255, 255, 0.4)';
+        arrow.style.color = 'rgba(255, 255, 255, 0.5)';
         arrow.style.transform = 'translateX(0)';
       }
     }
@@ -474,33 +453,30 @@ const Home = () => {
 
   return (
     <div style={styles.appContainer}>
-      {/* Professional Background */}
-      <div style={styles.backgroundOverlay}></div>
-
-      {/* World-Class Hero Section */}
+      {/* Compact Professional Hero */}
       <section style={styles.heroSection}>
         <Container>
           <Row className="justify-content-center">
             <Col lg={12}>
               <div style={styles.heroContainer}>
-                {/* Premium Badge */}
+                {/* Compact Badge */}
                 <div style={styles.premiumBadge}>
                   <span>✨</span>
                   <span>Premium Property Platform</span>
                 </div>
 
-                {/* World-Class Title */}
+                {/* Compact Professional Title */}
                 <h1 style={styles.heroTitle}>
                   Discover Your <span style={styles.gradientText}>Perfect Space</span><br />With SpaceLink
                 </h1>
 
-                {/* Professional Description */}
+                {/* Compact Description */}
                 <p style={styles.heroDescription}>
                   The most advanced property discovery platform. Find premium properties 
-                  with intelligent matching, seamless experiences, and unparalleled service.
+                  with intelligent matching and seamless experiences.
                 </p>
 
-                {/* World-Class Buttons */}
+                {/* Compact Buttons */}
                 <div style={styles.buttonContainer}>
                   <Button
                     as={Link}
@@ -510,7 +486,7 @@ const Home = () => {
                     onMouseLeave={(e) => handleButtonHover(e, false, 'primary')}
                   >
                     <span>Explore Properties</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/>
                     </svg>
                   </Button>
@@ -526,7 +502,7 @@ const Home = () => {
                   </Button>
                 </div>
 
-                {/* Professional Trust Metrics */}
+                {/* Compact Trust Metrics */}
                 <div style={styles.trustMetrics}>
                   <div style={styles.trustItem}>
                     <span style={styles.trustNumber}>10K+</span>
@@ -534,11 +510,11 @@ const Home = () => {
                   </div>
                   <div style={styles.trustItem}>
                     <span style={styles.trustNumber}>50K+</span>
-                    <span style={styles.trustLabel}>Happy Clients</span>
+                    <span style={styles.trustLabel}>Clients</span>
                   </div>
                   <div style={styles.trustItem}>
                     <span style={styles.trustNumber}>99.8%</span>
-                    <span style={styles.trustLabel}>Success Rate</span>
+                    <span style={styles.trustLabel}>Success</span>
                   </div>
                 </div>
               </div>
@@ -547,7 +523,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* World-Class Categories Section */}
+      {/* Professional Categories - Fixed Gap */}
       <section style={styles.categoriesSection}>
         <Container>
           <div style={styles.sectionHeader}>
@@ -556,11 +532,11 @@ const Home = () => {
               Find Your <span style={styles.gradientText}>Ideal Property</span>
             </h2>
             <p style={styles.sectionDescription}>
-              Explore our curated collection of premium properties across all categories
+              Explore premium properties across all categories
             </p>
           </div>
 
-          <Row className="g-4">
+          <Row className="g-3">
             {[
               {
                 category: 'Property Rentals',
@@ -629,7 +605,7 @@ const Home = () => {
                     <h4 style={styles.categoryTitle}>{item.title}</h4>
                     <p style={styles.categoryDescription}>{item.desc}</p>
                     <div style={styles.categoryArrow} data-arrow>
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/>
                       </svg>
                     </div>
@@ -641,7 +617,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* Featured Properties Section */}
+      {/* Glass Featured Properties */}
       <section style={styles.featuredSection}>
         <Container>
           <div style={styles.sectionHeader}>
@@ -661,12 +637,12 @@ const Home = () => {
             </div>
           ) : error ? (
             <div style={{...styles.loadingContainer, background: 'rgba(239, 68, 68, 0.05)', border: '1px solid rgba(239, 68, 68, 0.2)'}}>
-              <h4 style={{color: 'white', marginBottom: '16px', fontSize: '1.2rem'}}>Unable to Load Properties</h4>
-              <p style={{color: 'rgba(255, 255, 255, 0.7)', margin: 0}}>{error}</p>
+              <h4 style={{color: 'white', marginBottom: '12px', fontSize: '1rem'}}>Unable to Load Properties</h4>
+              <p style={{color: 'rgba(255, 255, 255, 0.7)', margin: 0, fontSize: '0.9rem'}}>{error}</p>
             </div>
           ) : (
             <>
-              <Row className="g-4 mb-5">
+              <Row className="g-4 mb-4">
                 {featuredProperties.slice(0, 6).map((property, index) => (
                   <Col key={property._id} lg={4} md={6}>
                     <PropertyCard property={property} showOwner={true} />
@@ -680,18 +656,18 @@ const Home = () => {
                   to="/find-property"
                   style={styles.exploreButton}
                   onMouseEnter={(e) => {
-                    e.target.style.transform = 'translateY(-4px) scale(1.02)';
+                    e.target.style.transform = 'translateY(-2px)';
                     e.target.style.background = 'rgba(255, 255, 255, 0.12)';
-                    e.target.style.boxShadow = '0 30px 80px rgba(0, 0, 0, 0.2)';
+                    e.target.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.15)';
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.transform = 'translateY(0) scale(1)';
+                    e.target.style.transform = 'translateY(0)';
                     e.target.style.background = 'rgba(255, 255, 255, 0.08)';
-                    e.target.style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.15)';
+                    e.target.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.1)';
                   }}
                 >
                   <span>View All Properties</span>
-                  <span style={{ fontSize: '0.95rem', opacity: 0.8 }}>({featuredProperties.length}+ available)</span>
+                  <span style={{ fontSize: '0.85rem', opacity: 0.8 }}>({featuredProperties.length}+ available)</span>
                 </Button>
               </div>
             </>
