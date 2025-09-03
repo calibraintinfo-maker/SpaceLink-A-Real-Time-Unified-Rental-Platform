@@ -1,448 +1,481 @@
-/* Custom CSS for Enhanced SpaceLink Home Page */
+import React, { useState, useEffect, useRef } from 'react';
+import { Container, Row, Col, Button, Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import PropertyCard from '../components/PropertyCard';
+import { api, handleApiError } from '../utils/api';
 
-/* Hero Section */
-.hero-section {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  position: relative;
-  display: flex;
-  align-items: center;
-}
+const Home = () => {
+  const [featuredProperties, setFeaturedProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [scrollY, setScrollY] = useState(0);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const heroRef = useRef(null);
 
-.hero-bg::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-}
+  useEffect(() => {
+    fetchFeaturedProperties();
+    
+    // Scroll parallax effect
+    const handleScroll = () => setScrollY(window.scrollY);
+    
+    // Mouse tracking for interactive elements
+    const handleMouseMove = (e) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth) * 100,
+        y: (e.clientY / window.innerHeight) * 100
+      });
+    };
 
-.hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.2);
-}
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('mousemove', handleMouseMove);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
 
-.min-vh-75 {
-  min-height: 75vh;
-}
+  const fetchFeaturedProperties = async () => {
+    try {
+      const response = await api.properties.getFeatured();
+      setFeaturedProperties(response.data);
+    } catch (error) {
+      console.error('Error fetching featured properties:', error);
+      setError(handleApiError(error));
+    } finally {
+      setLoading(false);
+    }
+  };
 
-.text-gradient {
-  background: linear-gradient(45deg, #ff6b6b, #ffd93d);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
+  return (
+    <div className="spacelink-home">
+      {/* Ultra Premium Hero Section */}
+      <section className="hero-ultra-premium" ref={heroRef}>
+        {/* Dynamic Background System */}
+        <div className="hero-background-system">
+          {/* Animated Gradient Mesh */}
+          <div className="gradient-mesh-container">
+            <div className="gradient-orb orb-1" 
+                 style={{transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.01}px)`}}></div>
+            <div className="gradient-orb orb-2" 
+                 style={{transform: `translate(${mousePosition.x * -0.015}px, ${mousePosition.y * 0.025}px)`}}></div>
+            <div className="gradient-orb orb-3" 
+                 style={{transform: `translate(${mousePosition.x * 0.01}px, ${mousePosition.y * -0.02}px)`}}></div>
+          </div>
+          
+          {/* Particle System */}
+          <div className="particle-system">
+            {[...Array(50)].map((_, i) => (
+              <div key={i} className={`particle particle-${i % 5}`} 
+                   style={{
+                     animationDelay: `${i * 0.1}s`,
+                     left: `${Math.random() * 100}%`,
+                     animationDuration: `${3 + Math.random() * 4}s`
+                   }}></div>
+            ))}
+          </div>
+          
+          {/* Grid Pattern Overlay */}
+          <div className="grid-overlay"></div>
+          
+          {/* Noise Texture */}
+          <div className="noise-texture"></div>
+        </div>
 
-.text-white-75 {
-  color: rgba(255, 255, 255, 0.85) !important;
-}
+        <Container className="hero-container-ultra">
+          <Row className="justify-content-center align-items-center min-vh-100">
+            <Col lg={10} className="text-center">
+              <div className="hero-content-ultra">
+                {/* Premium Badge */}
+                <div className="premium-badge" data-aos="fade-down" data-aos-delay="200">
+                  <div className="badge-glow"></div>
+                  <span className="badge-icon">✨</span>
+                  <span className="badge-text">Premium Property Platform</span>
+                  <div className="badge-pulse"></div>
+                </div>
 
-.hero-content {
-  animation: fadeInUp 1s ease-out;
-}
+                {/* Ultra Premium Typography */}
+                <h1 className="hero-title-ultra" data-aos="fade-up" data-aos-delay="400">
+                  <span className="title-word title-word-1">Discover</span>
+                  <span className="title-word title-word-2">Your</span>
+                  <br />
+                  <span className="title-word title-word-3 gradient-text-animated">Perfect</span>
+                  <span className="title-word title-word-4 gradient-text-animated">Space</span>
+                  <br />
+                  <span className="title-word title-word-5">With</span>
+                  <span className="title-word title-word-6 brand-text">SpaceLink</span>
+                </h1>
 
-.btn-hero-primary {
-  background: linear-gradient(45deg, #ff6b6b, #ffd93d);
-  border: none;
-  color: white;
-  font-weight: 600;
-  border-radius: 50px;
-  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
-  transition: all 0.3s ease;
-}
+                {/* Premium Description */}
+                <p className="hero-description-ultra" data-aos="fade-up" data-aos-delay="600">
+                  Experience the future of property discovery with our intelligent matching system,
+                  <br className="d-none d-lg-block" />
+                  premium listings, and seamless experiences that redefine luxury living.
+                </p>
 
-.btn-hero-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(255, 107, 107, 0.4);
-  background: linear-gradient(45deg, #ff5252, #ffca28);
-}
+                {/* Ultra Premium CTAs */}
+                <div className="hero-cta-ultra" data-aos="fade-up" data-aos-delay="800">
+                  <Button 
+                    as={Link} 
+                    to="/find-property" 
+                    className="btn-ultra-primary"
+                  >
+                    <span className="btn-bg-gradient"></span>
+                    <span className="btn-content">
+                      <span className="btn-text">Explore Properties</span>
+                      <span className="btn-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/>
+                        </svg>
+                      </span>
+                    </span>
+                    <span className="btn-shine"></span>
+                  </Button>
+                  
+                  <Button 
+                    as={Link} 
+                    to="/add-property" 
+                    className="btn-ultra-secondary"
+                  >
+                    <span className="btn-border-gradient"></span>
+                    <span className="btn-content">
+                      <span className="btn-text">List Property</span>
+                    </span>
+                  </Button>
+                </div>
 
-.btn-hero-secondary {
-  background: transparent;
-  border: 2px solid white;
-  color: white;
-  font-weight: 600;
-  border-radius: 50px;
-  transition: all 0.3s ease;
-}
+                {/* Trust Metrics with Animation */}
+                <div className="trust-metrics-ultra" data-aos="fade-up" data-aos-delay="1000">
+                  <div className="trust-item-ultra">
+                    <div className="trust-number-animated" data-target="10000">0</div>
+                    <div className="trust-label">Properties</div>
+                  </div>
+                  <div className="trust-divider"></div>
+                  <div className="trust-item-ultra">
+                    <div className="trust-number-animated" data-target="50000">0</div>
+                    <div className="trust-label">Happy Clients</div>
+                  </div>
+                  <div className="trust-divider"></div>
+                  <div className="trust-item-ultra">
+                    <div className="trust-number-animated" data-target="99.8">0</div>
+                    <div className="trust-label">Success Rate</div>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </Container>
 
-.btn-hero-secondary:hover {
-  background: white;
-  color: #667eea;
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
-}
+        {/* Scroll Indicator Ultra */}
+        <div className="scroll-indicator-ultra" data-aos="fade-up" data-aos-delay="1200">
+          <div className="scroll-mouse">
+            <div className="scroll-wheel"></div>
+          </div>
+          <div className="scroll-text">Scroll to explore premium properties</div>
+        </div>
+      </section>
 
-/* Floating Elements */
-.floating-elements {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-}
+      {/* Ultra Premium Features Bento Grid */}
+      <section className="features-bento-ultra" data-aos="fade-up">
+        <Container>
+          <Row>
+            <Col lg={12}>
+              <div className="bento-grid-ultra">
+                {/* Large Feature Card */}
+                <div className="bento-card bento-large" data-aos="zoom-in" data-aos-delay="200">
+                  <div className="bento-bg-gradient bg-gradient-1"></div>
+                  <div className="bento-content">
+                    <div className="bento-icon">
+                      <div className="icon-3d">🎯</div>
+                    </div>
+                    <h3 className="bento-title">AI-Powered Smart Matching</h3>
+                    <p className="bento-description">
+                      Our advanced machine learning algorithms analyze your preferences, 
+                      behavior, and requirements to recommend properties that perfectly 
+                      match your lifestyle and budget.
+                    </p>
+                    <div className="bento-metrics">
+                      <div className="metric">
+                        <span className="metric-value">98%</span>
+                        <span className="metric-label">Match Accuracy</span>
+                      </div>
+                      <div className="metric">
+                        <span className="metric-value">2.3x</span>
+                        <span className="metric-label">Faster Search</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bento-glow"></div>
+                </div>
 
-.floating-shape {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  animation: float 6s ease-in-out infinite;
-}
+                {/* Medium Feature Cards */}
+                <div className="bento-card bento-medium" data-aos="zoom-in" data-aos-delay="400">
+                  <div className="bento-bg-gradient bg-gradient-2"></div>
+                  <div className="bento-content">
+                    <div className="bento-icon">
+                      <div className="icon-3d">⚡</div>
+                    </div>
+                    <h3 className="bento-title">Lightning Fast Search</h3>
+                    <p className="bento-description">
+                      Real-time filtering with instant results across our entire database.
+                    </p>
+                  </div>
+                </div>
 
-.shape-1 {
-  width: 80px;
-  height: 80px;
-  top: 20%;
-  left: 10%;
-  animation-delay: 0s;
-}
+                <div className="bento-card bento-medium" data-aos="zoom-in" data-aos-delay="600">
+                  <div className="bento-bg-gradient bg-gradient-3"></div>
+                  <div className="bento-content">
+                    <div className="bento-icon">
+                      <div className="icon-3d">🛡️</div>
+                    </div>
+                    <h3 className="bento-title">Bank-Level Security</h3>
+                    <p className="bento-description">
+                      Military-grade encryption protects all your data and transactions.
+                    </p>
+                  </div>
+                </div>
 
-.shape-2 {
-  width: 120px;
-  height: 120px;
-  top: 60%;
-  right: 15%;
-  animation-delay: 2s;
-}
+                {/* Small Feature Cards */}
+                <div className="bento-card bento-small" data-aos="zoom-in" data-aos-delay="800">
+                  <div className="bento-bg-gradient bg-gradient-4"></div>
+                  <div className="bento-content">
+                    <div className="bento-icon">
+                      <div className="icon-3d">📊</div>
+                    </div>
+                    <h3 className="bento-title">Analytics</h3>
+                  </div>
+                </div>
 
-.shape-3 {
-  width: 60px;
-  height: 60px;
-  bottom: 20%;
-  left: 20%;
-  animation-delay: 4s;
-}
+                <div className="bento-card bento-small" data-aos="zoom-in" data-aos-delay="1000">
+                  <div className="bento-bg-gradient bg-gradient-5"></div>
+                  <div className="bento-content">
+                    <div className="bento-icon">
+                      <div className="icon-3d">🌟</div>
+                    </div>
+                    <h3 className="bento-title">Premium</h3>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
 
-/* Stats Section */
-.stats-section {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-}
+      {/* Ultra Premium Categories */}
+      <section className="categories-ultra" data-aos="fade-up">
+        <Container>
+          <div className="section-header-ultra text-center mb-5">
+            <div className="section-badge-ultra" data-aos="fade-down">Property Categories</div>
+            <h2 className="section-title-ultra" data-aos="fade-up" data-aos-delay="200">
+              Find Your <span className="gradient-text-animated">Perfect Space</span>
+            </h2>
+            <p className="section-description-ultra" data-aos="fade-up" data-aos-delay="400">
+              Explore our curated collection of premium properties across all categories
+            </p>
+          </div>
 
-.stat-item {
-  padding: 2rem 1rem;
-}
+          <Row className="g-4">
+            {[
+              { 
+                category: 'Property Rentals', 
+                icon: '🏠', 
+                title: 'Residential', 
+                desc: 'Luxury apartments, modern flats, family homes',
+                count: '2.5K+',
+                gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                delay: 200
+              },
+              { 
+                category: 'Commercial', 
+                icon: '🏢', 
+                title: 'Commercial', 
+                desc: 'Premium offices, retail spaces, warehouses',
+                count: '1.8K+',
+                gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                delay: 300
+              },
+              { 
+                category: 'Land', 
+                icon: '🌾', 
+                title: 'Land & Plots', 
+                desc: 'Agricultural land, commercial plots',
+                count: '950+',
+                gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                delay: 400
+              },
+              { 
+                category: 'Parking', 
+                icon: '🚗', 
+                title: 'Parking', 
+                desc: 'Secure parking spaces and garages',
+                count: '3.2K+',
+                gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+                delay: 500
+              },
+              { 
+                category: 'Event', 
+                icon: '🎉', 
+                title: 'Events', 
+                desc: 'Banquet halls, gardens, venues',
+                count: '420+',
+                gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+                delay: 600
+              },
+              { 
+                category: 'manage-properties', 
+                icon: '⚙️', 
+                title: 'Management', 
+                desc: 'Property management tools',
+                count: 'Tools',
+                gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+                delay: 700,
+                isManage: true
+              }
+            ].map((item, index) => (
+              <Col lg={4} md={6} key={index}>
+                <Card 
+                  className="category-card-ultra h-100"
+                  as={Link}
+                  to={item.isManage ? '/manage-properties' : `/find-property?category=${item.category}`}
+                  style={{ '--category-gradient': item.gradient }}
+                  data-aos="zoom-in" 
+                  data-aos-delay={item.delay}
+                >
+                  <div className="category-bg-ultra"></div>
+                  <div className="category-gradient-line"></div>
+                  <Card.Body className="category-body-ultra">
+                    <div className="category-header-ultra">
+                      <div className="category-icon-ultra">
+                        <span className="icon-3d-category">{item.icon}</span>
+                      </div>
+                      <div className="category-count-ultra">{item.count}</div>
+                    </div>
+                    <h4 className="category-title-ultra">{item.title}</h4>
+                    <p className="category-desc-ultra">{item.desc}</p>
+                    <div className="category-arrow-ultra">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/>
+                      </svg>
+                    </div>
+                  </Card.Body>
+                  <div className="category-hover-effect"></div>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </Container>
+      </section>
 
-.stat-number {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
+      {/* Ultra Premium Featured Properties */}
+      <section className="featured-ultra" data-aos="fade-up">
+        <Container>
+          <div className="section-header-ultra text-center mb-5">
+            <div className="section-badge-ultra" data-aos="fade-down">Featured Properties</div>
+            <h2 className="section-title-ultra" data-aos="fade-up" data-aos-delay="200">
+              Handpicked <span className="gradient-text-animated">Premium Listings</span>
+            </h2>
+            <p className="section-description-ultra" data-aos="fade-up" data-aos-delay="400">
+              Discover exceptional properties curated by our expert team
+            </p>
+          </div>
 
-.stat-label {
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
+          {loading ? (
+            <div className="loading-ultra" data-aos="fade-up">
+              <div className="loading-animation">
+                <div className="loading-orb orb-1"></div>
+                <div className="loading-orb orb-2"></div>
+                <div className="loading-orb orb-3"></div>
+              </div>
+              <p className="loading-text-ultra">Loading premium properties...</p>
+            </div>
+          ) : error ? (
+            <div className="error-ultra text-center" data-aos="fade-up">
+              <div className="error-icon-ultra">⚠️</div>
+              <div className="error-message-ultra">{error}</div>
+            </div>
+          ) : (
+            <>
+              <Row className="g-4 mb-5">
+                {featuredProperties.slice(0, 6).map((property, index) => (
+                  <Col key={property._id} lg={4} md={6}>
+                    <div 
+                      className="property-wrapper-ultra" 
+                      data-aos="zoom-in"
+                      data-aos-delay={index * 100}
+                    >
+                      <PropertyCard property={property} showOwner={true} />
+                    </div>
+                  </Col>
+                ))}
+              </Row>
+              
+              <div className="text-center" data-aos="fade-up">
+                <Button 
+                  as={Link} 
+                  to="/find-property" 
+                  className="btn-explore-ultra"
+                >
+                  <span className="btn-bg-gradient"></span>
+                  <span className="btn-content">
+                    <span className="btn-text">View All Properties</span>
+                    <span className="btn-count">({featuredProperties.length}+ available)</span>
+                  </span>
+                </Button>
+              </div>
+            </>
+          )}
+        </Container>
+      </section>
 
-/* Section Styling */
-.py-6 {
-  padding-top: 5rem;
-  padding-bottom: 5rem;
-}
+      {/* Ultra Premium CTA */}
+      <section className="cta-ultra">
+        <div className="cta-background-ultra">
+          <div className="cta-gradient-orbs">
+            <div className="cta-orb cta-orb-1"></div>
+            <div className="cta-orb cta-orb-2"></div>
+            <div className="cta-orb cta-orb-3"></div>
+          </div>
+          <div className="cta-grid-pattern"></div>
+        </div>
+        
+        <Container>
+          <Row className="justify-content-center">
+            <Col lg={8} className="text-center">
+              <div className="cta-content-ultra" data-aos="fade-up">
+                <h2 className="cta-title-ultra">
+                  Ready to Find Your <span className="gradient-text-animated">Dream Space?</span>
+                </h2>
+                <p className="cta-description-ultra" data-aos="fade-up" data-aos-delay="200">
+                  Join over 50,000 satisfied customers who discovered their perfect properties 
+                  through our premium platform
+                </p>
+                
+                <div className="cta-buttons-ultra" data-aos="fade-up" data-aos-delay="400">
+                  <Button 
+                    as={Link} 
+                    to="/find-property" 
+                    className="btn-cta-primary-ultra"
+                  >
+                    <span className="btn-bg-gradient"></span>
+                    <span className="btn-content">Start Your Journey</span>
+                    <span className="btn-shine"></span>
+                  </Button>
+                  <Button 
+                    as={Link} 
+                    to="/add-property" 
+                    className="btn-cta-secondary-ultra"
+                  >
+                    <span className="btn-border-gradient"></span>
+                    <span className="btn-content">List Your Property</span>
+                  </Button>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+    </div>
+  );
+};
 
-.bg-light-gradient {
-  background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
-}
-
-.section-header {
-  margin-bottom: 3rem;
-}
-
-.section-badge {
-  display: inline-block;
-  background: linear-gradient(45deg, #667eea, #764ba2);
-  color: white;
-  padding: 0.5rem 1.5rem;
-  border-radius: 50px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 1rem;
-}
-
-.section-title {
-  color: #2d3748;
-  margin-bottom: 1.5rem;
-}
-
-.section-subtitle {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-/* Loading States */
-.custom-loader {
-  padding: 3rem;
-}
-
-.loader-spinner {
-  width: 50px;
-  height: 50px;
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #667eea;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 0 auto;
-}
-
-/* Property Cards Animation */
-.property-wrapper {
-  animation: fadeInUp 0.6s ease-out forwards;
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.property-col:nth-child(1) .property-wrapper { animation-delay: 0.1s; }
-.property-col:nth-child(2) .property-wrapper { animation-delay: 0.2s; }
-.property-col:nth-child(3) .property-wrapper { animation-delay: 0.3s; }
-.property-col:nth-child(4) .property-wrapper { animation-delay: 0.4s; }
-.property-col:nth-child(5) .property-wrapper { animation-delay: 0.5s; }
-.property-col:nth-child(6) .property-wrapper { animation-delay: 0.6s; }
-
-.btn-explore {
-  background: linear-gradient(45deg, #667eea, #764ba2);
-  border: none;
-  color: white;
-  font-weight: 600;
-  border-radius: 50px;
-  transition: all 0.3s ease;
-}
-
-.btn-explore:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-}
-
-/* Category Cards */
-.category-card {
-  position: relative;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  text-decoration: none !important;
-  color: inherit !important;
-  background: white;
-  border-radius: 15px !important;
-  overflow: hidden;
-  animation: fadeInUp 0.6s ease-out forwards;
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.category-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15) !important;
-  color: inherit !important;
-  text-decoration: none !important;
-}
-
-.category-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, transparent 0%, rgba(102, 126, 234, 0.05) 100%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.category-card:hover .category-overlay {
-  opacity: 1;
-}
-
-.category-icon {
-  margin-bottom: 1rem;
-}
-
-.icon-emoji {
-  font-size: 2.5rem;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
-}
-
-.category-title {
-  font-weight: 600;
-  color: #2d3748;
-}
-
-.category-desc {
-  font-size: 0.85rem;
-}
-
-.shadow-hover {
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-}
-
-/* Feature Cards */
-.feature-card {
-  background: white;
-  border-radius: 15px;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.feature-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-}
-
-.feature-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(45deg, #667eea, #764ba2);
-}
-
-.feature-icon-wrapper {
-  position: relative;
-  display: inline-block;
-  margin-bottom: 1.5rem;
-}
-
-.feature-icon-bg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: rgba(102, 126, 234, 0.1);
-  z-index: 1;
-}
-
-.feature-icon {
-  position: relative;
-  z-index: 2;
-  font-size: 2.5rem;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
-}
-
-.feature-title {
-  color: #2d3748;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-
-.feature-desc {
-  line-height: 1.6;
-}
-
-/* CTA Section */
-.cta-section {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  position: relative;
-}
-
-.cta-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
-}
-
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.animate-fade-in {
-  animation: fadeInUp 1s ease-out;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .hero-section {
-    min-height: 80vh;
-    text-align: center;
-  }
-  
-  .hero-title {
-    font-size: 2.5rem;
-  }
-  
-  .hero-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .hero-buttons .btn {
-    width: 100%;
-    max-width: 300px;
-  }
-  
-  .section-title {
-    font-size: 2rem;
-  }
-  
-  .py-6 {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-  }
-  
-  .stat-number {
-    font-size: 2rem;
-  }
-  
-  .floating-shape {
-    display: none;
-  }
-}
-
-@media (max-width: 576px) {
-  .category-card {
-    margin-bottom: 1rem;
-  }
-  
-  .feature-card {
-    margin-bottom: 2rem;
-  }
-  
-  .hero-title {
-    font-size: 2rem;
-  }
-  
-  .section-badge {
-    font-size: 0.75rem;
-    padding: 0.4rem 1rem;
-  }
-}
-
-/* Color Variations for Category Cards */
-.category-primary:hover { border-color: #007bff; }
-.category-success:hover { border-color: #28a745; }
-.category-warning:hover { border-color: #ffc107; }
-.category-info:hover { border-color: #17a2b8; }
-.category-danger:hover { border-color: #dc3545; }
-.category-dark:hover { border-color: #343a40; }
+export default Home;
