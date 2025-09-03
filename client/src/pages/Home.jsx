@@ -8,13 +8,17 @@ const Home = () => {
   const [featuredProperties, setFeaturedProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [scrollY, setScrollY] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const heroRef = useRef(null);
 
   useEffect(() => {
     fetchFeaturedProperties();
     
-    // Mouse tracking for parallax effects
+    // Scroll parallax effect
+    const handleScroll = () => setScrollY(window.scrollY);
+    
+    // Mouse tracking for interactive elements
     const handleMouseMove = (e) => {
       setMousePosition({
         x: (e.clientX / window.innerWidth) * 100,
@@ -22,8 +26,13 @@ const Home = () => {
       });
     };
 
+    window.addEventListener('scroll', handleScroll);
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
   }, []);
 
   const fetchFeaturedProperties = async () => {
@@ -39,89 +48,117 @@ const Home = () => {
   };
 
   return (
-    <>
-      {/* Premium Hero Section */}
-      <section className="hero-premium" ref={heroRef}>
-        {/* Animated Background */}
-        <div className="hero-bg-container">
-          <div className="hero-gradient-overlay"></div>
-          <div className="hero-mesh-gradient"></div>
-          <div className="hero-noise-overlay"></div>
-          
-          {/* Floating Geometric Elements */}
-          <div className="geometric-elements">
-            <div className="geo-element geo-1" 
-                 style={{transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`}}></div>
-            <div className="geo-element geo-2" 
-                 style={{transform: `translate(${mousePosition.x * -0.01}px, ${mousePosition.y * 0.03}px)`}}></div>
-            <div className="geo-element geo-3" 
-                 style={{transform: `translate(${mousePosition.x * 0.015}px, ${mousePosition.y * -0.02}px)`}}></div>
-            <div className="geo-element geo-4" 
-                 style={{transform: `translate(${mousePosition.x * -0.025}px, ${mousePosition.y * 0.01}px)`}}></div>
+    <div className="spacelink-home">
+      {/* Ultra Premium Hero Section */}
+      <section className="hero-ultra-premium" ref={heroRef}>
+        {/* Dynamic Background System */}
+        <div className="hero-background-system">
+          {/* Animated Gradient Mesh */}
+          <div className="gradient-mesh-container">
+            <div className="gradient-orb orb-1" 
+                 style={{transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.01}px)`}}></div>
+            <div className="gradient-orb orb-2" 
+                 style={{transform: `translate(${mousePosition.x * -0.015}px, ${mousePosition.y * 0.025}px)`}}></div>
+            <div className="gradient-orb orb-3" 
+                 style={{transform: `translate(${mousePosition.x * 0.01}px, ${mousePosition.y * -0.02}px)`}}></div>
           </div>
+          
+          {/* Particle System */}
+          <div className="particle-system">
+            {[...Array(50)].map((_, i) => (
+              <div key={i} className={`particle particle-${i % 5}`} 
+                   style={{
+                     animationDelay: `${i * 0.1}s`,
+                     left: `${Math.random() * 100}%`,
+                     animationDuration: `${3 + Math.random() * 4}s`
+                   }}></div>
+            ))}
+          </div>
+          
+          {/* Grid Pattern Overlay */}
+          <div className="grid-overlay"></div>
+          
+          {/* Noise Texture */}
+          <div className="noise-texture"></div>
         </div>
 
-        <Container className="hero-content-container">
+        <Container className="hero-container-ultra">
           <Row className="justify-content-center align-items-center min-vh-100">
-            <Col lg={10} xl={9} className="text-center">
-              {/* Premium Typography */}
-              <div className="hero-content-wrapper">
-                <div className="hero-badge">
+            <Col lg={10} className="text-center">
+              <div className="hero-content-ultra">
+                {/* Premium Badge */}
+                <div className="premium-badge" data-aos="fade-down" data-aos-delay="200">
+                  <div className="badge-glow"></div>
                   <span className="badge-icon">✨</span>
-                  <span>Premium Property Platform</span>
+                  <span className="badge-text">Premium Property Platform</span>
+                  <div className="badge-pulse"></div>
                 </div>
-                
-                <h1 className="hero-title-premium">
-                  <span className="title-line-1">Discover Your</span>
-                  <span className="title-line-2 gradient-text">Perfect Space</span>
-                  <span className="title-line-3">With SpaceLink</span>
+
+                {/* Ultra Premium Typography */}
+                <h1 className="hero-title-ultra" data-aos="fade-up" data-aos-delay="400">
+                  <span className="title-word title-word-1">Discover</span>
+                  <span className="title-word title-word-2">Your</span>
+                  <br />
+                  <span className="title-word title-word-3 gradient-text-animated">Perfect</span>
+                  <span className="title-word title-word-4 gradient-text-animated">Space</span>
+                  <br />
+                  <span className="title-word title-word-5">With</span>
+                  <span className="title-word title-word-6 brand-text">SpaceLink</span>
                 </h1>
 
-                <p className="hero-description-premium">
-                  Revolutionizing property discovery with intelligent matching, 
-                  premium listings, and seamless experiences. From luxury residences 
-                  to commercial spaces — find exactly what you're looking for.
+                {/* Premium Description */}
+                <p className="hero-description-ultra" data-aos="fade-up" data-aos-delay="600">
+                  Experience the future of property discovery with our intelligent matching system,
+                  <br className="d-none d-lg-block" />
+                  premium listings, and seamless experiences that redefine luxury living.
                 </p>
 
-                {/* Premium CTA Buttons */}
-                <div className="hero-cta-container">
+                {/* Ultra Premium CTAs */}
+                <div className="hero-cta-ultra" data-aos="fade-up" data-aos-delay="800">
                   <Button 
                     as={Link} 
                     to="/find-property" 
-                    className="btn-premium-primary"
+                    className="btn-ultra-primary"
                   >
-                    <span className="btn-text">Explore Properties</span>
-                    <span className="btn-icon">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/>
-                      </svg>
+                    <span className="btn-bg-gradient"></span>
+                    <span className="btn-content">
+                      <span className="btn-text">Explore Properties</span>
+                      <span className="btn-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/>
+                        </svg>
+                      </span>
                     </span>
+                    <span className="btn-shine"></span>
                   </Button>
                   
                   <Button 
                     as={Link} 
                     to="/add-property" 
-                    className="btn-premium-secondary"
+                    className="btn-ultra-secondary"
                   >
-                    <span className="btn-text">List Property</span>
+                    <span className="btn-border-gradient"></span>
+                    <span className="btn-content">
+                      <span className="btn-text">List Property</span>
+                    </span>
                   </Button>
                 </div>
 
-                {/* Trust Indicators */}
-                <div className="trust-indicators">
-                  <div className="trust-item">
-                    <span className="trust-number">10K+</span>
-                    <span className="trust-label">Properties</span>
+                {/* Trust Metrics with Animation */}
+                <div className="trust-metrics-ultra" data-aos="fade-up" data-aos-delay="1000">
+                  <div className="trust-item-ultra">
+                    <div className="trust-number-animated" data-target="10000">0</div>
+                    <div className="trust-label">Properties</div>
                   </div>
-                  <div className="trust-separator"></div>
-                  <div className="trust-item">
-                    <span className="trust-number">50K+</span>
-                    <span className="trust-label">Happy Clients</span>
+                  <div className="trust-divider"></div>
+                  <div className="trust-item-ultra">
+                    <div className="trust-number-animated" data-target="50000">0</div>
+                    <div className="trust-label">Happy Clients</div>
                   </div>
-                  <div className="trust-separator"></div>
-                  <div className="trust-item">
-                    <span className="trust-number">99.8%</span>
-                    <span className="trust-label">Success Rate</span>
+                  <div className="trust-divider"></div>
+                  <div className="trust-item-ultra">
+                    <div className="trust-number-animated" data-target="99.8">0</div>
+                    <div className="trust-label">Success Rate</div>
                   </div>
                 </div>
               </div>
@@ -129,65 +166,94 @@ const Home = () => {
           </Row>
         </Container>
 
-        {/* Scroll Indicator */}
-        <div className="scroll-indicator">
-          <div className="scroll-line"></div>
-          <div className="scroll-text">Scroll to explore</div>
+        {/* Scroll Indicator Ultra */}
+        <div className="scroll-indicator-ultra" data-aos="fade-up" data-aos-delay="1200">
+          <div className="scroll-mouse">
+            <div className="scroll-wheel"></div>
+          </div>
+          <div className="scroll-text">Scroll to explore premium properties</div>
         </div>
       </section>
 
-      {/* Premium Features Section */}
-      <section className="features-premium">
+      {/* Ultra Premium Features Bento Grid */}
+      <section className="features-bento-ultra" data-aos="fade-up">
         <Container>
-          <Row className="justify-content-center">
+          <Row>
             <Col lg={12}>
-              <div className="features-grid">
-                {/* Feature 1 */}
-                <div className="feature-card-premium feature-1">
-                  <div className="feature-icon-container">
-                    <div className="feature-icon-bg"></div>
-                    <div className="feature-icon">🎯</div>
+              <div className="bento-grid-ultra">
+                {/* Large Feature Card */}
+                <div className="bento-card bento-large" data-aos="zoom-in" data-aos-delay="200">
+                  <div className="bento-bg-gradient bg-gradient-1"></div>
+                  <div className="bento-content">
+                    <div className="bento-icon">
+                      <div className="icon-3d">🎯</div>
+                    </div>
+                    <h3 className="bento-title">AI-Powered Smart Matching</h3>
+                    <p className="bento-description">
+                      Our advanced machine learning algorithms analyze your preferences, 
+                      behavior, and requirements to recommend properties that perfectly 
+                      match your lifestyle and budget.
+                    </p>
+                    <div className="bento-metrics">
+                      <div className="metric">
+                        <span className="metric-value">98%</span>
+                        <span className="metric-label">Match Accuracy</span>
+                      </div>
+                      <div className="metric">
+                        <span className="metric-value">2.3x</span>
+                        <span className="metric-label">Faster Search</span>
+                      </div>
+                    </div>
                   </div>
-                  <h3 className="feature-title">Smart Matching</h3>
-                  <p className="feature-description">
-                    AI-powered property recommendations based on your preferences and behavior
-                  </p>
+                  <div className="bento-glow"></div>
                 </div>
 
-                {/* Feature 2 */}
-                <div className="feature-card-premium feature-2">
-                  <div className="feature-icon-container">
-                    <div className="feature-icon-bg"></div>
-                    <div className="feature-icon">⚡</div>
+                {/* Medium Feature Cards */}
+                <div className="bento-card bento-medium" data-aos="zoom-in" data-aos-delay="400">
+                  <div className="bento-bg-gradient bg-gradient-2"></div>
+                  <div className="bento-content">
+                    <div className="bento-icon">
+                      <div className="icon-3d">⚡</div>
+                    </div>
+                    <h3 className="bento-title">Lightning Fast Search</h3>
+                    <p className="bento-description">
+                      Real-time filtering with instant results across our entire database.
+                    </p>
                   </div>
-                  <h3 className="feature-title">Instant Search</h3>
-                  <p className="feature-description">
-                    Real-time filtering with advanced search capabilities and instant results
-                  </p>
                 </div>
 
-                {/* Feature 3 */}
-                <div className="feature-card-premium feature-3">
-                  <div className="feature-icon-container">
-                    <div className="feature-icon-bg"></div>
-                    <div className="feature-icon">🛡️</div>
+                <div className="bento-card bento-medium" data-aos="zoom-in" data-aos-delay="600">
+                  <div className="bento-bg-gradient bg-gradient-3"></div>
+                  <div className="bento-content">
+                    <div className="bento-icon">
+                      <div className="icon-3d">🛡️</div>
+                    </div>
+                    <h3 className="bento-title">Bank-Level Security</h3>
+                    <p className="bento-description">
+                      Military-grade encryption protects all your data and transactions.
+                    </p>
                   </div>
-                  <h3 className="feature-title">Secure Platform</h3>
-                  <p className="feature-description">
-                    Bank-level security with verified listings and protected transactions
-                  </p>
                 </div>
 
-                {/* Feature 4 */}
-                <div className="feature-card-premium feature-4">
-                  <div className="feature-icon-container">
-                    <div className="feature-icon-bg"></div>
-                    <div className="feature-icon">📊</div>
+                {/* Small Feature Cards */}
+                <div className="bento-card bento-small" data-aos="zoom-in" data-aos-delay="800">
+                  <div className="bento-bg-gradient bg-gradient-4"></div>
+                  <div className="bento-content">
+                    <div className="bento-icon">
+                      <div className="icon-3d">📊</div>
+                    </div>
+                    <h3 className="bento-title">Analytics</h3>
                   </div>
-                  <h3 className="feature-title">Analytics Dashboard</h3>
-                  <p className="feature-description">
-                    Comprehensive insights and analytics for property owners and seekers
-                  </p>
+                </div>
+
+                <div className="bento-card bento-small" data-aos="zoom-in" data-aos-delay="1000">
+                  <div className="bento-bg-gradient bg-gradient-5"></div>
+                  <div className="bento-content">
+                    <div className="bento-icon">
+                      <div className="icon-3d">🌟</div>
+                    </div>
+                    <h3 className="bento-title">Premium</h3>
+                  </div>
                 </div>
               </div>
             </Col>
@@ -195,22 +261,18 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* Premium Categories Section */}
-      <section className="categories-premium">
+      {/* Ultra Premium Categories */}
+      <section className="categories-ultra" data-aos="fade-up">
         <Container>
-          <Row className="justify-content-center mb-5">
-            <Col lg={8} className="text-center">
-              <div className="section-header-premium">
-                <div className="section-badge-premium">Property Categories</div>
-                <h2 className="section-title-premium">
-                  Find Your <span className="gradient-text">Ideal Space</span>
-                </h2>
-                <p className="section-description-premium">
-                  Explore curated property categories designed for every lifestyle and business need
-                </p>
-              </div>
-            </Col>
-          </Row>
+          <div className="section-header-ultra text-center mb-5">
+            <div className="section-badge-ultra" data-aos="fade-down">Property Categories</div>
+            <h2 className="section-title-ultra" data-aos="fade-up" data-aos-delay="200">
+              Find Your <span className="gradient-text-animated">Perfect Space</span>
+            </h2>
+            <p className="section-description-ultra" data-aos="fade-up" data-aos-delay="400">
+              Explore our curated collection of premium properties across all categories
+            </p>
+          </div>
 
           <Row className="g-4">
             {[
@@ -219,72 +281,84 @@ const Home = () => {
                 icon: '🏠', 
                 title: 'Residential', 
                 desc: 'Luxury apartments, modern flats, family homes',
+                count: '2.5K+',
                 gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                count: '2.5K+'
+                delay: 200
               },
               { 
                 category: 'Commercial', 
                 icon: '🏢', 
                 title: 'Commercial', 
                 desc: 'Premium offices, retail spaces, warehouses',
+                count: '1.8K+',
                 gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-                count: '1.8K+'
+                delay: 300
               },
               { 
                 category: 'Land', 
                 icon: '🌾', 
                 title: 'Land & Plots', 
-                desc: 'Agricultural land, commercial plots, development sites',
+                desc: 'Agricultural land, commercial plots',
+                count: '950+',
                 gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-                count: '950+'
+                delay: 400
               },
               { 
                 category: 'Parking', 
                 icon: '🚗', 
                 title: 'Parking', 
-                desc: 'Secure parking, garages, covered spaces',
+                desc: 'Secure parking spaces and garages',
+                count: '3.2K+',
                 gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-                count: '3.2K+'
+                delay: 500
               },
               { 
                 category: 'Event', 
                 icon: '🎉', 
                 title: 'Events', 
-                desc: 'Banquet halls, gardens, conference venues',
+                desc: 'Banquet halls, gardens, venues',
+                count: '420+',
                 gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-                count: '420+'
+                delay: 600
               },
               { 
                 category: 'manage-properties', 
                 icon: '⚙️', 
                 title: 'Management', 
-                desc: 'Property management tools and services',
-                gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+                desc: 'Property management tools',
                 count: 'Tools',
+                gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+                delay: 700,
                 isManage: true
               }
             ].map((item, index) => (
               <Col lg={4} md={6} key={index}>
                 <Card 
-                  className="category-card-premium"
+                  className="category-card-ultra h-100"
                   as={Link}
                   to={item.isManage ? '/manage-properties' : `/find-property?category=${item.category}`}
                   style={{ '--category-gradient': item.gradient }}
+                  data-aos="zoom-in" 
+                  data-aos-delay={item.delay}
                 >
-                  <div className="category-gradient-bg"></div>
-                  <Card.Body className="category-body">
-                    <div className="category-header">
-                      <div className="category-icon-premium">{item.icon}</div>
-                      <div className="category-count">{item.count}</div>
+                  <div className="category-bg-ultra"></div>
+                  <div className="category-gradient-line"></div>
+                  <Card.Body className="category-body-ultra">
+                    <div className="category-header-ultra">
+                      <div className="category-icon-ultra">
+                        <span className="icon-3d-category">{item.icon}</span>
+                      </div>
+                      <div className="category-count-ultra">{item.count}</div>
                     </div>
-                    <h4 className="category-title-premium">{item.title}</h4>
-                    <p className="category-desc-premium">{item.desc}</p>
-                    <div className="category-arrow">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <h4 className="category-title-ultra">{item.title}</h4>
+                    <p className="category-desc-ultra">{item.desc}</p>
+                    <div className="category-arrow-ultra">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/>
                       </svg>
                     </div>
                   </Card.Body>
+                  <div className="category-hover-effect"></div>
                 </Card>
               </Col>
             ))}
@@ -292,36 +366,32 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* Premium Featured Properties */}
-      <section className="featured-premium">
+      {/* Ultra Premium Featured Properties */}
+      <section className="featured-ultra" data-aos="fade-up">
         <Container>
-          <Row className="justify-content-center mb-5">
-            <Col lg={8} className="text-center">
-              <div className="section-header-premium">
-                <div className="section-badge-premium">Featured Properties</div>
-                <h2 className="section-title-premium">
-                  Handpicked <span className="gradient-text">Premium Listings</span>
-                </h2>
-                <p className="section-description-premium">
-                  Discover exceptional properties curated by our expert team for discerning clients
-                </p>
-              </div>
-            </Col>
-          </Row>
+          <div className="section-header-ultra text-center mb-5">
+            <div className="section-badge-ultra" data-aos="fade-down">Featured Properties</div>
+            <h2 className="section-title-ultra" data-aos="fade-up" data-aos-delay="200">
+              Handpicked <span className="gradient-text-animated">Premium Listings</span>
+            </h2>
+            <p className="section-description-ultra" data-aos="fade-up" data-aos-delay="400">
+              Discover exceptional properties curated by our expert team
+            </p>
+          </div>
 
           {loading ? (
-            <div className="loading-premium">
-              <div className="loading-spinner-premium">
-                <div className="spinner-ring"></div>
-                <div className="spinner-ring"></div>
-                <div className="spinner-ring"></div>
+            <div className="loading-ultra" data-aos="fade-up">
+              <div className="loading-animation">
+                <div className="loading-orb orb-1"></div>
+                <div className="loading-orb orb-2"></div>
+                <div className="loading-orb orb-3"></div>
               </div>
-              <p className="loading-text-premium">Loading premium properties...</p>
+              <p className="loading-text-ultra">Loading premium properties...</p>
             </div>
           ) : error ? (
-            <div className="error-premium">
-              <div className="error-icon-premium">⚠️</div>
-              <div className="error-message-premium">{error}</div>
+            <div className="error-ultra text-center" data-aos="fade-up">
+              <div className="error-icon-ultra">⚠️</div>
+              <div className="error-message-ultra">{error}</div>
             </div>
           ) : (
             <>
@@ -329,8 +399,9 @@ const Home = () => {
                 {featuredProperties.slice(0, 6).map((property, index) => (
                   <Col key={property._id} lg={4} md={6}>
                     <div 
-                      className="property-card-wrapper" 
-                      style={{ animationDelay: `${index * 0.15}s` }}
+                      className="property-wrapper-ultra" 
+                      data-aos="zoom-in"
+                      data-aos-delay={index * 100}
                     >
                       <PropertyCard property={property} showOwner={true} />
                     </div>
@@ -338,56 +409,64 @@ const Home = () => {
                 ))}
               </Row>
               
-              <Row>
-                <Col className="text-center">
-                  <Button 
-                    as={Link} 
-                    to="/find-property" 
-                    className="btn-premium-tertiary"
-                  >
+              <div className="text-center" data-aos="fade-up">
+                <Button 
+                  as={Link} 
+                  to="/find-property" 
+                  className="btn-explore-ultra"
+                >
+                  <span className="btn-bg-gradient"></span>
+                  <span className="btn-content">
                     <span className="btn-text">View All Properties</span>
-                    <span className="btn-count">{featuredProperties.length}+ available</span>
-                  </Button>
-                </Col>
-              </Row>
+                    <span className="btn-count">({featuredProperties.length}+ available)</span>
+                  </span>
+                </Button>
+              </div>
             </>
           )}
         </Container>
       </section>
 
-      {/* Premium CTA Section */}
-      <section className="cta-premium">
-        <div className="cta-bg-elements">
-          <div className="cta-gradient-1"></div>
-          <div className="cta-gradient-2"></div>
-          <div className="cta-mesh"></div>
+      {/* Ultra Premium CTA */}
+      <section className="cta-ultra">
+        <div className="cta-background-ultra">
+          <div className="cta-gradient-orbs">
+            <div className="cta-orb cta-orb-1"></div>
+            <div className="cta-orb cta-orb-2"></div>
+            <div className="cta-orb cta-orb-3"></div>
+          </div>
+          <div className="cta-grid-pattern"></div>
         </div>
         
         <Container>
           <Row className="justify-content-center">
             <Col lg={8} className="text-center">
-              <div className="cta-content-premium">
-                <h2 className="cta-title-premium">
-                  Ready to Find Your <span className="gradient-text-white">Perfect Space?</span>
+              <div className="cta-content-ultra" data-aos="fade-up">
+                <h2 className="cta-title-ultra">
+                  Ready to Find Your <span className="gradient-text-animated">Dream Space?</span>
                 </h2>
-                <p className="cta-description-premium">
-                  Join thousands of satisfied customers who discovered their ideal properties through SpaceLink's premium platform
+                <p className="cta-description-ultra" data-aos="fade-up" data-aos-delay="200">
+                  Join over 50,000 satisfied customers who discovered their perfect properties 
+                  through our premium platform
                 </p>
                 
-                <div className="cta-buttons-premium">
+                <div className="cta-buttons-ultra" data-aos="fade-up" data-aos-delay="400">
                   <Button 
                     as={Link} 
                     to="/find-property" 
-                    className="btn-cta-primary"
+                    className="btn-cta-primary-ultra"
                   >
-                    Start Your Search
+                    <span className="btn-bg-gradient"></span>
+                    <span className="btn-content">Start Your Journey</span>
+                    <span className="btn-shine"></span>
                   </Button>
                   <Button 
                     as={Link} 
                     to="/add-property" 
-                    className="btn-cta-secondary"
+                    className="btn-cta-secondary-ultra"
                   >
-                    List Your Property
+                    <span className="btn-border-gradient"></span>
+                    <span className="btn-content">List Your Property</span>
                   </Button>
                 </div>
               </div>
@@ -395,7 +474,7 @@ const Home = () => {
           </Row>
         </Container>
       </section>
-    </>
+    </div>
   );
 };
 
