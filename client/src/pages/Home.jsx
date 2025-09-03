@@ -9,7 +9,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // Top 1% Agency Design - Perfect Alignment
+  // PERFECT Balance - Enhanced Visibility & Proper Sizing
   const styles = {
     // Professional App Container
     appContainer: {
@@ -18,67 +18,72 @@ const Home = () => {
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
     },
 
-    // Perfect Hero Section - Compact & Aligned
+    // Perfect Hero Section - Enhanced Size
     heroSection: {
-      padding: '80px 0 60px 0', // Much tighter
+      padding: '100px 0 80px 0', // Increased padding
       background: '#0a0e1a',
       position: 'relative'
     },
 
-    // Perfect Grid Container
+    // Enhanced Grid Container - Better Spacing
     heroGrid: {
       display: 'grid',
       gridTemplateColumns: '1fr 1fr',
-      gap: '60px',
+      gap: '50px', // Reduced gap
       alignItems: 'center',
-      maxWidth: '1200px',
+      maxWidth: '1300px', // Increased max width
       margin: '0 auto',
-      padding: '0 24px'
+      padding: '0 40px' // Increased padding
     },
 
-    // Left Content - Perfectly Aligned
+    // Left Content - Better Proportions
     heroLeft: {
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center'
     },
 
-    // Compact Professional Badge
+    // Enhanced Premium Badge - More Visible
     premiumBadge: {
       display: 'inline-flex',
       alignItems: 'center',
-      gap: '6px',
-      padding: '6px 12px', // Much smaller
-      background: 'rgba(59, 130, 246, 0.1)',
-      border: '1px solid rgba(59, 130, 246, 0.2)',
-      borderRadius: '16px',
+      gap: '8px',
+      padding: '10px 20px', // Increased size
+      background: 'rgba(59, 130, 246, 0.15)', // More visible
+      backdropFilter: 'blur(16px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+      border: '1px solid rgba(59, 130, 246, 0.3)',
+      borderRadius: '25px',
       color: '#60a5fa',
-      fontSize: '0.75rem', // Smaller
+      fontSize: '0.9rem', // Increased font
       fontWeight: 600,
-      marginBottom: '20px', // Much smaller
-      width: 'fit-content'
+      marginBottom: '32px', // Increased margin
+      width: 'fit-content',
+      boxShadow: '0 8px 32px rgba(59, 130, 246, 0.1)'
     },
 
     badgeIcon: {
-      width: '6px',
-      height: '6px',
+      width: '8px',
+      height: '8px',
       borderRadius: '50%',
       background: '#10b981',
-      animation: 'pulse 2s infinite'
+      animation: 'pulse 2s infinite',
+      boxShadow: '0 0 8px rgba(16, 185, 129, 0.5)'
     },
 
-    // Perfect Typography - Company Grade
+    // Enhanced Typography - Perfect Size
     heroTitle: {
-      fontSize: 'clamp(2.5rem, 4vw, 3.5rem)', // Much smaller
+      fontSize: 'clamp(3rem, 5vw, 4rem)', // Increased size
       fontWeight: 900,
       lineHeight: 1.1,
-      marginBottom: '16px', // Tight spacing
+      marginBottom: '24px', // Increased margin
       letterSpacing: '-0.02em'
     },
 
     titleLine1: {
       display: 'block',
-      color: 'white'
+      color: 'white',
+      textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
     },
 
     titleLine2: {
@@ -86,16 +91,17 @@ const Home = () => {
       background: 'linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%)',
       WebkitBackgroundClip: 'text',
       WebkitTextFillColor: 'transparent',
-      backgroundClip: 'text'
+      backgroundClip: 'text',
+      textShadow: 'none'
     },
 
-    // Compact Description
+    // Enhanced Description
     heroDescription: {
-      fontSize: '1rem', // Smaller
-      lineHeight: 1.5,
-      color: 'rgba(255, 255, 255, 0.8)',
-      marginBottom: '24px', // Tight spacing
-      maxWidth: '480px'
+      fontSize: '1.2rem', // Increased size
+      lineHeight: 1.6,
+      color: 'rgba(255, 255, 255, 0.85)',
+      marginBottom: '32px', // Increased margin
+      maxWidth: '520px'
     },
 
     highlightText: {
@@ -103,100 +109,106 @@ const Home = () => {
       fontWeight: 600
     },
 
-    // Compact Button Container
+    // Enhanced Button Container
     buttonContainer: {
       display: 'flex',
-      gap: '12px', // Tight spacing
-      marginBottom: '24px', // Much smaller
+      gap: '16px', // Increased gap
+      marginBottom: '40px', // Increased margin
       flexWrap: 'wrap'
     },
 
-    // Company-Grade Buttons - Compact
+    // Enhanced Buttons - Better Size
     primaryButton: {
       display: 'inline-flex',
       alignItems: 'center',
-      gap: '8px',
-      padding: '12px 20px', // Much smaller
+      gap: '10px',
+      padding: '16px 32px', // Increased padding
       background: '#3b82f6',
       border: 'none',
-      borderRadius: '6px', // Smaller radius
+      borderRadius: '8px',
       color: 'white',
-      fontSize: '0.9rem', // Smaller
-      fontWeight: 600,
+      fontSize: '1rem', // Increased font
+      fontWeight: 700,
       textDecoration: 'none',
-      transition: 'all 0.2s ease',
+      transition: 'all 0.3s ease',
       cursor: 'pointer',
-      userSelect: 'none'
+      userSelect: 'none',
+      boxShadow: '0 8px 25px rgba(59, 130, 246, 0.3)'
     },
 
     secondaryButton: {
       display: 'inline-flex',
       alignItems: 'center',
-      gap: '8px',
-      padding: '12px 20px',
-      background: 'transparent',
-      border: '1px solid rgba(255, 255, 255, 0.3)',
-      borderRadius: '6px',
-      color: 'rgba(255, 255, 255, 0.9)',
-      fontSize: '0.9rem',
-      fontWeight: 600,
+      gap: '10px',
+      padding: '16px 32px',
+      background: 'rgba(255, 255, 255, 0.08)', // More visible
+      backdropFilter: 'blur(12px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(12px) saturate(180%)',
+      border: '1px solid rgba(255, 255, 255, 0.2)',
+      borderRadius: '8px',
+      color: 'rgba(255, 255, 255, 0.95)',
+      fontSize: '1rem',
+      fontWeight: 700,
       textDecoration: 'none',
-      transition: 'all 0.2s ease',
+      transition: 'all 0.3s ease',
       cursor: 'pointer',
-      userSelect: 'none'
+      userSelect: 'none',
+      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)'
     },
 
-    // Compact Trust Indicators
+    // Enhanced Trust Container
     trustContainer: {
       display: 'flex',
       alignItems: 'center',
-      gap: '24px', // Tight spacing
+      gap: '32px', // Increased gap
       flexWrap: 'wrap'
     },
 
     starsContainer: {
       display: 'flex',
       alignItems: 'center',
-      gap: '6px'
+      gap: '8px'
     },
 
     stars: {
       color: '#fbbf24',
-      fontSize: '1rem' // Smaller
+      fontSize: '1.1rem', // Increased size
+      filter: 'drop-shadow(0 2px 4px rgba(251, 191, 36, 0.3))'
     },
 
     trustText: {
       color: 'rgba(255, 255, 255, 0.9)',
-      fontSize: '0.85rem', // Smaller
+      fontSize: '0.95rem', // Increased size
       fontWeight: 600
     },
 
     warrantyBadge: {
       display: 'flex',
       alignItems: 'center',
-      gap: '6px',
+      gap: '8px',
       color: '#10b981',
-      fontSize: '0.85rem',
+      fontSize: '0.95rem',
       fontWeight: 600
     },
 
-    // Right Image - Perfect Alignment
+    // Right Image - Enhanced
     heroRight: {
       position: 'relative',
-      height: '400px', // Fixed compact height
+      height: '450px', // Increased height
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center'
     },
 
-    // Perfect Property Container
+    // Enhanced Property Container
     propertyContainer: {
       position: 'relative',
       width: '100%',
       height: '100%',
-      borderRadius: '12px', // Smaller radius
+      borderRadius: '16px', // Increased radius
       overflow: 'hidden',
-      boxShadow: '0 16px 40px rgba(0, 0, 0, 0.3)'
+      boxShadow: '0 25px 60px rgba(0, 0, 0, 0.4)', // Enhanced shadow
+      border: '1px solid rgba(255, 255, 255, 0.1)'
     },
 
     propertyImage: {
@@ -205,59 +217,66 @@ const Home = () => {
       objectFit: 'cover'
     },
 
-    // Compact Property Badge
+    // Enhanced Property Badge
     propertyBadge: {
       position: 'absolute',
-      top: '16px',
-      left: '16px',
-      padding: '4px 12px', // Smaller
+      top: '20px',
+      left: '20px',
+      padding: '8px 16px', // Increased padding
       background: 'rgba(16, 185, 129, 0.9)',
+      backdropFilter: 'blur(12px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(12px) saturate(180%)',
       color: 'white',
-      borderRadius: '16px',
-      fontSize: '0.75rem', // Smaller
-      fontWeight: 600,
-      backdropFilter: 'blur(8px)'
+      borderRadius: '20px',
+      fontSize: '0.85rem', // Increased font
+      fontWeight: 700,
+      boxShadow: '0 8px 25px rgba(16, 185, 129, 0.3)',
+      border: '1px solid rgba(255, 255, 255, 0.2)'
     },
 
-    // Compact Categories Section
+    // Enhanced Categories Section
     categoriesSection: {
-      padding: '60px 0', // Much tighter
-      background: 'rgba(255, 255, 255, 0.02)'
+      padding: '80px 0', // Increased padding
+      background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%)'
     },
 
-    // Perfect Section Header - Compact
+    // Enhanced Section Header
     sectionHeader: {
       textAlign: 'center',
-      marginBottom: '40px', // Much smaller
-      maxWidth: '600px',
-      margin: '0 auto 40px auto',
-      background: 'rgba(255, 255, 255, 0.03)',
-      backdropFilter: 'blur(12px)',
-      border: '1px solid rgba(255, 255, 255, 0.08)',
-      borderRadius: '12px',
-      padding: '24px' // Much smaller
+      marginBottom: '50px', // Increased margin
+      maxWidth: '800px', // Increased width
+      margin: '0 auto 50px auto',
+      background: 'rgba(255, 255, 255, 0.06)', // More visible
+      backdropFilter: 'blur(20px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+      border: '1px solid rgba(255, 255, 255, 0.12)',
+      borderRadius: '16px',
+      padding: '40px', // Increased padding
+      boxShadow: '0 16px 40px rgba(0, 0, 0, 0.1)'
     },
 
     sectionBadge: {
       display: 'inline-block',
-      padding: '4px 12px', // Smaller
-      background: 'rgba(59, 130, 246, 0.1)',
-      border: '1px solid rgba(59, 130, 246, 0.2)',
-      borderRadius: '16px',
+      padding: '8px 16px', // Increased padding
+      background: 'rgba(59, 130, 246, 0.15)',
+      backdropFilter: 'blur(8px)',
+      border: '1px solid rgba(59, 130, 246, 0.25)',
+      borderRadius: '20px',
       color: '#60a5fa',
-      fontSize: '0.7rem', // Smaller
-      fontWeight: 600,
+      fontSize: '0.8rem', // Increased font
+      fontWeight: 700,
       textTransform: 'uppercase',
-      letterSpacing: '0.5px',
-      marginBottom: '12px' // Smaller
+      letterSpacing: '1px',
+      marginBottom: '20px' // Increased margin
     },
 
     sectionTitle: {
-      fontSize: 'clamp(1.5rem, 3vw, 2rem)', // Much smaller
+      fontSize: 'clamp(2rem, 4vw, 2.8rem)', // Increased size
       fontWeight: 800,
-      marginBottom: '12px', // Smaller
+      marginBottom: '16px', // Increased margin
       color: 'white',
-      lineHeight: 1.2
+      lineHeight: 1.2,
+      textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
     },
 
     gradientText: {
@@ -268,26 +287,27 @@ const Home = () => {
     },
 
     sectionDescription: {
-      fontSize: '0.9rem', // Smaller
-      lineHeight: 1.4,
-      color: 'rgba(255, 255, 255, 0.7)',
-      maxWidth: '400px',
+      fontSize: '1.1rem', // Increased size
+      lineHeight: 1.5,
+      color: 'rgba(255, 255, 255, 0.8)',
+      maxWidth: '500px',
       margin: '0 auto'
     },
 
-    // Perfect Category Cards - Compact
+    // Enhanced Category Cards
     categoryCard: {
-      background: 'rgba(255, 255, 255, 0.06)',
-      backdropFilter: 'blur(12px) saturate(180%)',
-      border: '1px solid rgba(255, 255, 255, 0.12)',
-      borderRadius: '10px',
+      background: 'rgba(255, 255, 255, 0.08)', // More visible
+      backdropFilter: 'blur(20px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+      border: '1px solid rgba(255, 255, 255, 0.15)', // More visible border
+      borderRadius: '12px',
       overflow: 'hidden',
-      transition: 'all 0.2s ease',
+      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
       cursor: 'pointer',
       textDecoration: 'none',
       color: 'inherit',
       height: '100%',
-      boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
+      boxShadow: '0 12px 40px rgba(0, 0, 0, 0.15)', // Enhanced shadow
       position: 'relative'
     },
 
@@ -296,12 +316,12 @@ const Home = () => {
       top: 0,
       left: 0,
       right: 0,
-      height: '2px', // Thinner
+      height: '3px',
       background: gradient
     }),
 
     categoryBody: {
-      padding: '20px', // Smaller padding
+      padding: '28px', // Increased padding
       height: '100%',
       display: 'flex',
       flexDirection: 'column'
@@ -311,108 +331,116 @@ const Home = () => {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginBottom: '12px' // Smaller
+      marginBottom: '16px'
     },
 
     categoryIcon: {
-      fontSize: '1.8rem', // Smaller
-      transition: 'transform 0.2s ease'
+      fontSize: '2.2rem', // Increased size
+      transition: 'transform 0.3s ease',
+      filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2))'
     },
 
     categoryCount: {
-      background: 'rgba(59, 130, 246, 0.1)',
+      background: 'rgba(59, 130, 246, 0.15)',
+      backdropFilter: 'blur(8px)',
       color: '#60a5fa',
-      padding: '2px 6px', // Smaller
-      borderRadius: '6px',
-      fontSize: '0.65rem', // Smaller
-      fontWeight: 700,
+      padding: '4px 10px', // Increased padding
+      borderRadius: '8px',
+      fontSize: '0.7rem',
+      fontWeight: 800,
       textTransform: 'uppercase',
-      border: '1px solid rgba(59, 130, 246, 0.2)'
+      border: '1px solid rgba(59, 130, 246, 0.25)',
+      boxShadow: '0 4px 12px rgba(59, 130, 246, 0.2)'
     },
 
     categoryTitle: {
-      fontSize: '1rem', // Smaller
-      fontWeight: 700,
-      marginBottom: '6px', // Smaller
-      color: 'white'
+      fontSize: '1.2rem', // Increased size
+      fontWeight: 800,
+      marginBottom: '8px',
+      color: 'white',
+      textShadow: '0 2px 8px rgba(0, 0, 0, 0.3)'
     },
 
     categoryDescription: {
-      color: 'rgba(255, 255, 255, 0.7)',
-      lineHeight: 1.3,
-      fontSize: '0.8rem', // Smaller
-      marginBottom: '12px', // Smaller
+      color: 'rgba(255, 255, 255, 0.75)',
+      lineHeight: 1.4,
+      fontSize: '0.95rem', // Increased size
+      marginBottom: '16px',
       flexGrow: 1
     },
 
     categoryArrow: {
       color: 'rgba(255, 255, 255, 0.5)',
-      transition: 'all 0.2s ease'
+      transition: 'all 0.3s ease'
     },
 
-    // Featured Properties - Compact
+    // Enhanced Featured Properties
     featuredSection: {
-      padding: '60px 0',
+      padding: '80px 0',
       background: 'rgba(255, 255, 255, 0.01)'
     },
 
-    // Compact Loading
+    // Enhanced Loading Container
     loadingContainer: {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      padding: '40px', // Smaller
-      background: 'rgba(255, 255, 255, 0.05)',
-      backdropFilter: 'blur(12px)',
-      borderRadius: '12px',
+      padding: '60px', // Increased padding
+      background: 'rgba(255, 255, 255, 0.08)', // More visible
+      backdropFilter: 'blur(20px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+      borderRadius: '16px',
       margin: '0 20px',
-      border: '1px solid rgba(255, 255, 255, 0.1)'
+      border: '1px solid rgba(255, 255, 255, 0.15)',
+      boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15)'
     },
 
     loadingSpinner: {
-      width: '32px', // Smaller
-      height: '32px',
-      border: '2px solid rgba(255, 255, 255, 0.2)',
-      borderTop: '2px solid #3b82f6',
+      width: '40px', // Increased size
+      height: '40px',
+      border: '3px solid rgba(255, 255, 255, 0.2)',
+      borderTop: '3px solid #3b82f6',
       borderRadius: '50%',
       animation: 'spin 1s linear infinite',
-      marginBottom: '16px'
+      marginBottom: '20px'
     },
 
     loadingText: {
       color: 'white',
-      fontSize: '0.9rem',
-      fontWeight: 500
+      fontSize: '1rem', // Increased size
+      fontWeight: 600
     },
 
-    // Compact Explore Button
+    // Enhanced Explore Button
     exploreButton: {
       display: 'inline-flex',
       alignItems: 'center',
-      gap: '8px',
-      padding: '12px 24px',
-      background: 'rgba(59, 130, 246, 0.1)',
-      backdropFilter: 'blur(12px)',
-      border: '1px solid rgba(59, 130, 246, 0.2)',
-      borderRadius: '6px',
+      gap: '12px',
+      padding: '16px 32px', // Increased padding
+      background: 'rgba(59, 130, 246, 0.15)',
+      backdropFilter: 'blur(16px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+      border: '1px solid rgba(59, 130, 246, 0.3)',
+      borderRadius: '8px',
       color: '#60a5fa',
-      fontSize: '0.9rem',
-      fontWeight: 600,
+      fontSize: '1rem', // Increased size
+      fontWeight: 700,
       textDecoration: 'none',
-      transition: 'all 0.2s ease',
-      userSelect: 'none'
+      transition: 'all 0.3s ease',
+      userSelect: 'none',
+      boxShadow: '0 12px 40px rgba(59, 130, 246, 0.2)'
     }
   };
 
-  // Professional Animations
+  // Enhanced Animations
   useEffect(() => {
     const styleSheet = document.createElement("style");
     styleSheet.innerText = `
       @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
       
       @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.7; transform: scale(1.1); }
       }
       
       @keyframes spin {
@@ -427,12 +455,13 @@ const Home = () => {
         user-select: none;
       }
       
-      /* Responsive Grid */
+      /* Enhanced Responsive Grid */
       @media (max-width: 768px) {
         .hero-grid {
           grid-template-columns: 1fr !important;
           gap: 40px !important;
           text-align: center;
+          padding: 0 20px !important;
         }
       }
     `;
@@ -457,61 +486,80 @@ const Home = () => {
     }
   };
 
-  // Perfect Hover Effects - Subtle
+  // Enhanced Hover Effects
   const handleButtonHover = (e, isEntering, type = 'primary') => {
     if (isEntering) {
       if (type === 'primary') {
         e.currentTarget.style.background = '#2563eb';
-        e.currentTarget.style.transform = 'translateY(-1px)';
+        e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
+        e.currentTarget.style.boxShadow = '0 16px 40px rgba(59, 130, 246, 0.4)';
       } else {
-        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
-        e.currentTarget.style.transform = 'translateY(-1px)';
+        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
+        e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
+        e.currentTarget.style.boxShadow = '0 16px 40px rgba(0, 0, 0, 0.3)';
       }
     } else {
       if (type === 'primary') {
         e.currentTarget.style.background = '#3b82f6';
+        e.currentTarget.style.boxShadow = '0 8px 25px rgba(59, 130, 246, 0.3)';
       } else {
-        e.currentTarget.style.background = 'transparent';
+        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
+        e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.2)';
       }
-      e.currentTarget.style.transform = 'translateY(0)';
+      e.currentTarget.style.transform = 'translateY(0) scale(1)';
     }
   };
 
   const handleCategoryHover = (e, isEntering) => {
+    const icon = e.currentTarget.querySelector('[data-icon]');
+    const arrow = e.currentTarget.querySelector('[data-arrow]');
+    
     if (isEntering) {
-      e.currentTarget.style.transform = 'translateY(-2px)';
-      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
+      e.currentTarget.style.transform = 'translateY(-4px) scale(1.02)';
+      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)';
+      e.currentTarget.style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.2)';
+      if (icon) icon.style.transform = 'scale(1.1) rotate(5deg)';
+      if (arrow) {
+        arrow.style.color = '#60a5fa';
+        arrow.style.transform = 'translateX(6px)';
+      }
     } else {
-      e.currentTarget.style.transform = 'translateY(0)';
-      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)';
+      e.currentTarget.style.transform = 'translateY(0) scale(1)';
+      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
+      e.currentTarget.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.15)';
+      if (icon) icon.style.transform = 'scale(1) rotate(0deg)';
+      if (arrow) {
+        arrow.style.color = 'rgba(255, 255, 255, 0.5)';
+        arrow.style.transform = 'translateX(0)';
+      }
     }
   };
 
   return (
     <div style={styles.appContainer}>
-      {/* Perfect Hero Section - Company Grade */}
+      {/* Enhanced Hero Section */}
       <section style={styles.heroSection}>
         <div style={styles.heroGrid} className="hero-grid">
-          {/* Left Content - Perfect Alignment */}
+          {/* Enhanced Left Content */}
           <div style={styles.heroLeft}>
-            {/* Compact Badge */}
+            {/* Enhanced Badge */}
             <div style={styles.premiumBadge}>
               <div style={styles.badgeIcon}></div>
               <span>Made in India • Premium Quality</span>
             </div>
 
-            {/* Perfect Typography */}
+            {/* Enhanced Typography */}
             <h1 style={styles.heroTitle}>
               <span style={styles.titleLine1}>Property Risks.</span>
               <span style={styles.titleLine2}>Perfect Solutions.</span>
             </h1>
 
-            {/* Compact Description */}
+            {/* Enhanced Description */}
             <p style={styles.heroDescription}>
               Your property search faces <strong>hidden challenges every day</strong>. From market fluctuations to finding the right match, give yourself <span style={styles.highlightText}>complete peace of mind</span>.
             </p>
 
-            {/* Compact Buttons */}
+            {/* Enhanced Buttons */}
             <div style={styles.buttonContainer}>
               <Button
                 as={Link}
@@ -536,7 +584,7 @@ const Home = () => {
               </Button>
             </div>
 
-            {/* Compact Trust Indicators */}
+            {/* Enhanced Trust Indicators */}
             <div style={styles.trustContainer}>
               <div style={styles.starsContainer}>
                 <div style={styles.stars}>⭐⭐⭐⭐⭐</div>
@@ -549,7 +597,7 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Right Image - Perfect Alignment */}
+          {/* Enhanced Right Image */}
           <div style={styles.heroRight}>
             <div style={styles.propertyContainer}>
               <img 
@@ -565,7 +613,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Compact Categories Section */}
+      {/* Enhanced Categories Section */}
       <section style={styles.categoriesSection}>
         <Container>
           <div style={styles.sectionHeader}>
@@ -578,13 +626,13 @@ const Home = () => {
             </p>
           </div>
 
-          <Row className="g-3">
+          <Row className="g-4">
             {[
               {
                 category: 'Property Rentals',
                 icon: '🏠',
                 title: 'Residential',
-                desc: 'Premium apartments, luxury flats',
+                desc: 'Premium apartments, luxury flats, family homes',
                 count: '2.5K+',
                 gradient: 'linear-gradient(135deg, #3b82f6 0%, #1e40af 100%)'
               },
@@ -592,7 +640,7 @@ const Home = () => {
                 category: 'Commercial',
                 icon: '🏢',
                 title: 'Commercial',
-                desc: 'Modern offices, retail spaces',
+                desc: 'Modern offices, retail spaces, warehouses',
                 count: '1.8K+',
                 gradient: 'linear-gradient(135deg, #10b981 0%, #047857 100%)'
               },
@@ -608,7 +656,7 @@ const Home = () => {
                 category: 'Parking',
                 icon: '🚗',
                 title: 'Parking',
-                desc: 'Secure parking spaces',
+                desc: 'Secure parking spaces, covered garages',
                 count: '3.2K+',
                 gradient: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)'
               },
@@ -616,7 +664,7 @@ const Home = () => {
                 category: 'Event',
                 icon: '🎉',
                 title: 'Event Venues',
-                desc: 'Banquet halls, event gardens',
+                desc: 'Banquet halls, event gardens, conference halls',
                 count: '420+',
                 gradient: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)'
               },
@@ -624,7 +672,7 @@ const Home = () => {
                 category: 'manage-properties',
                 icon: '⚙️',
                 title: 'Management',
-                desc: 'Professional management tools',
+                desc: 'Professional management tools and services',
                 count: 'Tools',
                 gradient: 'linear-gradient(135deg, #6b7280 0%, #4b5563 100%)',
                 isManage: true
@@ -641,13 +689,13 @@ const Home = () => {
                   <div style={styles.categoryGradientTop(item.gradient)}></div>
                   <Card.Body style={styles.categoryBody}>
                     <div style={styles.categoryHeader}>
-                      <span style={styles.categoryIcon}>{item.icon}</span>
+                      <span style={styles.categoryIcon} data-icon>{item.icon}</span>
                       <div style={styles.categoryCount}>{item.count}</div>
                     </div>
                     <h4 style={styles.categoryTitle}>{item.title}</h4>
                     <p style={styles.categoryDescription}>{item.desc}</p>
-                    <div style={styles.categoryArrow}>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <div style={styles.categoryArrow} data-arrow>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/>
                       </svg>
                     </div>
@@ -659,7 +707,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* Compact Featured Properties */}
+      {/* Enhanced Featured Properties */}
       <section style={styles.featuredSection}>
         <Container>
           <div style={styles.sectionHeader}>
@@ -668,23 +716,23 @@ const Home = () => {
               Premium <span style={styles.gradientText}>Collection</span>
             </h2>
             <p style={styles.sectionDescription}>
-              Handpicked exceptional properties
+              Handpicked exceptional properties curated by our expert team
             </p>
           </div>
 
           {loading ? (
             <div style={styles.loadingContainer}>
               <div style={styles.loadingSpinner}></div>
-              <p style={styles.loadingText}>Loading properties...</p>
+              <p style={styles.loadingText}>Loading premium properties...</p>
             </div>
           ) : error ? (
-            <div style={{...styles.loadingContainer, background: 'rgba(239, 68, 68, 0.05)'}}>
-              <h4 style={{color: 'white', marginBottom: '8px', fontSize: '1rem'}}>Unable to Load</h4>
-              <p style={{color: 'rgba(255, 255, 255, 0.7)', margin: 0, fontSize: '0.85rem'}}>{error}</p>
+            <div style={{...styles.loadingContainer, background: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.3)'}}>
+              <h4 style={{color: 'white', marginBottom: '12px', fontSize: '1.1rem'}}>Unable to Load Properties</h4>
+              <p style={{color: 'rgba(255, 255, 255, 0.8)', margin: 0, fontSize: '0.9rem'}}>{error}</p>
             </div>
           ) : (
             <>
-              <Row className="g-4 mb-4">
+              <Row className="g-4 mb-5">
                 {featuredProperties.slice(0, 6).map((property, index) => (
                   <Col key={property._id} lg={4} md={6}>
                     <PropertyCard property={property} showOwner={true} />
@@ -698,16 +746,18 @@ const Home = () => {
                   to="/find-property"
                   style={styles.exploreButton}
                   onMouseEnter={(e) => {
-                    e.target.style.background = 'rgba(59, 130, 246, 0.15)';
-                    e.target.style.transform = 'translateY(-1px)';
+                    e.target.style.background = 'rgba(59, 130, 246, 0.25)';
+                    e.target.style.transform = 'translateY(-2px) scale(1.02)';
+                    e.target.style.boxShadow = '0 20px 60px rgba(59, 130, 246, 0.3)';
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.background = 'rgba(59, 130, 246, 0.1)';
-                    e.target.style.transform = 'translateY(0)';
+                    e.target.style.background = 'rgba(59, 130, 246, 0.15)';
+                    e.target.style.transform = 'translateY(0) scale(1)';
+                    e.target.style.boxShadow = '0 12px 40px rgba(59, 130, 246, 0.2)';
                   }}
                 >
                   <span>View All Properties</span>
-                  <span style={{ fontSize: '0.8rem', opacity: 0.8 }}>({featuredProperties.length}+ available)</span>
+                  <span style={{ fontSize: '0.9rem', opacity: 0.8 }}>({featuredProperties.length}+ available)</span>
                 </Button>
               </div>
             </>
