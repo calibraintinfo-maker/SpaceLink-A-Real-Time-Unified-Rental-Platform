@@ -10,137 +10,191 @@ const Home = () => {
   const [error, setError] = useState('');
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  // Professional Clean Styles - Perfect Proportions
+  // Professional Glassmorphism Styles
   const styles = {
-    // Global Container
+    // Professional Background System
     appContainer: {
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
+      background: `
+        linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%),
+        radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.1) 0%, transparent 50%)
+      `,
       minHeight: '100vh',
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+      position: 'relative',
       overflow: 'hidden'
     },
 
-    // Subtle Background Effects
-    backgroundSystem: {
+    // Subtle Mesh Background
+    backgroundMesh: {
       position: 'fixed',
       top: 0,
       left: 0,
       width: '100%',
       height: '100%',
-      zIndex: -1,
-      background: 'radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%), radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 50%)'
+      backgroundImage: `
+        radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.04) 0%, transparent 40%)
+      `,
+      zIndex: -1
     },
 
-    // Hero Section - Compact & Professional
+    // Grid Overlay for Professional Look
+    gridOverlay: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      backgroundImage: `
+        linear-gradient(rgba(148, 163, 184, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 163, 184, 0.03) 1px, transparent 1px)
+      `,
+      backgroundSize: '40px 40px',
+      zIndex: -1
+    },
+
+    // Hero Section - Professional
     heroSection: {
-      padding: '60px 0 40px 0',
+      padding: '80px 0 60px 0',
       position: 'relative',
       zIndex: 10
     },
 
-    // Main Glass Container - Refined
-    glassContainer: {
-      background: 'rgba(255, 255, 255, 0.1)',
-      backdropFilter: 'blur(20px) saturate(180%)',
-      WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-      border: '1px solid rgba(255, 255, 255, 0.2)',
-      borderRadius: '20px',
-      padding: '40px',
+    // Ultra-Professional Glass Container
+    glassHeroContainer: {
+      background: 'rgba(255, 255, 255, 0.05)',
+      backdropFilter: 'blur(24px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+      border: '1px solid rgba(255, 255, 255, 0.1)',
+      borderRadius: '24px',
+      padding: '48px 40px',
       margin: '0 auto',
-      maxWidth: '900px',
-      boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
-      textAlign: 'center'
+      maxWidth: '800px',
+      boxShadow: `
+        0 32px 64px rgba(0, 0, 0, 0.12),
+        0 16px 32px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.05)
+      `,
+      textAlign: 'center',
+      position: 'relative',
+      overflow: 'hidden'
     },
 
-    // Compact Premium Badge
+    // Glass Shimmer Effect
+    glassShimmer: {
+      position: 'absolute',
+      top: 0,
+      left: '-100%',
+      width: '100%',
+      height: '100%',
+      background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent)',
+      animation: 'shimmerMove 3s infinite'
+    },
+
+    // Professional Badge
     premiumBadge: {
       display: 'inline-flex',
       alignItems: 'center',
       gap: '8px',
-      padding: '8px 16px',
-      background: 'rgba(255, 255, 255, 0.15)',
-      backdropFilter: 'blur(10px)',
-      border: '1px solid rgba(255, 255, 255, 0.25)',
-      borderRadius: '25px',
-      color: 'white',
-      fontSize: '0.85rem',
+      padding: '8px 20px',
+      background: 'rgba(255, 255, 255, 0.1)',
+      backdropFilter: 'blur(16px) saturate(180%)',
+      border: '1px solid rgba(255, 255, 255, 0.2)',
+      borderRadius: '30px',
+      color: 'rgba(255, 255, 255, 0.95)',
+      fontSize: '0.875rem',
       fontWeight: 600,
-      marginBottom: '24px'
+      marginBottom: '32px',
+      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
     },
 
-    // Professional Typography - Perfect Size
+    // Perfect Typography
     heroTitle: {
-      fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
-      fontWeight: 700,
-      lineHeight: 1.2,
-      marginBottom: '16px',
+      fontSize: 'clamp(2.5rem, 5vw, 3.25rem)',
+      fontWeight: 800,
+      lineHeight: 1.1,
+      marginBottom: '20px',
       color: 'white',
-      textShadow: '0 2px 10px rgba(0, 0, 0, 0.2)'
+      textShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+      letterSpacing: '-0.025em'
     },
 
-    // Clean Gradient Text
+    // Professional Gradient Text
     gradientText: {
-      background: 'linear-gradient(45deg, #ffd93d, #ff6b6b, #4ecdc4)',
+      background: 'linear-gradient(135deg, #60a5fa, #a78bfa, #34d399)',
       backgroundSize: '200% 200%',
       WebkitBackgroundClip: 'text',
       WebkitTextFillColor: 'transparent',
       backgroundClip: 'text',
-      animation: 'gradientShift 3s ease-in-out infinite'
+      animation: 'gradientShift 4s ease-in-out infinite'
     },
 
-    // Refined Description
+    // Clean Description
     heroDescription: {
-      fontSize: '1.1rem',
+      fontSize: '1.125rem',
       lineHeight: 1.6,
-      color: 'rgba(255, 255, 255, 0.9)',
-      marginBottom: '32px',
+      color: 'rgba(255, 255, 255, 0.8)',
+      marginBottom: '40px',
       maxWidth: '600px',
-      margin: '0 auto 32px auto'
+      margin: '0 auto 40px auto',
+      fontWeight: 400
     },
 
-    // Professional Buttons - Compact
+    // Professional Button Container
     buttonContainer: {
       display: 'flex',
       gap: '16px',
       justifyContent: 'center',
       flexWrap: 'wrap',
-      marginBottom: '32px'
+      marginBottom: '40px'
     },
 
-    primaryButton: {
+    // Glass Button - Primary
+    glassPrimaryButton: {
       display: 'inline-flex',
       alignItems: 'center',
       gap: '8px',
-      padding: '12px 24px',
-      background: 'rgba(255, 255, 255, 0.2)',
-      backdropFilter: 'blur(10px)',
-      border: '1px solid rgba(255, 255, 255, 0.3)',
-      borderRadius: '25px',
+      padding: '14px 28px',
+      background: 'rgba(255, 255, 255, 0.15)',
+      backdropFilter: 'blur(16px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+      border: '1px solid rgba(255, 255, 255, 0.25)',
+      borderRadius: '30px',
       color: 'white',
-      fontSize: '0.95rem',
+      fontSize: '1rem',
       fontWeight: 600,
       textDecoration: 'none',
-      transition: 'all 0.3s ease',
-      cursor: 'pointer'
+      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      cursor: 'pointer',
+      boxShadow: '0 12px 24px rgba(0, 0, 0, 0.1)',
+      position: 'relative',
+      overflow: 'hidden'
     },
 
-    secondaryButton: {
+    // Glass Button - Secondary
+    glassSecondaryButton: {
       display: 'inline-flex',
       alignItems: 'center',
       gap: '8px',
-      padding: '12px 24px',
-      background: 'transparent',
-      border: '1px solid rgba(255, 255, 255, 0.4)',
-      borderRadius: '25px',
-      color: 'white',
-      fontSize: '0.95rem',
+      padding: '14px 28px',
+      background: 'rgba(255, 255, 255, 0.05)',
+      backdropFilter: 'blur(16px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+      border: '1px solid rgba(255, 255, 255, 0.2)',
+      borderRadius: '30px',
+      color: 'rgba(255, 255, 255, 0.9)',
+      fontSize: '1rem',
       fontWeight: 600,
       textDecoration: 'none',
-      transition: 'all 0.3s ease',
-      cursor: 'pointer'
+      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      cursor: 'pointer',
+      boxShadow: '0 8px 16px rgba(0, 0, 0, 0.08)'
     },
 
-    // Compact Trust Metrics
+    // Trust Metrics Glass
     trustMetrics: {
       display: 'flex',
       justifyContent: 'center',
@@ -149,16 +203,23 @@ const Home = () => {
     },
 
     trustItem: {
+      background: 'rgba(255, 255, 255, 0.05)',
+      backdropFilter: 'blur(16px) saturate(180%)',
+      border: '1px solid rgba(255, 255, 255, 0.1)',
+      borderRadius: '16px',
+      padding: '20px 16px',
       textAlign: 'center',
-      color: 'white'
+      color: 'white',
+      minWidth: '100px',
+      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
     },
 
     trustNumber: {
-      fontSize: '1.5rem',
-      fontWeight: 700,
+      fontSize: '1.75rem',
+      fontWeight: 800,
       display: 'block',
       marginBottom: '4px',
-      background: 'linear-gradient(135deg, #ffd700, #ffb347)',
+      background: 'linear-gradient(135deg, #60a5fa, #a78bfa)',
       WebkitBackgroundClip: 'text',
       WebkitTextFillColor: 'transparent',
       backgroundClip: 'text'
@@ -166,75 +227,88 @@ const Home = () => {
 
     trustLabel: {
       fontSize: '0.8rem',
-      opacity: 0.85,
+      opacity: 0.8,
       textTransform: 'uppercase',
-      letterSpacing: '0.5px'
+      letterSpacing: '0.5px',
+      fontWeight: 500
     },
 
-    // Features Section - Clean & Compact
+    // Features Section Glass
     featuresSection: {
-      padding: '60px 0',
-      background: 'rgba(255, 255, 255, 0.02)'
+      padding: '80px 0',
+      position: 'relative'
     },
 
     // Professional Bento Grid
     bentoGrid: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-      gap: '20px',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+      gap: '24px',
       maxWidth: '1200px',
       margin: '0 auto',
-      padding: '0 20px'
+      padding: '0 24px'
     },
 
-    // Clean Feature Card
-    featureCard: (isLarge = false) => ({
-      background: 'rgba(255, 255, 255, 0.12)',
+    // Glass Feature Card
+    glassFeatureCard: (isLarge = false) => ({
+      background: 'rgba(255, 255, 255, 0.06)',
       backdropFilter: 'blur(20px) saturate(180%)',
-      border: '1px solid rgba(255, 255, 255, 0.2)',
-      borderRadius: '16px',
-      padding: isLarge ? '32px' : '24px',
-      transition: 'all 0.3s ease',
+      WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+      border: '1px solid rgba(255, 255, 255, 0.12)',
+      borderRadius: '20px',
+      padding: isLarge ? '32px' : '28px',
+      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
       cursor: 'pointer',
       gridColumn: isLarge ? 'span 2' : 'span 1',
-      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.1)'
+      boxShadow: '0 16px 40px rgba(0, 0, 0, 0.1)',
+      position: 'relative',
+      overflow: 'hidden'
     }),
 
     featureIcon: {
-      fontSize: '2rem',
-      marginBottom: '16px',
-      display: 'block'
+      fontSize: '2.5rem',
+      marginBottom: '20px',
+      display: 'block',
+      filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2))'
     },
 
     featureTitle: {
-      fontSize: '1.25rem',
+      fontSize: '1.375rem',
       fontWeight: 700,
       marginBottom: '12px',
-      color: 'white'
+      color: 'white',
+      textShadow: '0 2px 8px rgba(0, 0, 0, 0.2)'
     },
 
     featureDescription: {
-      fontSize: '0.95rem',
+      fontSize: '1rem',
       lineHeight: 1.5,
-      color: 'rgba(255, 255, 255, 0.8)',
-      marginBottom: '16px'
+      color: 'rgba(255, 255, 255, 0.75)',
+      marginBottom: '20px'
     },
 
-    // Compact Metrics
+    // Feature Metrics Glass
     featureMetrics: {
       display: 'flex',
       gap: '24px'
     },
 
     metricItem: {
-      textAlign: 'center'
+      background: 'rgba(255, 255, 255, 0.08)',
+      backdropFilter: 'blur(8px)',
+      borderRadius: '12px',
+      padding: '16px',
+      textAlign: 'center',
+      flex: 1,
+      border: '1px solid rgba(255, 255, 255, 0.1)'
     },
 
     metricValue: {
       fontSize: '1.5rem',
-      fontWeight: 700,
+      fontWeight: 800,
       color: 'white',
-      display: 'block'
+      display: 'block',
+      marginBottom: '4px'
     },
 
     metricLabel: {
@@ -244,66 +318,73 @@ const Home = () => {
       letterSpacing: '0.5px'
     },
 
-    // Categories Section - Professional
+    // Categories Section
     categoriesSection: {
-      padding: '60px 0'
+      padding: '80px 0',
+      position: 'relative'
     },
 
-    // Clean Section Header
-    sectionHeader: {
+    // Glass Section Header
+    glassSectionHeader: {
       textAlign: 'center',
-      marginBottom: '40px',
-      background: 'rgba(255, 255, 255, 0.08)',
-      backdropFilter: 'blur(20px)',
-      border: '1px solid rgba(255, 255, 255, 0.15)',
-      borderRadius: '16px',
-      padding: '32px',
-      maxWidth: '800px',
-      margin: '0 auto 40px auto'
+      marginBottom: '48px',
+      background: 'rgba(255, 255, 255, 0.04)',
+      backdropFilter: 'blur(20px) saturate(180%)',
+      border: '1px solid rgba(255, 255, 255, 0.08)',
+      borderRadius: '20px',
+      padding: '40px',
+      maxWidth: '700px',
+      margin: '0 auto 48px auto',
+      boxShadow: '0 16px 40px rgba(0, 0, 0, 0.08)'
     },
 
     sectionBadge: {
       display: 'inline-block',
       padding: '6px 16px',
-      background: 'rgba(255, 255, 255, 0.15)',
+      background: 'rgba(255, 255, 255, 0.1)',
+      backdropFilter: 'blur(8px)',
       borderRadius: '20px',
-      color: 'white',
+      color: 'rgba(255, 255, 255, 0.9)',
       fontSize: '0.8rem',
       fontWeight: 600,
       textTransform: 'uppercase',
       letterSpacing: '0.5px',
-      marginBottom: '16px'
+      marginBottom: '16px',
+      border: '1px solid rgba(255, 255, 255, 0.15)'
     },
 
     sectionTitle: {
-      fontSize: 'clamp(2rem, 4vw, 2.5rem)',
-      fontWeight: 700,
-      marginBottom: '12px',
+      fontSize: 'clamp(2rem, 4vw, 2.75rem)',
+      fontWeight: 800,
+      marginBottom: '16px',
       color: 'white',
-      lineHeight: 1.2
+      lineHeight: 1.2,
+      textShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
     },
 
     sectionDescription: {
-      fontSize: '1rem',
+      fontSize: '1.125rem',
       lineHeight: 1.5,
-      color: 'rgba(255, 255, 255, 0.85)',
+      color: 'rgba(255, 255, 255, 0.8)',
       maxWidth: '500px',
       margin: '0 auto'
     },
 
-    // Professional Category Cards
-    categoryCard: {
-      background: 'rgba(255, 255, 255, 0.1)',
-      backdropFilter: 'blur(15px) saturate(180%)',
-      border: '1px solid rgba(255, 255, 255, 0.2)',
-      borderRadius: '12px',
+    // Glass Category Cards
+    glassCategoryCard: {
+      background: 'rgba(255, 255, 255, 0.06)',
+      backdropFilter: 'blur(20px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+      border: '1px solid rgba(255, 255, 255, 0.12)',
+      borderRadius: '16px',
       overflow: 'hidden',
-      transition: 'all 0.3s ease',
+      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
       cursor: 'pointer',
       textDecoration: 'none',
       color: 'inherit',
       height: '100%',
-      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.08)'
+      boxShadow: '0 12px 32px rgba(0, 0, 0, 0.1)',
+      position: 'relative'
     },
 
     categoryGradientTop: (gradient) => ({
@@ -316,7 +397,7 @@ const Home = () => {
     }),
 
     categoryBody: {
-      padding: '20px',
+      padding: '24px',
       height: '100%',
       display: 'flex',
       flexDirection: 'column',
@@ -331,105 +412,105 @@ const Home = () => {
     },
 
     categoryIcon: {
-      fontSize: '2rem',
-      transition: 'transform 0.3s ease'
+      fontSize: '2.25rem',
+      transition: 'transform 0.3s ease',
+      filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2))'
     },
 
     categoryCount: {
-      background: 'rgba(255, 255, 255, 0.15)',
-      color: 'white',
-      padding: '4px 8px',
-      borderRadius: '8px',
+      background: 'rgba(255, 255, 255, 0.12)',
+      backdropFilter: 'blur(8px)',
+      color: 'rgba(255, 255, 255, 0.9)',
+      padding: '4px 10px',
+      borderRadius: '10px',
       fontSize: '0.7rem',
-      fontWeight: 600,
-      textTransform: 'uppercase'
+      fontWeight: 700,
+      textTransform: 'uppercase',
+      border: '1px solid rgba(255, 255, 255, 0.15)'
     },
 
     categoryTitle: {
-      fontSize: '1.1rem',
+      fontSize: '1.25rem',
       fontWeight: 700,
       marginBottom: '8px',
-      color: 'white'
+      color: 'white',
+      textShadow: '0 2px 8px rgba(0, 0, 0, 0.2)'
     },
 
     categoryDescription: {
-      color: 'rgba(255, 255, 255, 0.75)',
+      color: 'rgba(255, 255, 255, 0.7)',
       lineHeight: 1.4,
-      fontSize: '0.9rem',
+      fontSize: '0.95rem',
       flexGrow: 1,
-      marginBottom: '12px'
+      marginBottom: '16px'
     },
 
     categoryArrow: {
-      color: 'rgba(255, 255, 255, 0.5)',
+      color: 'rgba(255, 255, 255, 0.4)',
       transition: 'all 0.3s ease',
       alignSelf: 'flex-start'
     },
 
-    // Loading States - Clean
-    loadingContainer: {
+    // Loading & Error States - Glass
+    glassLoadingContainer: {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      padding: '60px 20px',
-      background: 'rgba(255, 255, 255, 0.08)',
-      backdropFilter: 'blur(20px)',
-      borderRadius: '16px',
-      margin: '0 20px'
+      padding: '60px 40px',
+      background: 'rgba(255, 255, 255, 0.05)',
+      backdropFilter: 'blur(20px) saturate(180%)',
+      borderRadius: '20px',
+      margin: '0 24px',
+      border: '1px solid rgba(255, 255, 255, 0.1)',
+      boxShadow: '0 16px 40px rgba(0, 0, 0, 0.1)'
     },
 
     loadingSpinner: {
       width: '40px',
       height: '40px',
-      border: '2px solid rgba(255, 255, 255, 0.3)',
-      borderTop: '2px solid white',
+      border: '2px solid rgba(255, 255, 255, 0.2)',
+      borderTop: '2px solid rgba(255, 255, 255, 0.8)',
       borderRadius: '50%',
       animation: 'spin 1s linear infinite',
-      marginBottom: '16px'
+      marginBottom: '20px'
     },
 
     loadingText: {
-      color: 'white',
+      color: 'rgba(255, 255, 255, 0.9)',
       fontSize: '1rem',
       fontWeight: 500
     },
 
-    // Error States - Clean
-    errorContainer: {
-      background: 'rgba(220, 38, 38, 0.1)',
-      backdropFilter: 'blur(15px)',
-      border: '1px solid rgba(220, 38, 38, 0.3)',
-      borderRadius: '12px',
-      padding: '24px',
-      textAlign: 'center',
-      margin: '0 20px',
-      color: 'white'
-    },
-
-    // Explore Button - Professional
-    exploreButton: {
+    // Glass Explore Button
+    glassExploreButton: {
       display: 'inline-flex',
       alignItems: 'center',
-      gap: '8px',
-      padding: '14px 28px',
-      background: 'rgba(255, 255, 255, 0.15)',
-      backdropFilter: 'blur(15px)',
-      border: '1px solid rgba(255, 255, 255, 0.25)',
-      borderRadius: '25px',
+      gap: '10px',
+      padding: '16px 32px',
+      background: 'rgba(255, 255, 255, 0.1)',
+      backdropFilter: 'blur(20px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+      border: '1px solid rgba(255, 255, 255, 0.2)',
+      borderRadius: '30px',
       color: 'white',
-      fontSize: '1rem',
+      fontSize: '1.05rem',
       fontWeight: 600,
       textDecoration: 'none',
-      transition: 'all 0.3s ease',
-      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.1)'
+      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+      boxShadow: '0 16px 40px rgba(0, 0, 0, 0.1)'
     }
   };
 
-  // Clean Animations
+  // Professional Animations
   useEffect(() => {
     const styleSheet = document.createElement("style");
     styleSheet.innerText = `
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+      
+      @keyframes shimmerMove {
+        0% { left: -100%; }
+        50%, 100% { left: 200%; }
+      }
       
       @keyframes gradientShift {
         0%, 100% { background-position: 0% 50%; }
@@ -441,8 +522,8 @@ const Home = () => {
         100% { transform: rotate(360deg); }
       }
       
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(24px); }
         to { opacity: 1; transform: translateY(0); }
       }
     `;
@@ -478,71 +559,74 @@ const Home = () => {
   };
 
   // Professional Hover Effects
-  const handleButtonHover = (e, isEntering, isPrimary = true) => {
+  const handleGlassHover = (e, isEntering, type = 'primary') => {
     if (isEntering) {
-      e.currentTarget.style.transform = 'translateY(-2px)';
-      e.currentTarget.style.boxShadow = '0 12px 30px rgba(0, 0, 0, 0.15)';
-      e.currentTarget.style.background = isPrimary 
-        ? 'rgba(255, 255, 255, 0.25)' 
-        : 'rgba(255, 255, 255, 0.1)';
+      e.currentTarget.style.transform = 'translateY(-2px) scale(1.01)';
+      if (type === 'primary') {
+        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+        e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.15)';
+      } else if (type === 'secondary') {
+        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+        e.currentTarget.style.boxShadow = '0 16px 32px rgba(0, 0, 0, 0.12)';
+      } else {
+        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+        e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.15)';
+      }
     } else {
-      e.currentTarget.style.transform = 'translateY(0)';
-      e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.1)';
-      e.currentTarget.style.background = isPrimary 
-        ? 'rgba(255, 255, 255, 0.2)' 
-        : 'transparent';
+      e.currentTarget.style.transform = 'translateY(0) scale(1)';
+      if (type === 'primary') {
+        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
+        e.currentTarget.style.boxShadow = '0 12px 24px rgba(0, 0, 0, 0.1)';
+      } else if (type === 'secondary') {
+        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+        e.currentTarget.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.08)';
+      } else {
+        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)';
+        e.currentTarget.style.boxShadow = '0 16px 40px rgba(0, 0, 0, 0.1)';
+      }
     }
   };
 
-  const handleCardHover = (e, isEntering) => {
+  const handleCategoryHover = (e, isEntering) => {
     const icon = e.currentTarget.querySelector('[data-icon]');
     const arrow = e.currentTarget.querySelector('[data-arrow]');
     
     if (isEntering) {
-      e.currentTarget.style.transform = 'translateY(-4px)';
-      e.currentTarget.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.15)';
-      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
-      if (icon) icon.style.transform = 'scale(1.05)';
+      e.currentTarget.style.transform = 'translateY(-4px) scale(1.01)';
+      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+      e.currentTarget.style.boxShadow = '0 20px 50px rgba(0, 0, 0, 0.15)';
+      if (icon) icon.style.transform = 'scale(1.05) rotate(2deg)';
       if (arrow) {
-        arrow.style.color = 'white';
-        arrow.style.transform = 'translateX(4px)';
+        arrow.style.color = 'rgba(255, 255, 255, 0.8)';
+        arrow.style.transform = 'translateX(6px)';
       }
     } else {
-      e.currentTarget.style.transform = 'translateY(0)';
-      e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.08)';
-      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
-      if (icon) icon.style.transform = 'scale(1)';
+      e.currentTarget.style.transform = 'translateY(0) scale(1)';
+      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)';
+      e.currentTarget.style.boxShadow = '0 12px 32px rgba(0, 0, 0, 0.1)';
+      if (icon) icon.style.transform = 'scale(1) rotate(0deg)';
       if (arrow) {
-        arrow.style.color = 'rgba(255, 255, 255, 0.5)';
+        arrow.style.color = 'rgba(255, 255, 255, 0.4)';
         arrow.style.transform = 'translateX(0)';
       }
     }
   };
 
-  const handleFeatureHover = (e, isEntering) => {
-    if (isEntering) {
-      e.currentTarget.style.transform = 'translateY(-5px)';
-      e.currentTarget.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.15)';
-      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.18)';
-    } else {
-      e.currentTarget.style.transform = 'translateY(0)';
-      e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.1)';
-      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)';
-    }
-  };
-
   return (
     <div style={styles.appContainer}>
-      {/* Subtle Background */}
-      <div style={styles.backgroundSystem}></div>
+      {/* Professional Background System */}
+      <div style={styles.backgroundMesh}></div>
+      <div style={styles.gridOverlay}></div>
 
-      {/* Professional Hero Section */}
+      {/* Ultra-Professional Hero */}
       <section style={styles.heroSection}>
         <Container>
           <Row className="justify-content-center">
             <Col lg={12}>
-              <div style={styles.glassContainer}>
-                {/* Compact Premium Badge */}
+              <div style={styles.glassHeroContainer}>
+                <div style={styles.glassShimmer}></div>
+                
+                {/* Premium Badge */}
                 <div style={styles.premiumBadge}>
                   <span>✨</span>
                   <span>Premium Property Platform</span>
@@ -556,17 +640,17 @@ const Home = () => {
                 {/* Clean Description */}
                 <p style={styles.heroDescription}>
                   Experience the future of property discovery with intelligent matching, 
-                  premium listings, and seamless experiences that redefine luxury living.
+                  premium listings, and seamless experiences that redefine modern living.
                 </p>
 
-                {/* Professional Buttons */}
+                {/* Glass Buttons */}
                 <div style={styles.buttonContainer}>
                   <Button
                     as={Link}
                     to="/find-property"
-                    style={styles.primaryButton}
-                    onMouseEnter={(e) => handleButtonHover(e, true, true)}
-                    onMouseLeave={(e) => handleButtonHover(e, false, true)}
+                    style={styles.glassPrimaryButton}
+                    onMouseEnter={(e) => handleGlassHover(e, true, 'primary')}
+                    onMouseLeave={(e) => handleGlassHover(e, false, 'primary')}
                   >
                     <span>Explore Properties</span>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -577,15 +661,15 @@ const Home = () => {
                   <Button
                     as={Link}
                     to="/add-property"
-                    style={styles.secondaryButton}
-                    onMouseEnter={(e) => handleButtonHover(e, true, false)}
-                    onMouseLeave={(e) => handleButtonHover(e, false, false)}
+                    style={styles.glassSecondaryButton}
+                    onMouseEnter={(e) => handleGlassHover(e, true, 'secondary')}
+                    onMouseLeave={(e) => handleGlassHover(e, false, 'secondary')}
                   >
                     <span>List Property</span>
                   </Button>
                 </div>
 
-                {/* Compact Trust Metrics */}
+                {/* Glass Trust Metrics */}
                 <div style={styles.trustMetrics}>
                   <div style={styles.trustItem}>
                     <span style={styles.trustNumber}>10K+</span>
@@ -606,15 +690,15 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* Clean Features Section */}
+      {/* Glass Features Section */}
       <section style={styles.featuresSection}>
         <Container>
           <div style={styles.bentoGrid}>
-            {/* Large Feature Card */}
+            {/* Large Glass Feature Card */}
             <div
-              style={styles.featureCard(true)}
-              onMouseEnter={(e) => handleFeatureHover(e, true)}
-              onMouseLeave={(e) => handleFeatureHover(e, false)}
+              style={styles.glassFeatureCard(true)}
+              onMouseEnter={(e) => handleGlassHover(e, true, 'card')}
+              onMouseLeave={(e) => handleGlassHover(e, false, 'card')}
             >
               <span style={styles.featureIcon}>🎯</span>
               <h3 style={styles.featureTitle}>AI-Powered Smart Matching</h3>
@@ -634,11 +718,11 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Feature Cards */}
+            {/* Glass Feature Cards */}
             <div
-              style={styles.featureCard()}
-              onMouseEnter={(e) => handleFeatureHover(e, true)}
-              onMouseLeave={(e) => handleFeatureHover(e, false)}
+              style={styles.glassFeatureCard()}
+              onMouseEnter={(e) => handleGlassHover(e, true, 'card')}
+              onMouseLeave={(e) => handleGlassHover(e, false, 'card')}
             >
               <span style={styles.featureIcon}>⚡</span>
               <h3 style={styles.featureTitle}>Lightning Fast</h3>
@@ -648,9 +732,9 @@ const Home = () => {
             </div>
 
             <div
-              style={styles.featureCard()}
-              onMouseEnter={(e) => handleFeatureHover(e, true)}
-              onMouseLeave={(e) => handleFeatureHover(e, false)}
+              style={styles.glassFeatureCard()}
+              onMouseEnter={(e) => handleGlassHover(e, true, 'card')}
+              onMouseLeave={(e) => handleGlassHover(e, false, 'card')}
             >
               <span style={styles.featureIcon}>🛡️</span>
               <h3 style={styles.featureTitle}>Secure Platform</h3>
@@ -660,12 +744,12 @@ const Home = () => {
             </div>
 
             <div
-              style={styles.featureCard()}
-              onMouseEnter={(e) => handleFeatureHover(e, true)}
-              onMouseLeave={(e) => handleFeatureHover(e, false)}
+              style={styles.glassFeatureCard()}
+              onMouseEnter={(e) => handleGlassHover(e, true, 'card')}
+              onMouseLeave={(e) => handleGlassHover(e, false, 'card')}
             >
               <span style={styles.featureIcon}>📊</span>
-              <h3 style={styles.featureTitle}>Analytics</h3>
+              <h3 style={styles.featureTitle}>Advanced Analytics</h3>
               <p style={styles.featureDescription}>
                 Comprehensive insights for smarter property decisions.
               </p>
@@ -674,10 +758,10 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* Professional Categories */}
+      {/* Glass Categories Section */}
       <section style={styles.categoriesSection}>
         <Container>
-          <div style={styles.sectionHeader}>
+          <div style={styles.glassSectionHeader}>
             <div style={styles.sectionBadge}>Property Categories</div>
             <h2 style={styles.sectionTitle}>
               Find Your <span style={styles.gradientText}>Perfect Space</span>
@@ -687,7 +771,7 @@ const Home = () => {
             </p>
           </div>
 
-          <Row className="g-3">
+          <Row className="g-4">
             {[
               {
                 category: 'Property Rentals',
@@ -695,7 +779,7 @@ const Home = () => {
                 title: 'Residential',
                 desc: 'Luxury apartments, modern flats, family homes',
                 count: '2.5K+',
-                gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+                gradient: 'linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%)'
               },
               {
                 category: 'Commercial',
@@ -703,7 +787,7 @@ const Home = () => {
                 title: 'Commercial',
                 desc: 'Premium offices, retail spaces, warehouses',
                 count: '1.8K+',
-                gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
+                gradient: 'linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%)'
               },
               {
                 category: 'Land',
@@ -711,7 +795,7 @@ const Home = () => {
                 title: 'Land & Plots',
                 desc: 'Agricultural land, commercial plots',
                 count: '950+',
-                gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
+                gradient: 'linear-gradient(135deg, #34d399 0%, #10b981 100%)'
               },
               {
                 category: 'Parking',
@@ -719,7 +803,7 @@ const Home = () => {
                 title: 'Parking',
                 desc: 'Secure parking spaces and garages',
                 count: '3.2K+',
-                gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)'
+                gradient: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)'
               },
               {
                 category: 'Event',
@@ -727,7 +811,7 @@ const Home = () => {
                 title: 'Events',
                 desc: 'Banquet halls, gardens, venues',
                 count: '420+',
-                gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+                gradient: 'linear-gradient(135deg, #f472b6 0%, #ec4899 100%)'
               },
               {
                 category: 'manage-properties',
@@ -735,17 +819,17 @@ const Home = () => {
                 title: 'Management',
                 desc: 'Property management tools',
                 count: 'Tools',
-                gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+                gradient: 'linear-gradient(135deg, #6b7280 0%, #4b5563 100%)',
                 isManage: true
               }
             ].map((item, index) => (
               <Col lg={4} md={6} key={index}>
                 <Card
-                  style={styles.categoryCard}
+                  style={styles.glassCategoryCard}
                   as={Link}
                   to={item.isManage ? '/manage-properties' : `/find-property?category=${item.category}`}
-                  onMouseEnter={(e) => handleCardHover(e, true)}
-                  onMouseLeave={(e) => handleCardHover(e, false)}
+                  onMouseEnter={(e) => handleCategoryHover(e, true)}
+                  onMouseLeave={(e) => handleCategoryHover(e, false)}
                 >
                   <div style={styles.categoryGradientTop(item.gradient)}></div>
                   <Card.Body style={styles.categoryBody}>
@@ -768,10 +852,10 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* Featured Properties */}
+      {/* Glass Featured Properties */}
       <section style={styles.featuresSection}>
         <Container>
-          <div style={styles.sectionHeader}>
+          <div style={styles.glassSectionHeader}>
             <div style={styles.sectionBadge}>Featured Properties</div>
             <h2 style={styles.sectionTitle}>
               Handpicked <span style={styles.gradientText}>Premium Listings</span>
@@ -782,21 +866,23 @@ const Home = () => {
           </div>
 
           {loading ? (
-            <div style={styles.loadingContainer}>
+            <div style={styles.glassLoadingContainer}>
               <div style={styles.loadingSpinner}></div>
               <p style={styles.loadingText}>Loading premium properties...</p>
             </div>
           ) : error ? (
-            <div style={styles.errorContainer}>
-              <h4>⚠️ Error Loading Properties</h4>
-              <p>{error}</p>
+            <div style={{...styles.glassLoadingContainer, background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)'}}>
+              <h4 style={{color: 'white', marginBottom: '12px'}}>⚠️ Error Loading Properties</h4>
+              <p style={{color: 'rgba(255, 255, 255, 0.8)', margin: 0}}>{error}</p>
             </div>
           ) : (
             <>
-              <Row className="g-4 mb-4">
+              <Row className="g-4 mb-5">
                 {featuredProperties.slice(0, 6).map((property, index) => (
                   <Col key={property._id} lg={4} md={6}>
-                    <PropertyCard property={property} showOwner={true} />
+                    <div style={{ transition: 'transform 0.3s ease' }}>
+                      <PropertyCard property={property} showOwner={true} />
+                    </div>
                   </Col>
                 ))}
               </Row>
@@ -805,20 +891,20 @@ const Home = () => {
                 <Button
                   as={Link}
                   to="/find-property"
-                  style={styles.exploreButton}
+                  style={styles.glassExploreButton}
                   onMouseEnter={(e) => {
-                    e.target.style.transform = 'translateY(-2px)';
-                    e.target.style.boxShadow = '0 12px 30px rgba(0, 0, 0, 0.15)';
-                    e.target.style.background = 'rgba(255, 255, 255, 0.2)';
+                    e.target.style.transform = 'translateY(-3px) scale(1.02)';
+                    e.target.style.background = 'rgba(255, 255, 255, 0.15)';
+                    e.target.style.boxShadow = '0 24px 50px rgba(0, 0, 0, 0.15)';
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.transform = 'translateY(0)';
-                    e.target.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.1)';
-                    e.target.style.background = 'rgba(255, 255, 255, 0.15)';
+                    e.target.style.transform = 'translateY(0) scale(1)';
+                    e.target.style.background = 'rgba(255, 255, 255, 0.1)';
+                    e.target.style.boxShadow = '0 16px 40px rgba(0, 0, 0, 0.1)';
                   }}
                 >
                   <span>View All Properties</span>
-                  <span style={{ fontSize: '0.85rem', opacity: 0.8 }}>({featuredProperties.length}+ available)</span>
+                  <span style={{ fontSize: '0.9rem', opacity: 0.8 }}>({featuredProperties.length}+ available)</span>
                 </Button>
               </div>
             </>
