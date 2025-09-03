@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Navbar as BootstrapNavbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -7,247 +7,114 @@ const Navbar = () => {
   const { user, logout, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const [isScrolled, setIsScrolled] = useState(false);
 
   const handleLogout = () => {
     logout();
     navigate('/');
   };
 
-  // Handle scroll effect
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   const styles = {
-    // Main Navbar Container - Ultra Professional
+    // Simple Clean Navbar
     navbar: {
-      background: isScrolled 
-        ? 'rgba(10, 14, 26, 0.95)' 
-        : 'rgba(10, 14, 26, 0.8)',
-      backdropFilter: 'blur(20px) saturate(180%)',
-      WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+      background: '#0a0e1a',
       borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-      padding: '12px 0',
-      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-      boxShadow: isScrolled 
-        ? '0 8px 32px rgba(0, 0, 0, 0.3)' 
-        : '0 4px 16px rgba(0, 0, 0, 0.1)',
-      position: 'sticky',
-      top: 0,
-      zIndex: 1030
+      padding: '16px 0'
     },
 
-    // Brand Logo - Enhanced
-    brandContainer: {
+    // Simple Brand
+    brand: {
       display: 'flex',
       alignItems: 'center',
-      gap: '10px',
+      gap: '8px',
       textDecoration: 'none',
-      padding: '8px 12px',
-      borderRadius: '10px',
-      transition: 'all 0.3s ease'
+      color: 'white'
     },
 
     brandIcon: {
-      fontSize: '1.6rem',
-      background: 'linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%)',
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      backgroundClip: 'text'
+      fontSize: '1.4rem'
     },
 
     brandText: {
-      fontSize: '1.4rem',
-      fontWeight: 800,
-      color: 'white',
-      textShadow: '0 2px 8px rgba(0, 0, 0, 0.3)'
+      fontSize: '1.3rem',
+      fontWeight: 700,
+      color: 'white'
     },
 
-    // Navigation Links - Professional
+    // Clean Navigation Links
     navLink: {
       color: 'rgba(255, 255, 255, 0.8)',
       textDecoration: 'none',
       fontSize: '0.95rem',
-      fontWeight: 600,
-      padding: '10px 16px',
-      borderRadius: '8px',
-      transition: 'all 0.3s ease',
-      position: 'relative',
-      userSelect: 'none'
+      fontWeight: 500,
+      padding: '8px 16px',
+      borderRadius: '6px',
+      transition: 'all 0.2s ease'
     },
 
-    activeNavLink: {
-      color: '#60a5fa',
-      background: 'rgba(96, 165, 250, 0.1)',
-      border: '1px solid rgba(96, 165, 250, 0.2)'
-    },
-
-    // Dropdown Styling - Enhanced
-    dropdown: {
-      background: 'rgba(10, 14, 26, 0.95)',
-      backdropFilter: 'blur(20px) saturate(180%)',
-      border: '1px solid rgba(255, 255, 255, 0.15)',
-      borderRadius: '12px',
-      boxShadow: '0 16px 40px rgba(0, 0, 0, 0.3)',
-      padding: '8px',
-      marginTop: '8px'
-    },
-
-    dropdownItem: {
-      color: 'rgba(255, 255, 255, 0.8)',
-      padding: '10px 16px',
-      borderRadius: '8px',
+    // Simple Auth Buttons
+    loginBtn: {
+      background: 'transparent',
+      border: '1px solid rgba(255, 255, 255, 0.3)',
+      color: 'white',
+      padding: '8px 20px',
+      borderRadius: '6px',
+      textDecoration: 'none',
       fontSize: '0.9rem',
       fontWeight: 500,
-      transition: 'all 0.2s ease',
-      border: 'none',
-      background: 'transparent'
+      transition: 'all 0.2s ease'
     },
 
-    dropdownDivider: {
-      borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-      margin: '8px 0'
-    },
-
-    // User Menu - Professional
-    userDropdown: {
-      background: 'rgba(255, 255, 255, 0.08)',
-      backdropFilter: 'blur(12px)',
-      border: '1px solid rgba(255, 255, 255, 0.15)',
-      borderRadius: '10px',
-      padding: '6px 12px',
-      color: 'white',
-      fontSize: '0.9rem',
-      fontWeight: 600,
-      transition: 'all 0.3s ease'
-    },
-
-    // Auth Buttons - Clean
-    authButton: {
-      padding: '8px 20px',
-      borderRadius: '8px',
-      fontSize: '0.9rem',
-      fontWeight: 600,
-      textDecoration: 'none',
-      transition: 'all 0.3s ease',
-      border: 'none',
-      cursor: 'pointer',
-      userSelect: 'none'
-    },
-
-    loginButton: {
-      background: 'transparent',
-      color: 'rgba(255, 255, 255, 0.8)',
-      border: '1px solid rgba(255, 255, 255, 0.2)'
-    },
-
-    registerButton: {
+    registerBtn: {
       background: '#3b82f6',
+      border: '1px solid #3b82f6',
       color: 'white',
-      border: '1px solid #3b82f6'
+      padding: '8px 20px',
+      borderRadius: '6px',
+      textDecoration: 'none',
+      fontSize: '0.9rem',
+      fontWeight: 500,
+      transition: 'all 0.2s ease'
     },
 
-    // Mobile Menu Toggle
-    mobileToggle: {
+    // User Dropdown
+    userBtn: {
       background: 'rgba(255, 255, 255, 0.1)',
       border: '1px solid rgba(255, 255, 255, 0.2)',
-      borderRadius: '8px',
-      padding: '8px',
-      color: 'white'
+      color: 'white',
+      padding: '8px 16px',
+      borderRadius: '6px',
+      fontSize: '0.9rem',
+      fontWeight: 500
     }
   };
 
-  // Check if current path matches link
   const isActive = (path) => location.pathname === path;
 
-  // Hover effects
-  const handleNavLinkHover = (e, isEntering) => {
-    if (isEntering && !isActive(e.target.getAttribute('href'))) {
-      e.target.style.color = '#60a5fa';
-      e.target.style.background = 'rgba(96, 165, 250, 0.1)';
-    } else if (!isActive(e.target.getAttribute('href'))) {
-      e.target.style.color = 'rgba(255, 255, 255, 0.8)';
-      e.target.style.background = 'transparent';
-    }
-  };
-
-  const handleDropdownItemHover = (e, isEntering) => {
-    if (isEntering) {
-      e.target.style.background = 'rgba(96, 165, 250, 0.15)';
-      e.target.style.color = '#60a5fa';
-    } else {
-      e.target.style.background = 'transparent';
-      e.target.style.color = 'rgba(255, 255, 255, 0.8)';
-    }
-  };
-
-  const handleAuthButtonHover = (e, isEntering, type) => {
-    if (isEntering) {
-      if (type === 'login') {
-        e.target.style.background = 'rgba(255, 255, 255, 0.1)';
-        e.target.style.color = 'white';
-      } else {
-        e.target.style.background = '#2563eb';
-        e.target.style.transform = 'translateY(-1px)';
-      }
-    } else {
-      if (type === 'login') {
-        e.target.style.background = 'transparent';
-        e.target.style.color = 'rgba(255, 255, 255, 0.8)';
-      } else {
-        e.target.style.background = '#3b82f6';
-        e.target.style.transform = 'translateY(0)';
-      }
-    }
-  };
-
   return (
-    <BootstrapNavbar expand="lg" style={styles.navbar} fixed="top">
+    <BootstrapNavbar expand="lg" style={styles.navbar} sticky="top">
       <Container>
-        {/* Brand Logo */}
-        <BootstrapNavbar.Brand 
-          as={Link} 
-          to="/" 
-          style={styles.brandContainer}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-            e.currentTarget.style.transform = 'translateY(-1px)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'transparent';
-            e.currentTarget.style.transform = 'translateY(0)';
-          }}
-        >
+        {/* Simple Brand */}
+        <BootstrapNavbar.Brand as={Link} to="/" style={styles.brand}>
           <span style={styles.brandIcon}>🏠</span>
           <span style={styles.brandText}>SpaceLink</span>
         </BootstrapNavbar.Brand>
         
-        {/* Mobile Toggle */}
-        <BootstrapNavbar.Toggle 
-          aria-controls="basic-navbar-nav" 
-          style={styles.mobileToggle}
-        />
+        <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
         
         <BootstrapNavbar.Collapse id="basic-navbar-nav">
-          {/* Main Navigation */}
+          {/* Simple Navigation */}
           <Nav className="me-auto">
             <Nav.Link 
               as={Link} 
               to="/find-property"
               style={{
                 ...styles.navLink,
-                ...(isActive('/find-property') ? styles.activeNavLink : {})
+                ...(isActive('/find-property') ? { color: '#60a5fa' } : {})
               }}
-              onMouseEnter={(e) => handleNavLinkHover(e, true)}
-              onMouseLeave={(e) => handleNavLinkHover(e, false)}
+              onMouseEnter={(e) => e.target.style.color = '#60a5fa'}
+              onMouseLeave={(e) => e.target.style.color = isActive('/find-property') ? '#60a5fa' : 'rgba(255, 255, 255, 0.8)'}
             >
-              🔍 Find Property
+              Find Property
             </Nav.Link>
             
             {isAuthenticated && (
@@ -257,96 +124,66 @@ const Navbar = () => {
                   to="/my-bookings"
                   style={{
                     ...styles.navLink,
-                    ...(isActive('/my-bookings') ? styles.activeNavLink : {})
+                    ...(isActive('/my-bookings') ? { color: '#60a5fa' } : {})
                   }}
-                  onMouseEnter={(e) => handleNavLinkHover(e, true)}
-                  onMouseLeave={(e) => handleNavLinkHover(e, false)}
+                  onMouseEnter={(e) => e.target.style.color = '#60a5fa'}
+                  onMouseLeave={(e) => e.target.style.color = isActive('/my-bookings') ? '#60a5fa' : 'rgba(255, 255, 255, 0.8)'}
                 >
-                  📋 My Bookings
+                  My Bookings
                 </Nav.Link>
                 
-                <NavDropdown 
-                  title="⚙️ Property Management" 
-                  id="property-dropdown"
-                  style={styles.navLink}
-                  menuVariant="dark"
-                >
-                  <NavDropdown.Item 
-                    as={Link} 
-                    to="/add-property"
-                    style={styles.dropdownItem}
-                    onMouseEnter={(e) => handleDropdownItemHover(e, true)}
-                    onMouseLeave={(e) => handleDropdownItemHover(e, false)}
-                  >
-                    ➕ Add Property
+                <NavDropdown title="Property Management" id="property-dropdown">
+                  <NavDropdown.Item as={Link} to="/add-property">
+                    Add Property
                   </NavDropdown.Item>
-                  <NavDropdown.Item 
-                    as={Link} 
-                    to="/manage-properties"
-                    style={styles.dropdownItem}
-                    onMouseEnter={(e) => handleDropdownItemHover(e, true)}
-                    onMouseLeave={(e) => handleDropdownItemHover(e, false)}
-                  >
-                    📊 Manage Properties
+                  <NavDropdown.Item as={Link} to="/manage-properties">
+                    Manage Properties
                   </NavDropdown.Item>
                 </NavDropdown>
               </>
             )}
           </Nav>
           
-          {/* User Menu */}
+          {/* Simple Auth Section */}
           <Nav>
             {isAuthenticated ? (
               <NavDropdown 
-                title={`👤 ${user?.name || 'User'}`} 
+                title={`${user?.name || 'User'}`} 
                 id="user-dropdown" 
                 align="end"
-                style={styles.userDropdown}
-                menuVariant="dark"
+                style={styles.userBtn}
               >
-                <NavDropdown.Item 
-                  as={Link} 
-                  to="/profile"
-                  style={styles.dropdownItem}
-                  onMouseEnter={(e) => handleDropdownItemHover(e, true)}
-                  onMouseLeave={(e) => handleDropdownItemHover(e, false)}
-                >
-                  👤 Profile
+                <NavDropdown.Item as={Link} to="/profile">
+                  Profile
                 </NavDropdown.Item>
-                <NavDropdown.Item 
-                  as={Link} 
-                  to="/favorites"
-                  style={styles.dropdownItem}
-                  onMouseEnter={(e) => handleDropdownItemHover(e, true)}
-                  onMouseLeave={(e) => handleDropdownItemHover(e, false)}
-                >
-                  ❤️ Favorites
-                </NavDropdown.Item>
-                <NavDropdown.Divider style={styles.dropdownDivider} />
-                <NavDropdown.Item 
-                  onClick={handleLogout}
-                  style={styles.dropdownItem}
-                  onMouseEnter={(e) => handleDropdownItemHover(e, true)}
-                  onMouseLeave={(e) => handleDropdownItemHover(e, false)}
-                >
-                  🚪 Logout
+                <NavDropdown.Divider />
+                <NavDropdown.Item onClick={handleLogout}>
+                  Logout
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (
-              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                 <Link
                   to="/login"
-                  style={{...styles.authButton, ...styles.loginButton}}
-                  onMouseEnter={(e) => handleAuthButtonHover(e, true, 'login')}
-                  onMouseLeave={(e) => handleAuthButtonHover(e, false, 'login')}
+                  style={styles.loginBtn}
+                  onMouseEnter={(e) => {
+                    e.target.style.background = 'rgba(255, 255, 255, 0.1)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = 'transparent';
+                  }}
                 >
                   Login
                 </Link>
                 <Link
                   to="/register"
-                  style={{...styles.authButton, ...styles.registerButton}}
-                  onMouseEnter={(e) => handleAuthButtonHover(e, true, 'register')}
-                  onMouseLeave={(e) => handleAuthButtonHover(e, false, 'register')}
+                  style={styles.registerBtn}
+                  onMouseEnter={(e) => {
+                    e.target.style.background = '#2563eb';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = '#3b82f6';
+                  }}
                 >
                   Register
                 </Link>
