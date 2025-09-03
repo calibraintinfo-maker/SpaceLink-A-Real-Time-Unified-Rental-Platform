@@ -9,221 +9,283 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // Final Company-Grade Professional Styles
+  // Professional SafePark-Style Design
   const styles = {
     // Professional App Container
     appContainer: {
-      background: 'linear-gradient(180deg, #0f172a 0%, #1e293b 100%)',
+      background: '#0a0e1a',
       minHeight: '100vh',
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
     },
 
-    // Compact Hero Section - Company Style
+    // Professional Hero Section - SafePark Style
     heroSection: {
-      padding: '60px 0 40px 0', // Much more compact
+      padding: '60px 0',
+      background: '#0a0e1a',
+      position: 'relative',
+      overflow: 'hidden'
+    },
+
+    // Split Layout Container
+    heroContainer: {
+      display: 'flex',
+      alignItems: 'center',
+      minHeight: '80vh',
       position: 'relative'
     },
 
-    // Compact Professional Hero Container
-    heroContainer: {
-      background: 'rgba(255, 255, 255, 0.03)',
-      backdropFilter: 'blur(20px) saturate(180%)',
-      WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      borderRadius: '16px', // Smaller radius
-      padding: '40px 32px', // Much more compact padding
-      margin: '0 auto',
-      maxWidth: '800px', // Smaller max width
-      boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
-      textAlign: 'center'
+    // Left Content Section
+    heroLeft: {
+      flex: 1,
+      paddingRight: '3rem',
+      zIndex: 10
     },
 
-    // Compact Premium Badge
+    // Premium Badge - SafePark Style
     premiumBadge: {
       display: 'inline-flex',
       alignItems: 'center',
-      gap: '6px',
-      padding: '6px 16px', // Much smaller
-      background: 'rgba(255, 255, 255, 0.08)',
-      backdropFilter: 'blur(8px)',
-      border: '1px solid rgba(255, 255, 255, 0.15)',
+      gap: '8px',
+      padding: '8px 16px',
+      background: 'rgba(59, 130, 246, 0.15)',
+      border: '1px solid rgba(59, 130, 246, 0.3)',
       borderRadius: '20px',
-      color: 'rgba(255, 255, 255, 0.9)',
-      fontSize: '0.8rem', // Smaller font
+      color: '#60a5fa',
+      fontSize: '0.85rem',
       fontWeight: 600,
-      marginBottom: '20px' // Much smaller margin
+      marginBottom: '2rem',
+      backdropFilter: 'blur(8px)'
     },
 
-    // Company-Grade Typography - Compact
+    badgeIcon: {
+      width: '8px',
+      height: '8px',
+      borderRadius: '50%',
+      background: '#10b981',
+      animation: 'pulse 2s infinite'
+    },
+
+    // Professional Large Headline
     heroTitle: {
-      fontSize: 'clamp(2rem, 4vw, 2.8rem)', // Much smaller
-      fontWeight: 800,
-      lineHeight: 1.2,
-      marginBottom: '16px', // Smaller margin
+      fontSize: 'clamp(3rem, 6vw, 4.5rem)',
+      fontWeight: 900,
+      lineHeight: 1.1,
+      marginBottom: '1.5rem',
       color: 'white',
       letterSpacing: '-0.02em'
     },
 
-    // Professional Gradient Text
-    gradientText: {
-      background: 'linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #34d399 100%)',
-      backgroundSize: '200% 200%',
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      backgroundClip: 'text',
-      animation: 'gradientFlow 4s ease-in-out infinite'
-    },
-
-    // Compact Description
-    heroDescription: {
-      fontSize: '1rem', // Smaller
-      lineHeight: 1.5,
-      color: 'rgba(255, 255, 255, 0.7)',
-      marginBottom: '24px', // Smaller margin
-      maxWidth: '600px',
-      margin: '0 auto 24px auto'
-    },
-
-    // Compact Button Container
-    buttonContainer: {
-      display: 'flex',
-      gap: '12px',
-      justifyContent: 'center',
-      flexWrap: 'wrap',
-      marginBottom: '32px' // Smaller margin
-    },
-
-    // Company-Grade Buttons - Compact
-    primaryButton: {
-      display: 'inline-flex',
-      alignItems: 'center',
-      gap: '8px',
-      padding: '12px 24px', // Much smaller
-      background: 'rgba(255, 255, 255, 0.12)',
-      backdropFilter: 'blur(8px)',
-      border: '1px solid rgba(255, 255, 255, 0.2)',
-      borderRadius: '8px', // Smaller radius for modern look
-      color: 'white',
-      fontSize: '0.95rem', // Smaller font
-      fontWeight: 600,
-      textDecoration: 'none',
-      transition: 'all 0.3s ease',
-      cursor: 'pointer',
-      userSelect: 'none', // Fix text selection
-      WebkitUserSelect: 'none'
-    },
-
-    secondaryButton: {
-      display: 'inline-flex',
-      alignItems: 'center',
-      gap: '8px',
-      padding: '12px 24px',
-      background: 'transparent',
-      border: '1px solid rgba(255, 255, 255, 0.3)',
-      borderRadius: '8px',
-      color: 'rgba(255, 255, 255, 0.9)',
-      fontSize: '0.95rem',
-      fontWeight: 600,
-      textDecoration: 'none',
-      transition: 'all 0.3s ease',
-      cursor: 'pointer',
-      userSelect: 'none', // Fix text selection
-      WebkitUserSelect: 'none'
-    },
-
-    // Compact Trust Metrics
-    trustMetrics: {
-      display: 'flex',
-      justifyContent: 'center',
-      gap: '24px', // Smaller gap
-      flexWrap: 'wrap'
-    },
-
-    trustItem: {
-      background: 'rgba(255, 255, 255, 0.05)',
-      backdropFilter: 'blur(8px)',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      borderRadius: '12px',
-      padding: '16px 12px', // Much smaller
-      textAlign: 'center',
-      color: 'white',
-      minWidth: '90px' // Smaller width
-    },
-
-    trustNumber: {
-      fontSize: '1.4rem', // Smaller
-      fontWeight: 800,
+    // First Line - White
+    titleLine1: {
       display: 'block',
-      marginBottom: '4px',
-      background: 'linear-gradient(135deg, #60a5fa, #a78bfa)',
+      color: 'white'
+    },
+
+    // Second Line - Blue Accent
+    titleLine2: {
+      display: 'block',
+      background: 'linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%)',
       WebkitBackgroundClip: 'text',
       WebkitTextFillColor: 'transparent',
       backgroundClip: 'text'
     },
 
-    trustLabel: {
-      fontSize: '0.75rem', // Smaller
-      opacity: 0.8,
-      textTransform: 'uppercase',
-      letterSpacing: '0.5px',
-      fontWeight: 500
+    // Professional Description
+    heroDescription: {
+      fontSize: '1.2rem',
+      lineHeight: 1.6,
+      color: 'rgba(255, 255, 255, 0.8)',
+      marginBottom: '2rem',
+      maxWidth: '500px'
     },
 
-    // Categories Section - Professional Spacing
+    highlightText: {
+      color: '#10b981',
+      fontWeight: 600
+    },
+
+    // Professional Button Container
+    buttonContainer: {
+      display: 'flex',
+      gap: '16px',
+      marginBottom: '3rem',
+      flexWrap: 'wrap'
+    },
+
+    // Primary CTA Button - SafePark Style
+    primaryButton: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '12px',
+      padding: '16px 32px',
+      background: '#3b82f6',
+      border: 'none',
+      borderRadius: '8px',
+      color: 'white',
+      fontSize: '1rem',
+      fontWeight: 600,
+      textDecoration: 'none',
+      transition: 'all 0.3s ease',
+      cursor: 'pointer',
+      boxShadow: '0 4px 14px rgba(59, 130, 246, 0.3)',
+      userSelect: 'none'
+    },
+
+    // Secondary Button - SafePark Style
+    secondaryButton: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '12px',
+      padding: '16px 32px',
+      background: 'transparent',
+      border: '1px solid rgba(255, 255, 255, 0.3)',
+      borderRadius: '8px',
+      color: 'white',
+      fontSize: '1rem',
+      fontWeight: 600,
+      textDecoration: 'none',
+      transition: 'all 0.3s ease',
+      cursor: 'pointer',
+      userSelect: 'none'
+    },
+
+    // Trust Indicators - SafePark Style
+    trustContainer: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '2rem',
+      flexWrap: 'wrap'
+    },
+
+    // Stars Rating
+    starsContainer: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px'
+    },
+
+    stars: {
+      color: '#fbbf24',
+      fontSize: '1.2rem'
+    },
+
+    trustText: {
+      color: 'rgba(255, 255, 255, 0.9)',
+      fontSize: '0.95rem',
+      fontWeight: 600
+    },
+
+    // Warranty Badge
+    warrantyBadge: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      color: '#10b981',
+      fontSize: '0.95rem',
+      fontWeight: 600
+    },
+
+    // Right Image Section
+    heroRight: {
+      flex: 1,
+      position: 'relative',
+      height: '600px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
+
+    // Property Image Container
+    propertyImageContainer: {
+      position: 'relative',
+      width: '100%',
+      height: '500px',
+      borderRadius: '16px',
+      overflow: 'hidden',
+      boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)'
+    },
+
+    propertyImage: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
+      borderRadius: '16px'
+    },
+
+    // Premium Property Badge
+    propertyBadge: {
+      position: 'absolute',
+      top: '20px',
+      left: '20px',
+      padding: '8px 16px',
+      background: 'rgba(16, 185, 129, 0.9)',
+      color: 'white',
+      borderRadius: '20px',
+      fontSize: '0.85rem',
+      fontWeight: 600,
+      backdropFilter: 'blur(8px)'
+    },
+
+    // Categories Section - Compact
     categoriesSection: {
-      padding: '50px 0', // Much smaller padding
-      position: 'relative'
+      padding: '60px 0',
+      background: 'rgba(255, 255, 255, 0.02)'
     },
 
-    // Compact Section Header - Fix Gap Issues
+    // Compact Section Header
     sectionHeader: {
       textAlign: 'center',
-      marginBottom: '32px', // MUCH smaller margin to fix gap
-      background: 'rgba(255, 255, 255, 0.02)',
+      marginBottom: '40px',
+      background: 'rgba(255, 255, 255, 0.03)',
       backdropFilter: 'blur(16px)',
       border: '1px solid rgba(255, 255, 255, 0.08)',
       borderRadius: '16px',
-      padding: '32px 24px', // Smaller padding
+      padding: '32px',
       maxWidth: '700px',
-      margin: '0 auto 32px auto' // Fixed margin
+      margin: '0 auto 40px auto'
     },
 
     sectionBadge: {
       display: 'inline-block',
-      padding: '4px 12px', // Smaller
-      background: 'rgba(255, 255, 255, 0.1)',
-      backdropFilter: 'blur(4px)',
-      borderRadius: '16px',
-      color: 'rgba(255, 255, 255, 0.9)',
-      fontSize: '0.75rem', // Smaller
+      padding: '6px 16px',
+      background: 'rgba(59, 130, 246, 0.15)',
+      border: '1px solid rgba(59, 130, 246, 0.3)',
+      borderRadius: '20px',
+      color: '#60a5fa',
+      fontSize: '0.8rem',
       fontWeight: 600,
       textTransform: 'uppercase',
       letterSpacing: '0.5px',
-      marginBottom: '16px', // Smaller
-      border: '1px solid rgba(255, 255, 255, 0.15)'
+      marginBottom: '16px'
     },
 
     sectionTitle: {
-      fontSize: 'clamp(1.8rem, 4vw, 2.2rem)', // Much smaller
+      fontSize: 'clamp(2rem, 4vw, 2.5rem)',
       fontWeight: 800,
-      marginBottom: '12px', // Smaller
+      marginBottom: '16px',
       color: 'white',
       lineHeight: 1.2
     },
 
+    gradientText: {
+      background: 'linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%)',
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      backgroundClip: 'text'
+    },
+
     sectionDescription: {
-      fontSize: '1rem', // Smaller
-      lineHeight: 1.4,
+      fontSize: '1rem',
+      lineHeight: 1.5,
       color: 'rgba(255, 255, 255, 0.7)',
       maxWidth: '500px',
       margin: '0 auto'
     },
 
-    // Glass Category Cards - Professional
+    // Glass Category Cards
     categoryCard: {
-      background: 'rgba(255, 255, 255, 0.06)', // Glass theme
+      background: 'rgba(255, 255, 255, 0.06)',
       backdropFilter: 'blur(16px) saturate(180%)',
-      WebkitBackdropFilter: 'blur(16px) saturate(180%)',
       border: '1px solid rgba(255, 255, 255, 0.12)',
       borderRadius: '12px',
       overflow: 'hidden',
@@ -246,10 +308,7 @@ const Home = () => {
     }),
 
     categoryBody: {
-      padding: '24px', // Compact padding
-      height: '100%',
-      display: 'flex',
-      flexDirection: 'column'
+      padding: '24px'
     },
 
     categoryHeader: {
@@ -260,24 +319,23 @@ const Home = () => {
     },
 
     categoryIcon: {
-      fontSize: '2rem', // Smaller
+      fontSize: '2rem',
       transition: 'transform 0.3s ease'
     },
 
     categoryCount: {
-      background: 'rgba(255, 255, 255, 0.15)', // Glass theme
-      backdropFilter: 'blur(4px)',
-      color: 'white',
+      background: 'rgba(59, 130, 246, 0.15)',
+      color: '#60a5fa',
       padding: '4px 8px',
       borderRadius: '8px',
       fontSize: '0.7rem',
       fontWeight: 700,
       textTransform: 'uppercase',
-      border: '1px solid rgba(255, 255, 255, 0.2)'
+      border: '1px solid rgba(59, 130, 246, 0.3)'
     },
 
     categoryTitle: {
-      fontSize: '1.1rem', // Smaller
+      fontSize: '1.1rem',
       fontWeight: 700,
       marginBottom: '8px',
       color: 'white'
@@ -286,8 +344,7 @@ const Home = () => {
     categoryDescription: {
       color: 'rgba(255, 255, 255, 0.7)',
       lineHeight: 1.4,
-      fontSize: '0.9rem', // Smaller
-      flexGrow: 1,
+      fontSize: '0.9rem',
       marginBottom: '16px'
     },
 
@@ -296,92 +353,81 @@ const Home = () => {
       transition: 'all 0.3s ease'
     },
 
-    // Featured Properties Section
+    // Featured Properties
     featuredSection: {
-      padding: '50px 0', // Compact
+      padding: '60px 0',
       background: 'rgba(255, 255, 255, 0.01)'
     },
 
-    // Glass Loading Container
+    // Loading Container
     loadingContainer: {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      padding: '40px', // Smaller
-      background: 'rgba(255, 255, 255, 0.05)', // Glass theme
-      backdropFilter: 'blur(16px) saturate(180%)',
-      WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+      padding: '60px',
+      background: 'rgba(255, 255, 255, 0.05)',
+      backdropFilter: 'blur(16px)',
       borderRadius: '16px',
       margin: '0 20px',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      boxShadow: '0 16px 40px rgba(0, 0, 0, 0.1)'
+      border: '1px solid rgba(255, 255, 255, 0.1)'
     },
 
     loadingSpinner: {
-      width: '32px', // Smaller
-      height: '32px',
-      border: '2px solid rgba(255, 255, 255, 0.2)',
-      borderTop: '2px solid white',
+      width: '40px',
+      height: '40px',
+      border: '3px solid rgba(255, 255, 255, 0.2)',
+      borderTop: '3px solid #3b82f6',
       borderRadius: '50%',
       animation: 'spin 1s linear infinite',
-      marginBottom: '16px'
+      marginBottom: '20px'
     },
 
     loadingText: {
       color: 'white',
-      fontSize: '0.95rem', // Smaller
+      fontSize: '1rem',
       fontWeight: 500
     },
 
-    // Professional Explore Button - Fix Selection
+    // Explore Button
     exploreButton: {
       display: 'inline-flex',
       alignItems: 'center',
-      gap: '10px',
-      padding: '14px 28px',
-      background: 'rgba(255, 255, 255, 0.08)', // Glass theme
-      backdropFilter: 'blur(16px) saturate(180%)',
-      WebkitBackdropFilter: 'blur(16px) saturate(180%)',
-      border: '1px solid rgba(255, 255, 255, 0.2)',
+      gap: '12px',
+      padding: '16px 32px',
+      background: 'rgba(59, 130, 246, 0.15)',
+      backdropFilter: 'blur(16px)',
+      border: '1px solid rgba(59, 130, 246, 0.3)',
       borderRadius: '8px',
-      color: 'white',
-      fontSize: '0.95rem',
+      color: '#60a5fa',
+      fontSize: '1rem',
       fontWeight: 600,
       textDecoration: 'none',
       transition: 'all 0.3s ease',
-      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-      userSelect: 'none', // Fix text selection issue
-      WebkitUserSelect: 'none',
-      cursor: 'pointer'
+      userSelect: 'none'
     }
   };
 
-  // Professional Animations
+  // Animations
   useEffect(() => {
     const styleSheet = document.createElement("style");
     styleSheet.innerText = `
       @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
       
-      /* Fix text selection globally */
-      * {
-        -webkit-tap-highlight-color: transparent;
-      }
-      
-      button, a {
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-      
-      @keyframes gradientFlow {
-        0%, 100% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
       }
       
       @keyframes spin {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
+      }
+      
+      /* Fix text selection */
+      button, a {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
       }
     `;
     document.head.appendChild(styleSheet);
@@ -408,20 +454,23 @@ const Home = () => {
   // Professional Hover Effects
   const handleButtonHover = (e, isEntering, type = 'primary') => {
     if (isEntering) {
-      e.currentTarget.style.transform = 'translateY(-2px)';
       if (type === 'primary') {
-        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.18)';
-        e.currentTarget.style.boxShadow = '0 12px 30px rgba(0, 0, 0, 0.15)';
+        e.currentTarget.style.transform = 'translateY(-2px)';
+        e.currentTarget.style.background = '#2563eb';
+        e.currentTarget.style.boxShadow = '0 8px 25px rgba(59, 130, 246, 0.4)';
       } else {
-        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
+        e.currentTarget.style.transform = 'translateY(-2px)';
+        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.5)';
       }
     } else {
       e.currentTarget.style.transform = 'translateY(0)';
       if (type === 'primary') {
-        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)';
-        e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.1)';
+        e.currentTarget.style.background = '#3b82f6';
+        e.currentTarget.style.boxShadow = '0 4px 14px rgba(59, 130, 246, 0.3)';
       } else {
         e.currentTarget.style.background = 'transparent';
+        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
       }
     }
   };
@@ -432,11 +481,11 @@ const Home = () => {
     
     if (isEntering) {
       e.currentTarget.style.transform = 'translateY(-4px)';
-      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'; // Enhanced glass
+      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
       e.currentTarget.style.boxShadow = '0 16px 40px rgba(0, 0, 0, 0.15)';
       if (icon) icon.style.transform = 'scale(1.05)';
       if (arrow) {
-        arrow.style.color = 'white';
+        arrow.style.color = '#60a5fa';
         arrow.style.transform = 'translateX(4px)';
       }
     } else {
@@ -453,77 +502,85 @@ const Home = () => {
 
   return (
     <div style={styles.appContainer}>
-      {/* Compact Professional Hero */}
+      {/* Professional SafePark-Style Hero */}
       <section style={styles.heroSection}>
         <Container>
-          <Row className="justify-content-center">
-            <Col lg={12}>
-              <div style={styles.heroContainer}>
-                {/* Compact Badge */}
-                <div style={styles.premiumBadge}>
-                  <span>✨</span>
-                  <span>Premium Property Platform</span>
+          <div style={styles.heroContainer}>
+            {/* Left Content */}
+            <div style={styles.heroLeft}>
+              {/* Premium Badge */}
+              <div style={styles.premiumBadge}>
+                <div style={styles.badgeIcon}></div>
+                <span>Made in India • Premium Quality</span>
+              </div>
+
+              {/* Professional Headline */}
+              <h1 style={styles.heroTitle}>
+                <span style={styles.titleLine1}>Property Risks.</span>
+                <span style={styles.titleLine2}>Perfect Solutions.</span>
+              </h1>
+
+              {/* Professional Description */}
+              <p style={styles.heroDescription}>
+                Your property search faces <strong>hidden challenges every day</strong>. From market fluctuations to finding the right match, give yourself <span style={styles.highlightText}>complete peace of mind</span>.
+              </p>
+
+              {/* Professional Buttons */}
+              <div style={styles.buttonContainer}>
+                <Button
+                  as={Link}
+                  to="/find-property"
+                  style={styles.primaryButton}
+                  onMouseEnter={(e) => handleButtonHover(e, true, 'primary')}
+                  onMouseLeave={(e) => handleButtonHover(e, false, 'primary')}
+                >
+                  <span>🏠</span>
+                  <span>Find My Property Now</span>
+                </Button>
+                
+                <Button
+                  as={Link}
+                  to="/gallery"
+                  style={styles.secondaryButton}
+                  onMouseEnter={(e) => handleButtonHover(e, true, 'secondary')}
+                  onMouseLeave={(e) => handleButtonHover(e, false, 'secondary')}
+                >
+                  <span>▶</span>
+                  <span>View Gallery</span>
+                </Button>
+              </div>
+
+              {/* Trust Indicators */}
+              <div style={styles.trustContainer}>
+                <div style={styles.starsContainer}>
+                  <div style={styles.stars}>⭐⭐⭐⭐⭐</div>
+                  <span style={styles.trustText}>10,000+ Satisfied Clients</span>
                 </div>
-
-                {/* Compact Professional Title */}
-                <h1 style={styles.heroTitle}>
-                  Discover Your <span style={styles.gradientText}>Perfect Space</span><br />With SpaceLink
-                </h1>
-
-                {/* Compact Description */}
-                <p style={styles.heroDescription}>
-                  The most advanced property discovery platform. Find premium properties 
-                  with intelligent matching and seamless experiences.
-                </p>
-
-                {/* Compact Buttons */}
-                <div style={styles.buttonContainer}>
-                  <Button
-                    as={Link}
-                    to="/find-property"
-                    style={styles.primaryButton}
-                    onMouseEnter={(e) => handleButtonHover(e, true, 'primary')}
-                    onMouseLeave={(e) => handleButtonHover(e, false, 'primary')}
-                  >
-                    <span>Explore Properties</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/>
-                    </svg>
-                  </Button>
-                  
-                  <Button
-                    as={Link}
-                    to="/add-property"
-                    style={styles.secondaryButton}
-                    onMouseEnter={(e) => handleButtonHover(e, true, 'secondary')}
-                    onMouseLeave={(e) => handleButtonHover(e, false, 'secondary')}
-                  >
-                    <span>List Property</span>
-                  </Button>
-                </div>
-
-                {/* Compact Trust Metrics */}
-                <div style={styles.trustMetrics}>
-                  <div style={styles.trustItem}>
-                    <span style={styles.trustNumber}>10K+</span>
-                    <span style={styles.trustLabel}>Properties</span>
-                  </div>
-                  <div style={styles.trustItem}>
-                    <span style={styles.trustNumber}>50K+</span>
-                    <span style={styles.trustLabel}>Clients</span>
-                  </div>
-                  <div style={styles.trustItem}>
-                    <span style={styles.trustNumber}>99.8%</span>
-                    <span style={styles.trustLabel}>Success</span>
-                  </div>
+                <div style={styles.warrantyBadge}>
+                  <span>✓</span>
+                  <span>Lifetime Support</span>
                 </div>
               </div>
-            </Col>
-          </Row>
+            </div>
+
+            {/* Right Image */}
+            <div style={styles.heroRight}>
+              <div style={styles.propertyImageContainer}>
+                <img 
+                  src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                  alt="Luxury Property" 
+                  style={styles.propertyImage}
+                />
+                <div style={styles.propertyBadge}>
+                  Premium Protection
+                </div>
+              </div>
+            </div>
+          </div>
         </Container>
       </section>
 
-      {/* Professional Categories - Fixed Gap */}
+      {/* Categories Section */}
       <section style={styles.categoriesSection}>
         <Container>
           <div style={styles.sectionHeader}>
@@ -536,7 +593,7 @@ const Home = () => {
             </p>
           </div>
 
-          <Row className="g-3">
+          <Row className="g-4">
             {[
               {
                 category: 'Property Rentals',
@@ -544,7 +601,7 @@ const Home = () => {
                 title: 'Residential',
                 desc: 'Premium apartments, luxury flats, family homes',
                 count: '2.5K+',
-                gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+                gradient: 'linear-gradient(135deg, #3b82f6 0%, #1e40af 100%)'
               },
               {
                 category: 'Commercial',
@@ -552,7 +609,7 @@ const Home = () => {
                 title: 'Commercial',
                 desc: 'Modern offices, retail spaces, warehouses',
                 count: '1.8K+',
-                gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
+                gradient: 'linear-gradient(135deg, #10b981 0%, #047857 100%)'
               },
               {
                 category: 'Land',
@@ -560,7 +617,7 @@ const Home = () => {
                 title: 'Land & Plots',
                 desc: 'Agricultural land, development plots',
                 count: '950+',
-                gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
+                gradient: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)'
               },
               {
                 category: 'Parking',
@@ -568,7 +625,7 @@ const Home = () => {
                 title: 'Parking',
                 desc: 'Secure parking spaces, covered garages',
                 count: '3.2K+',
-                gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)'
+                gradient: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)'
               },
               {
                 category: 'Event',
@@ -576,7 +633,7 @@ const Home = () => {
                 title: 'Event Venues',
                 desc: 'Banquet halls, event gardens, conference halls',
                 count: '420+',
-                gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+                gradient: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)'
               },
               {
                 category: 'manage-properties',
@@ -584,7 +641,7 @@ const Home = () => {
                 title: 'Property Management',
                 desc: 'Professional management tools and services',
                 count: 'Tools',
-                gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+                gradient: 'linear-gradient(135deg, #6b7280 0%, #4b5563 100%)',
                 isManage: true
               }
             ].map((item, index) => (
@@ -617,7 +674,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* Glass Featured Properties */}
+      {/* Featured Properties */}
       <section style={styles.featuredSection}>
         <Container>
           <div style={styles.sectionHeader}>
@@ -637,8 +694,8 @@ const Home = () => {
             </div>
           ) : error ? (
             <div style={{...styles.loadingContainer, background: 'rgba(239, 68, 68, 0.05)', border: '1px solid rgba(239, 68, 68, 0.2)'}}>
-              <h4 style={{color: 'white', marginBottom: '12px', fontSize: '1rem'}}>Unable to Load Properties</h4>
-              <p style={{color: 'rgba(255, 255, 255, 0.7)', margin: 0, fontSize: '0.9rem'}}>{error}</p>
+              <h4 style={{color: 'white', marginBottom: '12px'}}>Unable to Load Properties</h4>
+              <p style={{color: 'rgba(255, 255, 255, 0.7)', margin: 0}}>{error}</p>
             </div>
           ) : (
             <>
@@ -657,17 +714,15 @@ const Home = () => {
                   style={styles.exploreButton}
                   onMouseEnter={(e) => {
                     e.target.style.transform = 'translateY(-2px)';
-                    e.target.style.background = 'rgba(255, 255, 255, 0.12)';
-                    e.target.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.15)';
+                    e.target.style.background = 'rgba(59, 130, 246, 0.25)';
                   }}
                   onMouseLeave={(e) => {
                     e.target.style.transform = 'translateY(0)';
-                    e.target.style.background = 'rgba(255, 255, 255, 0.08)';
-                    e.target.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.1)';
+                    e.target.style.background = 'rgba(59, 130, 246, 0.15)';
                   }}
                 >
                   <span>View All Properties</span>
-                  <span style={{ fontSize: '0.85rem', opacity: 0.8 }}>({featuredProperties.length}+ available)</span>
+                  <span style={{ fontSize: '0.9rem', opacity: 0.8 }}>({featuredProperties.length}+ available)</span>
                 </Button>
               </div>
             </>
