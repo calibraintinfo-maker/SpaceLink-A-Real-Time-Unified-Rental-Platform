@@ -543,10 +543,7 @@ const Home = () => {
           {/* Enhanced Left Content */}
           <div style={styles.heroLeft}>
             {/* Enhanced Badge */}
-            <div style={styles.premiumBadge}>
-              <div style={styles.badgeIcon}></div>
-              <span>Made in India • Premium Quality</span>
-            </div>
+            
 
             {/* Enhanced Typography */}
             <h1 style={styles.heroTitle}>
@@ -572,16 +569,7 @@ const Home = () => {
                 <span>Find My Property Now</span>
               </Button>
               
-              <Button
-                as={Link}
-                to="/gallery"
-                style={styles.secondaryButton}
-                onMouseEnter={(e) => handleButtonHover(e, true, 'secondary')}
-                onMouseLeave={(e) => handleButtonHover(e, false, 'secondary')}
-              >
-                <span>▶</span>
-                <span>View Gallery</span>
-              </Button>
+             
             </div>
 
             {/* Enhanced Trust Indicators */}
@@ -605,9 +593,7 @@ const Home = () => {
                 alt="Luxury Property" 
                 style={styles.propertyImage}
               />
-              <div style={styles.propertyBadge}>
-                Premium Protection
-              </div>
+             
             </div>
           </div>
         </div>
