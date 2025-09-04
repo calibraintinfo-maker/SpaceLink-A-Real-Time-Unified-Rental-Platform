@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Form, Button, Card, Pagination, Alert, Badge, Spinner } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Card, Pagination, Alert, Spinner, Badge } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 import PropertyCard from '../components/PropertyCard';
 import { api, handleApiError, categories } from '../utils/api';
@@ -138,7 +138,7 @@ const FindProperty = () => {
   };
 
   const styles = {
-    // Main container with background
+    // Main container with perfect dark background
     pageContainer: {
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
@@ -146,17 +146,17 @@ const FindProperty = () => {
       paddingBottom: '3rem'
     },
 
-    // Hero section
+    // Hero section with better contrast
     heroSection: {
-      background: 'rgba(255, 255, 255, 0.05)',
-      backdropFilter: 'blur(20px) saturate(180%)',
-      WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      borderRadius: '20px',
-      padding: '40px',
+      background: 'rgba(255, 255, 255, 0.08)',
+      backdropFilter: 'blur(25px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(25px) saturate(180%)',
+      border: '1px solid rgba(255, 255, 255, 0.15)',
+      borderRadius: '24px',
+      padding: '3rem 2rem',
       marginBottom: '3rem',
       textAlign: 'center',
-      boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)'
+      boxShadow: '0 25px 60px rgba(0, 0, 0, 0.4)'
     },
 
     heroTitle: {
@@ -175,15 +175,15 @@ const FindProperty = () => {
       marginBottom: '0'
     },
 
-    // Category banner
+    // Category banner with better styling
     categoryBanner: {
       background: 'linear-gradient(135deg, #3b82f6 0%, #1e40af 100%)',
-      borderRadius: '16px',
-      padding: '24px',
+      borderRadius: '20px',
+      padding: '2rem',
       marginBottom: '2rem',
       color: 'white',
       textAlign: 'center',
-      boxShadow: '0 12px 40px rgba(59, 130, 246, 0.3)'
+      boxShadow: '0 16px 40px rgba(59, 130, 246, 0.3)'
     },
 
     categoryTitle: {
@@ -206,26 +206,28 @@ const FindProperty = () => {
     contentContainer: {
       display: 'flex',
       gap: '2rem',
-      alignItems: 'flex-start'
+      alignItems: 'flex-start',
+      maxWidth: '1400px',
+      margin: '0 auto'
     },
 
-    // Sidebar filters
+    // FIXED: Sidebar filters with proper contrast
     filterSidebar: {
-      width: '320px',
-      minWidth: '320px',
+      width: '350px',
+      minWidth: '350px',
       background: 'rgba(255, 255, 255, 0.08)',
-      backdropFilter: 'blur(20px) saturate(180%)',
-      WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+      backdropFilter: 'blur(25px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(25px) saturate(180%)',
       border: '1px solid rgba(255, 255, 255, 0.15)',
-      borderRadius: '16px',
+      borderRadius: '20px',
       padding: '0',
-      boxShadow: '0 16px 40px rgba(0, 0, 0, 0.2)',
+      boxShadow: '0 25px 60px rgba(0, 0, 0, 0.4)',
       position: 'sticky',
       top: '2rem'
     },
 
     filterHeader: {
-      padding: '24px',
+      padding: '1.5rem',
       borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
       display: 'flex',
       alignItems: 'center',
@@ -245,18 +247,19 @@ const FindProperty = () => {
     filterCount: {
       background: 'rgba(59, 130, 246, 0.2)',
       color: '#60a5fa',
-      padding: '4px 8px',
-      borderRadius: '12px',
+      padding: '4px 10px',
+      borderRadius: '20px',
       fontSize: '0.75rem',
-      fontWeight: '600'
+      fontWeight: '700',
+      border: '1px solid rgba(59, 130, 246, 0.3)'
     },
 
     filterBody: {
-      padding: '24px'
+      padding: '1.5rem'
     },
 
     filterGroup: {
-      marginBottom: '24px'
+      marginBottom: '1.5rem'
     },
 
     filterLabel: {
@@ -267,45 +270,49 @@ const FindProperty = () => {
       display: 'block'
     },
 
+    // FIXED: Perfect form inputs with high contrast
     filterInput: {
-      background: 'rgba(255, 255, 255, 0.1)',
-      border: '1px solid rgba(255, 255, 255, 0.2)',
-      borderRadius: '8px',
+      background: '#1f2937', // Dark gray background
+      border: '1px solid #4a5568', // Visible border
+      borderRadius: '10px',
       padding: '12px 16px',
-      color: 'white',
+      color: '#e0e6f5', // Light text
       fontSize: '0.9rem',
       width: '100%',
       outline: 'none',
       transition: 'all 0.3s ease'
     },
 
+    // FIXED: Perfect select dropdown with high contrast
     filterSelect: {
-      background: 'rgba(255, 255, 255, 0.1)',
-      border: '1px solid rgba(255, 255, 255, 0.2)',
-      borderRadius: '8px',
+      background: '#1f2937', // Dark gray background  
+      border: '1px solid #4a5568', // Visible border
+      borderRadius: '10px',
       padding: '12px 16px',
-      color: 'white',
+      color: '#e0e6f5', // Light text
       fontSize: '0.9rem',
       width: '100%',
-      outline: 'none'
+      outline: 'none',
+      cursor: 'pointer',
+      transition: 'all 0.3s ease'
     },
 
     priceRow: {
       display: 'flex',
-      gap: '8px'
+      gap: '10px'
     },
 
     filterButtons: {
       display: 'flex',
-      gap: '8px',
-      marginTop: '8px'
+      gap: '10px',
+      marginTop: '1rem'
     },
 
     applyButton: {
       flex: 1,
       background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
       border: 'none',
-      borderRadius: '8px',
+      borderRadius: '10px',
       padding: '12px 20px',
       color: 'white',
       fontSize: '0.9rem',
@@ -318,7 +325,7 @@ const FindProperty = () => {
       flex: 1,
       background: 'rgba(255, 255, 255, 0.1)',
       border: '1px solid rgba(255, 255, 255, 0.2)',
-      borderRadius: '8px',
+      borderRadius: '10px',
       padding: '12px 20px',
       color: 'rgba(255, 255, 255, 0.8)',
       fontSize: '0.9rem',
@@ -344,7 +351,7 @@ const FindProperty = () => {
 
     resultsTitle: {
       color: 'white',
-      fontSize: '1.5rem',
+      fontSize: '1.8rem',
       fontWeight: '700',
       margin: '0'
     },
@@ -359,7 +366,7 @@ const FindProperty = () => {
       display: 'none',
       background: 'rgba(59, 130, 246, 0.2)',
       border: '1px solid rgba(59, 130, 246, 0.3)',
-      borderRadius: '8px',
+      borderRadius: '10px',
       padding: '10px 16px',
       color: '#60a5fa',
       fontSize: '0.9rem',
@@ -381,7 +388,7 @@ const FindProperty = () => {
       alignItems: 'center',
       padding: '4rem 2rem',
       background: 'rgba(255, 255, 255, 0.05)',
-      borderRadius: '16px',
+      borderRadius: '20px',
       border: '1px solid rgba(255, 255, 255, 0.1)'
     },
 
@@ -400,7 +407,7 @@ const FindProperty = () => {
       textAlign: 'center',
       padding: '4rem 2rem',
       background: 'rgba(255, 255, 255, 0.05)',
-      borderRadius: '16px',
+      borderRadius: '20px',
       border: '1px solid rgba(255, 255, 255, 0.1)'
     },
 
@@ -425,7 +432,7 @@ const FindProperty = () => {
     emptyButton: {
       background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
       border: 'none',
-      borderRadius: '8px',
+      borderRadius: '10px',
       padding: '12px 24px',
       color: 'white',
       fontSize: '1rem',
@@ -437,15 +444,15 @@ const FindProperty = () => {
       display: 'flex',
       justifyContent: 'center',
       background: 'rgba(255, 255, 255, 0.05)',
-      borderRadius: '12px',
-      padding: '1rem'
+      borderRadius: '16px',
+      padding: '1.5rem'
     },
 
     // Error alert
     errorAlert: {
       background: 'rgba(239, 68, 68, 0.15)',
       border: '1px solid rgba(239, 68, 68, 0.3)',
-      borderRadius: '12px',
+      borderRadius: '16px',
       color: '#fca5a5',
       padding: '16px 20px',
       marginBottom: '2rem'
@@ -454,19 +461,37 @@ const FindProperty = () => {
 
   return (
     <>
-      {/* Enhanced CSS */}
+      {/* FIXED: Enhanced CSS with perfect dark mode styling */}
       <style>
         {`
+          /* FIXED: Perfect form input styling */
           .filter-input:focus, .filter-select:focus {
-            border-color: rgba(59, 130, 246, 0.5) !important;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
-            background: rgba(255, 255, 255, 0.15) !important;
+            border-color: #60a5fa !important;
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2) !important;
+            background: #2d3748 !important;
           }
           
           .filter-input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
+            color: #9ca3af !important;
           }
           
+          /* FIXED: Perfect dropdown styling */
+          .filter-select option {
+            background-color: #1f2937 !important;
+            color: #e0e6f5 !important;
+            padding: 8px !important;
+          }
+          
+          .filter-select option:hover {
+            background-color: #374151 !important;
+          }
+          
+          .filter-select option:checked {
+            background-color: #60a5fa !important;
+            color: white !important;
+          }
+          
+          /* Button hover effects */
           .apply-btn:hover {
             background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
             transform: translateY(-1px) !important;
@@ -481,6 +506,7 @@ const FindProperty = () => {
             background: rgba(59, 130, 246, 0.3) !important;
           }
           
+          /* Perfect responsive design */
           @media (max-width: 768px) {
             .content-container {
               flex-direction: column !important;
@@ -502,15 +528,20 @@ const FindProperty = () => {
             }
           }
           
+          /* Perfect pagination styling */
           .pagination .page-link {
             background: rgba(255, 255, 255, 0.1) !important;
             border: 1px solid rgba(255, 255, 255, 0.2) !important;
             color: rgba(255, 255, 255, 0.8) !important;
+            border-radius: 8px !important;
+            margin: 0 2px !important;
+            padding: 8px 12px !important;
           }
           
           .pagination .page-link:hover {
             background: rgba(59, 130, 246, 0.2) !important;
             color: #60a5fa !important;
+            border-color: rgba(59, 130, 246, 0.3) !important;
           }
           
           .pagination .page-item.active .page-link {
@@ -557,7 +588,7 @@ const FindProperty = () => {
 
           {/* Main Content */}
           <div style={styles.contentContainer} className="content-container">
-            {/* Filter Sidebar */}
+            {/* FIXED: Filter Sidebar with perfect contrast */}
             <div style={styles.filterSidebar} className="filter-sidebar">
               <div style={styles.filterHeader}>
                 <h5 style={styles.filterTitle}>
@@ -623,7 +654,7 @@ const FindProperty = () => {
                       value={filters.city}
                       onChange={handleFilterChange}
                       placeholder="City"
-                      style={{ ...styles.filterInput, marginBottom: '8px' }}
+                      style={{ ...styles.filterInput, marginBottom: '10px' }}
                       className="filter-input"
                     />
                     <input
@@ -644,7 +675,7 @@ const FindProperty = () => {
                       name="fromDate"
                       value={filters.fromDate}
                       onChange={handleFilterChange}
-                      style={{ ...styles.filterInput, marginBottom: '8px' }}
+                      style={{ ...styles.filterInput, marginBottom: '10px' }}
                       className="filter-input"
                     />
                     <input
