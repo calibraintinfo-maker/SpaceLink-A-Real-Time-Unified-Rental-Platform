@@ -16,233 +16,76 @@ const Footer = () => {
   };
 
   return (
-    <footer style={{
-      position: 'fixed',
-      bottom: 0,
-      left: 0,
-      right: 0,
-      width: '100%',
-      background: '#ffffff',
-      borderTop: '1px solid #e2e8f0',
-      boxShadow: '0 -2px 8px rgba(0, 0, 0, 0.1)',
-      zIndex: 1000,
-      padding: '30px 0'
-    }}>
+    <footer className="static-footer">
       <Container>
-        <Row className="align-items-center">
-          {/* Brand & Newsletter */}
-          <Col md={4} className="mb-2">
-            <Link to="/" style={{
-              color: '#0f172a',
-              fontSize: '1.3rem',
-              fontWeight: '700',
-              textDecoration: 'none',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              marginBottom: '10px'
-            }}>
-              <span>🏠</span>
-              <span>SpaceLink</span>
+        <Row>
+          <Col md={3}>
+            <Link to="/" className="footer-brand">
+              🏠 SpaceLink
             </Link>
-            
-            <p style={{
-              color: '#64748b',
-              fontSize: '0.85rem',
-              marginBottom: '12px',
-              maxWidth: '280px'
-            }}>
+            <p className="footer-description">
               Your trusted global property platform. Helping clients find exceptional properties and empowering seamless transactions.
             </p>
-
-            {/* Newsletter */}
-            <div>
-              <h6 style={{
-                color: '#0f172a',
-                fontSize: '0.9rem',
-                fontWeight: '600',
-                marginBottom: '8px'
-              }}>
-                Stay Updated
-              </h6>
-              
-              <form onSubmit={handleSubscribe} style={{
-                display: 'flex',
-                gap: '6px',
-                maxWidth: '280px'
-              }}>
+            <div className="newsletter-section">
+              <h6>Stay Updated</h6>
+              <form onSubmit={handleSubscribe} className="newsletter-form">
                 <input
                   type="email"
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  style={{
-                    background: '#f8fafc',
-                    border: '1px solid #e2e8f0',
-                    borderRadius: '6px',
-                    padding: '6px 10px',
-                    fontSize: '0.8rem',
-                    color: '#0f172a',
-                    flex: 1,
-                    outline: 'none'
-                  }}
+                  className="newsletter-input"
                   required
                 />
-                <button
-                  type="submit"
-                  style={{
-                    background: '#6366f1',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '6px',
-                    padding: '6px 12px',
-                    fontSize: '0.8rem',
-                    fontWeight: '600',
-                    cursor: 'pointer'
-                  }}
-                >
+                <button type="submit" className="newsletter-btn">
                   Subscribe
                 </button>
               </form>
-              
-              {isSubscribed && (
-                <p style={{ color: '#10b981', fontSize: '0.75rem', fontWeight: '600', marginTop: '4px' }}>
-                  ✓ Successfully subscribed!
-                </p>
-              )}
+              {isSubscribed && <p className="success-msg">✓ Subscribed!</p>}
             </div>
           </Col>
 
-          {/* Quick Links */}
           <Col md={2}>
-            <h6 style={{
-              color: '#0f172a',
-              fontSize: '0.9rem',
-              fontWeight: '600',
-              marginBottom: '8px'
-            }}>
-              Quick Links
-            </h6>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              {[
-                { to: '/find-property', text: 'Find Property' },
-                { to: '/add-property', text: 'List Property' },
-                { to: '/my-bookings', text: 'My Bookings' },
-                { to: '/profile', text: 'Profile' }
-              ].map((link, i) => (
-                <li key={i} style={{ marginBottom: '6px' }}>
-                  <Link to={link.to} style={{
-                    color: '#64748b',
-                    textDecoration: 'none',
-                    fontSize: '0.8rem',
-                    fontWeight: '500'
-                  }}>
-                    {link.text}
-                  </Link>
-                </li>
-              ))}
+            <h6 className="footer-title">Quick Links</h6>
+            <ul className="footer-links">
+              <li><Link to="/find-property">Find Property</Link></li>
+              <li><Link to="/add-property">List Property</Link></li>
+              <li><Link to="/my-bookings">My Bookings</Link></li>
+              <li><Link to="/profile">Profile</Link></li>
             </ul>
           </Col>
 
-          {/* Categories */}
           <Col md={2}>
-            <h6 style={{
-              color: '#0f172a',
-              fontSize: '0.9rem',
-              fontWeight: '600',
-              marginBottom: '8px'
-            }}>
-              Categories
-            </h6>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              {[
-                { to: '/find-property?category=Property Rentals', text: 'Residential' },
-                { to: '/find-property?category=Commercial', text: 'Commercial' },
-                { to: '/find-property?category=Land', text: 'Land & Plots' },
-                { to: '/find-property?category=Event', text: 'Event Venues' }
-              ].map((link, i) => (
-                <li key={i} style={{ marginBottom: '6px' }}>
-                  <Link to={link.to} style={{
-                    color: '#64748b',
-                    textDecoration: 'none',
-                    fontSize: '0.8rem',
-                    fontWeight: '500'
-                  }}>
-                    {link.text}
-                  </Link>
-                </li>
-              ))}
+            <h6 className="footer-title">Categories</h6>
+            <ul className="footer-links">
+              <li><Link to="/find-property?category=Property Rentals">Residential</Link></li>
+              <li><Link to="/find-property?category=Commercial">Commercial</Link></li>
+              <li><Link to="/find-property?category=Land">Land & Plots</Link></li>
+              <li><Link to="/find-property?category=Event">Event Venues</Link></li>
             </ul>
           </Col>
 
-          {/* Support */}
           <Col md={2}>
-            <h6 style={{
-              color: '#0f172a',
-              fontSize: '0.9rem',
-              fontWeight: '600',
-              marginBottom: '8px'
-            }}>
-              Support
-            </h6>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              {[
-                { to: '/help', text: 'Help Center' },
-                { to: '/contact', text: 'Contact Us' },
-                { to: '/about', text: 'About Us' },
-                { to: '/blog', text: 'Blog' }
-              ].map((link, i) => (
-                <li key={i} style={{ marginBottom: '6px' }}>
-                  <Link to={link.to} style={{
-                    color: '#64748b',
-                    textDecoration: 'none',
-                    fontSize: '0.8rem',
-                    fontWeight: '500'
-                  }}>
-                    {link.text}
-                  </Link>
-                </li>
-              ))}
+            <h6 className="footer-title">Support</h6>
+            <ul className="footer-links">
+              <li><Link to="/help">Help Center</Link></li>
+              <li><Link to="/contact">Contact Us</Link></li>
+              <li><Link to="/about">About Us</Link></li>
+              <li><Link to="/blog">Blog</Link></li>
             </ul>
           </Col>
 
-          {/* Legal & Copyright - NO SOCIAL ICONS */}
-          <Col md={2}>
-            <h6 style={{
-              color: '#0f172a',
-              fontSize: '0.9rem',
-              fontWeight: '600',
-              marginBottom: '8px'
-            }}>
-              Legal
-            </h6>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              {[
-                { to: '/privacy', text: 'Privacy Policy' },
-                { to: '/terms', text: 'Terms of Service' },
-                { to: '/cookies', text: 'Cookie Policy' }
-              ].map((link, i) => (
-                <li key={i} style={{ marginBottom: '6px' }}>
-                  <Link to={link.to} style={{
-                    color: '#64748b',
-                    textDecoration: 'none',
-                    fontSize: '0.8rem',
-                    fontWeight: '500'
-                  }}>
-                    {link.text}
-                  </Link>
-                </li>
-              ))}
+          <Col md={3}>
+            <h6 className="footer-title">Legal</h6>
+            <ul className="footer-links">
+              <li><Link to="/privacy">Privacy Policy</Link></li>
+              <li><Link to="/terms">Terms of Service</Link></li>
+              <li><Link to="/cookies">Cookie Policy</Link></li>
+              <li><Link to="/disclaimer">Disclaimer</Link></li>
             </ul>
-            
-            {/* Simple Copyright - NO SOCIAL ICONS */}
-            <p style={{
-              color: '#64748b',
-              fontSize: '0.75rem',
-              margin: '10px 0 0 0'
-            }}>
-              © 2025 SpaceLink. All rights reserved.
-            </p>
+            <div className="copyright">
+              <p>© 2025 SpaceLink. All rights reserved.</p>
+            </div>
           </Col>
         </Row>
       </Container>
