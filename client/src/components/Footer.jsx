@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -17,26 +17,27 @@ const Footer = () => {
 
   return (
     <footer style={{
+      // CRITICAL: Natural positioning - NO FIXED
+      position: 'relative',
       background: '#ffffff',
       borderTop: '1px solid #e2e8f0',
-      paddingTop: '40px',        // Reduced from 60px
-      paddingBottom: '20px',     // Reduced from 40px
-      position: 'relative'       // Ensures natural scrolling
+      paddingTop: '30px',          // Reduced size
+      paddingBottom: '20px',       // Reduced size
+      marginTop: 'auto'           // Push to bottom naturally
     }}>
       <Container>
-        {/* Compact Footer Content */}
         <Row>
-          {/* Brand & Newsletter - More Compact */}
-          <Col lg={4} md={6} className="mb-3">
+          {/* Compact Brand & Newsletter */}
+          <Col md={6} className="mb-3">
             <Link to="/" style={{
               color: '#0f172a',
-              fontSize: '1.3rem',        // Slightly smaller
+              fontSize: '1.2rem',
               fontWeight: '700',
               textDecoration: 'none',
               display: 'flex',
               alignItems: 'center',
               gap: '6px',
-              marginBottom: '12px'       // Reduced spacing
+              marginBottom: '10px'
             }}>
               <span>🏠</span>
               <span>SpaceLink</span>
@@ -44,19 +45,19 @@ const Footer = () => {
             
             <p style={{
               color: '#64748b',
-              fontSize: '0.9rem',        // Smaller text
-              lineHeight: '1.5',
-              maxWidth: '280px',
-              marginBottom: '16px'       // Reduced spacing
+              fontSize: '0.85rem',
+              lineHeight: '1.4',
+              marginBottom: '15px',
+              maxWidth: '300px'
             }}>
               Your trusted global property platform. Find exceptional properties.
             </p>
 
             {/* Compact Newsletter */}
-            <div style={{ marginBottom: '20px' }}>
+            <div>
               <h6 style={{
                 color: '#0f172a',
-                fontSize: '0.95rem',      // Smaller
+                fontSize: '0.9rem',
                 fontWeight: '600',
                 marginBottom: '8px'
               }}>
@@ -66,7 +67,8 @@ const Footer = () => {
               <form onSubmit={handleSubscribe} style={{
                 display: 'flex',
                 gap: '6px',
-                maxWidth: '280px'
+                maxWidth: '280px',
+                marginBottom: '10px'
               }}>
                 <input
                   type="email"
@@ -77,8 +79,8 @@ const Footer = () => {
                     background: '#f8fafc',
                     border: '1px solid #e2e8f0',
                     borderRadius: '6px',
-                    padding: '8px 12px',    // Smaller padding
-                    fontSize: '0.85rem',    // Smaller font
+                    padding: '6px 10px',
+                    fontSize: '0.8rem',
                     color: '#0f172a',
                     flex: 1,
                     outline: 'none'
@@ -92,11 +94,10 @@ const Footer = () => {
                     color: 'white',
                     border: 'none',
                     borderRadius: '6px',
-                    padding: '8px 14px',    // Smaller padding
-                    fontSize: '0.85rem',    // Smaller font
+                    padding: '6px 12px',
+                    fontSize: '0.8rem',
                     fontWeight: '600',
-                    cursor: 'pointer',
-                    whiteSpace: 'nowrap'
+                    cursor: 'pointer'
                   }}
                 >
                   Subscribe
@@ -104,181 +105,125 @@ const Footer = () => {
               </form>
               
               {isSubscribed && (
-                <p style={{
-                  color: '#10b981',
-                  fontSize: '0.8rem',     // Smaller
-                  fontWeight: '600',
-                  marginTop: '6px'
-                }}>
+                <p style={{ color: '#10b981', fontSize: '0.75rem', fontWeight: '600' }}>
                   ✓ Subscribed!
                 </p>
               )}
             </div>
           </Col>
 
-          {/* Quick Links - Compact */}
-          <Col lg={2} md={3} className="mb-3">
-            <h6 style={{
-              color: '#0f172a',
-              fontSize: '0.9rem',        // Smaller
-              fontWeight: '600',
-              marginBottom: '12px'
-            }}>
-              Quick Links
-            </h6>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              {[
-                { to: '/find-property', text: 'Find Property' },
-                { to: '/add-property', text: 'List Property' },
-                { to: '/my-bookings', text: 'My Bookings' },
-                { to: '/profile', text: 'Profile' }
-              ].map((link, index) => (
-                <li key={index} style={{ marginBottom: '8px' }}>
-                  <Link to={link.to} style={{
-                    color: '#64748b',
-                    textDecoration: 'none',
-                    fontSize: '0.85rem',   // Smaller
-                    fontWeight: '500'
-                  }}>
-                    {link.text}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </Col>
+          {/* Compact Links */}
+          <Col md={6}>
+            <Row>
+              <Col sm={3}>
+                <h6 style={{ color: '#0f172a', fontSize: '0.85rem', fontWeight: '600', marginBottom: '8px' }}>
+                  Quick Links
+                </h6>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                  {['Find Property', 'List Property', 'My Bookings', 'Profile'].map((text, i) => (
+                    <li key={i} style={{ marginBottom: '6px' }}>
+                      <Link to={`/${text.toLowerCase().replace(' ', '-')}`} style={{
+                        color: '#64748b',
+                        textDecoration: 'none',
+                        fontSize: '0.75rem'
+                      }}>
+                        {text}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </Col>
 
-          {/* Categories - Compact */}
-          <Col lg={2} md={3} className="mb-3">
-            <h6 style={{
-              color: '#0f172a',
-              fontSize: '0.9rem',
-              fontWeight: '600',
-              marginBottom: '12px'
-            }}>
-              Categories
-            </h6>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              {[
-                { to: '/find-property?category=Property Rentals', text: 'Residential' },
-                { to: '/find-property?category=Commercial', text: 'Commercial' },
-                { to: '/find-property?category=Land', text: 'Land & Plots' },
-                { to: '/find-property?category=Event', text: 'Event Venues' }
-              ].map((link, index) => (
-                <li key={index} style={{ marginBottom: '8px' }}>
-                  <Link to={link.to} style={{
-                    color: '#64748b',
-                    textDecoration: 'none',
-                    fontSize: '0.85rem',
-                    fontWeight: '500'
-                  }}>
-                    {link.text}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </Col>
+              <Col sm={3}>
+                <h6 style={{ color: '#0f172a', fontSize: '0.85rem', fontWeight: '600', marginBottom: '8px' }}>
+                  Categories
+                </h6>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                  {['Residential', 'Commercial', 'Land & Plots', 'Events'].map((text, i) => (
+                    <li key={i} style={{ marginBottom: '6px' }}>
+                      <Link to={`/find-property?category=${text}`} style={{
+                        color: '#64748b',
+                        textDecoration: 'none',
+                        fontSize: '0.75rem'
+                      }}>
+                        {text}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </Col>
 
-          {/* Support - Compact */}
-          <Col lg={2} md={3} className="mb-3">
-            <h6 style={{
-              color: '#0f172a',
-              fontSize: '0.9rem',
-              fontWeight: '600',
-              marginBottom: '12px'
-            }}>
-              Support
-            </h6>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              {[
-                { to: '/help', text: 'Help Center' },
-                { to: '/contact', text: 'Contact Us' },
-                { to: '/about', text: 'About Us' },
-                { to: '/blog', text: 'Blog' }
-              ].map((link, index) => (
-                <li key={index} style={{ marginBottom: '8px' }}>
-                  <Link to={link.to} style={{
-                    color: '#64748b',
-                    textDecoration: 'none',
-                    fontSize: '0.85rem',
-                    fontWeight: '500'
-                  }}>
-                    {link.text}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </Col>
+              <Col sm={3}>
+                <h6 style={{ color: '#0f172a', fontSize: '0.85rem', fontWeight: '600', marginBottom: '8px' }}>
+                  Support
+                </h6>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                  {['Help Center', 'Contact Us', 'About Us', 'Blog'].map((text, i) => (
+                    <li key={i} style={{ marginBottom: '6px' }}>
+                      <Link to={`/${text.toLowerCase().replace(' ', '-')}`} style={{
+                        color: '#64748b',
+                        textDecoration: 'none',
+                        fontSize: '0.75rem'
+                      }}>
+                        {text}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </Col>
 
-          {/* Legal - Compact */}
-          <Col lg={2} md={3} className="mb-3">
-            <h6 style={{
-              color: '#0f172a',
-              fontSize: '0.9rem',
-              fontWeight: '600',
-              marginBottom: '12px'
-            }}>
-              Legal
-            </h6>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              {[
-                { to: '/privacy', text: 'Privacy Policy' },
-                { to: '/terms', text: 'Terms of Service' },
-                { to: '/cookies', text: 'Cookie Policy' },
-                { to: '/disclaimer', text: 'Disclaimer' }
-              ].map((link, index) => (
-                <li key={index} style={{ marginBottom: '8px' }}>
-                  <Link to={link.to} style={{
-                    color: '#64748b',
-                    textDecoration: 'none',
-                    fontSize: '0.85rem',
-                    fontWeight: '500'
-                  }}>
-                    {link.text}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+              <Col sm={3}>
+                <h6 style={{ color: '#0f172a', fontSize: '0.85rem', fontWeight: '600', marginBottom: '8px' }}>
+                  Legal
+                </h6>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                  {['Privacy Policy', 'Terms of Service', 'Cookie Policy', 'Disclaimer'].map((text, i) => (
+                    <li key={i} style={{ marginBottom: '6px' }}>
+                      <Link to={`/${text.toLowerCase().replace(' ', '-')}`} style={{
+                        color: '#64748b',
+                        textDecoration: 'none',
+                        fontSize: '0.75rem'
+                      }}>
+                        {text}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </Col>
+            </Row>
           </Col>
         </Row>
 
-        {/* Compact Bottom Section */}
+        {/* Compact Bottom */}
         <div style={{
           borderTop: '1px solid #e2e8f0',
-          paddingTop: '16px',           // Reduced from 32px
+          paddingTop: '12px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           flexWrap: 'wrap',
-          gap: '12px'
+          gap: '10px'
         }}>
-          <p style={{
-            color: '#64748b',
-            fontSize: '0.8rem',          // Smaller
-            margin: 0
-          }}>
+          <p style={{ color: '#64748b', fontSize: '0.75rem', margin: 0 }}>
             © 2025 SpaceLink. All rights reserved.
           </p>
           
-          <div style={{
-            display: 'flex',
-            gap: '12px',                 // Reduced gap
-            alignItems: 'center'
-          }}>
-            {['𝕏', 'in', '📷', 'f'].map((icon, index) => (
-              <a key={index} href="#" style={{
+          <div style={{ display: 'flex', gap: '8px' }}>
+            {['𝕏', 'in', '📷', 'f'].map((icon, i) => (
+              <a key={i} href="#" style={{
                 color: '#64748b',
-                fontSize: '1rem',         // Smaller icons
+                fontSize: '0.9rem',
                 textDecoration: 'none',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                width: '32px',             // Smaller size
-                height: '32px',
-                borderRadius: '6px',
+                width: '28px',
+                height: '28px',
+                borderRadius: '4px',
                 background: '#f8fafc',
                 border: '1px solid #e2e8f0'
               }}>
-                <span>{icon}</span>
+                {icon}
               </a>
             ))}
           </div>
