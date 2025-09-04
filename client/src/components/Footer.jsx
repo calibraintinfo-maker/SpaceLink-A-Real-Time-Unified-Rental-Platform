@@ -19,64 +19,62 @@ const Footer = () => {
     <div style={{
       background: '#ffffff',
       borderTop: '1px solid #e2e8f0',
-      padding: '25px 0',  // Reduced from 50px
-      marginTop: '30px',  // Reduced from 50px
-      boxShadow: '0 -1px 4px rgba(0, 0, 0, 0.05)'
+      padding: '40px 0',  // Normal size - not too big, not too small
+      marginTop: '40px',
+      boxShadow: '0 -2px 8px rgba(0, 0, 0, 0.08)'
     }}>
       <Container>
-        {/* Compact Footer Content */}
-        <Row className="align-items-center">
-          {/* Brand & Newsletter - More Compact */}
-          <Col md={4} className="mb-3">
+        <Row>
+          {/* Brand & Newsletter - Perfect Size */}
+          <Col lg={4} md={6} className="mb-4">
             <Link to="/" style={{
               color: '#0f172a',
-              fontSize: '1.2rem',  // Smaller
+              fontSize: '1.3rem',  // Normal size
               fontWeight: '700',
               textDecoration: 'none',
               display: 'block',
-              marginBottom: '8px'   // Reduced spacing
+              marginBottom: '12px'
             }}>
               🏠 SpaceLink
             </Link>
             
             <p style={{
               color: '#64748b',
-              fontSize: '0.8rem',   // Smaller
-              lineHeight: '1.4',
-              marginBottom: '12px',  // Reduced spacing
-              maxWidth: '250px'
+              fontSize: '0.9rem',   // Normal size
+              lineHeight: '1.5',
+              marginBottom: '20px',
+              maxWidth: '300px'
             }}>
-              Your trusted property platform.
+              Your trusted global property platform. Helping clients find exceptional properties and empowering seamless transactions.
             </p>
 
-            {/* Compact Newsletter */}
             <div>
               <h6 style={{
                 color: '#0f172a',
-                fontSize: '0.85rem',  // Smaller
+                fontSize: '1rem',    // Normal size
                 fontWeight: '600',
-                marginBottom: '6px'
+                marginBottom: '10px'
               }}>
                 Stay Updated
               </h6>
               
               <form onSubmit={handleSubscribe} style={{
                 display: 'flex',
-                gap: '6px',
-                maxWidth: '250px',
-                marginBottom: '8px'
+                gap: '8px',
+                maxWidth: '300px',
+                marginBottom: '12px'
               }}>
                 <input
                   type="email"
-                  placeholder="Enter email"
+                  placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   style={{
                     background: '#f8fafc',
                     border: '1px solid #e2e8f0',
-                    borderRadius: '4px',
-                    padding: '6px 10px',  // Smaller padding
-                    fontSize: '0.8rem',   // Smaller font
+                    borderRadius: '6px',
+                    padding: '8px 12px',  // Normal padding
+                    fontSize: '0.9rem',   // Normal size
                     color: '#0f172a',
                     flex: 1,
                     outline: 'none'
@@ -87,9 +85,9 @@ const Footer = () => {
                   background: '#6366f1',
                   color: 'white',
                   border: 'none',
-                  borderRadius: '4px',
-                  padding: '6px 12px',  // Smaller padding
-                  fontSize: '0.8rem',   // Smaller font
+                  borderRadius: '6px',
+                  padding: '8px 16px',  // Normal padding
+                  fontSize: '0.9rem',   // Normal size
                   fontWeight: '600',
                   cursor: 'pointer',
                   whiteSpace: 'nowrap'
@@ -99,24 +97,24 @@ const Footer = () => {
               </form>
               
               {isSubscribed && (
-                <p style={{ color: '#10b981', fontSize: '0.75rem', fontWeight: '600', margin: 0 }}>
-                  ✓ Subscribed!
+                <p style={{ color: '#10b981', fontSize: '0.85rem', fontWeight: '600', margin: 0 }}>
+                  ✓ Successfully subscribed!
                 </p>
               )}
             </div>
           </Col>
 
-          {/* Quick Links - Compact */}
-          <Col md={2} className="mb-2">
+          {/* Quick Links - Normal Size */}
+          <Col lg={2} md={3} className="mb-4">
             <h6 style={{
               color: '#0f172a',
-              fontSize: '0.85rem',  // Smaller
+              fontSize: '0.95rem',  // Normal size
               fontWeight: '600',
-              marginBottom: '8px'
+              marginBottom: '12px'
             }}>
               Quick Links
             </h6>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {[
                 { to: '/find-property', text: 'Find Property' },
                 { to: '/add-property', text: 'List Property' },
@@ -126,8 +124,9 @@ const Footer = () => {
                 <Link key={i} to={link.to} style={{
                   color: '#64748b',
                   textDecoration: 'none',
-                  fontSize: '0.75rem',  // Smaller
-                  fontWeight: '500'
+                  fontSize: '0.85rem',  // Normal size
+                  fontWeight: '500',
+                  transition: 'color 0.2s ease'
                 }}>
                   {link.text}
                 </Link>
@@ -135,17 +134,17 @@ const Footer = () => {
             </div>
           </Col>
 
-          {/* Categories - Compact */}
-          <Col md={2} className="mb-2">
+          {/* Categories - Normal Size */}
+          <Col lg={2} md={3} className="mb-4">
             <h6 style={{
               color: '#0f172a',
-              fontSize: '0.85rem',
+              fontSize: '0.95rem',
               fontWeight: '600',
-              marginBottom: '8px'
+              marginBottom: '12px'
             }}>
               Categories
             </h6>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {[
                 { to: '/find-property?category=Property Rentals', text: 'Residential' },
                 { to: '/find-property?category=Commercial', text: 'Commercial' },
@@ -155,8 +154,9 @@ const Footer = () => {
                 <Link key={i} to={link.to} style={{
                   color: '#64748b',
                   textDecoration: 'none',
-                  fontSize: '0.75rem',
-                  fontWeight: '500'
+                  fontSize: '0.85rem',
+                  fontWeight: '500',
+                  transition: 'color 0.2s ease'
                 }}>
                   {link.text}
                 </Link>
@@ -164,17 +164,17 @@ const Footer = () => {
             </div>
           </Col>
 
-          {/* Support - Compact */}
-          <Col md={2} className="mb-2">
+          {/* Support - Normal Size */}
+          <Col lg={2} md={3} className="mb-4">
             <h6 style={{
               color: '#0f172a',
-              fontSize: '0.85rem',
+              fontSize: '0.95rem',
               fontWeight: '600',
-              marginBottom: '8px'
+              marginBottom: '12px'
             }}>
               Support
             </h6>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {[
                 { to: '/help', text: 'Help Center' },
                 { to: '/contact', text: 'Contact Us' },
@@ -184,8 +184,9 @@ const Footer = () => {
                 <Link key={i} to={link.to} style={{
                   color: '#64748b',
                   textDecoration: 'none',
-                  fontSize: '0.75rem',
-                  fontWeight: '500'
+                  fontSize: '0.85rem',
+                  fontWeight: '500',
+                  transition: 'color 0.2s ease'
                 }}>
                   {link.text}
                 </Link>
@@ -193,44 +194,53 @@ const Footer = () => {
             </div>
           </Col>
 
-          {/* Legal & Copyright - Compact */}
-          <Col md={2} className="mb-2">
+          {/* Legal - Normal Size */}
+          <Col lg={2} md={3} className="mb-4">
             <h6 style={{
               color: '#0f172a',
-              fontSize: '0.85rem',
+              fontSize: '0.95rem',
               fontWeight: '600',
-              marginBottom: '8px'
+              marginBottom: '12px'
             }}>
               Legal
             </h6>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '12px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {[
                 { to: '/privacy', text: 'Privacy Policy' },
                 { to: '/terms', text: 'Terms of Service' },
-                { to: '/cookies', text: 'Cookie Policy' }
+                { to: '/cookies', text: 'Cookie Policy' },
+                { to: '/disclaimer', text: 'Disclaimer' }
               ].map((link, i) => (
                 <Link key={i} to={link.to} style={{
                   color: '#64748b',
                   textDecoration: 'none',
-                  fontSize: '0.75rem',
-                  fontWeight: '500'
+                  fontSize: '0.85rem',
+                  fontWeight: '500',
+                  transition: 'color 0.2s ease'
                 }}>
                   {link.text}
                 </Link>
               ))}
             </div>
-            
-            {/* Copyright - No Social Icons */}
-            <p style={{
-              color: '#64748b',
-              fontSize: '0.7rem',   // Smaller
-              margin: 0,
-              fontWeight: '500'
-            }}>
-              © 2025 SpaceLink. All rights reserved.
-            </p>
           </Col>
         </Row>
+
+        {/* Copyright Section - Normal Size, No Social Icons */}
+        <div style={{
+          borderTop: '1px solid #e2e8f0',
+          paddingTop: '24px',
+          marginTop: '30px',
+          textAlign: 'center'
+        }}>
+          <p style={{
+            color: '#64748b',
+            fontSize: '0.9rem',    // Normal size
+            margin: 0,
+            fontWeight: '500'
+          }}>
+            © 2025 SpaceLink. All rights reserved.
+          </p>
+        </div>
       </Container>
     </div>
   );
