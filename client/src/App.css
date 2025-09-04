@@ -46,24 +46,23 @@ body {
   padding: 8px 0 !important;
 }
 
-/* CRITICAL: Main content grows to fill available space */
+/* CRITICAL: Main content grows naturally */
 .main-content {
   flex: 1 !important;
   padding-top: 80px !important;
   background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
   overflow-y: auto;
-  min-height: calc(100vh - 80px);
 }
 
-/* CRITICAL: Footer positioned naturally at bottom - NOT FIXED */
-.footer {
-  position: relative !important;  /* Key: Natural scrolling */
-  flex-shrink: 0 !important;
+/* CRITICAL: Footer flows naturally - NOT FIXED */
+footer {
+  position: relative !important;  /* Natural flow */
+  flex-shrink: 0 !important;     /* Don't shrink */
   background: #ffffff !important;
   border-top: 1px solid #e2e8f0 !important;
   color: #0f172a !important;
-  margin-top: 0 !important;
-  z-index: 1 !important;  /* Lower than navbar */
+  margin-top: auto !important;   /* Push to bottom */
+  z-index: 1 !important;         /* Below navbar */
 }
 
 /* Mobile responsiveness */
@@ -75,7 +74,6 @@ body {
   
   .main-content {
     padding-top: 70px !important;
-    min-height: calc(100vh - 70px);
   }
 }
 
@@ -87,7 +85,6 @@ body {
   
   .main-content {
     padding-top: 60px !important;
-    min-height: calc(100vh - 60px);
   }
 }
 
@@ -461,6 +458,130 @@ a:focus-visible {
   margin-bottom: 16px;
 }
 
+/* Navbar brand and navigation enhancements */
+.navbar-brand {
+  font-weight: 800 !important;
+  font-size: 1.5rem !important;
+  color: #0f172a !important;
+}
+
+.navbar-brand:hover {
+  color: #6366f1 !important;
+}
+
+.nav-link {
+  font-weight: 500 !important;
+  color: #64748b !important;
+  transition: color 0.2s ease !important;
+}
+
+.nav-link:hover {
+  color: #6366f1 !important;
+}
+
+.nav-link.active {
+  color: #6366f1 !important;
+  font-weight: 600 !important;
+}
+
+/* Navbar toggler */
+.navbar-toggler {
+  border: none !important;
+  padding: 4px 8px !important;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none !important;
+}
+
+/* Property card enhancements */
+.property-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.property-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px) scale(1.02);
+}
+
+/* Newsletter form enhancements */
+.newsletter-input {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  color: #0f172a;
+  background: #f8fafc;
+  transition: all 0.2s ease;
+}
+
+.newsletter-input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.newsletter-btn {
+  background: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.newsletter-btn:hover {
+  background: #4f46e5;
+  transform: translateY(-1px);
+}
+
+/* Footer link enhancements */
+.footer-link {
+  color: #64748b;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+  color: #6366f1;
+}
+
+/* Social links */
+.social-link {
+  color: #64748b;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.social-link:hover {
+  color: #6366f1;
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+}
+
 /* Print styles */
 @media print {
   .navbar, .footer {
@@ -500,7 +621,33 @@ a:focus-visible {
   }
 }
 
-/* Dark mode support (if needed later) */
-@media (prefers-color-scheme: dark) {
-  /* Add dark mode styles here if needed */
+/* Smooth scrolling behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Selection styling */
+::selection {
+  background: rgba(99, 102, 241, 0.2);
+  color: #0f172a;
+}
+
+/* Image responsiveness */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Text selection improvements */
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
