@@ -20,7 +20,7 @@ import './App.css';
 function App() {
   return (
     <>
-      {/* CRITICAL: Fixed CSS to prevent overlapping and proper layout */}
+      {/* CRITICAL: Fixed CSS to prevent all overlapping issues */}
       <style>
         {`
           /* Reset and base styles */
@@ -28,7 +28,7 @@ function App() {
             box-sizing: border-box;
           }
 
-          html, body, #root {
+          html, body {
             height: 100%;
             margin: 0;
             padding: 0;
@@ -39,14 +39,24 @@ function App() {
             line-height: 1.6;
             color: #0f172a;
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
           }
 
-          /* CRITICAL: Proper layout structure to prevent footer overlap */
+          #root {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            flex: 1;
+          }
+
+          /* CRITICAL: Proper app layout structure */
           .app-container {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            position: relative;
+            flex: 1;
           }
 
           /* CRITICAL: Fixed navbar positioning */
@@ -55,7 +65,7 @@ function App() {
             top: 0 !important;
             left: 0 !important;
             right: 0 !important;
-            z-index: 1050 !important; /* Highest priority - above everything */
+            z-index: 1050 !important; /* Highest priority */
             height: 80px !important;
             background: rgba(255, 255, 255, 0.95) !important;
             backdrop-filter: blur(20px) saturate(180%) !important;
@@ -63,23 +73,24 @@ function App() {
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1) !important;
           }
 
-          /* CRITICAL: Main content with proper spacing */
+          /* CRITICAL: Main content with proper spacing - NO overlap */
           .main-content {
-            flex: 1 0 auto; /* Grow to fill space, don't shrink */
-            padding-top: 80px; /* Space for fixed navbar */
-            padding-bottom: 60px; /* Space for footer */
+            flex: 1 !important;
+            padding-top: 80px !important; /* Space for fixed navbar */
             background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
-            min-height: calc(100vh - 80px); /* Minimum height minus navbar */
+            min-height: calc(100vh - 80px);
+            overflow-y: auto;
           }
 
-          /* CRITICAL: Footer positioning to prevent overlap */
+          /* CRITICAL: Footer - NO fixed positioning to prevent overlap */
           .app-footer {
-            flex-shrink: 0; /* Don't shrink */
             background: #ffffff !important; /* Light theme footer */
             border-top: 1px solid #e2e8f0 !important;
-            z-index: 10 !important; /* Below navbar but above content */
-            position: relative !important;
-            margin-top: auto; /* Push to bottom */
+            color: #0f172a !important;
+            z-index: 10 !important;
+            position: relative !important; /* NOT fixed - this prevents overlap */
+            margin-top: 0 !important;
+            flex-shrink: 0 !important;
           }
 
           /* Smooth scrolling */
@@ -168,7 +179,7 @@ function App() {
               <Navbar />
             </div>
 
-            {/* Main Content Area - Proper Spacing */}
+            {/* Main Content Area - Proper Spacing, NO overlap */}
             <main className="main-content">
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -240,7 +251,7 @@ function App() {
               </Routes>
             </main>
 
-            {/* Footer - Below Content */}
+            {/* Footer - NO overlap, positioned naturally */}
             <div className="app-footer">
               <Footer />
             </div>
