@@ -20,7 +20,7 @@ import './App.css';
 function App() {
   return (
     <>
-      {/* COMPLETE FIX: This CSS will solve ALL overlap issues */}
+      {/* COMPLETE FLEXBOX SOLUTION - No more footer overlap! */}
       <style>
         {`
           /* Complete reset */
@@ -42,19 +42,20 @@ function App() {
           }
 
           #root {
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
+            min-height: 100vh;
           }
 
-          /* CRITICAL: Perfect app structure */
+          /* CRITICAL: Flexbox layout prevents all overlap issues */
           .app-container {
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
+            min-height: 100vh;
+            flex: 1;
           }
 
-          /* CRITICAL: Fixed navbar - stays on top */
+          /* Fixed navbar - highest z-index */
           .app-navbar {
             position: fixed !important;
             top: 0 !important;
@@ -68,22 +69,22 @@ function App() {
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1) !important;
           }
 
-          /* CRITICAL: Main content - NO overlap */
+          /* CRITICAL: Main content grows to fill space */
           .main-content {
-            flex: 1 !important;
-            margin-top: 80px !important; /* Space for navbar */
+            flex: 1 !important; /* This is the key - grows to fill space */
+            padding-top: 80px !important; /* Space for fixed navbar */
             background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
             min-height: calc(100vh - 80px);
           }
 
-          /* CRITICAL: Footer - Light theme, NO overlap */
+          /* CRITICAL: Footer stays at bottom naturally */
           .app-footer {
+            flex-shrink: 0 !important; /* Prevents shrinking */
             background: #ffffff !important;
             border-top: 1px solid #e2e8f0 !important;
             color: #0f172a !important;
-            z-index: 10 !important;
             position: relative !important;
-            margin-top: 0 !important;
+            z-index: 10 !important;
           }
 
           /* Mobile responsiveness */
@@ -93,7 +94,8 @@ function App() {
             }
             
             .main-content {
-              margin-top: 70px !important;
+              padding-top: 70px !important;
+              min-height: calc(100vh - 70px);
             }
           }
 
@@ -131,7 +133,14 @@ function App() {
             background: #94a3b8;
           }
 
-          /* Error boundary */
+          /* Focus styles for accessibility */
+          *:focus-visible {
+            outline: 2px solid #6366f1;
+            outline-offset: 2px;
+            border-radius: 4px;
+          }
+
+          /* Error boundary styles */
           .error-boundary {
             padding: 40px;
             text-align: center;
@@ -160,7 +169,7 @@ function App() {
               <Navbar />
             </div>
 
-            {/* Main Content - NO overlap */}
+            {/* Main Content - Grows to fill space */}
             <main className="main-content">
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -208,6 +217,7 @@ function App() {
                     </ProtectedRoute>
                   } 
                 />
+                {/* 404 Error Route */}
                 <Route 
                   path="*" 
                   element={
@@ -231,7 +241,7 @@ function App() {
               </Routes>
             </main>
 
-            {/* Footer - Light theme, positioned correctly */}
+            {/* Footer - Naturally positioned at bottom */}
             <div className="app-footer">
               <Footer />
             </div>
