@@ -692,7 +692,7 @@ const PropertyDetails = () => {
                 <Carousel
                   activeIndex={activeImageIndex}
                   onSelect={(selectedIndex) => setActiveImageIndex(selectedIndex)}
-                  interval={2000} // 2 seconds auto-slide
+                  interval={1000} // 1 seconds auto-slide
                   fade={false}
                   controls={property.images.length > 1}
                   indicators={property.images.length > 1}
