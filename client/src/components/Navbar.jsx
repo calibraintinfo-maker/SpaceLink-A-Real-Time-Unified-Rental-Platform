@@ -17,55 +17,56 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Clean CSS Override */}
+      {/* Perfect Compact CSS */}
       <style>
         {`
-          .clean-navbar {
+          .perfect-navbar {
             background: rgba(15, 23, 42, 0.95) !important;
             backdrop-filter: blur(10px) !important;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+            padding: 8px 0 !important;
+            min-height: 56px !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
           }
           
-          .navbar-brand {
-            margin-right: auto !important;
-            padding-left: 0 !important;
-          }
-          
-          .clean-brand {
+          .perfect-brand {
             color: white !important;
             font-weight: 700 !important;
-            font-size: 1.4rem !important;
+            font-size: 1.3rem !important;
             text-decoration: none !important;
-            display: flex !important;
-            align-items: center !important;
-            gap: 8px !important;
+            margin-right: auto !important;
+            padding: 4px 0 !important;
           }
           
-          .clean-nav-link {
+          .perfect-nav {
+            margin-left: 0 !important;
+          }
+          
+          .perfect-nav-link {
             color: rgba(255, 255, 255, 0.9) !important;
             font-weight: 500 !important;
-            padding: 8px 16px !important;
-            margin: 0 4px !important;
-            border-radius: 6px !important;
+            font-size: 0.9rem !important;
+            padding: 6px 12px !important;
+            margin: 0 2px !important;
+            border-radius: 4px !important;
             transition: all 0.2s ease !important;
           }
           
-          .clean-nav-link:hover {
+          .perfect-nav-link:hover {
             background: rgba(255, 255, 255, 0.1) !important;
             color: #60a5fa !important;
           }
           
-          .clean-nav-link.active {
+          .perfect-nav-link.active {
             background: rgba(59, 130, 246, 0.2) !important;
             color: #60a5fa !important;
           }
           
-          .clean-btn {
-            padding: 8px 20px !important;
-            border-radius: 6px !important;
+          .perfect-btn {
+            padding: 6px 16px !important;
+            border-radius: 4px !important;
             font-weight: 500 !important;
-            font-size: 0.9rem !important;
+            font-size: 0.85rem !important;
             text-decoration: none !important;
             transition: all 0.2s ease !important;
           }
@@ -91,20 +92,38 @@ const Navbar = () => {
             background: #2563eb !important;
           }
           
+          .navbar-toggler {
+            padding: 4px 8px !important;
+            font-size: 0.9rem !important;
+          }
+          
           .dropdown-menu {
             background: rgba(15, 23, 42, 0.95) !important;
             border: 1px solid rgba(255, 255, 255, 0.1) !important;
-            border-radius: 6px !important;
+            border-radius: 4px !important;
+            font-size: 0.9rem !important;
           }
           
           .dropdown-item {
             color: rgba(255, 255, 255, 0.9) !important;
-            padding: 8px 16px !important;
+            padding: 6px 12px !important;
           }
           
           .dropdown-item:hover {
             background: rgba(255, 255, 255, 0.1) !important;
             color: #60a5fa !important;
+          }
+          
+          /* Force brand to far left */
+          .navbar-brand {
+            margin-right: auto !important;
+            padding-left: 0 !important;
+          }
+          
+          /* Ensure perfect container alignment */
+          .navbar .container {
+            padding-left: 20px !important;
+            padding-right: 20px !important;
           }
         `}
       </style>
@@ -112,26 +131,31 @@ const Navbar = () => {
       <BootstrapNavbar 
         expand="lg" 
         sticky="top"
-        className="clean-navbar"
-        style={{ padding: '16px 0' }}
+        className="perfect-navbar"
       >
         <Container>
-          {/* Logo on Far Left */}
-          <BootstrapNavbar.Brand as={Link} to="/" className="clean-brand">
-            <span style={{ fontSize: '1.5rem' }}>🏠</span>
+          {/* Brand on Far Left */}
+          <BootstrapNavbar.Brand 
+            as={Link} 
+            to="/" 
+            className="perfect-brand d-flex align-items-center"
+            style={{ gap: '6px' }}
+          >
+            <span style={{ fontSize: '1.4rem' }}>🏠</span>
             <span>SpaceLink</span>
           </BootstrapNavbar.Brand>
           
           <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
           
           <BootstrapNavbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
+            {/* Navigation Links */}
+            <Nav className="perfect-nav me-auto">
               {isAuthenticated && (
                 <>
                   <Nav.Link 
                     as={Link} 
                     to="/my-bookings"
-                    className={`clean-nav-link ${isActive('/my-bookings') ? 'active' : ''}`}
+                    className={`perfect-nav-link ${isActive('/my-bookings') ? 'active' : ''}`}
                   >
                     My Bookings
                   </Nav.Link>
@@ -139,7 +163,7 @@ const Navbar = () => {
                   <NavDropdown 
                     title="Properties" 
                     id="property-dropdown"
-                    className="clean-nav-link"
+                    className="perfect-nav-link"
                   >
                     <NavDropdown.Item as={Link} to="/add-property">
                       Add Property
@@ -159,7 +183,7 @@ const Navbar = () => {
                   title={user?.name || 'User'} 
                   id="user-dropdown" 
                   align="end"
-                  className="clean-nav-link"
+                  className="perfect-nav-link"
                 >
                   <NavDropdown.Item as={Link} to="/profile">
                     Profile
@@ -170,11 +194,11 @@ const Navbar = () => {
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : (
-                <div className="d-flex" style={{ gap: '12px' }}>
-                  <Link to="/login" className="clean-btn login-btn">
+                <div className="d-flex align-items-center" style={{ gap: '8px' }}>
+                  <Link to="/login" className="perfect-btn login-btn">
                     Login
                   </Link>
-                  <Link to="/register" className="clean-btn register-btn">
+                  <Link to="/register" className="perfect-btn register-btn">
                     Register
                   </Link>
                 </div>
