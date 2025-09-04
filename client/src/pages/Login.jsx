@@ -84,38 +84,14 @@ const Login = () => {
       color: 'white'
     },
 
-    // Brand section
-    brandSection: {
+    // Header section (no logo)
+    headerSection: {
       textAlign: 'center',
       marginBottom: '40px'
     },
 
-    brandLogo: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: '12px',
-      marginBottom: '16px',
-      textDecoration: 'none',
-      color: 'white'
-    },
-
-    brandIcon: {
-      fontSize: '2rem',
-      background: 'linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%)',
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      backgroundClip: 'text'
-    },
-
-    brandName: {
-      fontSize: '1.8rem',
-      fontWeight: '800',
-      textShadow: '0 2px 8px rgba(0, 0, 0, 0.3)'
-    },
-
     welcomeTitle: {
-      fontSize: '1.5rem',
+      fontSize: '1.8rem',
       fontWeight: '700',
       marginBottom: '8px',
       textShadow: '0 2px 8px rgba(0, 0, 0, 0.3)'
@@ -275,12 +251,8 @@ const Login = () => {
             <Col xs={12} sm={10} md={8} lg={6} xl={5}>
               <Card style={styles.loginCard} className="login-card">
                 <Card.Body style={styles.cardBody}>
-                  {/* Brand section */}
-                  <div style={styles.brandSection}>
-                    <Link to="/" style={styles.brandLogo}>
-                      
-                      <span style={styles.brandName}>SpaceLink</span>
-                    </Link>
+                  {/* Header section - No Logo */}
+                  <div style={styles.headerSection}>
                     <h2 style={styles.welcomeTitle}>Welcome Back</h2>
                     <p style={styles.welcomeSubtitle}>
                       Sign in to your account to continue
