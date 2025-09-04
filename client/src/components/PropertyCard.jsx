@@ -5,19 +5,17 @@ import { formatPrice, getImageUrl } from '../utils/api';
 
 const PropertyCard = ({ property, showOwner = false }) => {
   const [isHovered, setIsHovered] = useState(false);
-  
+
   // Get the first image from images array, or fallback to single image field
   const displayImage = property.images && property.images.length > 0 
     ? property.images[0] 
     : property.image;
 
   const styles = {
-    // Main Card Container - Ultra Premium Glass
+    // Main Card Container - Light Theme Premium
     propertyCard: {
-      background: 'rgba(255, 255, 255, 0.08)',
-      backdropFilter: 'blur(20px) saturate(180%)',
-      WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-      border: '1px solid rgba(255, 255, 255, 0.15)',
+      background: '#ffffff', // Pure white background
+      border: '1px solid #e2e8f0', // Light gray border
       borderRadius: '16px',
       overflow: 'hidden',
       transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
@@ -26,8 +24,8 @@ const PropertyCard = ({ property, showOwner = false }) => {
       display: 'flex',
       flexDirection: 'column',
       boxShadow: isHovered 
-        ? '0 25px 60px rgba(0, 0, 0, 0.25), 0 12px 30px rgba(0, 0, 0, 0.15)' 
-        : '0 12px 40px rgba(0, 0, 0, 0.15), 0 6px 20px rgba(0, 0, 0, 0.1)',
+        ? '0 20px 40px rgba(0, 0, 0, 0.15), 0 8px 24px rgba(0, 0, 0, 0.1)' 
+        : '0 4px 6px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.03)',
       transform: isHovered ? 'translateY(-8px) scale(1.02)' : 'translateY(0) scale(1)',
       position: 'relative'
     },
@@ -48,7 +46,7 @@ const PropertyCard = ({ property, showOwner = false }) => {
       transform: isHovered ? 'scale(1.1)' : 'scale(1)'
     },
 
-    // Image Overlay Gradient
+    // Light Image Overlay
     imageOverlay: {
       position: 'absolute',
       top: 0,
@@ -56,7 +54,7 @@ const PropertyCard = ({ property, showOwner = false }) => {
       right: 0,
       bottom: 0,
       background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%)',
-      opacity: isHovered ? 0.7 : 0.4,
+      opacity: isHovered ? 0.5 : 0.2,
       transition: 'opacity 0.3s ease'
     },
 
@@ -71,10 +69,9 @@ const PropertyCard = ({ property, showOwner = false }) => {
       zIndex: 10
     },
 
-    // Premium Badges
+    // Light Theme Badges
     primaryBadge: {
-      background: 'rgba(59, 130, 246, 0.9)',
-      backdropFilter: 'blur(8px)',
+      background: '#6366f1', // Solid purple
       color: 'white',
       padding: '4px 8px',
       borderRadius: '6px',
@@ -82,23 +79,22 @@ const PropertyCard = ({ property, showOwner = false }) => {
       fontWeight: 700,
       textTransform: 'uppercase',
       letterSpacing: '0.5px',
-      border: '1px solid rgba(255, 255, 255, 0.2)'
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
     },
 
     secondaryBadge: {
-      background: 'rgba(255, 255, 255, 0.9)',
-      backdropFilter: 'blur(8px)',
-      color: '#374151',
+      background: 'rgba(255, 255, 255, 0.95)', // Almost opaque white
+      color: '#374151', // Dark gray text
       padding: '4px 8px',
       borderRadius: '6px',
       fontSize: '0.7rem',
       fontWeight: 600,
-      border: '1px solid rgba(0, 0, 0, 0.1)'
+      border: '1px solid rgba(0, 0, 0, 0.1)',
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
     },
 
     imageBadge: {
-      background: 'rgba(16, 185, 129, 0.9)',
-      backdropFilter: 'blur(8px)',
+      background: '#10b981', // Solid green
       color: 'white',
       padding: '4px 8px',
       borderRadius: '6px',
@@ -107,13 +103,12 @@ const PropertyCard = ({ property, showOwner = false }) => {
       display: 'flex',
       alignItems: 'center',
       gap: '4px',
-      border: '1px solid rgba(255, 255, 255, 0.2)'
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
     },
 
-    // Card Body - Premium Glass
+    // Card Body - Light Theme
     cardBody: {
-      background: 'rgba(255, 255, 255, 0.05)',
-      backdropFilter: 'blur(10px)',
+      background: '#ffffff', // Pure white
       padding: '20px',
       display: 'flex',
       flexDirection: 'column',
@@ -121,23 +116,22 @@ const PropertyCard = ({ property, showOwner = false }) => {
       position: 'relative'
     },
 
-    // Title Styling
+    // Title Styling - Dark Text
     propertyTitle: {
       fontSize: '1.2rem',
       fontWeight: 700,
-      color: 'white',
+      color: '#0f172a', // Dark text
       marginBottom: '8px',
       lineHeight: 1.3,
-      textShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
       display: '-webkit-box',
       WebkitLineClamp: 2,
       WebkitBoxOrient: 'vertical',
       overflow: 'hidden'
     },
 
-    // Location Styling
+    // Location Styling - Light Theme
     locationText: {
-      color: 'rgba(255, 255, 255, 0.8)',
+      color: '#64748b', // Medium gray
       fontSize: '0.9rem',
       marginBottom: '12px',
       display: 'flex',
@@ -151,9 +145,9 @@ const PropertyCard = ({ property, showOwner = false }) => {
       opacity: 0.8
     },
 
-    // Description Styling
+    // Description Styling - Light Theme
     descriptionText: {
-      color: 'rgba(255, 255, 255, 0.7)',
+      color: '#475569', // Darker gray for readability
       fontSize: '0.85rem',
       lineHeight: 1.4,
       marginBottom: '16px',
@@ -164,31 +158,26 @@ const PropertyCard = ({ property, showOwner = false }) => {
       flexGrow: 1
     },
 
-    // Price and Size Container
+    // Price and Size Container - Light Theme
     priceContainer: {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
       marginBottom: '12px',
       padding: '12px',
-      background: 'rgba(255, 255, 255, 0.08)',
-      backdropFilter: 'blur(10px)',
+      background: '#f8fafc', // Light gray background
       borderRadius: '10px',
-      border: '1px solid rgba(255, 255, 255, 0.1)'
+      border: '1px solid #e2e8f0'
     },
 
     priceBadge: {
-      background: 'linear-gradient(135deg, #ffd700, #ffb347)',
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      backgroundClip: 'text',
+      color: '#059669', // Green for price
       fontSize: '1.1rem',
-      fontWeight: 900,
-      textShadow: 'none'
+      fontWeight: 900
     },
 
     sizeText: {
-      color: 'rgba(255, 255, 255, 0.8)',
+      color: '#64748b', // Medium gray
       fontSize: '0.85rem',
       fontWeight: 600,
       display: 'flex',
@@ -196,15 +185,15 @@ const PropertyCard = ({ property, showOwner = false }) => {
       gap: '4px'
     },
 
-    // Owner Info
+    // Owner Info - Light Theme
     ownerInfo: {
-      color: 'rgba(255, 255, 255, 0.7)',
+      color: '#475569', // Darker gray
       fontSize: '0.8rem',
       marginBottom: '16px',
       padding: '8px 12px',
-      background: 'rgba(255, 255, 255, 0.05)',
+      background: '#f1f5f9', // Very light gray
       borderRadius: '8px',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
+      border: '1px solid #e2e8f0',
       display: 'flex',
       alignItems: 'center',
       gap: '6px'
@@ -217,16 +206,14 @@ const PropertyCard = ({ property, showOwner = false }) => {
       marginTop: 'auto'
     },
 
-    // Primary Button - Premium Glass
+    // Primary Button - Light Theme
     primaryButton: {
       flex: 1,
       padding: '12px 16px',
-      background: 'rgba(59, 130, 246, 0.2)',
-      backdropFilter: 'blur(10px) saturate(180%)',
-      WebkitBackdropFilter: 'blur(10px) saturate(180%)',
-      border: '1px solid rgba(59, 130, 246, 0.3)',
+      background: '#6366f1', // Solid purple
+      border: 'none',
       borderRadius: '8px',
-      color: '#60a5fa',
+      color: 'white',
       fontSize: '0.85rem',
       fontWeight: 700,
       textDecoration: 'none',
@@ -237,19 +224,17 @@ const PropertyCard = ({ property, showOwner = false }) => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      boxShadow: '0 4px 12px rgba(59, 130, 246, 0.2)'
+      boxShadow: '0 4px 12px rgba(99, 102, 241, 0.3)'
     },
 
-    // Secondary Button - Premium Glass
+    // Secondary Button - Light Theme
     secondaryButton: {
       flex: 1,
       padding: '12px 16px',
-      background: 'rgba(16, 185, 129, 0.2)',
-      backdropFilter: 'blur(10px) saturate(180%)',
-      WebkitBackdropFilter: 'blur(10px) saturate(180%)',
-      border: '1px solid rgba(16, 185, 129, 0.3)',
+      background: '#10b981', // Solid green
+      border: 'none',
       borderRadius: '8px',
-      color: '#10b981',
+      color: 'white',
       fontSize: '0.85rem',
       fontWeight: 700,
       textDecoration: 'none',
@@ -260,43 +245,32 @@ const PropertyCard = ({ property, showOwner = false }) => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      boxShadow: '0 4px 12px rgba(16, 185, 129, 0.2)'
-    },
-
-    // Hover Effects
-    buttonHover: {
-      transform: 'translateY(-2px)',
-      boxShadow: '0 8px 20px rgba(59, 130, 246, 0.3)'
-    },
-
-    secondaryButtonHover: {
-      transform: 'translateY(-2px)',
-      boxShadow: '0 8px 20px rgba(16, 185, 129, 0.3)'
+      boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
     }
   };
 
-  // Button Hover Handlers
+  // Button Hover Handlers - Updated for Light Theme
   const handlePrimaryHover = (e, isEntering) => {
     if (isEntering) {
-      e.target.style.background = 'rgba(59, 130, 246, 0.3)';
+      e.target.style.background = '#4f46e5'; // Darker purple
       e.target.style.transform = 'translateY(-2px)';
-      e.target.style.boxShadow = '0 8px 20px rgba(59, 130, 246, 0.4)';
+      e.target.style.boxShadow = '0 8px 20px rgba(99, 102, 241, 0.4)';
     } else {
-      e.target.style.background = 'rgba(59, 130, 246, 0.2)';
+      e.target.style.background = '#6366f1';
       e.target.style.transform = 'translateY(0)';
-      e.target.style.boxShadow = '0 4px 12px rgba(59, 130, 246, 0.2)';
+      e.target.style.boxShadow = '0 4px 12px rgba(99, 102, 241, 0.3)';
     }
   };
 
   const handleSecondaryHover = (e, isEntering) => {
     if (isEntering) {
-      e.target.style.background = 'rgba(16, 185, 129, 0.3)';
+      e.target.style.background = '#059669'; // Darker green
       e.target.style.transform = 'translateY(-2px)';
       e.target.style.boxShadow = '0 8px 20px rgba(16, 185, 129, 0.4)';
     } else {
-      e.target.style.background = 'rgba(16, 185, 129, 0.2)';
+      e.target.style.background = '#10b981';
       e.target.style.transform = 'translateY(0)';
-      e.target.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.2)';
+      e.target.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.3)';
     }
   };
 
