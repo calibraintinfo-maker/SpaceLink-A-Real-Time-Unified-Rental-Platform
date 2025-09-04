@@ -16,13 +16,14 @@ const Footer = () => {
   };
 
   const styles = {
-    // Professional light footer
+    // Light theme footer - NO positioning issues
     footerContainer: {
-      background: '#ffffff',
+      background: '#ffffff', // Light theme
       borderTop: '1px solid #e2e8f0',
       paddingTop: '60px',
       paddingBottom: '40px',
-      marginTop: '80px'
+      position: 'relative', // CRITICAL: Not fixed
+      zIndex: 1 // Lower than navbar
     },
 
     // Brand section
