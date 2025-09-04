@@ -21,11 +21,11 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="app-wrapper">
+        <div className="app-container">
           {/* Fixed Navbar */}
           <Navbar />
           
-          {/* Main Content Area */}
+          {/* Main Content - Takes full space */}
           <main className="main-content">
             <Routes>
               <Route path="/" element={<Home />} />
@@ -73,37 +73,10 @@ function App() {
                   </ProtectedRoute>
                 } 
               />
-              <Route 
-                path="*" 
-                element={
-                  <div style={{
-                    padding: '40px',
-                    textAlign: 'center',
-                    background: '#fef2f2',
-                    border: '1px solid #fecaca',
-                    borderRadius: '12px',
-                    margin: '20px'
-                  }}>
-                    <h2 style={{ color: '#dc2626', marginBottom: '16px' }}>Page Not Found</h2>
-                    <p style={{ color: '#991b1b' }}>The page you're looking for doesn't exist.</p>
-                    <a href="/" style={{ 
-                      background: '#6366f1', 
-                      color: 'white', 
-                      padding: '12px 24px', 
-                      borderRadius: '8px',
-                      display: 'inline-block',
-                      marginTop: '16px',
-                      textDecoration: 'none'
-                    }}>
-                      Go Home
-                    </a>
-                  </div>
-                } 
-              />
             </Routes>
           </main>
           
-          {/* Footer - Naturally positioned at bottom */}
+          {/* Fixed Footer - Always at bottom */}
           <Footer />
         </div>
       </Router>
