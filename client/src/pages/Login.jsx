@@ -278,7 +278,7 @@ const Login = () => {
                   {/* Brand section */}
                   <div style={styles.brandSection}>
                     <Link to="/" style={styles.brandLogo}>
-                      <span style={styles.brandIcon}>🏠</span>
+                      
                       <span style={styles.brandName}>SpaceLink</span>
                     </Link>
                     <h2 style={styles.welcomeTitle}>Welcome Back</h2>
