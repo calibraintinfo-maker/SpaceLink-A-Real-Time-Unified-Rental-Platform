@@ -26,21 +26,21 @@ const Footer = () => {
       borderTop: '1px solid #e2e8f0',
       boxShadow: '0 -2px 8px rgba(0, 0, 0, 0.1)',
       zIndex: 1000,
-      padding: '40px 0'
+      padding: '30px 0'
     }}>
       <Container>
-        <Row>
+        <Row className="align-items-center">
           {/* Brand & Newsletter */}
-          <Col lg={4} md={6} className="mb-3">
+          <Col md={4} className="mb-2">
             <Link to="/" style={{
               color: '#0f172a',
-              fontSize: '1.4rem',
+              fontSize: '1.3rem',
               fontWeight: '700',
               textDecoration: 'none',
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
-              marginBottom: '12px'
+              marginBottom: '10px'
             }}>
               <span>🏠</span>
               <span>SpaceLink</span>
@@ -48,10 +48,9 @@ const Footer = () => {
             
             <p style={{
               color: '#64748b',
-              fontSize: '0.9rem',
-              lineHeight: '1.5',
-              marginBottom: '16px',
-              maxWidth: '300px'
+              fontSize: '0.85rem',
+              marginBottom: '12px',
+              maxWidth: '280px'
             }}>
               Your trusted global property platform. Helping clients find exceptional properties and empowering seamless transactions.
             </p>
@@ -60,7 +59,7 @@ const Footer = () => {
             <div>
               <h6 style={{
                 color: '#0f172a',
-                fontSize: '1rem',
+                fontSize: '0.9rem',
                 fontWeight: '600',
                 marginBottom: '8px'
               }}>
@@ -69,8 +68,8 @@ const Footer = () => {
               
               <form onSubmit={handleSubscribe} style={{
                 display: 'flex',
-                gap: '8px',
-                maxWidth: '300px'
+                gap: '6px',
+                maxWidth: '280px'
               }}>
                 <input
                   type="email"
@@ -81,8 +80,8 @@ const Footer = () => {
                     background: '#f8fafc',
                     border: '1px solid #e2e8f0',
                     borderRadius: '6px',
-                    padding: '8px 12px',
-                    fontSize: '0.9rem',
+                    padding: '6px 10px',
+                    fontSize: '0.8rem',
                     color: '#0f172a',
                     flex: 1,
                     outline: 'none'
@@ -96,8 +95,8 @@ const Footer = () => {
                     color: 'white',
                     border: 'none',
                     borderRadius: '6px',
-                    padding: '8px 16px',
-                    fontSize: '0.9rem',
+                    padding: '6px 12px',
+                    fontSize: '0.8rem',
                     fontWeight: '600',
                     cursor: 'pointer'
                   }}
@@ -107,7 +106,7 @@ const Footer = () => {
               </form>
               
               {isSubscribed && (
-                <p style={{ color: '#10b981', fontSize: '0.8rem', fontWeight: '600', marginTop: '6px' }}>
+                <p style={{ color: '#10b981', fontSize: '0.75rem', fontWeight: '600', marginTop: '4px' }}>
                   ✓ Successfully subscribed!
                 </p>
               )}
@@ -115,12 +114,12 @@ const Footer = () => {
           </Col>
 
           {/* Quick Links */}
-          <Col lg={2} md={3} className="mb-3">
+          <Col md={2}>
             <h6 style={{
               color: '#0f172a',
-              fontSize: '0.95rem',
+              fontSize: '0.9rem',
               fontWeight: '600',
-              marginBottom: '12px'
+              marginBottom: '8px'
             }}>
               Quick Links
             </h6>
@@ -131,11 +130,11 @@ const Footer = () => {
                 { to: '/my-bookings', text: 'My Bookings' },
                 { to: '/profile', text: 'Profile' }
               ].map((link, i) => (
-                <li key={i} style={{ marginBottom: '8px' }}>
+                <li key={i} style={{ marginBottom: '6px' }}>
                   <Link to={link.to} style={{
                     color: '#64748b',
                     textDecoration: 'none',
-                    fontSize: '0.85rem',
+                    fontSize: '0.8rem',
                     fontWeight: '500'
                   }}>
                     {link.text}
@@ -146,12 +145,12 @@ const Footer = () => {
           </Col>
 
           {/* Categories */}
-          <Col lg={2} md={3} className="mb-3">
+          <Col md={2}>
             <h6 style={{
               color: '#0f172a',
-              fontSize: '0.95rem',
+              fontSize: '0.9rem',
               fontWeight: '600',
-              marginBottom: '12px'
+              marginBottom: '8px'
             }}>
               Categories
             </h6>
@@ -162,11 +161,11 @@ const Footer = () => {
                 { to: '/find-property?category=Land', text: 'Land & Plots' },
                 { to: '/find-property?category=Event', text: 'Event Venues' }
               ].map((link, i) => (
-                <li key={i} style={{ marginBottom: '8px' }}>
+                <li key={i} style={{ marginBottom: '6px' }}>
                   <Link to={link.to} style={{
                     color: '#64748b',
                     textDecoration: 'none',
-                    fontSize: '0.85rem',
+                    fontSize: '0.8rem',
                     fontWeight: '500'
                   }}>
                     {link.text}
@@ -177,12 +176,12 @@ const Footer = () => {
           </Col>
 
           {/* Support */}
-          <Col lg={2} md={3} className="mb-3">
+          <Col md={2}>
             <h6 style={{
               color: '#0f172a',
-              fontSize: '0.95rem',
+              fontSize: '0.9rem',
               fontWeight: '600',
-              marginBottom: '12px'
+              marginBottom: '8px'
             }}>
               Support
             </h6>
@@ -193,11 +192,11 @@ const Footer = () => {
                 { to: '/about', text: 'About Us' },
                 { to: '/blog', text: 'Blog' }
               ].map((link, i) => (
-                <li key={i} style={{ marginBottom: '8px' }}>
+                <li key={i} style={{ marginBottom: '6px' }}>
                   <Link to={link.to} style={{
                     color: '#64748b',
                     textDecoration: 'none',
-                    fontSize: '0.85rem',
+                    fontSize: '0.8rem',
                     fontWeight: '500'
                   }}>
                     {link.text}
@@ -207,13 +206,13 @@ const Footer = () => {
             </ul>
           </Col>
 
-          {/* Legal */}
-          <Col lg={2} md={3} className="mb-3">
+          {/* Legal & Copyright - NO SOCIAL ICONS */}
+          <Col md={2}>
             <h6 style={{
               color: '#0f172a',
-              fontSize: '0.95rem',
+              fontSize: '0.9rem',
               fontWeight: '600',
-              marginBottom: '12px'
+              marginBottom: '8px'
             }}>
               Legal
             </h6>
@@ -221,14 +220,13 @@ const Footer = () => {
               {[
                 { to: '/privacy', text: 'Privacy Policy' },
                 { to: '/terms', text: 'Terms of Service' },
-                { to: '/cookies', text: 'Cookie Policy' },
-                { to: '/disclaimer', text: 'Disclaimer' }
+                { to: '/cookies', text: 'Cookie Policy' }
               ].map((link, i) => (
-                <li key={i} style={{ marginBottom: '8px' }}>
+                <li key={i} style={{ marginBottom: '6px' }}>
                   <Link to={link.to} style={{
                     color: '#64748b',
                     textDecoration: 'none',
-                    fontSize: '0.85rem',
+                    fontSize: '0.8rem',
                     fontWeight: '500'
                   }}>
                     {link.text}
@@ -236,53 +234,17 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
+            
+            {/* Simple Copyright - NO SOCIAL ICONS */}
+            <p style={{
+              color: '#64748b',
+              fontSize: '0.75rem',
+              margin: '10px 0 0 0'
+            }}>
+              © 2025 SpaceLink. All rights reserved.
+            </p>
           </Col>
         </Row>
-
-        {/* Bottom Section */}
-        <div style={{
-          borderTop: '1px solid #e2e8f0',
-          paddingTop: '20px',
-          marginTop: '20px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          gap: '12px'
-        }}>
-          <p style={{
-            color: '#64748b',
-            fontSize: '0.85rem',
-            margin: 0
-          }}>
-            © 2025 SpaceLink. All rights reserved.
-          </p>
-          
-          <div style={{
-            display: 'flex',
-            gap: '12px',
-            alignItems: 'center'
-          }}>
-            {['𝕏', 'in', '📷', 'f'].map((icon, i) => (
-              <a key={i} href="#" style={{
-                color: '#64748b',
-                fontSize: '1.1rem',
-                textDecoration: 'none',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '32px',
-                height: '32px',
-                borderRadius: '6px',
-                background: '#f8fafc',
-                border: '1px solid #e2e8f0',
-                transition: 'all 0.2s ease'
-              }}>
-                {icon}
-              </a>
-            ))}
-          </div>
-        </div>
       </Container>
     </footer>
   );
