@@ -16,7 +16,7 @@ const Footer = () => {
   };
 
   const styles = {
-    // Light theme footer - matches your design
+    // Light theme footer - NO positioning issues
     footerContainer: {
       background: '#ffffff',
       borderTop: '1px solid #e2e8f0',
@@ -226,7 +226,9 @@ const Footer = () => {
 
       <footer style={styles.footerContainer}>
         <Container>
+          {/* Main Footer Content */}
           <Row>
+            {/* Brand & Newsletter */}
             <Col lg={4} md={6} className="mb-4">
               <div style={styles.brandSection}>
                 <Link to="/" style={styles.brandLogo} className="brand-logo">
@@ -241,7 +243,7 @@ const Footer = () => {
               <div style={styles.newsletterSection}>
                 <h6 style={styles.newsletterTitle}>Stay Updated</h6>
                 <p style={styles.newsletterDescription}>
-                  Get the latest property listings and updates.
+                  Get the latest property listings and market updates.
                 </p>
                 <form onSubmit={handleSubscribe} style={styles.newsletterForm} className="newsletter-form">
                   <input
@@ -267,6 +269,7 @@ const Footer = () => {
               </div>
             </Col>
 
+            {/* Quick Links */}
             <Col lg={2} md={6} className="mb-4">
               <div style={styles.linkSection}>
                 <h6 style={styles.sectionTitle}>Quick Links</h6>
@@ -295,6 +298,7 @@ const Footer = () => {
               </div>
             </Col>
 
+            {/* Categories */}
             <Col lg={2} md={6} className="mb-4">
               <div style={styles.linkSection}>
                 <h6 style={styles.sectionTitle}>Categories</h6>
@@ -323,6 +327,7 @@ const Footer = () => {
               </div>
             </Col>
 
+            {/* Support */}
             <Col lg={2} md={6} className="mb-4">
               <div style={styles.linkSection}>
                 <h6 style={styles.sectionTitle}>Support</h6>
@@ -351,6 +356,7 @@ const Footer = () => {
               </div>
             </Col>
 
+            {/* Legal */}
             <Col lg={2} md={6} className="mb-4">
               <div style={styles.linkSection}>
                 <h6 style={styles.sectionTitle}>Legal</h6>
@@ -380,6 +386,7 @@ const Footer = () => {
             </Col>
           </Row>
 
+          {/* Bottom Section */}
           <div style={styles.bottomSection} className="bottom-section">
             <p style={styles.copyright}>
               © 2025 SpaceLink. All rights reserved.
