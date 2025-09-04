@@ -17,19 +17,6 @@ body {
   background: #f8fafc;
 }
 
-#root {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-/* App container - Simple flexbox */
-.app-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
 /* Fixed navbar */
 .navbar {
   position: fixed !important;
@@ -44,40 +31,16 @@ body {
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Main content - grows to fill space */
-.main-content {
-  flex: 1;
-  padding-top: 80px;
-  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
-  min-height: calc(100vh - 80px);
-}
-
-/* Footer - flows naturally at bottom */
-footer {
-  background: #ffffff !important;
-  border-top: 1px solid #e2e8f0 !important;
-  color: #0f172a !important;
-  margin-top: auto;
-}
-
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   .navbar {
     height: 70px !important;
-  }
-  
-  .main-content {
-    padding-top: 70px !important;
   }
 }
 
 @media (max-width: 480px) {
   .navbar {
     height: 60px !important;
-  }
-  
-  .main-content {
-    padding-top: 60px !important;
   }
 }
 
@@ -152,7 +115,7 @@ a:hover {
   box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
 }
 
-/* Property cards */
+/* Property card styling */
 .property-card {
   background: #ffffff;
   border: 1px solid #e2e8f0;
@@ -178,11 +141,17 @@ footer input:focus {
 
 footer button:hover {
   background: #4f46e5 !important;
+  transform: translateY(-1px);
 }
 
 /* Utility classes */
-.text-muted { color: #64748b !important; }
-.text-primary { color: #6366f1 !important; }
+.text-muted {
+  color: #64748b !important;
+}
+
+.text-primary {
+  color: #6366f1 !important;
+}
 
 /* Loading spinner */
 @keyframes spin {
@@ -216,9 +185,5 @@ html {
 @media print {
   .navbar, footer {
     display: none !important;
-  }
-  
-  .main-content {
-    padding-top: 0 !important;
   }
 }
