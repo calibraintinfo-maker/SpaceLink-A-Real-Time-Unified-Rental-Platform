@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Form, Button, Card, Pagination, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, Card, Pagination, Alert, Badge, Spinner } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 import PropertyCard from '../components/PropertyCard';
 import { api, handleApiError, categories } from '../utils/api';
@@ -9,13 +9,13 @@ const FindProperty = () => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [showFilters, setShowFilters] = useState(false);
   const [pagination, setPagination] = useState({
     page: 1,
     limit: 12,
     total: 0,
     pages: 0
   });
-
   const [filters, setFilters] = useState({
     category: searchParams.get('category') || '',
     minPrice: searchParams.get('minPrice') || '',
@@ -30,7 +30,6 @@ const FindProperty = () => {
     fetchProperties();
   }, [pagination.page]);
 
-  // Handle URL parameter changes
   useEffect(() => {
     const newFilters = {
       category: searchParams.get('category') || '',
@@ -46,7 +45,6 @@ const FindProperty = () => {
     setPagination(prev => ({ ...prev, page: 1 }));
   }, [searchParams]);
 
-  // Fetch properties when filters change
   useEffect(() => {
     if (Object.values(filters).some(value => value !== '')) {
       fetchProperties();
@@ -61,8 +59,7 @@ const FindProperty = () => {
         limit: pagination.limit,
         ...filters
       };
-
-      // Remove empty filters
+      
       Object.keys(queryParams).forEach(key => {
         if (queryParams[key] === '') {
           delete queryParams[key];
@@ -89,7 +86,6 @@ const FindProperty = () => {
     
     setFilters(newFilters);
     
-    // Update URL parameters
     const newSearchParams = new URLSearchParams();
     Object.entries(newFilters).forEach(([key, value]) => {
       if (value) {
@@ -118,256 +114,677 @@ const FindProperty = () => {
     
     setFilters(clearedFilters);
     setPagination(prev => ({ ...prev, page: 1 }));
-    setSearchParams({}); // Clear URL parameters
+    setSearchParams({});
   };
 
   const handlePageChange = (pageNumber) => {
     setPagination(prev => ({ ...prev, page: pageNumber }));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const getCategoryIcon = (category) => {
+    const icons = {
+      'Property Rentals': '🏠',
+      'Commercial': '🏢',
+      'Land': '🌾',
+      'Parking': '🚗',
+      'Event': '🎉'
+    };
+    return icons[category] || '🏠';
+  };
+
+  const getActiveFilterCount = () => {
+    return Object.values(filters).filter(value => value !== '').length;
+  };
+
+  const styles = {
+    // Main container with background
+    pageContainer: {
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+      paddingTop: '2rem',
+      paddingBottom: '3rem'
+    },
+
+    // Hero section
+    heroSection: {
+      background: 'rgba(255, 255, 255, 0.05)',
+      backdropFilter: 'blur(20px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+      border: '1px solid rgba(255, 255, 255, 0.1)',
+      borderRadius: '20px',
+      padding: '40px',
+      marginBottom: '3rem',
+      textAlign: 'center',
+      boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)'
+    },
+
+    heroTitle: {
+      fontSize: 'clamp(2rem, 4vw, 3rem)',
+      fontWeight: '800',
+      background: 'linear-gradient(135deg, #ffffff 0%, #60a5fa 100%)',
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      backgroundClip: 'text',
+      marginBottom: '1rem'
+    },
+
+    heroSubtitle: {
+      color: 'rgba(255, 255, 255, 0.8)',
+      fontSize: '1.1rem',
+      marginBottom: '0'
+    },
+
+    // Category banner
+    categoryBanner: {
+      background: 'linear-gradient(135deg, #3b82f6 0%, #1e40af 100%)',
+      borderRadius: '16px',
+      padding: '24px',
+      marginBottom: '2rem',
+      color: 'white',
+      textAlign: 'center',
+      boxShadow: '0 12px 40px rgba(59, 130, 246, 0.3)'
+    },
+
+    categoryTitle: {
+      fontSize: '1.8rem',
+      fontWeight: '700',
+      marginBottom: '0.5rem',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '12px'
+    },
+
+    categoryDesc: {
+      fontSize: '1rem',
+      opacity: 0.9,
+      marginBottom: '0'
+    },
+
+    // Main content layout
+    contentContainer: {
+      display: 'flex',
+      gap: '2rem',
+      alignItems: 'flex-start'
+    },
+
+    // Sidebar filters
+    filterSidebar: {
+      width: '320px',
+      minWidth: '320px',
+      background: 'rgba(255, 255, 255, 0.08)',
+      backdropFilter: 'blur(20px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+      border: '1px solid rgba(255, 255, 255, 0.15)',
+      borderRadius: '16px',
+      padding: '0',
+      boxShadow: '0 16px 40px rgba(0, 0, 0, 0.2)',
+      position: 'sticky',
+      top: '2rem'
+    },
+
+    filterHeader: {
+      padding: '24px',
+      borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between'
+    },
+
+    filterTitle: {
+      color: 'white',
+      fontSize: '1.2rem',
+      fontWeight: '700',
+      margin: '0',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px'
+    },
+
+    filterCount: {
+      background: 'rgba(59, 130, 246, 0.2)',
+      color: '#60a5fa',
+      padding: '4px 8px',
+      borderRadius: '12px',
+      fontSize: '0.75rem',
+      fontWeight: '600'
+    },
+
+    filterBody: {
+      padding: '24px'
+    },
+
+    filterGroup: {
+      marginBottom: '24px'
+    },
+
+    filterLabel: {
+      color: 'rgba(255, 255, 255, 0.9)',
+      fontSize: '0.9rem',
+      fontWeight: '600',
+      marginBottom: '8px',
+      display: 'block'
+    },
+
+    filterInput: {
+      background: 'rgba(255, 255, 255, 0.1)',
+      border: '1px solid rgba(255, 255, 255, 0.2)',
+      borderRadius: '8px',
+      padding: '12px 16px',
+      color: 'white',
+      fontSize: '0.9rem',
+      width: '100%',
+      outline: 'none',
+      transition: 'all 0.3s ease'
+    },
+
+    filterSelect: {
+      background: 'rgba(255, 255, 255, 0.1)',
+      border: '1px solid rgba(255, 255, 255, 0.2)',
+      borderRadius: '8px',
+      padding: '12px 16px',
+      color: 'white',
+      fontSize: '0.9rem',
+      width: '100%',
+      outline: 'none'
+    },
+
+    priceRow: {
+      display: 'flex',
+      gap: '8px'
+    },
+
+    filterButtons: {
+      display: 'flex',
+      gap: '8px',
+      marginTop: '8px'
+    },
+
+    applyButton: {
+      flex: 1,
+      background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+      border: 'none',
+      borderRadius: '8px',
+      padding: '12px 20px',
+      color: 'white',
+      fontSize: '0.9rem',
+      fontWeight: '600',
+      cursor: 'pointer',
+      transition: 'all 0.3s ease'
+    },
+
+    clearButton: {
+      flex: 1,
+      background: 'rgba(255, 255, 255, 0.1)',
+      border: '1px solid rgba(255, 255, 255, 0.2)',
+      borderRadius: '8px',
+      padding: '12px 20px',
+      color: 'rgba(255, 255, 255, 0.8)',
+      fontSize: '0.9rem',
+      fontWeight: '600',
+      cursor: 'pointer',
+      transition: 'all 0.3s ease'
+    },
+
+    // Results section
+    resultsSection: {
+      flex: 1,
+      minWidth: 0
+    },
+
+    resultsHeader: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: '2rem',
+      flexWrap: 'wrap',
+      gap: '1rem'
+    },
+
+    resultsTitle: {
+      color: 'white',
+      fontSize: '1.5rem',
+      fontWeight: '700',
+      margin: '0'
+    },
+
+    resultsCount: {
+      color: 'rgba(255, 255, 255, 0.7)',
+      fontSize: '1rem',
+      margin: '0'
+    },
+
+    mobileFilterToggle: {
+      display: 'none',
+      background: 'rgba(59, 130, 246, 0.2)',
+      border: '1px solid rgba(59, 130, 246, 0.3)',
+      borderRadius: '8px',
+      padding: '10px 16px',
+      color: '#60a5fa',
+      fontSize: '0.9rem',
+      fontWeight: '600'
+    },
+
+    // Properties grid
+    propertiesGrid: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+      gap: '2rem',
+      marginBottom: '3rem'
+    },
+
+    // Loading state
+    loadingContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      padding: '4rem 2rem',
+      background: 'rgba(255, 255, 255, 0.05)',
+      borderRadius: '16px',
+      border: '1px solid rgba(255, 255, 255, 0.1)'
+    },
+
+    loadingSpinner: {
+      marginBottom: '1rem'
+    },
+
+    loadingText: {
+      color: 'white',
+      fontSize: '1.1rem',
+      fontWeight: '500'
+    },
+
+    // Empty state
+    emptyState: {
+      textAlign: 'center',
+      padding: '4rem 2rem',
+      background: 'rgba(255, 255, 255, 0.05)',
+      borderRadius: '16px',
+      border: '1px solid rgba(255, 255, 255, 0.1)'
+    },
+
+    emptyIcon: {
+      fontSize: '4rem',
+      marginBottom: '1rem'
+    },
+
+    emptyTitle: {
+      color: 'white',
+      fontSize: '1.5rem',
+      fontWeight: '700',
+      marginBottom: '0.5rem'
+    },
+
+    emptyText: {
+      color: 'rgba(255, 255, 255, 0.7)',
+      fontSize: '1rem',
+      marginBottom: '2rem'
+    },
+
+    emptyButton: {
+      background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+      border: 'none',
+      borderRadius: '8px',
+      padding: '12px 24px',
+      color: 'white',
+      fontSize: '1rem',
+      fontWeight: '600'
+    },
+
+    // Pagination
+    paginationContainer: {
+      display: 'flex',
+      justifyContent: 'center',
+      background: 'rgba(255, 255, 255, 0.05)',
+      borderRadius: '12px',
+      padding: '1rem'
+    },
+
+    // Error alert
+    errorAlert: {
+      background: 'rgba(239, 68, 68, 0.15)',
+      border: '1px solid rgba(239, 68, 68, 0.3)',
+      borderRadius: '12px',
+      color: '#fca5a5',
+      padding: '16px 20px',
+      marginBottom: '2rem'
+    }
   };
 
   return (
-    <Container className="py-4">
-      {/* Header Section */}
-      {filters.category && (
-        <Row className="mb-4">
-          <Col>
-            <Card className="bg-primary text-white">
-              <Card.Body className="text-center">
-                <h3 className="mb-2">
-                  {filters.category === 'Property Rentals' && '🏠'}
-                  {filters.category === 'Commercial' && '🏢'}
-                  {filters.category === 'Land' && '🌾'}
-                  {filters.category === 'Parking' && '🚗'}
-                  {filters.category === 'Event' && '🎉'}
-                  {' '}{filters.category}
-                </h3>
-                <p className="mb-0">
-                  {filters.category === 'Property Rentals' && 'Apartments, Flats, Houses'}
-                  {filters.category === 'Commercial' && 'Offices, Shops, Warehouses'}
-                  {filters.category === 'Land' && 'Agricultural, Commercial Plots'}
-                  {filters.category === 'Parking' && 'Car, Bike, Garage Spaces'}
-                  {filters.category === 'Event' && 'Banquet, Gardens, Halls'}
-                </p>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      )}
+    <>
+      {/* Enhanced CSS */}
+      <style>
+        {`
+          .filter-input:focus, .filter-select:focus {
+            border-color: rgba(59, 130, 246, 0.5) !important;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+            background: rgba(255, 255, 255, 0.15) !important;
+          }
+          
+          .filter-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+          }
+          
+          .apply-btn:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+            transform: translateY(-1px) !important;
+          }
+          
+          .clear-btn:hover {
+            background: rgba(255, 255, 255, 0.15) !important;
+            color: white !important;
+          }
+          
+          .mobile-filter-toggle:hover {
+            background: rgba(59, 130, 246, 0.3) !important;
+          }
+          
+          @media (max-width: 768px) {
+            .content-container {
+              flex-direction: column !important;
+            }
+            
+            .filter-sidebar {
+              width: 100% !important;
+              min-width: unset !important;
+              position: static !important;
+            }
+            
+            .mobile-filter-toggle {
+              display: block !important;
+            }
+            
+            .properties-grid {
+              grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+              gap: 1.5rem !important;
+            }
+          }
+          
+          .pagination .page-link {
+            background: rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            color: rgba(255, 255, 255, 0.8) !important;
+          }
+          
+          .pagination .page-link:hover {
+            background: rgba(59, 130, 246, 0.2) !important;
+            color: #60a5fa !important;
+          }
+          
+          .pagination .page-item.active .page-link {
+            background: #3b82f6 !important;
+            border-color: #3b82f6 !important;
+            color: white !important;
+          }
+        `}
+      </style>
 
-      <Row>
-        <Col md={3}>
-          {/* Filter Sidebar */}
-          <Card className="filter-sidebar mb-4">
-            <Card.Header>
-              <h5 className="mb-0">🔍 Filter Properties</h5>
-            </Card.Header>
-            <Card.Body>
-              <Form onSubmit={handleFilterSubmit}>
-                <Form.Group className="mb-3">
-                  <Form.Label>
-                    Category 
-                    {filters.category && (
-                      <span className="badge bg-primary ms-2">
-                        {filters.category}
-                      </span>
-                    )}
-                  </Form.Label>
-                  <Form.Select
-                    name="category"
-                    value={filters.category}
-                    onChange={handleFilterChange}
-                  >
-                    <option value="">All Categories</option>
-                    {Object.keys(categories).map(category => (
-                      <option key={category} value={category}>
-                        {category}
-                      </option>
-                    ))}
-                  </Form.Select>
-                </Form.Group>
+      <div style={styles.pageContainer}>
+        <Container>
+          {/* Hero Section */}
+          <div style={styles.heroSection}>
+            <h1 style={styles.heroTitle}>Find Your Perfect Property</h1>
+            <p style={styles.heroSubtitle}>
+              Discover amazing properties tailored to your needs from our premium collection
+            </p>
+          </div>
 
-                <Form.Group className="mb-3">
-                  <Form.Label>Price Range</Form.Label>
-                  <Row>
-                    <Col>
-                      <Form.Control
+          {/* Category Banner */}
+          {filters.category && (
+            <div style={styles.categoryBanner}>
+              <h3 style={styles.categoryTitle}>
+                <span>{getCategoryIcon(filters.category)}</span>
+                <span>{filters.category}</span>
+              </h3>
+              <p style={styles.categoryDesc}>
+                {filters.category === 'Property Rentals' && 'Apartments, Flats, Houses & More'}
+                {filters.category === 'Commercial' && 'Offices, Shops, Warehouses & Business Spaces'}
+                {filters.category === 'Land' && 'Agricultural & Commercial Plots'}
+                {filters.category === 'Parking' && 'Car, Bike & Garage Spaces'}
+                {filters.category === 'Event' && 'Banquet Halls, Gardens & Event Venues'}
+              </p>
+            </div>
+          )}
+
+          {/* Error Message */}
+          {error && (
+            <div style={styles.errorAlert}>
+              <strong>⚠️ Error:</strong> {error}
+            </div>
+          )}
+
+          {/* Main Content */}
+          <div style={styles.contentContainer} className="content-container">
+            {/* Filter Sidebar */}
+            <div style={styles.filterSidebar} className="filter-sidebar">
+              <div style={styles.filterHeader}>
+                <h5 style={styles.filterTitle}>
+                  <span>🔍</span>
+                  <span>Filters</span>
+                </h5>
+                {getActiveFilterCount() > 0 && (
+                  <span style={styles.filterCount}>
+                    {getActiveFilterCount()} active
+                  </span>
+                )}
+              </div>
+
+              <div style={styles.filterBody}>
+                <Form onSubmit={handleFilterSubmit}>
+                  <div style={styles.filterGroup}>
+                    <label style={styles.filterLabel}>Category</label>
+                    <select
+                      name="category"
+                      value={filters.category}
+                      onChange={handleFilterChange}
+                      style={styles.filterSelect}
+                      className="filter-select"
+                    >
+                      <option value="">All Categories</option>
+                      {Object.keys(categories).map(category => (
+                        <option key={category} value={category}>
+                          {getCategoryIcon(category)} {category}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div style={styles.filterGroup}>
+                    <label style={styles.filterLabel}>Price Range</label>
+                    <div style={styles.priceRow}>
+                      <input
                         type="number"
                         name="minPrice"
                         value={filters.minPrice}
                         onChange={handleFilterChange}
                         placeholder="Min Price"
+                        style={styles.filterInput}
+                        className="filter-input"
                       />
-                    </Col>
-                    <Col>
-                      <Form.Control
+                      <input
                         type="number"
                         name="maxPrice"
                         value={filters.maxPrice}
                         onChange={handleFilterChange}
                         placeholder="Max Price"
+                        style={styles.filterInput}
+                        className="filter-input"
                       />
-                    </Col>
-                  </Row>
-                </Form.Group>
+                    </div>
+                  </div>
 
-                <Form.Group className="mb-3">
-                  <Form.Label>Location</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="city"
-                    value={filters.city}
-                    onChange={handleFilterChange}
-                    placeholder="City"
-                    className="mb-2"
-                  />
-                  <Form.Control
-                    type="text"
-                    name="state"
-                    value={filters.state}
-                    onChange={handleFilterChange}
-                    placeholder="State"
-                  />
-                </Form.Group>
+                  <div style={styles.filterGroup}>
+                    <label style={styles.filterLabel}>📍 Location</label>
+                    <input
+                      type="text"
+                      name="city"
+                      value={filters.city}
+                      onChange={handleFilterChange}
+                      placeholder="City"
+                      style={{ ...styles.filterInput, marginBottom: '8px' }}
+                      className="filter-input"
+                    />
+                    <input
+                      type="text"
+                      name="state"
+                      value={filters.state}
+                      onChange={handleFilterChange}
+                      placeholder="State"
+                      style={styles.filterInput}
+                      className="filter-input"
+                    />
+                  </div>
 
-                <Form.Group className="mb-3">
-                  <Form.Label>Availability</Form.Label>
-                  <Form.Control
-                    type="date"
-                    name="fromDate"
-                    value={filters.fromDate}
-                    onChange={handleFilterChange}
-                    className="mb-2"
-                  />
-                  <Form.Control
-                    type="date"
-                    name="toDate"
-                    value={filters.toDate}
-                    onChange={handleFilterChange}
-                  />
-                  <Form.Text className="text-muted">
-                    Select date range to check availability
-                  </Form.Text>
-                </Form.Group>
+                  <div style={styles.filterGroup}>
+                    <label style={styles.filterLabel}>📅 Availability</label>
+                    <input
+                      type="date"
+                      name="fromDate"
+                      value={filters.fromDate}
+                      onChange={handleFilterChange}
+                      style={{ ...styles.filterInput, marginBottom: '8px' }}
+                      className="filter-input"
+                    />
+                    <input
+                      type="date"
+                      name="toDate"
+                      value={filters.toDate}
+                      onChange={handleFilterChange}
+                      style={styles.filterInput}
+                      className="filter-input"
+                    />
+                  </div>
 
-                <div className="d-grid gap-2">
-                  <Button type="submit" variant="primary">
-                    Apply Filters
-                  </Button>
-                  <Button 
-                    type="button" 
-                    variant="outline-secondary"
-                    onClick={clearFilters}
-                  >
-                    Clear Filters
-                  </Button>
-                </div>
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-
-        <Col md={9}>
-          {/* Header */}
-          <div className="d-flex justify-content-between align-items-center mb-4">
-            <div>
-              <h2>Find Properties</h2>
-              <p className="text-muted mb-0">
-                {pagination.total > 0 && `${pagination.total} properties found`}
-              </p>
-            </div>
-          </div>
-
-          {/* Error Message */}
-          {error && (
-            <Alert variant="danger" className="mb-4">
-              {error}
-            </Alert>
-          )}
-
-          {/* Loading State */}
-          {loading ? (
-            <div className="text-center py-5">
-              <div className="spinner-border" role="status">
-                <span className="visually-hidden">Loading...</span>
+                  <div style={styles.filterButtons}>
+                    <button
+                      type="submit"
+                      style={styles.applyButton}
+                      className="apply-btn"
+                    >
+                      Apply Filters
+                    </button>
+                    <button
+                      type="button"
+                      onClick={clearFilters}
+                      style={styles.clearButton}
+                      className="clear-btn"
+                    >
+                      Clear All
+                    </button>
+                  </div>
+                </Form>
               </div>
-              <p className="mt-2">Loading properties...</p>
             </div>
-          ) : (
-            <>
-              {/* Properties Grid */}
-              {properties.length > 0 ? (
-                <>
-                  <Row className="g-4 mb-4">
-                    {properties.map((property) => (
-                      <Col key={property._id} lg={4} md={6}>
-                        <PropertyCard property={property} showOwner={true} />
-                      </Col>
-                    ))}
-                  </Row>
 
-                  {/* Pagination */}
-                  {pagination.pages > 1 && (
-                    <div className="d-flex justify-content-center">
-                      <Pagination>
-                        <Pagination.First 
-                          onClick={() => handlePageChange(1)}
-                          disabled={pagination.page === 1}
-                        />
-                        <Pagination.Prev 
-                          onClick={() => handlePageChange(pagination.page - 1)}
-                          disabled={pagination.page === 1}
-                        />
-                        
-                        {[...Array(pagination.pages)].map((_, index) => {
-                          const pageNumber = index + 1;
-                          if (
-                            pageNumber === 1 ||
-                            pageNumber === pagination.pages ||
-                            (pageNumber >= pagination.page - 2 && pageNumber <= pagination.page + 2)
-                          ) {
-                            return (
-                              <Pagination.Item
-                                key={pageNumber}
-                                active={pageNumber === pagination.page}
-                                onClick={() => handlePageChange(pageNumber)}
-                              >
-                                {pageNumber}
-                              </Pagination.Item>
-                            );
-                          }
-                          return null;
-                        })}
-                        
-                        <Pagination.Next 
-                          onClick={() => handlePageChange(pagination.page + 1)}
-                          disabled={pagination.page === pagination.pages}
-                        />
-                        <Pagination.Last 
-                          onClick={() => handlePageChange(pagination.pages)}
-                          disabled={pagination.page === pagination.pages}
-                        />
-                      </Pagination>
+            {/* Results Section */}
+            <div style={styles.resultsSection}>
+              {/* Results Header */}
+              <div style={styles.resultsHeader}>
+                <div>
+                  <h2 style={styles.resultsTitle}>Properties</h2>
+                  {pagination.total > 0 && (
+                    <p style={styles.resultsCount}>
+                      {pagination.total} properties found
+                    </p>
+                  )}
+                </div>
+                
+                <button
+                  style={styles.mobileFilterToggle}
+                  className="mobile-filter-toggle"
+                  onClick={() => setShowFilters(!showFilters)}
+                >
+                  🔍 Filters ({getActiveFilterCount()})
+                </button>
+              </div>
+
+              {/* Loading State */}
+              {loading ? (
+                <div style={styles.loadingContainer}>
+                  <Spinner animation="border" style={styles.loadingSpinner} />
+                  <p style={styles.loadingText}>Finding perfect properties...</p>
+                </div>
+              ) : (
+                <>
+                  {/* Properties Grid */}
+                  {properties.length > 0 ? (
+                    <>
+                      <div style={styles.propertiesGrid} className="properties-grid">
+                        {properties.map((property) => (
+                          <PropertyCard key={property._id} property={property} showOwner={true} />
+                        ))}
+                      </div>
+
+                      {/* Pagination */}
+                      {pagination.pages > 1 && (
+                        <div style={styles.paginationContainer}>
+                          <Pagination>
+                            <Pagination.First 
+                              onClick={() => handlePageChange(1)}
+                              disabled={pagination.page === 1}
+                            />
+                            <Pagination.Prev 
+                              onClick={() => handlePageChange(pagination.page - 1)}
+                              disabled={pagination.page === 1}
+                            />
+                            
+                            {[...Array(pagination.pages)].map((_, index) => {
+                              const pageNumber = index + 1;
+                              if (
+                                pageNumber === 1 ||
+                                pageNumber === pagination.pages ||
+                                (pageNumber >= pagination.page - 2 && pageNumber <= pagination.page + 2)
+                              ) {
+                                return (
+                                  <Pagination.Item
+                                    key={pageNumber}
+                                    active={pageNumber === pagination.page}
+                                    onClick={() => handlePageChange(pageNumber)}
+                                  >
+                                    {pageNumber}
+                                  </Pagination.Item>
+                                );
+                              }
+                              return null;
+                            })}
+                            
+                            <Pagination.Next 
+                              onClick={() => handlePageChange(pagination.page + 1)}
+                              disabled={pagination.page === pagination.pages}
+                            />
+                            <Pagination.Last 
+                              onClick={() => handlePageChange(pagination.pages)}
+                              disabled={pagination.page === pagination.pages}
+                            />
+                          </Pagination>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    /* Empty State */
+                    <div style={styles.emptyState}>
+                      <div style={styles.emptyIcon}>🏠</div>
+                      <h4 style={styles.emptyTitle}>No Properties Found</h4>
+                      <p style={styles.emptyText}>
+                        We couldn't find any properties matching your criteria. Try adjusting your filters or search in a different area.
+                      </p>
+                      <button
+                        onClick={clearFilters}
+                        style={styles.emptyButton}
+                      >
+                        Clear All Filters
+                      </button>
                     </div>
                   )}
                 </>
-              ) : (
-                <Card className="text-center py-5">
-                  <Card.Body>
-                    <h4>No Properties Found</h4>
-                    <p className="text-muted">
-                      Try adjusting your filters or search criteria
-                    </p>
-                    <Button variant="primary" onClick={clearFilters}>
-                      Clear All Filters
-                    </Button>
-                  </Card.Body>
-                </Card>
               )}
-            </>
-          )}
-        </Col>
-      </Row>
-    </Container>
+            </div>
+          </div>
+        </Container>
+      </div>
+    </>
   );
 };
 
