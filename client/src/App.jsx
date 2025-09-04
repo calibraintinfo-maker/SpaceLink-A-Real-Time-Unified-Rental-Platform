@@ -76,7 +76,7 @@ function App() {
             </Routes>
           </main>
           
-          {/* Simple Fixed Footer - Always Visible */}
+          {/* Simple Fixed Footer - NO MOVEMENT */}
           <Footer />
         </div>
       </Router>
