@@ -16,17 +16,14 @@ const Footer = () => {
   };
 
   const styles = {
-    // Light theme footer - NO positioning issues
+    // Light theme footer - matches your design
     footerContainer: {
-      background: '#ffffff', // Light theme
+      background: '#ffffff',
       borderTop: '1px solid #e2e8f0',
       paddingTop: '60px',
-      paddingBottom: '40px',
-      position: 'relative', // CRITICAL: Not fixed
-      zIndex: 1 // Lower than navbar
+      paddingBottom: '40px'
     },
 
-    // Brand section
     brandSection: {
       marginBottom: '40px'
     },
@@ -50,7 +47,6 @@ const Footer = () => {
       marginBottom: '24px'
     },
 
-    // Newsletter section
     newsletterSection: {
       marginBottom: '40px'
     },
@@ -107,7 +103,6 @@ const Footer = () => {
       marginTop: '8px'
     },
 
-    // Links sections
     linkSection: {
       marginBottom: '32px'
     },
@@ -137,7 +132,6 @@ const Footer = () => {
       transition: 'color 0.2s ease'
     },
 
-    // Bottom section
     bottomSection: {
       borderTop: '1px solid #e2e8f0',
       paddingTop: '32px',
@@ -232,11 +226,8 @@ const Footer = () => {
 
       <footer style={styles.footerContainer}>
         <Container>
-          {/* Main Footer Content */}
           <Row>
-            {/* Brand & Newsletter */}
             <Col lg={4} md={6} className="mb-4">
-              {/* Brand */}
               <div style={styles.brandSection}>
                 <Link to="/" style={styles.brandLogo} className="brand-logo">
                   <span>🏠</span>
@@ -247,11 +238,10 @@ const Footer = () => {
                 </p>
               </div>
 
-              {/* Newsletter */}
               <div style={styles.newsletterSection}>
                 <h6 style={styles.newsletterTitle}>Stay Updated</h6>
                 <p style={styles.newsletterDescription}>
-                  Get the latest property listings and updates delivered to your inbox.
+                  Get the latest property listings and updates.
                 </p>
                 <form onSubmit={handleSubscribe} style={styles.newsletterForm} className="newsletter-form">
                   <input
@@ -277,7 +267,6 @@ const Footer = () => {
               </div>
             </Col>
 
-            {/* Quick Links */}
             <Col lg={2} md={6} className="mb-4">
               <div style={styles.linkSection}>
                 <h6 style={styles.sectionTitle}>Quick Links</h6>
@@ -306,7 +295,6 @@ const Footer = () => {
               </div>
             </Col>
 
-            {/* Categories */}
             <Col lg={2} md={6} className="mb-4">
               <div style={styles.linkSection}>
                 <h6 style={styles.sectionTitle}>Categories</h6>
@@ -335,7 +323,6 @@ const Footer = () => {
               </div>
             </Col>
 
-            {/* Support */}
             <Col lg={2} md={6} className="mb-4">
               <div style={styles.linkSection}>
                 <h6 style={styles.sectionTitle}>Support</h6>
@@ -364,7 +351,6 @@ const Footer = () => {
               </div>
             </Col>
 
-            {/* Legal */}
             <Col lg={2} md={6} className="mb-4">
               <div style={styles.linkSection}>
                 <h6 style={styles.sectionTitle}>Legal</h6>
@@ -394,7 +380,6 @@ const Footer = () => {
             </Col>
           </Row>
 
-          {/* Bottom Section */}
           <div style={styles.bottomSection} className="bottom-section">
             <p style={styles.copyright}>
               © 2025 SpaceLink. All rights reserved.
