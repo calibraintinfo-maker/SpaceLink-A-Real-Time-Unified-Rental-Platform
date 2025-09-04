@@ -39,136 +39,139 @@ const PropertyDetails = () => {
   };
 
   const styles = {
-    // Compact page container
+    // Premium page container
     pageContainer: {
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
-      paddingTop: '1.5rem',
-      paddingBottom: '2rem'
+      paddingTop: '2rem',
+      paddingBottom: '3rem'
     },
 
-    // Compact back button
+    // Professional back button
     backButton: {
       background: 'rgba(255, 255, 255, 0.1)',
       backdropFilter: 'blur(10px)',
       border: '1px solid rgba(255, 255, 255, 0.2)',
-      borderRadius: '8px',
-      padding: '8px 16px',
+      borderRadius: '12px',
+      padding: '12px 20px',
       color: 'rgba(255, 255, 255, 0.9)',
       textDecoration: 'none',
-      fontSize: '0.85rem',
+      fontSize: '0.9rem',
       fontWeight: '600',
       transition: 'all 0.3s ease',
       display: 'inline-flex',
       alignItems: 'center',
-      gap: '6px',
-      marginBottom: '1.5rem'
+      gap: '8px',
+      marginBottom: '2rem'
     },
 
-    // Much smaller carousel container
+    // MUCH smaller, well-proportioned carousel
     carouselContainer: {
       background: 'rgba(255, 255, 255, 0.08)',
-      backdropFilter: 'blur(20px) saturate(180%)',
-      WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+      backdropFilter: 'blur(25px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(25px) saturate(180%)',
       border: '1px solid rgba(255, 255, 255, 0.15)',
-      borderRadius: '16px',
+      borderRadius: '20px',
       overflow: 'hidden',
-      marginBottom: '1.5rem',
-      boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4)',
+      marginBottom: '2.5rem',
+      boxShadow: '0 25px 60px rgba(0, 0, 0, 0.4)',
       position: 'relative',
-      maxWidth: '100%'
+      maxWidth: '800px', // Constrained width
+      margin: '0 auto 2.5rem auto' // Centered
     },
 
-    // Smaller carousel image
+    // Perfect carousel image size
     carouselImage: {
-      height: '250px', // Reduced from 300px
+      height: '280px', // Much smaller than before
       width: '100%',
       objectFit: 'cover',
-      borderRadius: '16px'
+      borderRadius: '20px'
     },
 
-    // Compact image counter
+    // Elegant image counter
     imageCounter: {
       position: 'absolute',
-      top: '12px',
-      right: '12px',
+      top: '16px',
+      right: '16px',
       background: 'rgba(0, 0, 0, 0.8)',
-      backdropFilter: 'blur(8px)',
+      backdropFilter: 'blur(10px)',
       color: 'white',
-      padding: '4px 8px',
-      borderRadius: '12px',
-      fontSize: '0.75rem',
+      padding: '8px 12px',
+      borderRadius: '20px',
+      fontSize: '0.8rem',
       fontWeight: '700',
       zIndex: 10,
       border: '1px solid rgba(255, 255, 255, 0.2)'
     },
 
-    // Tighter content layout
+    // Perfect content layout
     contentLayout: {
       display: 'flex',
-      gap: '1.5rem',
-      alignItems: 'flex-start'
+      gap: '2.5rem',
+      alignItems: 'flex-start',
+      maxWidth: '1200px',
+      margin: '0 auto'
     },
 
-    // Compact details card
+    // Larger, more prominent details card
     detailsCard: {
       background: 'rgba(255, 255, 255, 0.08)',
-      backdropFilter: 'blur(20px) saturate(180%)',
-      WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+      backdropFilter: 'blur(25px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(25px) saturate(180%)',
       border: '1px solid rgba(255, 255, 255, 0.15)',
-      borderRadius: '16px',
-      padding: '1.5rem',
-      boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4)',
+      borderRadius: '24px',
+      padding: '2.5rem', // More generous padding
+      boxShadow: '0 25px 60px rgba(0, 0, 0, 0.4)',
       color: 'white',
       flex: 1
     },
 
-    // Smaller badges
+    // Professional badge styling
     badgeContainer: {
       display: 'flex',
-      gap: '6px',
-      marginBottom: '1rem',
+      gap: '10px',
+      marginBottom: '2rem',
       flexWrap: 'wrap'
     },
 
     primaryBadge: {
       background: 'rgba(59, 130, 246, 0.2)',
-      backdropFilter: 'blur(6px)',
+      backdropFilter: 'blur(8px)',
       color: '#60a5fa',
       border: '1px solid rgba(59, 130, 246, 0.3)',
-      borderRadius: '12px',
-      padding: '3px 8px',
-      fontSize: '0.7rem',
+      borderRadius: '20px',
+      padding: '6px 14px', // More padding
+      fontSize: '0.8rem',
       fontWeight: '700'
     },
 
     secondaryBadge: {
       background: 'rgba(107, 114, 128, 0.2)',
-      backdropFilter: 'blur(6px)',
+      backdropFilter: 'blur(8px)',
       color: '#9ca3af',
       border: '1px solid rgba(107, 114, 128, 0.3)',
-      borderRadius: '12px',
-      padding: '3px 8px',
-      fontSize: '0.7rem',
+      borderRadius: '20px',
+      padding: '6px 14px',
+      fontSize: '0.8rem',
       fontWeight: '700'
     },
 
     infoBadge: {
       background: 'rgba(16, 185, 129, 0.2)',
-      backdropFilter: 'blur(6px)',
+      backdropFilter: 'blur(8px)',
       color: '#10b981',
       border: '1px solid rgba(16, 185, 129, 0.3)',
-      borderRadius: '12px',
-      padding: '3px 8px',
-      fontSize: '0.7rem',
+      borderRadius: '20px',
+      padding: '6px 14px',
+      fontSize: '0.8rem',
       fontWeight: '700'
     },
 
-    // Compact typography
+    // Perfect typography hierarchy
     propertyTitle: {
-      fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', // Reduced size
+      fontSize: 'clamp(1.8rem, 4vw, 2.2rem)', // Larger title
       fontWeight: '800',
-      marginBottom: '0.75rem',
+      marginBottom: '1.5rem',
       background: 'linear-gradient(135deg, #ffffff 0%, #60a5fa 100%)',
       WebkitBackgroundClip: 'text',
       WebkitTextFillColor: 'transparent',
@@ -176,53 +179,53 @@ const PropertyDetails = () => {
       lineHeight: 1.2
     },
 
-    // Smaller price container
+    // Prominent price container
     priceContainer: {
       background: 'rgba(34, 197, 94, 0.15)',
-      backdropFilter: 'blur(8px)',
+      backdropFilter: 'blur(10px)',
       border: '1px solid rgba(34, 197, 94, 0.3)',
-      borderRadius: '10px',
-      padding: '0.75rem',
-      marginBottom: '1rem'
+      borderRadius: '16px',
+      padding: '1.5rem', // More padding
+      marginBottom: '2rem'
     },
 
     priceText: {
-      fontSize: '1.3rem', // Reduced from 1.5rem
+      fontSize: '1.8rem', // Larger price
       fontWeight: '800',
       color: '#22c55e',
-      marginBottom: '0.25rem'
+      marginBottom: '0.5rem'
     },
 
     addressText: {
       color: 'rgba(255, 255, 255, 0.8)',
-      fontSize: '0.8rem',
+      fontSize: '1rem', // Larger address text
       display: 'flex',
       alignItems: 'center',
-      gap: '4px'
+      gap: '8px'
     },
 
-    // Tighter details grid
+    // Better details grid
     detailsGrid: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-      gap: '0.75rem',
-      marginBottom: '1rem'
+      gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+      gap: '1.2rem', // More gap
+      marginBottom: '2rem'
     },
 
     detailItem: {
       background: 'rgba(255, 255, 255, 0.05)',
-      backdropFilter: 'blur(8px)',
+      backdropFilter: 'blur(10px)',
       border: '1px solid rgba(255, 255, 255, 0.1)',
-      borderRadius: '8px',
-      padding: '0.5rem',
+      borderRadius: '12px',
+      padding: '1rem', // More padding
       display: 'flex',
       alignItems: 'center',
-      gap: '6px',
-      fontSize: '0.75rem'
+      gap: '10px',
+      fontSize: '0.9rem' // Larger font
     },
 
     detailIcon: {
-      fontSize: '0.9rem',
+      fontSize: '1.1rem',
       opacity: 0.8
     },
 
@@ -234,127 +237,127 @@ const PropertyDetails = () => {
     detailValue: {
       color: 'rgba(255, 255, 255, 0.7)',
       marginLeft: 'auto',
-      fontSize: '0.75rem'
+      fontSize: '0.85rem'
     },
 
-    // Compact description
+    // Enhanced description section
     descriptionSection: {
-      marginBottom: '1rem'
+      marginBottom: '2rem'
     },
 
     sectionTitle: {
-      fontSize: '1rem',
+      fontSize: '1.2rem', // Larger section titles
       fontWeight: '700',
-      marginBottom: '0.5rem',
+      marginBottom: '1rem',
       color: 'white',
       display: 'flex',
       alignItems: 'center',
-      gap: '4px'
+      gap: '8px'
     },
 
     descriptionText: {
       color: 'rgba(255, 255, 255, 0.8)',
-      lineHeight: '1.5',
-      fontSize: '0.8rem',
+      lineHeight: '1.7',
+      fontSize: '1rem', // Larger description text
       whiteSpace: 'pre-line'
     },
 
-    // Compact owner section
+    // Enhanced owner section
     ownerSection: {
       background: 'rgba(255, 255, 255, 0.05)',
-      backdropFilter: 'blur(8px)',
+      backdropFilter: 'blur(10px)',
       border: '1px solid rgba(255, 255, 255, 0.1)',
-      borderRadius: '10px',
-      padding: '0.75rem',
-      marginTop: '1rem'
+      borderRadius: '16px',
+      padding: '1.5rem', // More padding
+      marginTop: '2rem'
     },
 
     ownerInfo: {
       display: 'flex',
       alignItems: 'center',
-      gap: '0.5rem'
+      gap: '1rem'
     },
 
     ownerAvatar: {
-      width: '40px',
-      height: '40px',
+      width: '56px', // Larger avatar
+      height: '56px',
       borderRadius: '50%',
       background: 'linear-gradient(135deg, #3b82f6 0%, #1e40af 100%)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      fontSize: '1rem',
+      fontSize: '1.4rem',
       fontWeight: '700',
       color: 'white'
     },
 
     ownerName: {
-      fontSize: '0.9rem',
+      fontSize: '1.1rem', // Larger name
       fontWeight: '700',
       color: 'white',
-      marginBottom: '0.1rem'
+      marginBottom: '0.25rem'
     },
 
     ownerContact: {
       color: 'rgba(255, 255, 255, 0.7)',
-      fontSize: '0.7rem'
+      fontSize: '0.9rem' // Larger contact text
     },
 
-    // Smaller booking sidebar
+    // Perfect booking sidebar
     bookingSidebar: {
-      width: '300px', // Reduced from 340px
-      minWidth: '300px'
+      width: '380px', // Slightly wider
+      minWidth: '380px'
     },
 
     bookingCard: {
       background: 'rgba(255, 255, 255, 0.08)',
-      backdropFilter: 'blur(20px) saturate(180%)',
-      WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+      backdropFilter: 'blur(25px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(25px) saturate(180%)',
       border: '1px solid rgba(255, 255, 255, 0.15)',
-      borderRadius: '16px',
+      borderRadius: '24px',
       overflow: 'hidden',
-      boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4)',
+      boxShadow: '0 25px 60px rgba(0, 0, 0, 0.4)',
       position: 'sticky',
       top: '2rem',
-      marginBottom: '1.5rem'
+      marginBottom: '2rem'
     },
 
     bookingHeader: {
       background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
-      padding: '0.75rem',
+      padding: '1.2rem',
       textAlign: 'center'
     },
 
     bookingHeaderTitle: {
-      fontSize: '0.9rem',
+      fontSize: '1.1rem', // Larger header
       fontWeight: '700',
       color: 'white',
       margin: '0',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      gap: '4px'
+      gap: '8px'
     },
 
     bookingBody: {
-      padding: '1rem'
+      padding: '2rem' // More padding
     },
 
     bookingPrice: {
       textAlign: 'center',
-      marginBottom: '1rem'
+      marginBottom: '2rem'
     },
 
     bookingPriceAmount: {
-      fontSize: '1.3rem', // Reduced
+      fontSize: '1.8rem', // Larger booking price
       fontWeight: '800',
       color: '#22c55e',
-      marginBottom: '0.1rem'
+      marginBottom: '0.5rem'
     },
 
     bookingPriceNote: {
       color: 'rgba(255, 255, 255, 0.7)',
-      fontSize: '0.7rem'
+      fontSize: '0.9rem'
     },
 
     bookingButton: {
@@ -363,101 +366,101 @@ const PropertyDetails = () => {
         ? 'linear-gradient(135deg, #16a34a 0%, #15803d 100%)'
         : 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
       border: 'none',
-      borderRadius: '10px',
-      padding: '0.6rem 0.8rem',
+      borderRadius: '16px',
+      padding: '1rem 1.5rem', // Larger button
       color: 'white',
-      fontSize: '0.9rem',
+      fontSize: '1.1rem', // Larger button text
       fontWeight: '700',
       textDecoration: 'none',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      gap: '6px',
+      gap: '10px',
       transition: 'all 0.3s ease',
-      boxShadow: '0 6px 20px rgba(34, 197, 94, 0.3)',
-      marginBottom: '0.75rem',
-      transform: isBookingHovered ? 'translateY(-1px)' : 'translateY(0)'
+      boxShadow: '0 12px 30px rgba(34, 197, 94, 0.3)',
+      marginBottom: '1.5rem',
+      transform: isBookingHovered ? 'translateY(-2px) scale(1.02)' : 'translateY(0) scale(1)'
     },
 
     paymentNote: {
       textAlign: 'center',
       background: 'rgba(255, 193, 7, 0.15)',
       border: '1px solid rgba(255, 193, 7, 0.3)',
-      borderRadius: '6px',
-      padding: '6px',
+      borderRadius: '12px',
+      padding: '12px',
       color: '#fbbf24',
-      fontSize: '0.7rem',
+      fontSize: '0.85rem',
       fontWeight: '600',
-      marginBottom: '0.75rem'
+      marginBottom: '1.5rem'
     },
 
-    // Smaller features list
+    // Enhanced features list
     featuresList: {
       background: 'rgba(255, 255, 255, 0.05)',
-      backdropFilter: 'blur(8px)',
+      backdropFilter: 'blur(10px)',
       border: '1px solid rgba(255, 255, 255, 0.1)',
-      borderRadius: '10px',
-      padding: '0.75rem',
-      marginBottom: '0.75rem'
+      borderRadius: '16px',
+      padding: '1.5rem', // More padding
+      marginBottom: '1.5rem'
     },
 
     featuresTitle: {
-      fontSize: '0.8rem',
+      fontSize: '1rem', // Larger features title
       fontWeight: '700',
       color: 'white',
-      marginBottom: '0.5rem',
+      marginBottom: '1rem',
       display: 'flex',
       alignItems: 'center',
-      gap: '4px'
+      gap: '8px'
     },
 
     featureItem: {
       display: 'flex',
       alignItems: 'center',
-      gap: '6px',
-      marginBottom: '6px',
+      gap: '10px',
+      marginBottom: '10px',
       color: 'rgba(255, 255, 255, 0.8)',
-      fontSize: '0.7rem'
+      fontSize: '0.9rem' // Larger feature text
     },
 
     featureIcon: {
       color: '#22c55e',
-      fontSize: '0.8rem'
+      fontSize: '1rem'
     },
 
-    // Compact contact card
+    // Enhanced contact card
     contactCard: {
       background: 'rgba(255, 255, 255, 0.05)',
-      backdropFilter: 'blur(8px)',
+      backdropFilter: 'blur(10px)',
       border: '1px solid rgba(255, 255, 255, 0.1)',
-      borderRadius: '10px',
-      padding: '0.75rem'
+      borderRadius: '16px',
+      padding: '1.5rem' // More padding
     },
 
     contactTitle: {
-      fontSize: '0.8rem',
+      fontSize: '1rem', // Larger contact title
       fontWeight: '700',
       color: 'white',
-      marginBottom: '0.5rem',
+      marginBottom: '1rem',
       display: 'flex',
       alignItems: 'center',
-      gap: '4px'
+      gap: '8px'
     },
 
     contactInfo: {
-      marginBottom: '0.5rem'
+      marginBottom: '1rem'
     },
 
     contactLabel: {
       fontWeight: '600',
       color: 'rgba(255, 255, 255, 0.9)',
-      marginBottom: '0.1rem',
-      fontSize: '0.7rem'
+      marginBottom: '0.25rem',
+      fontSize: '0.85rem'
     },
 
     contactValue: {
       color: 'rgba(255, 255, 255, 0.7)',
-      fontSize: '0.7rem'
+      fontSize: '0.85rem'
     },
 
     // Loading states
@@ -466,7 +469,7 @@ const PropertyDetails = () => {
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      minHeight: '50vh',
+      minHeight: '60vh',
       color: 'white'
     },
 
@@ -475,15 +478,15 @@ const PropertyDetails = () => {
     },
 
     loadingText: {
-      fontSize: '1rem',
+      fontSize: '1.1rem',
       fontWeight: '600'
     },
 
     errorContainer: {
       background: 'rgba(239, 68, 68, 0.15)',
       border: '1px solid rgba(239, 68, 68, 0.3)',
-      borderRadius: '12px',
-      padding: '1.5rem',
+      borderRadius: '16px',
+      padding: '2rem',
       textAlign: 'center',
       color: '#fca5a5'
     }
@@ -515,8 +518,8 @@ const PropertyDetails = () => {
               style={{
                 background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
                 border: 'none',
-                borderRadius: '8px',
-                padding: '10px 20px',
+                borderRadius: '12px',
+                padding: '12px 24px',
                 marginTop: '1rem'
               }}
             >
@@ -541,8 +544,8 @@ const PropertyDetails = () => {
               style={{
                 background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
                 border: 'none',
-                borderRadius: '8px',
-                padding: '10px 20px',
+                borderRadius: '12px',
+                padding: '12px 24px',
                 marginTop: '1rem'
               }}
             >
@@ -556,33 +559,33 @@ const PropertyDetails = () => {
 
   return (
     <>
-      {/* Compact CSS with reduced sizes */}
+      {/* World-class professional CSS */}
       <style>
         {`
           .back-btn:hover {
             background: rgba(255, 255, 255, 0.15) !important;
             color: white !important;
-            transform: translateX(-3px) !important;
+            transform: translateX(-4px) !important;
           }
           
           .carousel {
-            max-width: 100%;
+            max-width: 800px;
             margin: 0 auto;
           }
           
           .carousel-item img {
-            height: 250px !important;
+            height: 280px !important;
             width: 100% !important;
             object-fit: cover !important;
-            border-radius: 16px !important;
+            border-radius: 20px !important;
           }
           
           .carousel-control-prev, .carousel-control-next {
             background: rgba(0, 0, 0, 0.6) !important;
-            backdrop-filter: blur(8px) !important;
+            backdrop-filter: blur(10px) !important;
             border-radius: 50% !important;
-            width: 40px !important;
-            height: 40px !important;
+            width: 50px !important;
+            height: 50px !important;
             top: 50% !important;
             transform: translateY(-50%) !important;
             opacity: 0.8 !important;
@@ -596,46 +599,47 @@ const PropertyDetails = () => {
           }
           
           .carousel-control-prev {
-            left: 12px !important;
+            left: 20px !important;
           }
           
           .carousel-control-next {
-            right: 12px !important;
+            right: 20px !important;
           }
           
           .carousel-indicators {
-            bottom: 12px !important;
+            bottom: 20px !important;
             margin-bottom: 0 !important;
           }
           
           .carousel-indicators [data-bs-target] {
             background-color: rgba(255, 255, 255, 0.5) !important;
-            border-radius: 8px !important;
-            width: 10px !important;
-            height: 3px !important;
+            border-radius: 12px !important;
+            width: 14px !important;
+            height: 4px !important;
             border: none !important;
             transition: all 0.3s ease !important;
           }
           
           .carousel-indicators .active {
             background-color: #3b82f6 !important;
-            width: 20px !important;
+            width: 28px !important;
           }
           
           .carousel-caption {
             background: rgba(0, 0, 0, 0.7) !important;
-            backdrop-filter: blur(8px) !important;
-            border-radius: 10px !important;
-            bottom: 20px !important;
-            left: 15px !important;
-            right: 15px !important;
-            padding: 8px 12px !important;
+            backdrop-filter: blur(10px) !important;
+            border-radius: 16px !important;
+            bottom: 30px !important;
+            left: 25px !important;
+            right: 25px !important;
+            padding: 12px 18px !important;
             border: 1px solid rgba(255, 255, 255, 0.1) !important;
           }
           
           @media (max-width: 768px) {
             .content-layout {
               flex-direction: column !important;
+              gap: 2rem !important;
             }
             
             .booking-sidebar {
@@ -652,26 +656,26 @@ const PropertyDetails = () => {
             }
             
             .carousel-item img {
-              height: 200px !important;
+              height: 220px !important;
             }
             
             .carousel-control-prev, .carousel-control-next {
-              width: 35px !important;
-              height: 35px !important;
+              width: 45px !important;
+              height: 45px !important;
             }
           }
           
           @media (max-width: 480px) {
             .carousel-item img {
-              height: 180px !important;
+              height: 200px !important;
             }
           }
         `}
       </style>
 
       <div style={styles.pageContainer}>
-        <Container style={{ maxWidth: '1000px' }}>
-          {/* Compact Back Button */}
+        <Container>
+          {/* Professional Back Button */}
           <Link
             to="/find-property"
             style={styles.backButton}
@@ -681,7 +685,7 @@ const PropertyDetails = () => {
             <span>Back to Properties</span>
           </Link>
 
-          {/* Compact Carousel - 250px height, 2 second auto-slide */}
+          {/* Perfect-sized Carousel - Centered & Constrained */}
           <div style={styles.carouselContainer}>
             {property.images && property.images.length > 0 ? (
               <>
@@ -708,7 +712,7 @@ const PropertyDetails = () => {
                         <p style={{ 
                           margin: 0, 
                           fontWeight: '600', 
-                          fontSize: '0.75rem',
+                          fontSize: '0.9rem',
                           color: 'rgba(255, 255, 255, 0.9)'
                         }}>
                           {property.title} - Gallery {index + 1}
@@ -732,18 +736,18 @@ const PropertyDetails = () => {
                 justifyContent: 'center',
                 background: 'rgba(255, 255, 255, 0.05)',
                 color: 'rgba(255, 255, 255, 0.7)',
-                fontSize: '0.9rem'
+                fontSize: '1rem'
               }}>
                 📷 No images available
               </div>
             )}
           </div>
 
-          {/* Compact Main Content */}
+          {/* Perfect Professional Content Layout */}
           <div style={styles.contentLayout} className="content-layout">
-            {/* Property Details */}
+            {/* Enhanced Property Details */}
             <div style={styles.detailsCard}>
-              {/* Smaller Badges */}
+              {/* Professional Badges */}
               <div style={styles.badgeContainer}>
                 <span style={styles.primaryBadge}>
                   {getCategoryIcon(property.category)} {property.category}
@@ -760,12 +764,12 @@ const PropertyDetails = () => {
                 ))}
               </div>
 
-              {/* Compact Title */}
+              {/* Prominent Title */}
               <h1 style={styles.propertyTitle}>
                 {property.title}
               </h1>
 
-              {/* Smaller Price */}
+              {/* Enhanced Price Display */}
               <div style={styles.priceContainer}>
                 <div style={styles.priceText}>
                   {formatPrice(property.price, property.rentType[0])}
@@ -779,7 +783,7 @@ const PropertyDetails = () => {
                 </div>
               </div>
 
-              {/* Tighter Details Grid */}
+              {/* Professional Details Grid */}
               <div style={styles.detailsGrid} className="details-grid">
                 <div style={styles.detailItem}>
                   <span style={styles.detailIcon}>📐</span>
@@ -817,7 +821,7 @@ const PropertyDetails = () => {
                 </div>
               </div>
 
-              {/* Compact Description */}
+              {/* Enhanced Description */}
               <div style={styles.descriptionSection}>
                 <h5 style={styles.sectionTitle}>
                   <span>📝</span>
@@ -828,7 +832,7 @@ const PropertyDetails = () => {
                 </p>
               </div>
 
-              {/* Compact Owner Section */}
+              {/* Enhanced Owner Section */}
               {property.ownerId && (
                 <div style={styles.ownerSection}>
                   <h5 style={styles.sectionTitle}>
@@ -855,9 +859,9 @@ const PropertyDetails = () => {
               )}
             </div>
 
-            {/* Smaller Booking Sidebar */}
+            {/* Professional Booking Sidebar */}
             <div style={styles.bookingSidebar} className="booking-sidebar">
-              {/* Compact Booking Card */}
+              {/* Enhanced Booking Card */}
               <div style={styles.bookingCard}>
                 <div style={styles.bookingHeader}>
                   <h5 style={styles.bookingHeaderTitle}>
@@ -867,6 +871,7 @@ const PropertyDetails = () => {
                 </div>
 
                 <div style={styles.bookingBody}>
+                  {/* Prominent Price Display */}
                   <div style={styles.bookingPrice}>
                     <h3 style={styles.bookingPriceAmount}>
                       {formatPrice(property.price, property.rentType[0])}
@@ -876,6 +881,7 @@ const PropertyDetails = () => {
                     </p>
                   </div>
 
+                  {/* Professional Booking Button */}
                   <Link
                     to={`/book/${property._id}`}
                     style={styles.bookingButton}
@@ -886,14 +892,16 @@ const PropertyDetails = () => {
                     <span>Book Now</span>
                   </Link>
 
+                  {/* Payment Note */}
                   <div style={styles.paymentNote}>
                     💳 Payment: On Spot Only
                   </div>
 
+                  {/* Enhanced Features */}
                   <div style={styles.featuresList}>
                     <h6 style={styles.featuresTitle}>
                       <span>✨</span>
-                      <span>Features</span>
+                      <span>Property Features</span>
                     </h6>
                     <div style={styles.featureItem}>
                       <span style={styles.featureIcon}>✓</span>
@@ -919,7 +927,7 @@ const PropertyDetails = () => {
 
                   <div style={{ 
                     textAlign: 'center', 
-                    fontSize: '0.65rem', 
+                    fontSize: '0.8rem', 
                     color: 'rgba(255, 255, 255, 0.6)' 
                   }}>
                     ⚠️ Complete your profile before booking
@@ -927,11 +935,11 @@ const PropertyDetails = () => {
                 </div>
               </div>
 
-              {/* Compact Contact Card */}
+              {/* Enhanced Contact Card */}
               <div style={styles.contactCard}>
                 <h6 style={styles.contactTitle}>
                   <span>📞</span>
-                  <span>Contact Info</span>
+                  <span>Contact Information</span>
                 </h6>
                 <div style={styles.contactInfo}>
                   <div style={styles.contactLabel}>Property Contact:</div>
