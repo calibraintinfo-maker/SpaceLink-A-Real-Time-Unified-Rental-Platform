@@ -65,7 +65,7 @@ const PropertyDetails = () => {
       marginBottom: '2rem'
     },
 
-    // Perfect carousel container - reduced size
+    // Compact carousel container
     carouselContainer: {
       background: 'rgba(255, 255, 255, 0.08)',
       backdropFilter: 'blur(25px) saturate(180%)',
@@ -80,15 +80,15 @@ const PropertyDetails = () => {
       margin: '0 0 2rem 0'
     },
 
-    // Optimized carousel image - perfect size
+    // Reduced carousel image size
     carouselImage: {
-      height: '350px',
+      height: '300px', // Reduced from 350px
       width: '100%',
       objectFit: 'cover',
       borderRadius: '20px'
     },
 
-    // Improved image counter
+    // Image counter
     imageCounter: {
       position: 'absolute',
       top: '16px',
@@ -104,14 +104,14 @@ const PropertyDetails = () => {
       border: '1px solid rgba(255, 255, 255, 0.2)'
     },
 
-    // Main content layout - better spacing
+    // Main content layout
     contentLayout: {
       display: 'flex',
       gap: '2rem',
       alignItems: 'flex-start'
     },
 
-    // Property details card - improved
+    // Property details card
     detailsCard: {
       background: 'rgba(255, 255, 255, 0.08)',
       backdropFilter: 'blur(25px) saturate(180%)',
@@ -124,7 +124,7 @@ const PropertyDetails = () => {
       flex: 1
     },
 
-    // Badge styling - compact
+    // Badge styling
     badgeContainer: {
       display: 'flex',
       gap: '8px',
@@ -165,7 +165,7 @@ const PropertyDetails = () => {
       fontWeight: '700'
     },
 
-    // Typography - better hierarchy
+    // Typography
     propertyTitle: {
       fontSize: 'clamp(1.5rem, 4vw, 2rem)',
       fontWeight: '800',
@@ -177,7 +177,7 @@ const PropertyDetails = () => {
       lineHeight: 1.2
     },
 
-    // Price container - more compact
+    // Price container
     priceContainer: {
       background: 'rgba(34, 197, 94, 0.15)',
       backdropFilter: 'blur(10px)',
@@ -202,7 +202,7 @@ const PropertyDetails = () => {
       gap: '6px'
     },
 
-    // Compact details grid
+    // Details grid
     detailsGrid: {
       display: 'grid',
       gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
@@ -238,7 +238,7 @@ const PropertyDetails = () => {
       fontSize: '0.8rem'
     },
 
-    // Description section - better spacing
+    // Description section
     descriptionSection: {
       marginBottom: '1.5rem'
     },
@@ -260,7 +260,7 @@ const PropertyDetails = () => {
       whiteSpace: 'pre-line'
     },
 
-    // Owner section - compact
+    // Owner section
     ownerSection: {
       background: 'rgba(255, 255, 255, 0.05)',
       backdropFilter: 'blur(10px)',
@@ -301,7 +301,7 @@ const PropertyDetails = () => {
       fontSize: '0.8rem'
     },
 
-    // Booking sidebar - optimized width
+    // Booking sidebar
     bookingSidebar: {
       width: '340px',
       minWidth: '340px'
@@ -392,7 +392,7 @@ const PropertyDetails = () => {
       marginBottom: '1rem'
     },
 
-    // Compact features list
+    // Features list
     featuresList: {
       background: 'rgba(255, 255, 255, 0.05)',
       backdropFilter: 'blur(10px)',
@@ -426,7 +426,7 @@ const PropertyDetails = () => {
       fontSize: '0.9rem'
     },
 
-    // Contact card - compact
+    // Contact card
     contactCard: {
       background: 'rgba(255, 255, 255, 0.05)',
       backdropFilter: 'blur(10px)',
@@ -557,7 +557,7 @@ const PropertyDetails = () => {
 
   return (
     <>
-      {/* Enhanced CSS with Auto-Slide */}
+      {/* Enhanced CSS with reduced sizes and faster auto-slide */}
       <style>
         {`
           .back-btn:hover {
@@ -572,7 +572,7 @@ const PropertyDetails = () => {
           }
           
           .carousel-item img {
-            height: 350px !important;
+            height: 300px !important;
             width: 100% !important;
             object-fit: cover !important;
             border-radius: 20px !important;
@@ -653,7 +653,7 @@ const PropertyDetails = () => {
             }
             
             .carousel-item img {
-              height: 280px !important;
+              height: 250px !important;
             }
             
             .carousel-control-prev, .carousel-control-next {
@@ -664,7 +664,7 @@ const PropertyDetails = () => {
           
           @media (max-width: 480px) {
             .carousel-item img {
-              height: 220px !important;
+              height: 200px !important;
             }
           }
         `}
@@ -682,7 +682,7 @@ const PropertyDetails = () => {
             <span>Back to Properties</span>
           </Link>
 
-          {/* Auto-Slide Carousel - Perfect Size */}
+          {/* Compact Auto-Slide Carousel - 2 Second Interval */}
           <div style={styles.carouselContainer}>
             {property.images && property.images.length > 0 ? (
               <>
@@ -692,7 +692,7 @@ const PropertyDetails = () => {
                 <Carousel
                   activeIndex={activeImageIndex}
                   onSelect={(selectedIndex) => setActiveImageIndex(selectedIndex)}
-                  interval={4000} // Auto-slide every 4 seconds
+                  interval={2000} // 2 seconds auto-slide
                   fade={false}
                   controls={property.images.length > 1}
                   indicators={property.images.length > 1}
@@ -740,7 +740,7 @@ const PropertyDetails = () => {
             )}
           </div>
 
-          {/* Main Content - Perfect Alignment */}
+          {/* Main Content */}
           <div style={styles.contentLayout} className="content-layout">
             {/* Property Details */}
             <div style={styles.detailsCard}>
@@ -856,7 +856,7 @@ const PropertyDetails = () => {
               )}
             </div>
 
-            {/* Compact Booking Sidebar */}
+            {/* Booking Sidebar */}
             <div style={styles.bookingSidebar} className="booking-sidebar">
               {/* Booking Card */}
               <div style={styles.bookingCard}>
