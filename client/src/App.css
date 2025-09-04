@@ -44,17 +44,17 @@ body {
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Main content with proper spacing for fixed navbar and footer */
+/* CRITICAL: Main content with proper spacing - NO OVERLAP */
 .main-content {
   flex: 1;
   padding-top: 80px !important;
-  padding-bottom: 180px !important; /* Space for fixed footer */
+  padding-bottom: 140px !important; /* Space for footer */
   background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
   overflow-y: auto;
   min-height: calc(100vh - 80px);
 }
 
-/* Fixed footer - Always visible, no scroll behavior */
+/* CRITICAL: Footer - ABSOLUTELY FIXED, NO MOVEMENT */
 footer {
   position: fixed !important;
   bottom: 0 !important;
@@ -65,7 +65,10 @@ footer {
   border-top: 1px solid #e2e8f0 !important;
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1) !important;
   z-index: 1000 !important;
-  padding: 40px 0 !important;
+  padding: 30px 0 !important;
+  /* NO TRANSITIONS OR TRANSFORMS - COMPLETELY STATIC */
+  transform: none !important;
+  transition: none !important;
 }
 
 /* Mobile responsiveness */
@@ -76,11 +79,11 @@ footer {
   
   .main-content {
     padding-top: 70px !important;
-    padding-bottom: 200px !important;
+    padding-bottom: 120px !important;
   }
   
   footer {
-    padding: 30px 0 !important;
+    padding: 25px 0 !important;
   }
 }
 
@@ -91,11 +94,11 @@ footer {
   
   .main-content {
     padding-top: 60px !important;
-    padding-bottom: 220px !important;
+    padding-bottom: 110px !important;
   }
   
   footer {
-    padding: 25px 0 !important;
+    padding: 20px 0 !important;
   }
 }
 
@@ -221,18 +224,12 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Footer hover effects */
+/* Footer link hover effects */
 footer a:hover {
   color: #6366f1 !important;
 }
 
-footer .social-link:hover {
-  background: #f1f5f9 !important;
-  border-color: #cbd5e1 !important;
-  transform: translateY(-1px) !important;
-}
-
-/* Newsletter input styling */
+/* Newsletter styling */
 footer input:focus {
   border-color: #6366f1 !important;
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1) !important;
@@ -240,7 +237,6 @@ footer input:focus {
 
 footer button:hover {
   background: #4f46e5 !important;
-  transform: translateY(-1px) !important;
 }
 
 /* Print styles */
@@ -253,4 +249,13 @@ footer button:hover {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
   }
+}
+
+/* CRITICAL: Remove any scroll behavior or animation classes */
+.hide, .hidden, .scroll-hide, .scroll-show {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
 }
