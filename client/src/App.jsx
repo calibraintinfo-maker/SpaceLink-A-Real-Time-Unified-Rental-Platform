@@ -20,14 +20,18 @@ import './App.css';
 function App() {
   return (
     <>
-      {/* CRITICAL: Global CSS to fix navbar overlap and provide professional layout */}
+      {/* CRITICAL: Fixed CSS to prevent overlapping and proper layout */}
       <style>
         {`
           /* Reset and base styles */
-          * {
+          *, *::before, *::after {
+            box-sizing: border-box;
+          }
+
+          html, body, #root {
+            height: 100%;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
           }
 
           body {
@@ -37,28 +41,21 @@ function App() {
             overflow-x: hidden;
           }
 
-          /* CRITICAL FIX: Prevent navbar overlap */
+          /* CRITICAL: Proper layout structure to prevent footer overlap */
           .app-container {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            position: relative;
           }
 
-          /* CRITICAL: Add top padding for fixed navbar */
-          .main-content {
-            flex: 1;
-            padding-top: 80px; /* MUST match navbar height */
-            background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
-            min-height: calc(100vh - 80px);
-          }
-
-          /* Ensure navbar stays fixed and on top */
+          /* CRITICAL: Fixed navbar positioning */
           .app-navbar {
             position: fixed !important;
             top: 0 !important;
             left: 0 !important;
             right: 0 !important;
-            z-index: 1050 !important; /* Higher than Bootstrap modal */
+            z-index: 1050 !important; /* Highest priority - above everything */
             height: 80px !important;
             background: rgba(255, 255, 255, 0.95) !important;
             backdrop-filter: blur(20px) saturate(180%) !important;
@@ -66,11 +63,23 @@ function App() {
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1) !important;
           }
 
-          /* Footer styling */
+          /* CRITICAL: Main content with proper spacing */
+          .main-content {
+            flex: 1 0 auto; /* Grow to fill space, don't shrink */
+            padding-top: 80px; /* Space for fixed navbar */
+            padding-bottom: 60px; /* Space for footer */
+            background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+            min-height: calc(100vh - 80px); /* Minimum height minus navbar */
+          }
+
+          /* CRITICAL: Footer positioning to prevent overlap */
           .app-footer {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: white;
-            margin-top: auto;
+            flex-shrink: 0; /* Don't shrink */
+            background: #ffffff !important; /* Light theme footer */
+            border-top: 1px solid #e2e8f0 !important;
+            z-index: 10 !important; /* Below navbar but above content */
+            position: relative !important;
+            margin-top: auto; /* Push to bottom */
           }
 
           /* Smooth scrolling */
@@ -80,36 +89,13 @@ function App() {
 
           /* Mobile responsiveness */
           @media (max-width: 768px) {
-            .main-content {
-              padding-top: 70px !important; /* Smaller navbar on mobile */
-            }
-            
             .app-navbar {
               height: 70px !important;
             }
-          }
-
-          /* Page transitions */
-          .page-fade-enter {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-
-          .page-fade-enter-active {
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
-          }
-
-          .page-fade-exit {
-            opacity: 1;
-            transform: translateY(0);
-          }
-
-          .page-fade-exit-active {
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+            
+            .main-content {
+              padding-top: 70px !important;
+            }
           }
 
           /* Loading states */
@@ -153,36 +139,6 @@ function App() {
             border-radius: 4px;
           }
 
-          /* Professional button resets */
-          button, .btn {
-            font-family: inherit;
-            font-weight: 600;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-          }
-
-          /* Professional form inputs */
-          input, select, textarea {
-            font-family: inherit;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-          }
-
-          input:focus, select:focus, textarea:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-            border-color: #6366f1;
-          }
-
-          /* Professional link styling */
-          a {
-            color: #6366f1;
-            text-decoration: none;
-            transition: color 0.2s ease;
-          }
-
-          a:hover {
-            color: #4f46e5;
-          }
-
           /* Error handling styles */
           .error-boundary {
             padding: 40px;
@@ -207,12 +163,12 @@ function App() {
       <AuthProvider>
         <Router>
           <div className="app-container">
-            {/* Fixed Navbar */}
+            {/* Fixed Navbar - Highest Z-Index */}
             <div className="app-navbar">
               <Navbar />
             </div>
 
-            {/* Main Content Area with proper spacing */}
+            {/* Main Content Area - Proper Spacing */}
             <main className="main-content">
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -273,7 +229,8 @@ function App() {
                         padding: '12px 24px', 
                         borderRadius: '8px',
                         display: 'inline-block',
-                        marginTop: '16px'
+                        marginTop: '16px',
+                        textDecoration: 'none'
                       }}>
                         Go Home
                       </a>
@@ -283,7 +240,7 @@ function App() {
               </Routes>
             </main>
 
-            {/* Footer */}
+            {/* Footer - Below Content */}
             <div className="app-footer">
               <Footer />
             </div>
