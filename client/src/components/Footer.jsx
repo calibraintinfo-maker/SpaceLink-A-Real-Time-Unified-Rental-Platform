@@ -4,114 +4,120 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
+  const [isSubscribed, setIsSubscribed] = useState(false);
 
   const handleSubscribe = (e) => {
     e.preventDefault();
     if (email) {
-      alert('Thank you for subscribing!');
+      setIsSubscribed(true);
       setEmail('');
+      setTimeout(() => setIsSubscribed(false), 3000);
     }
   };
 
   const styles = {
-    // Clean Footer Container
+    // Professional light footer
     footerContainer: {
-      background: '#0a0e1a',
-      borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-      marginTop: 'auto',
-      padding: '60px 0 30px 0'
+      background: '#ffffff',
+      borderTop: '1px solid #e2e8f0',
+      paddingTop: '60px',
+      paddingBottom: '40px',
+      marginTop: '80px'
     },
 
-    // Main Content Row
-    footerContent: {
+    // Brand section
+    brandSection: {
       marginBottom: '40px'
     },
 
-    // Brand Section - Clean
-    brandSection: {
-      marginBottom: '2rem'
-    },
-
     brandLogo: {
+      color: '#0f172a',
+      fontSize: '1.5rem',
+      fontWeight: '800',
+      textDecoration: 'none',
       display: 'flex',
       alignItems: 'center',
-      gap: '10px',
-      marginBottom: '16px',
-      textDecoration: 'none'
-    },
-
-    brandIcon: {
-      fontSize: '1.8rem'
-    },
-
-    brandName: {
-      fontSize: '1.5rem',
-      fontWeight: 800,
-      color: 'white',
-      margin: 0
+      gap: '8px',
+      marginBottom: '16px'
     },
 
     brandDescription: {
-      color: 'rgba(255, 255, 255, 0.7)',
-      fontSize: '0.95rem',
-      lineHeight: 1.5,
-      marginBottom: '24px',
-      maxWidth: '300px'
+      color: '#64748b',
+      fontSize: '1rem',
+      lineHeight: '1.6',
+      maxWidth: '320px',
+      marginBottom: '24px'
     },
 
-    // Newsletter - Simple & Clean
-    newsletterContainer: {
-      background: 'rgba(255, 255, 255, 0.05)',
-      padding: '20px',
-      borderRadius: '8px',
-      border: '1px solid rgba(255, 255, 255, 0.1)'
+    // Newsletter section
+    newsletterSection: {
+      marginBottom: '40px'
     },
 
     newsletterTitle: {
-      color: 'white',
-      fontSize: '1rem',
-      fontWeight: 600,
-      marginBottom: '8px'
+      color: '#0f172a',
+      fontSize: '1.1rem',
+      fontWeight: '700',
+      marginBottom: '12px'
+    },
+
+    newsletterDescription: {
+      color: '#64748b',
+      fontSize: '0.9rem',
+      marginBottom: '16px',
+      maxWidth: '300px'
     },
 
     newsletterForm: {
       display: 'flex',
       gap: '8px',
-      marginTop: '12px'
+      maxWidth: '320px'
     },
 
-    emailInput: {
+    newsletterInput: {
+      background: '#f8fafc',
+      border: '1px solid #e2e8f0',
+      borderRadius: '8px',
+      padding: '10px 14px',
+      fontSize: '0.9rem',
+      color: '#0f172a',
       flex: 1,
-      padding: '10px 12px',
-      background: 'rgba(255, 255, 255, 0.1)',
-      border: '1px solid rgba(255, 255, 255, 0.2)',
-      borderRadius: '6px',
-      color: 'white',
-      fontSize: '0.9rem',
-      outline: 'none'
+      outline: 'none',
+      transition: 'all 0.2s ease'
     },
 
-    subscribeBtn: {
-      padding: '10px 20px',
-      background: '#3b82f6',
+    newsletterButton: {
+      background: '#6366f1',
+      color: 'white',
       border: 'none',
-      borderRadius: '6px',
-      color: 'white',
+      borderRadius: '8px',
+      padding: '10px 16px',
       fontSize: '0.9rem',
-      fontWeight: 600,
+      fontWeight: '600',
       cursor: 'pointer',
-      transition: 'background 0.2s ease'
+      transition: 'all 0.2s ease',
+      whiteSpace: 'nowrap'
     },
 
-    // Column Headers - Clean
-    columnTitle: {
-      color: 'white',
+    successMessage: {
+      color: '#10b981',
+      fontSize: '0.85rem',
+      fontWeight: '600',
+      marginTop: '8px'
+    },
+
+    // Links sections
+    linkSection: {
+      marginBottom: '32px'
+    },
+
+    sectionTitle: {
+      color: '#0f172a',
       fontSize: '1rem',
-      fontWeight: 600,
+      fontWeight: '700',
       marginBottom: '16px'
     },
 
-    // Link Lists - Clean
     linkList: {
       listStyle: 'none',
       padding: 0,
@@ -119,267 +125,298 @@ const Footer = () => {
     },
 
     linkItem: {
-      marginBottom: '8px'
+      marginBottom: '12px'
     },
 
     footerLink: {
-      color: 'rgba(255, 255, 255, 0.6)',
+      color: '#64748b',
       textDecoration: 'none',
       fontSize: '0.9rem',
-      transition: 'color 0.2s ease',
-      display: 'block',
-      padding: '4px 0'
+      fontWeight: '500',
+      transition: 'color 0.2s ease'
     },
 
-    // Bottom Section - Clean
+    // Bottom section
     bottomSection: {
-      borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-      paddingTop: '20px',
-      textAlign: 'center'
+      borderTop: '1px solid #e2e8f0',
+      paddingTop: '32px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      flexWrap: 'wrap',
+      gap: '16px'
     },
 
-    copyrightText: {
-      color: 'rgba(255, 255, 255, 0.5)',
-      fontSize: '0.85rem',
+    copyright: {
+      color: '#64748b',
+      fontSize: '0.9rem',
       margin: 0
+    },
+
+    socialLinks: {
+      display: 'flex',
+      gap: '16px',
+      alignItems: 'center'
+    },
+
+    socialLink: {
+      color: '#64748b',
+      fontSize: '1.2rem',
+      textDecoration: 'none',
+      transition: 'color 0.2s ease',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '36px',
+      height: '36px',
+      borderRadius: '8px',
+      background: '#f8fafc',
+      border: '1px solid #e2e8f0'
     }
   };
 
   return (
-    <footer style={styles.footerContainer}>
-      <Container>
-        <Row style={styles.footerContent}>
-          {/* Brand & Newsletter */}
-          <Col lg={4} md={6} style={styles.brandSection}>
-            <Link to="/" style={styles.brandLogo}>
-              <span style={styles.brandIcon}>🏠</span>
-              <span style={styles.brandName}>SpaceLink</span>
-            </Link>
+    <>
+      <style>
+        {`
+          .newsletter-input:focus {
+            border-color: #6366f1 !important;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1) !important;
+          }
+          
+          .newsletter-input::placeholder {
+            color: #94a3b8;
+          }
+          
+          .newsletter-btn:hover {
+            background: #4f46e5 !important;
+            transform: translateY(-1px) !important;
+          }
+          
+          .footer-link:hover {
+            color: #6366f1 !important;
+          }
+          
+          .brand-logo:hover {
+            color: #6366f1 !important;
+          }
+          
+          .social-link:hover {
+            color: #6366f1 !important;
+            background: #f1f5f9 !important;
+            border-color: #cbd5e1 !important;
+            transform: translateY(-1px) !important;
+          }
+          
+          @media (max-width: 768px) {
+            .newsletter-form {
+              flex-direction: column !important;
+            }
             
-            <p style={styles.brandDescription}>
-              Your trusted platform for property rentals. Find the perfect space for your needs.
+            .newsletter-btn {
+              width: 100% !important;
+            }
+            
+            .bottom-section {
+              flex-direction: column !important;
+              text-align: center !important;
+            }
+            
+            .social-links {
+              justify-content: center !important;
+            }
+          }
+        `}
+      </style>
+
+      <footer style={styles.footerContainer}>
+        <Container>
+          {/* Main Footer Content */}
+          <Row>
+            {/* Brand & Newsletter */}
+            <Col lg={4} md={6} className="mb-4">
+              {/* Brand */}
+              <div style={styles.brandSection}>
+                <Link to="/" style={styles.brandLogo} className="brand-logo">
+                  <span>🏠</span>
+                  <span>SpaceLink</span>
+                </Link>
+                <p style={styles.brandDescription}>
+                  Your trusted global property platform. Helping clients find exceptional properties and empowering seamless transactions.
+                </p>
+              </div>
+
+              {/* Newsletter */}
+              <div style={styles.newsletterSection}>
+                <h6 style={styles.newsletterTitle}>Stay Updated</h6>
+                <p style={styles.newsletterDescription}>
+                  Get the latest property listings and updates delivered to your inbox.
+                </p>
+                <form onSubmit={handleSubscribe} style={styles.newsletterForm} className="newsletter-form">
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    style={styles.newsletterInput}
+                    className="newsletter-input"
+                    required
+                  />
+                  <button
+                    type="submit"
+                    style={styles.newsletterButton}
+                    className="newsletter-btn"
+                  >
+                    Subscribe
+                  </button>
+                </form>
+                {isSubscribed && (
+                  <p style={styles.successMessage}>✓ Successfully subscribed!</p>
+                )}
+              </div>
+            </Col>
+
+            {/* Quick Links */}
+            <Col lg={2} md={6} className="mb-4">
+              <div style={styles.linkSection}>
+                <h6 style={styles.sectionTitle}>Quick Links</h6>
+                <ul style={styles.linkList}>
+                  <li style={styles.linkItem}>
+                    <Link to="/find-property" style={styles.footerLink} className="footer-link">
+                      Find Property
+                    </Link>
+                  </li>
+                  <li style={styles.linkItem}>
+                    <Link to="/add-property" style={styles.footerLink} className="footer-link">
+                      List Property
+                    </Link>
+                  </li>
+                  <li style={styles.linkItem}>
+                    <Link to="/my-bookings" style={styles.footerLink} className="footer-link">
+                      My Bookings
+                    </Link>
+                  </li>
+                  <li style={styles.linkItem}>
+                    <Link to="/profile" style={styles.footerLink} className="footer-link">
+                      Profile
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </Col>
+
+            {/* Categories */}
+            <Col lg={2} md={6} className="mb-4">
+              <div style={styles.linkSection}>
+                <h6 style={styles.sectionTitle}>Categories</h6>
+                <ul style={styles.linkList}>
+                  <li style={styles.linkItem}>
+                    <Link to="/find-property?category=Property Rentals" style={styles.footerLink} className="footer-link">
+                      Residential
+                    </Link>
+                  </li>
+                  <li style={styles.linkItem}>
+                    <Link to="/find-property?category=Commercial" style={styles.footerLink} className="footer-link">
+                      Commercial
+                    </Link>
+                  </li>
+                  <li style={styles.linkItem}>
+                    <Link to="/find-property?category=Land" style={styles.footerLink} className="footer-link">
+                      Land & Plots
+                    </Link>
+                  </li>
+                  <li style={styles.linkItem}>
+                    <Link to="/find-property?category=Event" style={styles.footerLink} className="footer-link">
+                      Event Venues
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </Col>
+
+            {/* Support */}
+            <Col lg={2} md={6} className="mb-4">
+              <div style={styles.linkSection}>
+                <h6 style={styles.sectionTitle}>Support</h6>
+                <ul style={styles.linkList}>
+                  <li style={styles.linkItem}>
+                    <Link to="/help" style={styles.footerLink} className="footer-link">
+                      Help Center
+                    </Link>
+                  </li>
+                  <li style={styles.linkItem}>
+                    <Link to="/contact" style={styles.footerLink} className="footer-link">
+                      Contact Us
+                    </Link>
+                  </li>
+                  <li style={styles.linkItem}>
+                    <Link to="/about" style={styles.footerLink} className="footer-link">
+                      About Us
+                    </Link>
+                  </li>
+                  <li style={styles.linkItem}>
+                    <Link to="/blog" style={styles.footerLink} className="footer-link">
+                      Blog
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </Col>
+
+            {/* Legal */}
+            <Col lg={2} md={6} className="mb-4">
+              <div style={styles.linkSection}>
+                <h6 style={styles.sectionTitle}>Legal</h6>
+                <ul style={styles.linkList}>
+                  <li style={styles.linkItem}>
+                    <Link to="/privacy" style={styles.footerLink} className="footer-link">
+                      Privacy Policy
+                    </Link>
+                  </li>
+                  <li style={styles.linkItem}>
+                    <Link to="/terms" style={styles.footerLink} className="footer-link">
+                      Terms of Service
+                    </Link>
+                  </li>
+                  <li style={styles.linkItem}>
+                    <Link to="/cookies" style={styles.footerLink} className="footer-link">
+                      Cookie Policy
+                    </Link>
+                  </li>
+                  <li style={styles.linkItem}>
+                    <Link to="/disclaimer" style={styles.footerLink} className="footer-link">
+                      Disclaimer
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </Col>
+          </Row>
+
+          {/* Bottom Section */}
+          <div style={styles.bottomSection} className="bottom-section">
+            <p style={styles.copyright}>
+              © 2025 SpaceLink. All rights reserved.
             </p>
-
-            <div style={styles.newsletterContainer}>
-              <h6 style={styles.newsletterTitle}>Stay Updated</h6>
-              <form onSubmit={handleSubscribe} style={styles.newsletterForm}>
-                <input
-                  type="email"
-                  placeholder="Enter email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  style={styles.emailInput}
-                  required
-                />
-                <button
-                  type="submit"
-                  style={styles.subscribeBtn}
-                  onMouseEnter={(e) => e.target.style.background = '#2563eb'}
-                  onMouseLeave={(e) => e.target.style.background = '#3b82f6'}
-                >
-                  Subscribe
-                </button>
-              </form>
+            
+            <div style={styles.socialLinks}>
+              <a href="#" style={styles.socialLink} className="social-link" aria-label="Twitter">
+                <span>𝕏</span>
+              </a>
+              <a href="#" style={styles.socialLink} className="social-link" aria-label="LinkedIn">
+                <span>in</span>
+              </a>
+              <a href="#" style={styles.socialLink} className="social-link" aria-label="Instagram">
+                <span>📷</span>
+              </a>
+              <a href="#" style={styles.socialLink} className="social-link" aria-label="Facebook">
+                <span>f</span>
+              </a>
             </div>
-          </Col>
-
-          {/* Quick Links */}
-          <Col lg={2} md={6}>
-            <h6 style={styles.columnTitle}>Quick Links</h6>
-            <ul style={styles.linkList}>
-              <li style={styles.linkItem}>
-                <Link
-                  to="/find-property"
-                  style={styles.footerLink}
-                  onMouseEnter={(e) => e.target.style.color = '#60a5fa'}
-                  onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.6)'}
-                >
-                  Find Property
-                </Link>
-              </li>
-              <li style={styles.linkItem}>
-                <Link
-                  to="/add-property"
-                  style={styles.footerLink}
-                  onMouseEnter={(e) => e.target.style.color = '#60a5fa'}
-                  onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.6)'}
-                >
-                  Add Property
-                </Link>
-              </li>
-              <li style={styles.linkItem}>
-                <Link
-                  to="/my-bookings"
-                  style={styles.footerLink}
-                  onMouseEnter={(e) => e.target.style.color = '#60a5fa'}
-                  onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.6)'}
-                >
-                  My Bookings
-                </Link>
-              </li>
-              <li style={styles.linkItem}>
-                <Link
-                  to="/favorites"
-                  style={styles.footerLink}
-                  onMouseEnter={(e) => e.target.style.color = '#60a5fa'}
-                  onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.6)'}
-                >
-                  Favorites
-                </Link>
-              </li>
-            </ul>
-          </Col>
-
-          {/* Categories */}
-          <Col lg={2} md={6}>
-            <h6 style={styles.columnTitle}>Categories</h6>
-            <ul style={styles.linkList}>
-              <li style={styles.linkItem}>
-                <Link
-                  to="/find-property?category=residential"
-                  style={styles.footerLink}
-                  onMouseEnter={(e) => e.target.style.color = '#60a5fa'}
-                  onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.6)'}
-                >
-                  Residential
-                </Link>
-              </li>
-              <li style={styles.linkItem}>
-                <Link
-                  to="/find-property?category=commercial"
-                  style={styles.footerLink}
-                  onMouseEnter={(e) => e.target.style.color = '#60a5fa'}
-                  onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.6)'}
-                >
-                  Commercial
-                </Link>
-              </li>
-              <li style={styles.linkItem}>
-                <Link
-                  to="/find-property?category=land"
-                  style={styles.footerLink}
-                  onMouseEnter={(e) => e.target.style.color = '#60a5fa'}
-                  onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.6)'}
-                >
-                  Land & Plots
-                </Link>
-              </li>
-              <li style={styles.linkItem}>
-                <Link
-                  to="/find-property?category=parking"
-                  style={styles.footerLink}
-                  onMouseEnter={(e) => e.target.style.color = '#60a5fa'}
-                  onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.6)'}
-                >
-                  Parking
-                </Link>
-              </li>
-            </ul>
-          </Col>
-
-          {/* Support */}
-          <Col lg={2} md={6}>
-            <h6 style={styles.columnTitle}>Support</h6>
-            <ul style={styles.linkList}>
-              <li style={styles.linkItem}>
-                <a
-                  href="#"
-                  style={styles.footerLink}
-                  onMouseEnter={(e) => e.target.style.color = '#60a5fa'}
-                  onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.6)'}
-                >
-                  Help Center
-                </a>
-              </li>
-              <li style={styles.linkItem}>
-                <a
-                  href="#"
-                  style={styles.footerLink}
-                  onMouseEnter={(e) => e.target.style.color = '#60a5fa'}
-                  onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.6)'}
-                >
-                  Contact Us
-                </a>
-              </li>
-              <li style={styles.linkItem}>
-                <a
-                  href="#"
-                  style={styles.footerLink}
-                  onMouseEnter={(e) => e.target.style.color = '#60a5fa'}
-                  onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.6)'}
-                >
-                  Terms & Conditions
-                </a>
-              </li>
-              <li style={styles.linkItem}>
-                <a
-                  href="#"
-                  style={styles.footerLink}
-                  onMouseEnter={(e) => e.target.style.color = '#60a5fa'}
-                  onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.6)'}
-                >
-                  Privacy Policy
-                </a>
-              </li>
-            </ul>
-          </Col>
-
-          {/* Legal */}
-          <Col lg={2} md={6}>
-            <h6 style={styles.columnTitle}>Legal</h6>
-            <ul style={styles.linkList}>
-              <li style={styles.linkItem}>
-                <a
-                  href="#"
-                  style={styles.footerLink}
-                  onMouseEnter={(e) => e.target.style.color = '#60a5fa'}
-                  onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.6)'}
-                >
-                  Privacy Policy
-                </a>
-              </li>
-              <li style={styles.linkItem}>
-                <a
-                  href="#"
-                  style={styles.footerLink}
-                  onMouseEnter={(e) => e.target.style.color = '#60a5fa'}
-                  onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.6)'}
-                >
-                  Terms of Service
-                </a>
-              </li>
-              <li style={styles.linkItem}>
-                <a
-                  href="#"
-                  style={styles.footerLink}
-                  onMouseEnter={(e) => e.target.style.color = '#60a5fa'}
-                  onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.6)'}
-                >
-                  Cookie Policy
-                </a>
-              </li>
-              <li style={styles.linkItem}>
-                <a
-                  href="#"
-                  style={styles.footerLink}
-                  onMouseEnter={(e) => e.target.style.color = '#60a5fa'}
-                  onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.6)'}
-                >
-                  Disclaimer
-                </a>
-              </li>
-            </ul>
-          </Col>
-        </Row>
-
-        {/* Bottom Section */}
-        <div style={styles.bottomSection}>
-          <p style={styles.copyrightText}>
-            © 2025 SpaceLink. All rights reserved.
-          </p>
-        </div>
-      </Container>
-    </footer>
+          </div>
+        </Container>
+      </footer>
+    </>
   );
 };
 
