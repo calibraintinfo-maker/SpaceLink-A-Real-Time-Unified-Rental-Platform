@@ -25,7 +25,7 @@ function App() {
           {/* Fixed Navbar */}
           <Navbar />
           
-          {/* Main Content - Takes full space */}
+          {/* Main Content */}
           <main className="main-content">
             <Routes>
               <Route path="/" element={<Home />} />
@@ -76,7 +76,7 @@ function App() {
             </Routes>
           </main>
           
-          {/* Fixed Footer - Always at bottom */}
+          {/* Simple Fixed Footer - Always Visible */}
           <Footer />
         </div>
       </Router>
