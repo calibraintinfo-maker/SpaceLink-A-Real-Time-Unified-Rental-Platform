@@ -8,144 +8,221 @@ const Home = () => {
 
   return (
     <>
-      {/* CLEAN PROFESSIONAL HERO */}
+      {/* MUSEMIND-INSPIRED HERO SECTION */}
       <section style={{
-        background: 'linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)',
+        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)',
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
-        paddingTop: '80px'
+        position: 'relative',
+        overflow: 'hidden'
       }}>
-        <Container>
-          <Row className="align-items-center">
+        {/* Animated Background Elements - Musemind Style */}
+        <div style={{
+          position: 'absolute',
+          top: '20%',
+          left: '10%',
+          width: '300px',
+          height: '300px',
+          background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%)',
+          borderRadius: '50%',
+          filter: 'blur(40px)',
+          animation: 'float 8s ease-in-out infinite'
+        }}></div>
+        
+        <div style={{
+          position: 'absolute',
+          bottom: '30%',
+          right: '15%',
+          width: '200px',
+          height: '200px',
+          background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%)',
+          borderRadius: '50%',
+          filter: 'blur(30px)',
+          animation: 'float 6s ease-in-out infinite reverse'
+        }}></div>
+
+        <Container style={{ position: 'relative', zIndex: 2 }}>
+          <Row className="align-items-center min-vh-100">
             <Col lg={6} className="mb-5 mb-lg-0">
-              <div style={{ maxWidth: '500px' }}>
-                {/* Clean Badge */}
+              <div style={{ maxWidth: '600px' }}>
+                {/* Musemind-Style Badge */}
                 <div style={{
                   display: 'inline-block',
-                  background: '#e0f2fe',
-                  color: '#0369a1',
-                  padding: '8px 20px',
+                  background: 'rgba(99, 102, 241, 0.1)',
+                  border: '1px solid rgba(99, 102, 241, 0.2)',
                   borderRadius: '50px',
-                  fontSize: '0.875rem',
-                  fontWeight: 600,
-                  marginBottom: '24px',
-                  border: '1px solid #bae6fd'
+                  padding: '8px 24px',
+                  marginBottom: '32px'
                 }}>
-                  Leading Property Platform
+                  <span style={{
+                    background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                    fontSize: '0.875rem',
+                    fontWeight: 600,
+                    letterSpacing: '0.05em',
+                    textTransform: 'uppercase'
+                  }}>
+                    Leading Rental Platform
+                  </span>
                 </div>
                 
-                {/* Clean Typography */}
+                {/* Musemind-Style Typography */}
                 <h1 style={{
-                  fontSize: '3.5rem',
-                  fontWeight: 700,
+                  fontSize: '4.5rem',
+                  fontWeight: 900,
                   lineHeight: '1.1',
-                  color: '#1e293b',
                   marginBottom: '24px',
-                  letterSpacing: '-0.025em'
+                  letterSpacing: '-0.04em',
+                  color: 'white'
                 }}>
-                  Find Your Perfect 
-                  <span style={{ color: '#0ea5e9' }}> Property</span> Today
+                  Rent Anything,
+                  <br />
+                  <span style={{
+                    background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text'
+                  }}>
+                    Anywhere
+                  </span>
                 </h1>
                 
                 <p style={{
-                  fontSize: '1.125rem',
-                  color: '#64748b',
-                  lineHeight: '1.75',
-                  marginBottom: '32px'
+                  fontSize: '1.25rem',
+                  color: 'rgba(255, 255, 255, 0.8)',
+                  lineHeight: '1.6',
+                  marginBottom: '40px',
+                  maxWidth: '500px'
                 }}>
-                  SpaceLink connects you with exceptional properties worldwide. 
-                  Professional service, trusted expertise, seamless transactions.
+                  From properties to equipment, venues to vehicles - SpaceLink connects you with 
+                  <strong style={{ color: 'rgba(255, 255, 255, 0.95)' }}> exceptional rentals worldwide</strong>. 
+                  Professional service, trusted transactions.
                 </p>
                 
-                {/* Clean CTA */}
-                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                {/* Musemind-Style CTA */}
+                <div style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '20px',
+                  marginBottom: '60px'
+                }}>
                   <Link 
                     to="/find-property" 
                     style={{
-                      background: '#0ea5e9',
+                      background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
                       color: 'white',
-                      padding: '14px 32px',
-                      borderRadius: '8px',
-                      fontWeight: 600,
-                      fontSize: '1rem',
+                      padding: '16px 32px',
+                      borderRadius: '12px',
+                      fontWeight: 700,
+                      fontSize: '1.1rem',
                       textDecoration: 'none',
-                      display: 'inline-block',
-                      boxShadow: '0 4px 6px rgba(14, 165, 233, 0.25)',
-                      transition: 'all 0.2s ease'
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '12px',
+                      boxShadow: '0 10px 40px rgba(99, 102, 241, 0.3)',
+                      transition: 'all 0.3s ease',
+                      border: 'none'
                     }}
                     onMouseEnter={(e) => {
-                      e.target.style.background = '#0284c7';
-                      e.target.style.transform = 'translateY(-1px)';
-                      e.target.style.boxShadow = '0 6px 12px rgba(14, 165, 233, 0.3)';
+                      e.target.style.transform = 'translateY(-3px)';
+                      e.target.style.boxShadow = '0 20px 60px rgba(99, 102, 241, 0.4)';
                     }}
                     onMouseLeave={(e) => {
-                      e.target.style.background = '#0ea5e9';
                       e.target.style.transform = 'translateY(0)';
-                      e.target.style.boxShadow = '0 4px 6px rgba(14, 165, 233, 0.25)';
+                      e.target.style.boxShadow = '0 10px 40px rgba(99, 102, 241, 0.3)';
                     }}
                   >
-                    Browse Properties
+                    <span style={{ fontSize: '1.2rem' }}>🔍</span>
+                    Explore Rentals
                   </Link>
                   
                   <Link 
                     to="/about" 
                     style={{
-                      color: '#475569',
-                      fontSize: '1rem',
+                      color: 'rgba(255, 255, 255, 0.9)',
+                      fontSize: '1.1rem',
                       fontWeight: 600,
                       textDecoration: 'none',
                       display: 'inline-flex',
                       alignItems: 'center',
-                      gap: '8px'
+                      gap: '8px',
+                      transition: 'all 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.color = '#8b5cf6';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.color = 'rgba(255, 255, 255, 0.9)';
                     }}
                   >
-                    Learn More →
+                    How it works
+                    <span style={{ 
+                      transition: 'transform 0.2s ease',
+                      fontSize: '1.2rem'
+                    }}>→</span>
                   </Link>
                 </div>
                 
-                {/* Clean Stats */}
+                {/* Musemind-Style Stats */}
                 <div style={{
-                  display: 'flex',
-                  gap: '32px',
-                  marginTop: '48px',
-                  paddingTop: '32px',
-                  borderTop: '1px solid #e2e8f0'
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(3, 1fr)',
+                  gap: '40px',
+                  paddingTop: '40px',
+                  borderTop: '1px solid rgba(255, 255, 255, 0.1)'
                 }}>
-                  <div>
+                  <div style={{ textAlign: 'center' }}>
                     <div style={{
-                      fontSize: '1.875rem',
-                      fontWeight: 700,
-                      color: '#1e293b'
+                      fontSize: '2.5rem',
+                      fontWeight: 900,
+                      background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      marginBottom: '8px'
                     }}>10K+</div>
                     <div style={{
-                      fontSize: '0.875rem',
-                      color: '#64748b',
-                      fontWeight: 500
-                    }}>Properties</div>
+                      fontSize: '0.9rem',
+                      color: 'rgba(255, 255, 255, 0.7)',
+                      fontWeight: 500,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em'
+                    }}>Items Listed</div>
                   </div>
-                  <div>
+                  <div style={{ textAlign: 'center' }}>
                     <div style={{
-                      fontSize: '1.875rem',
-                      fontWeight: 700,
-                      color: '#1e293b'
+                      fontSize: '2.5rem',
+                      fontWeight: 900,
+                      background: 'linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      marginBottom: '8px'
                     }}>500+</div>
                     <div style={{
-                      fontSize: '0.875rem',
-                      color: '#64748b',
-                      fontWeight: 500
+                      fontSize: '0.9rem',
+                      color: 'rgba(255, 255, 255, 0.7)',
+                      fontWeight: 500,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em'
                     }}>Cities</div>
                   </div>
-                  <div>
+                  <div style={{ textAlign: 'center' }}>
                     <div style={{
-                      fontSize: '1.875rem',
-                      fontWeight: 700,
-                      color: '#1e293b'
+                      fontSize: '2.5rem',
+                      fontWeight: 900,
+                      background: 'linear-gradient(135deg, #ec4899 0%, #f59e0b 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      marginBottom: '8px'
                     }}>99%</div>
                     <div style={{
-                      fontSize: '0.875rem',
-                      color: '#64748b',
-                      fontWeight: 500
+                      fontSize: '0.9rem',
+                      color: 'rgba(255, 255, 255, 0.7)',
+                      fontWeight: 500,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em'
                     }}>Satisfaction</div>
                   </div>
                 </div>
@@ -158,28 +235,39 @@ const Home = () => {
                 maxWidth: '600px',
                 margin: '0 auto'
               }}>
-                {/* Clean Image */}
-                <img 
-                  src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
-                  alt="Modern luxury property" 
-                  style={{
-                    width: '100%',
-                    borderRadius: '12px',
-                    boxShadow: '0 20px 25px rgba(0, 0, 0, 0.1)',
-                    display: 'block'
-                  }}
-                />
+                {/* Musemind-Style Image with Advanced Styling */}
+                <div style={{
+                  position: 'relative',
+                  borderRadius: '24px',
+                  overflow: 'hidden',
+                  boxShadow: '0 40px 100px rgba(0, 0, 0, 0.3)',
+                  background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%)',
+                  padding: '8px'
+                }}>
+                  <img 
+                    src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
+                    alt="Premium rental properties" 
+                    style={{
+                      width: '100%',
+                      borderRadius: '20px',
+                      display: 'block',
+                      height: '600px',
+                      objectFit: 'cover'
+                    }}
+                  />
+                </div>
                 
-                {/* Clean Feature Card */}
+                {/* Musemind-Style Floating Cards */}
                 <div style={{
                   position: 'absolute',
-                  bottom: '20px',
-                  left: '20px',
+                  top: '30px',
+                  right: '30px',
                   background: 'rgba(255, 255, 255, 0.95)',
-                  backdropFilter: 'blur(10px)',
-                  borderRadius: '12px',
+                  backdropFilter: 'blur(20px)',
+                  borderRadius: '16px',
                   padding: '16px 20px',
-                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+                  animation: 'float 6s ease-in-out infinite',
                   border: '1px solid rgba(255, 255, 255, 0.2)'
                 }}>
                   <div style={{
@@ -188,25 +276,68 @@ const Home = () => {
                     gap: '12px'
                   }}>
                     <div style={{
-                      background: '#dcfce7',
-                      borderRadius: '8px',
-                      padding: '8px',
+                      background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+                      borderRadius: '12px',
+                      padding: '10px',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center'
                     }}>
-                      <span style={{ fontSize: '16px' }}>✓</span>
+                      <span style={{ fontSize: '18px', color: 'white' }}>🏆</span>
                     </div>
                     <div>
                       <div style={{
-                        fontWeight: 600,
+                        fontWeight: 700,
                         color: '#1e293b',
-                        fontSize: '0.875rem'
-                      }}>Verified Properties</div>
+                        fontSize: '0.9rem',
+                        marginBottom: '2px'
+                      }}>Premium Quality</div>
                       <div style={{
                         fontSize: '0.75rem',
                         color: '#64748b'
-                      }}>100% Authentic Listings</div>
+                      }}>Verified & Trusted</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div style={{
+                  position: 'absolute',
+                  bottom: '30px',
+                  left: '30px',
+                  background: 'rgba(255, 255, 255, 0.95)',
+                  backdropFilter: 'blur(20px)',
+                  borderRadius: '16px',
+                  padding: '16px 20px',
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+                  animation: 'float 6s ease-in-out infinite 3s',
+                  border: '1px solid rgba(255, 255, 255, 0.2)'
+                }}>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px'
+                  }}>
+                    <div style={{
+                      background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                      borderRadius: '12px',
+                      padding: '10px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      <span style={{ fontSize: '18px', color: 'white' }}>⚡</span>
+                    </div>
+                    <div>
+                      <div style={{
+                        fontWeight: 700,
+                        color: '#1e293b',
+                        fontSize: '0.9rem',
+                        marginBottom: '2px'
+                      }}>Instant Booking</div>
+                      <div style={{
+                        fontSize: '0.75rem',
+                        color: '#64748b'
+                      }}>Book in Seconds</div>
                     </div>
                   </div>
                 </div>
@@ -216,318 +347,165 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* CLEAN FEATURED PROPERTIES */}
+      {/* MODERN CATEGORIES SECTION */}
       <section style={{
-        padding: '80px 0',
-        background: '#ffffff'
+        padding: '100px 0',
+        background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)'
       }}>
         <Container>
-          {/* Clean Section Header */}
           <div style={{
             textAlign: 'center',
-            marginBottom: '64px',
-            maxWidth: '600px',
-            margin: '0 auto 64px auto'
+            marginBottom: '80px'
           }}>
-            <h2 style={{
-              fontSize: '2.25rem',
+            <div style={{
+              display: 'inline-block',
+              background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+              borderRadius: '25px',
+              padding: '8px 20px',
+              color: 'white',
+              fontSize: '0.8rem',
               fontWeight: 700,
-              color: '#1e293b',
-              marginBottom: '16px'
-            }}>Featured Properties</h2>
-            <p style={{
-              fontSize: '1.125rem',
-              color: '#64748b',
-              lineHeight: '1.75'
+              letterSpacing: '1px',
+              marginBottom: '24px',
+              textTransform: 'uppercase'
             }}>
-              Handpicked premium properties from our expert team
+              RENTAL CATEGORIES
+            </div>
+            <h2 style={{
+              fontSize: '3rem',
+              fontWeight: 800,
+              color: '#1e293b',
+              marginBottom: '20px'
+            }}>What Would You Like to Rent?</h2>
+            <p style={{
+              fontSize: '1.2rem',
+              color: '#64748b',
+              maxWidth: '600px',
+              margin: '0 auto'
+            }}>
+              From real estate to equipment, venues to vehicles - find everything you need
             </p>
           </div>
           
           <Row>
-            {/* Clean Property Cards */}
-            <Col lg={6} className="mb-4">
-              <div style={{
-                background: '#ffffff',
-                borderRadius: '12px',
-                overflow: 'hidden',
-                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05)',
-                border: '1px solid #f1f5f9',
-                transition: 'all 0.2s ease',
-                height: '100%'
-              }}>
-                {/* Clean Image */}
-                <div style={{ position: 'relative', height: '240px', overflow: 'hidden' }}>
-                  <img 
-                    src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                    alt="Modern Villa"
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover'
-                    }}
-                  />
+            {/* Category Cards */}
+            {[
+              { icon: '🏠', title: 'Properties', desc: 'Houses, apartments, commercial spaces', color: '#6366f1' },
+              { icon: '🎪', title: 'Event Venues', desc: 'Wedding halls, conference rooms, studios', color: '#8b5cf6' },
+              { icon: '🚗', title: 'Vehicles', desc: 'Cars, bikes, trucks, luxury vehicles', color: '#ec4899' },
+              { icon: '⚙️', title: 'Equipment', desc: 'Tools, machinery, electronics, furniture', color: '#10b981' }
+            ].map((category, index) => (
+              <Col lg={3} md={6} className="mb-4" key={index}>
+                <div style={{
+                  background: 'white',
+                  borderRadius: '20px',
+                  padding: '40px 24px',
+                  textAlign: 'center',
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
+                  border: '1px solid #f1f5f9',
+                  transition: 'all 0.3s ease',
+                  cursor: 'pointer',
+                  height: '100%'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-8px)';
+                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.12)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.08)';
+                }}>
                   <div style={{
-                    position: 'absolute',
-                    top: '16px',
-                    left: '16px',
-                    background: '#0ea5e9',
-                    color: 'white',
-                    padding: '4px 12px',
-                    borderRadius: '20px',
-                    fontSize: '0.75rem',
-                    fontWeight: 600
-                  }}>
-                    For Rent
-                  </div>
-                </div>
-                
-                {/* Clean Content */}
-                <div style={{ padding: '24px' }}>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    color: '#64748b',
-                    fontSize: '0.875rem',
-                    marginBottom: '8px'
-                  }}>
-                    <span>📍</span>
-                    Namakkal, Tamil Nadu
-                  </div>
-                  
+                    fontSize: '3rem',
+                    marginBottom: '20px'
+                  }}>{category.icon}</div>
                   <h3 style={{
-                    fontSize: '1.25rem',
-                    fontWeight: 600,
+                    fontSize: '1.4rem',
+                    fontWeight: 700,
                     color: '#1e293b',
-                    marginBottom: '8px'
-                  }}>Modern Villa</h3>
-                  
+                    marginBottom: '12px'
+                  }}>{category.title}</h3>
                   <p style={{
                     color: '#64748b',
-                    fontSize: '0.875rem',
-                    lineHeight: '1.5',
-                    marginBottom: '16px'
-                  }}>Spacious luxury villa with premium amenities and modern design</p>
-                  
-                  {/* Clean Features */}
+                    fontSize: '0.95rem',
+                    lineHeight: '1.6',
+                    marginBottom: '24px'
+                  }}>{category.desc}</p>
                   <div style={{
-                    display: 'flex',
-                    gap: '16px',
-                    marginBottom: '20px',
-                    fontSize: '0.875rem',
-                    color: '#64748b'
-                  }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <span>🛏️</span>4 BHK
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <span>📐</span>2,500 sq ft
-                    </div>
-                  </div>
-                  
-                  {/* Clean Footer */}
-                  <div style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center'
-                  }}>
-                    <div style={{
-                      fontSize: '1.5rem',
-                      fontWeight: 700,
-                      color: '#0ea5e9'
-                    }}>₹1,234/month</div>
-                    
-                    <div style={{ display: 'flex', gap: '8px' }}>
-                      <button style={{
-                        background: 'transparent',
-                        border: '1px solid #e2e8f0',
-                        color: '#64748b',
-                        padding: '8px 16px',
-                        borderRadius: '6px',
-                        fontSize: '0.875rem',
-                        fontWeight: 500,
-                        cursor: 'pointer'
-                      }}>View Details</button>
-                      
-                      <button style={{
-                        background: '#0ea5e9',
-                        border: 'none',
-                        color: 'white',
-                        padding: '8px 16px',
-                        borderRadius: '6px',
-                        fontSize: '0.875rem',
-                        fontWeight: 600,
-                        cursor: 'pointer'
-                      }}>Book Now</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Col>
-
-            <Col lg={6} className="mb-4">
-              <div style={{
-                background: '#ffffff',
-                borderRadius: '12px',
-                overflow: 'hidden',
-                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05)',
-                border: '1px solid #f1f5f9',
-                transition: 'all 0.2s ease',
-                height: '100%'
-              }}>
-                <div style={{ position: 'relative', height: '240px', overflow: 'hidden' }}>
-                  <img 
-                    src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                    alt="Agricultural Land"
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover'
-                    }}
-                  />
-                  <div style={{
-                    position: 'absolute',
-                    top: '16px',
-                    left: '16px',
-                    background: '#10b981',
+                    background: category.color,
                     color: 'white',
-                    padding: '4px 12px',
-                    borderRadius: '20px',
-                    fontSize: '0.75rem',
-                    fontWeight: 600
-                  }}>
-                    For Sale
-                  </div>
-                </div>
-                
-                <div style={{ padding: '24px' }}>
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    color: '#64748b',
-                    fontSize: '0.875rem',
-                    marginBottom: '8px'
-                  }}>
-                    <span>📍</span>
-                    Namakkal, Tamil Nadu
-                  </div>
-                  
-                  <h3 style={{
-                    fontSize: '1.25rem',
+                    padding: '10px 20px',
+                    borderRadius: '25px',
+                    fontSize: '0.9rem',
                     fontWeight: 600,
-                    color: '#1e293b',
-                    marginBottom: '8px'
-                  }}>Premium Land</h3>
-                  
-                  <p style={{
-                    color: '#64748b',
-                    fontSize: '0.875rem',
-                    lineHeight: '1.5',
-                    marginBottom: '16px'
-                  }}>Perfect agricultural land with excellent connectivity and growth potential</p>
-                  
-                  <div style={{
-                    display: 'flex',
-                    gap: '16px',
-                    marginBottom: '20px',
-                    fontSize: '0.875rem',
-                    color: '#64748b'
+                    display: 'inline-block'
                   }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <span>🌾</span>Agricultural
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <span>📐</span>10,000 sq ft
-                    </div>
-                  </div>
-                  
-                  <div style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center'
-                  }}>
-                    <div style={{
-                      fontSize: '1.5rem',
-                      fontWeight: 700,
-                      color: '#10b981'
-                    }}>₹1,22,345/year</div>
-                    
-                    <div style={{ display: 'flex', gap: '8px' }}>
-                      <button style={{
-                        background: 'transparent',
-                        border: '1px solid #e2e8f0',
-                        color: '#64748b',
-                        padding: '8px 16px',
-                        borderRadius: '6px',
-                        fontSize: '0.875rem',
-                        fontWeight: 500,
-                        cursor: 'pointer'
-                      }}>View Details</button>
-                      
-                      <button style={{
-                        background: '#10b981',
-                        border: 'none',
-                        color: 'white',
-                        padding: '8px 16px',
-                        borderRadius: '6px',
-                        fontSize: '0.875rem',
-                        fontWeight: 600,
-                        cursor: 'pointer'
-                      }}>Book Now</button>
-                    </div>
+                    Explore →
                   </div>
                 </div>
-              </div>
-            </Col>
+              </Col>
+            ))}
           </Row>
         </Container>
       </section>
 
-      {/* CLEAN CTA SECTION */}
+      {/* MODERN CTA SECTION */}
       <section style={{
-        padding: '80px 0',
+        padding: '100px 0',
         background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
-        textAlign: 'center'
+        textAlign: 'center',
+        position: 'relative',
+        overflow: 'hidden'
       }}>
-        <Container>
+        {/* Background decoration */}
+        <div style={{
+          position: 'absolute',
+          top: '-50%',
+          right: '-20%',
+          width: '600px',
+          height: '600px',
+          background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%)',
+          borderRadius: '50%',
+          filter: 'blur(60px)'
+        }}></div>
+        
+        <Container style={{ position: 'relative', zIndex: 2 }}>
           <div style={{ maxWidth: '600px', margin: '0 auto' }}>
             <h2 style={{
-              fontSize: '2.25rem',
-              fontWeight: 700,
+              fontSize: '3rem',
+              fontWeight: 800,
               color: 'white',
-              marginBottom: '16px'
-            }}>Ready to Find Your Perfect Property?</h2>
+              marginBottom: '20px'
+            }}>Ready to Start Renting?</h2>
             
             <p style={{
-              fontSize: '1.125rem',
+              fontSize: '1.2rem',
               color: 'rgba(255, 255, 255, 0.8)',
-              marginBottom: '32px',
-              lineHeight: '1.75'
-            }}>Join thousands of satisfied clients worldwide</p>
+              marginBottom: '40px',
+              lineHeight: '1.6'
+            }}>Join thousands of renters and owners making seamless transactions worldwide</p>
             
             <Link 
               to="/find-property" 
               style={{
-                background: '#0ea5e9',
+                background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
                 color: 'white',
-                padding: '16px 32px',
-                borderRadius: '8px',
-                fontWeight: 600,
-                fontSize: '1rem',
+                padding: '18px 40px',
+                borderRadius: '12px',
+                fontWeight: 700,
+                fontSize: '1.1rem',
                 textDecoration: 'none',
                 display: 'inline-block',
-                boxShadow: '0 4px 6px rgba(14, 165, 233, 0.25)',
-                transition: 'all 0.2s ease'
+                boxShadow: '0 10px 40px rgba(99, 102, 241, 0.3)',
+                transition: 'all 0.3s ease'
               }}
               onMouseEnter={(e) => {
-                e.target.style.background = '#0284c7';
-                e.target.style.transform = 'translateY(-1px)';
+                e.target.style.transform = 'translateY(-3px)';
+                e.target.style.boxShadow = '0 20px 60px rgba(99, 102, 241, 0.4)';
               }}
               onMouseLeave={(e) => {
-                e.target.style.background = '#0ea5e9';
                 e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = '0 10px 40px rgba(99, 102, 241, 0.3)';
               }}
             >
               Start Your Search
@@ -535,6 +513,35 @@ const Home = () => {
           </div>
         </Container>
       </section>
+
+      {/* CSS Animations */}
+      <style>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(1deg); }
+        }
+        
+        @media (max-width: 768px) {
+          .hero-title {
+            font-size: 3rem !important;
+          }
+          
+          .hero-stats {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 20px !important;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .hero-title {
+            font-size: 2.5rem !important;
+          }
+          
+          .hero-stats {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </>
   );
 };
