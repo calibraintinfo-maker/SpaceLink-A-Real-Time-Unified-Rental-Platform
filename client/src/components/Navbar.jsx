@@ -17,104 +17,93 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Add custom CSS to override Bootstrap */}
+      {/* Clean CSS Override */}
       <style>
         {`
-          .glass-navbar {
-            background: rgba(255, 255, 255, 0.1) !important;
-            backdrop-filter: blur(20px) !important;
-            -webkit-backdrop-filter: blur(20px) !important;
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+          .clean-navbar {
+            background: rgba(15, 23, 42, 0.95) !important;
+            backdrop-filter: blur(10px) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
           }
           
-          .glass-brand {
+          .navbar-brand {
+            margin-right: auto !important;
+            padding-left: 0 !important;
+          }
+          
+          .clean-brand {
             color: white !important;
             font-weight: 700 !important;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+            font-size: 1.4rem !important;
             text-decoration: none !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
           }
           
-          .glass-nav-link {
+          .clean-nav-link {
             color: rgba(255, 255, 255, 0.9) !important;
             font-weight: 500 !important;
             padding: 8px 16px !important;
-            border-radius: 8px !important;
-            transition: all 0.3s ease !important;
             margin: 0 4px !important;
+            border-radius: 6px !important;
+            transition: all 0.2s ease !important;
           }
           
-          .glass-nav-link:hover {
-            background: rgba(255, 255, 255, 0.15) !important;
-            color: #60a5fa !important;
-            transform: translateY(-1px) !important;
-          }
-          
-          .glass-nav-link.active {
-            background: rgba(96, 165, 250, 0.2) !important;
-            color: #60a5fa !important;
-            border: 1px solid rgba(96, 165, 250, 0.3) !important;
-          }
-          
-          .glass-btn {
-            padding: 8px 20px !important;
-            border-radius: 8px !important;
-            font-weight: 500 !important;
-            transition: all 0.3s ease !important;
-            text-decoration: none !important;
-            border: 1px solid rgba(255, 255, 255, 0.3) !important;
-          }
-          
-          .glass-btn-login {
+          .clean-nav-link:hover {
             background: rgba(255, 255, 255, 0.1) !important;
+            color: #60a5fa !important;
+          }
+          
+          .clean-nav-link.active {
+            background: rgba(59, 130, 246, 0.2) !important;
+            color: #60a5fa !important;
+          }
+          
+          .clean-btn {
+            padding: 8px 20px !important;
+            border-radius: 6px !important;
+            font-weight: 500 !important;
+            font-size: 0.9rem !important;
+            text-decoration: none !important;
+            transition: all 0.2s ease !important;
+          }
+          
+          .login-btn {
+            background: transparent !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
             color: rgba(255, 255, 255, 0.9) !important;
           }
           
-          .glass-btn-login:hover {
-            background: rgba(255, 255, 255, 0.2) !important;
-            color: white !important;
-            transform: translateY(-1px) !important;
-          }
-          
-          .glass-btn-register {
-            background: rgba(59, 130, 246, 0.7) !important;
-            color: white !important;
-            border: 1px solid rgba(59, 130, 246, 0.5) !important;
-          }
-          
-          .glass-btn-register:hover {
-            background: rgba(59, 130, 246, 0.9) !important;
-            color: white !important;
-            transform: translateY(-1px) !important;
-          }
-          
-          .navbar-toggler {
+          .login-btn:hover {
             background: rgba(255, 255, 255, 0.1) !important;
-            border: 1px solid rgba(255, 255, 255, 0.3) !important;
-            border-radius: 6px !important;
+            color: white !important;
           }
           
-          .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+          .register-btn {
+            background: #3b82f6 !important;
+            border: 1px solid #3b82f6 !important;
+            color: white !important;
+          }
+          
+          .register-btn:hover {
+            background: #2563eb !important;
           }
           
           .dropdown-menu {
-            background: rgba(15, 23, 42, 0.9) !important;
-            backdrop-filter: blur(20px) !important;
-            border: 1px solid rgba(255, 255, 255, 0.15) !important;
-            border-radius: 8px !important;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+            background: rgba(15, 23, 42, 0.95) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-radius: 6px !important;
           }
           
           .dropdown-item {
             color: rgba(255, 255, 255, 0.9) !important;
             padding: 8px 16px !important;
-            border-radius: 6px !important;
-            margin: 2px !important;
           }
           
           .dropdown-item:hover {
-            background: rgba(96, 165, 250, 0.15) !important;
+            background: rgba(255, 255, 255, 0.1) !important;
             color: #60a5fa !important;
           }
         `}
@@ -123,19 +112,14 @@ const Navbar = () => {
       <BootstrapNavbar 
         expand="lg" 
         sticky="top"
-        className="glass-navbar"
-        style={{ padding: '12px 0' }}
+        className="clean-navbar"
+        style={{ padding: '16px 0' }}
       >
         <Container>
-          {/* Glass Logo */}
-          <BootstrapNavbar.Brand 
-            as={Link} 
-            to="/" 
-            className="glass-brand d-flex align-items-center"
-            style={{ gap: '8px' }}
-          >
+          {/* Logo on Far Left */}
+          <BootstrapNavbar.Brand as={Link} to="/" className="clean-brand">
             <span style={{ fontSize: '1.5rem' }}>🏠</span>
-            SpaceLink
+            <span>SpaceLink</span>
           </BootstrapNavbar.Brand>
           
           <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
@@ -147,7 +131,7 @@ const Navbar = () => {
                   <Nav.Link 
                     as={Link} 
                     to="/my-bookings"
-                    className={`glass-nav-link ${isActive('/my-bookings') ? 'active' : ''}`}
+                    className={`clean-nav-link ${isActive('/my-bookings') ? 'active' : ''}`}
                   >
                     My Bookings
                   </Nav.Link>
@@ -155,7 +139,7 @@ const Navbar = () => {
                   <NavDropdown 
                     title="Properties" 
                     id="property-dropdown"
-                    className="glass-nav-link"
+                    className="clean-nav-link"
                   >
                     <NavDropdown.Item as={Link} to="/add-property">
                       Add Property
@@ -168,14 +152,14 @@ const Navbar = () => {
               )}
             </Nav>
             
-            {/* Glass Auth Buttons */}
+            {/* Auth Buttons on Right */}
             <Nav>
               {isAuthenticated ? (
                 <NavDropdown 
-                  title={`${user?.name || 'User'}`} 
+                  title={user?.name || 'User'} 
                   id="user-dropdown" 
                   align="end"
-                  className="glass-nav-link"
+                  className="clean-nav-link"
                 >
                   <NavDropdown.Item as={Link} to="/profile">
                     Profile
@@ -186,11 +170,11 @@ const Navbar = () => {
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : (
-                <div className="d-flex" style={{ gap: '10px' }}>
-                  <Link to="/login" className="glass-btn glass-btn-login">
+                <div className="d-flex" style={{ gap: '12px' }}>
+                  <Link to="/login" className="clean-btn login-btn">
                     Login
                   </Link>
-                  <Link to="/register" className="glass-btn glass-btn-register">
+                  <Link to="/register" className="clean-btn register-btn">
                     Register
                   </Link>
                 </div>
