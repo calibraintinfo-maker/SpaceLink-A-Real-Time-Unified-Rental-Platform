@@ -1,214 +1,334 @@
 import React from 'react';
-import { Navbar as BootstrapNavbar, Nav, Container, NavDropdown } from 'react-bootstrap';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
-const Navbar = () => {
-  const { user, logout, isAuthenticated } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
+const Footer = () => {
+  const styles = {
+    // Much smaller footer container
+    footerContainer: {
+      background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+      borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+      paddingTop: '2rem', // Reduced from 4rem
+      paddingBottom: '1rem', // Much smaller
+      marginTop: '3rem'
+    },
 
-  const handleLogout = () => {
-    logout();
-    navigate('/');
+    // Compact brand section
+    brandSection: {
+      marginBottom: '1.5rem' // Reduced spacing
+    },
+
+    brandLogo: {
+      color: 'white',
+      fontSize: '1.2rem', // Smaller logo
+      fontWeight: '700',
+      textDecoration: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '6px',
+      marginBottom: '0.5rem' // Less margin
+    },
+
+    brandDescription: {
+      color: 'rgba(255, 255, 255, 0.7)',
+      fontSize: '0.85rem', // Smaller text
+      lineHeight: '1.4',
+      maxWidth: '280px'
+    },
+
+    // Compact newsletter
+    newsletterSection: {
+      marginBottom: '1.5rem'
+    },
+
+    newsletterTitle: {
+      color: 'white',
+      fontSize: '1rem', // Smaller title
+      fontWeight: '600',
+      marginBottom: '0.75rem'
+    },
+
+    newsletterForm: {
+      display: 'flex',
+      gap: '8px',
+      maxWidth: '300px' // Constrained width
+    },
+
+    newsletterInput: {
+      background: 'rgba(255, 255, 255, 0.1)',
+      border: '1px solid rgba(255, 255, 255, 0.2)',
+      borderRadius: '6px',
+      padding: '8px 12px', // Smaller padding
+      color: 'white',
+      fontSize: '0.85rem', // Smaller font
+      flex: 1,
+      outline: 'none'
+    },
+
+    newsletterButton: {
+      background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+      border: 'none',
+      borderRadius: '6px',
+      padding: '8px 16px', // Smaller padding
+      color: 'white',
+      fontSize: '0.85rem',
+      fontWeight: '600',
+      cursor: 'pointer',
+      whiteSpace: 'nowrap'
+    },
+
+    // Compact link sections
+    linkSection: {
+      marginBottom: '1.5rem'
+    },
+
+    sectionTitle: {
+      color: 'white',
+      fontSize: '0.9rem', // Much smaller
+      fontWeight: '600',
+      marginBottom: '0.75rem', // Less spacing
+      textTransform: 'uppercase',
+      letterSpacing: '0.5px'
+    },
+
+    linkList: {
+      listStyle: 'none',
+      padding: 0,
+      margin: 0
+    },
+
+    linkItem: {
+      marginBottom: '0.4rem' // Tighter spacing
+    },
+
+    footerLink: {
+      color: 'rgba(255, 255, 255, 0.7)',
+      textDecoration: 'none',
+      fontSize: '0.8rem', // Smaller links
+      transition: 'color 0.3s ease'
+    },
+
+    // Compact bottom section
+    bottomSection: {
+      borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+      paddingTop: '1rem', // Less padding
+      marginTop: '1.5rem',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      textAlign: 'center'
+    },
+
+    copyright: {
+      color: 'rgba(255, 255, 255, 0.6)',
+      fontSize: '0.75rem', // Very small text
+      margin: 0
+    }
   };
-
-  const isActive = (path) => location.pathname === path;
 
   return (
     <>
-      {/* Perfect Compact CSS */}
       <style>
         {`
-          .perfect-navbar {
-            background: rgba(15, 23, 42, 0.95) !important;
-            backdrop-filter: blur(10px) !important;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-            padding: 8px 0 !important;
-            min-height: 56px !important;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+          .newsletter-input:focus {
+            border-color: rgba(59, 130, 246, 0.5) !important;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
           }
           
-          .perfect-brand {
-            color: white !important;
-            font-weight: 700 !important;
-            font-size: 1.3rem !important;
-            text-decoration: none !important;
-            margin-right: auto !important;
-            padding: 4px 0 !important;
+          .newsletter-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
           }
           
-          .perfect-nav {
-            margin-left: 0 !important;
+          .newsletter-btn:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
           }
           
-          .perfect-nav-link {
-            color: rgba(255, 255, 255, 0.9) !important;
-            font-weight: 500 !important;
-            font-size: 0.9rem !important;
-            padding: 6px 12px !important;
-            margin: 0 2px !important;
-            border-radius: 4px !important;
-            transition: all 0.2s ease !important;
-          }
-          
-          .perfect-nav-link:hover {
-            background: rgba(255, 255, 255, 0.1) !important;
+          .footer-link:hover {
             color: #60a5fa !important;
           }
           
-          .perfect-nav-link.active {
-            background: rgba(59, 130, 246, 0.2) !important;
-            color: #60a5fa !important;
-          }
-          
-          .perfect-btn {
-            padding: 6px 16px !important;
-            border-radius: 4px !important;
-            font-weight: 500 !important;
-            font-size: 0.85rem !important;
-            text-decoration: none !important;
-            transition: all 0.2s ease !important;
-          }
-          
-          .login-btn {
-            background: transparent !important;
-            border: 1px solid rgba(255, 255, 255, 0.3) !important;
-            color: rgba(255, 255, 255, 0.9) !important;
-          }
-          
-          .login-btn:hover {
-            background: rgba(255, 255, 255, 0.1) !important;
-            color: white !important;
-          }
-          
-          .register-btn {
-            background: #3b82f6 !important;
-            border: 1px solid #3b82f6 !important;
-            color: white !important;
-          }
-          
-          .register-btn:hover {
-            background: #2563eb !important;
-          }
-          
-          .navbar-toggler {
-            padding: 4px 8px !important;
-            font-size: 0.9rem !important;
-          }
-          
-          .dropdown-menu {
-            background: rgba(15, 23, 42, 0.95) !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
-            border-radius: 4px !important;
-            font-size: 0.9rem !important;
-          }
-          
-          .dropdown-item {
-            color: rgba(255, 255, 255, 0.9) !important;
-            padding: 6px 12px !important;
-          }
-          
-          .dropdown-item:hover {
-            background: rgba(255, 255, 255, 0.1) !important;
-            color: #60a5fa !important;
-          }
-          
-          /* Force brand to far left */
-          .navbar-brand {
-            margin-right: auto !important;
-            padding-left: 0 !important;
-          }
-          
-          /* Ensure perfect container alignment */
-          .navbar .container {
-            padding-left: 20px !important;
-            padding-right: 20px !important;
+          @media (max-width: 768px) {
+            .newsletter-form {
+              flex-direction: column !important;
+              gap: 8px !important;
+            }
+            
+            .newsletter-btn {
+              width: 100% !important;
+            }
+            
+            .bottom-section {
+              flex-direction: column !important;
+              gap: 0.5rem !important;
+            }
           }
         `}
       </style>
 
-      <BootstrapNavbar 
-        expand="lg" 
-        sticky="top"
-        className="perfect-navbar"
-      >
+      <footer style={styles.footerContainer}>
         <Container>
-          {/* Brand on Far Left */}
-          <BootstrapNavbar.Brand 
-            as={Link} 
-            to="/" 
-            className="perfect-brand d-flex align-items-center"
-            style={{ gap: '6px' }}
-          >
-            <span style={{ fontSize: '1.4rem' }}>🏠</span>
-            <span>SpaceLink</span>
-          </BootstrapNavbar.Brand>
-          
-          <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
-          
-          <BootstrapNavbar.Collapse id="basic-navbar-nav">
-            {/* Navigation Links */}
-            <Nav className="perfect-nav me-auto">
-              {isAuthenticated && (
-                <>
-                  <Nav.Link 
-                    as={Link} 
-                    to="/my-bookings"
-                    className={`perfect-nav-link ${isActive('/my-bookings') ? 'active' : ''}`}
+          {/* Compact Main Footer Content */}
+          <Row>
+            {/* Brand & Newsletter - Combined */}
+            <Col lg={4} md={6} className="mb-3">
+              {/* Compact Brand */}
+              <div style={styles.brandSection}>
+                <Link to="/" style={styles.brandLogo}>
+                  <span>🏠</span>
+                  <span>SpaceLink</span>
+                </Link>
+                <p style={styles.brandDescription}>
+                  Your trusted platform for property rentals. Find the perfect space for your needs.
+                </p>
+              </div>
+
+              {/* Compact Newsletter */}
+              <div style={styles.newsletterSection}>
+                <h6 style={styles.newsletterTitle}>Stay Updated</h6>
+                <div style={styles.newsletterForm} className="newsletter-form">
+                  <input
+                    type="email"
+                    placeholder="Enter email"
+                    style={styles.newsletterInput}
+                    className="newsletter-input"
+                  />
+                  <button
+                    style={styles.newsletterButton}
+                    className="newsletter-btn"
                   >
-                    My Bookings
-                  </Nav.Link>
-                  
-                  <NavDropdown 
-                    title="Properties" 
-                    id="property-dropdown"
-                    className="perfect-nav-link"
-                  >
-                    <NavDropdown.Item as={Link} to="/add-property">
-                      Add Property
-                    </NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/manage-properties">
-                      Manage Properties
-                    </NavDropdown.Item>
-                  </NavDropdown>
-                </>
-              )}
-            </Nav>
-            
-            {/* Auth Buttons on Right */}
-            <Nav>
-              {isAuthenticated ? (
-                <NavDropdown 
-                  title={user?.name || 'User'} 
-                  id="user-dropdown" 
-                  align="end"
-                  className="perfect-nav-link"
-                >
-                  <NavDropdown.Item as={Link} to="/profile">
-                    Profile
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item onClick={handleLogout}>
-                    Logout
-                  </NavDropdown.Item>
-                </NavDropdown>
-              ) : (
-                <div className="d-flex align-items-center" style={{ gap: '8px' }}>
-                  <Link to="/login" className="perfect-btn login-btn">
-                    Login
-                  </Link>
-                  <Link to="/register" className="perfect-btn register-btn">
-                    Register
-                  </Link>
+                    Subscribe
+                  </button>
                 </div>
-              )}
-            </Nav>
-          </BootstrapNavbar.Collapse>
+              </div>
+            </Col>
+
+            {/* Quick Links - Compact */}
+            <Col lg={2} md={6} className="mb-3">
+              <div style={styles.linkSection}>
+                <h6 style={styles.sectionTitle}>Quick Links</h6>
+                <ul style={styles.linkList}>
+                  <li style={styles.linkItem}>
+                    <Link to="/find-property" style={styles.footerLink} className="footer-link">
+                      Find Property
+                    </Link>
+                  </li>
+                  <li style={styles.linkItem}>
+                    <Link to="/add-property" style={styles.footerLink} className="footer-link">
+                      Add Property
+                    </Link>
+                  </li>
+                  <li style={styles.linkItem}>
+                    <Link to="/my-bookings" style={styles.footerLink} className="footer-link">
+                      My Bookings
+                    </Link>
+                  </li>
+                  <li style={styles.linkItem}>
+                    <Link to="/favorites" style={styles.footerLink} className="footer-link">
+                      Favorites
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </Col>
+
+            {/* Categories - Compact */}
+            <Col lg={2} md={6} className="mb-3">
+              <div style={styles.linkSection}>
+                <h6 style={styles.sectionTitle}>Categories</h6>
+                <ul style={styles.linkList}>
+                  <li style={styles.linkItem}>
+                    <Link to="/category/residential" style={styles.footerLink} className="footer-link">
+                      Residential
+                    </Link>
+                  </li>
+                  <li style={styles.linkItem}>
+                    <Link to="/category/commercial" style={styles.footerLink} className="footer-link">
+                      Commercial
+                    </Link>
+                  </li>
+                  <li style={styles.linkItem}>
+                    <Link to="/category/land" style={styles.footerLink} className="footer-link">
+                      Land & Plots
+                    </Link>
+                  </li>
+                  <li style={styles.linkItem}>
+                    <Link to="/category/parking" style={styles.footerLink} className="footer-link">
+                      Parking
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </Col>
+
+            {/* Support - Compact */}
+            <Col lg={2} md={6} className="mb-3">
+              <div style={styles.linkSection}>
+                <h6 style={styles.sectionTitle}>Support</h6>
+                <ul style={styles.linkList}>
+                  <li style={styles.linkItem}>
+                    <Link to="/help" style={styles.footerLink} className="footer-link">
+                      Help Center
+                    </Link>
+                  </li>
+                  <li style={styles.linkItem}>
+                    <Link to="/contact" style={styles.footerLink} className="footer-link">
+                      Contact Us
+                    </Link>
+                  </li>
+                  <li style={styles.linkItem}>
+                    <Link to="/terms" style={styles.footerLink} className="footer-link">
+                      Terms & Conditions
+                    </Link>
+                  </li>
+                  <li style={styles.linkItem}>
+                    <Link to="/privacy" style={styles.footerLink} className="footer-link">
+                      Privacy Policy
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </Col>
+
+            {/* Legal - Compact */}
+            <Col lg={2} md={6} className="mb-3">
+              <div style={styles.linkSection}>
+                <h6 style={styles.sectionTitle}>Legal</h6>
+                <ul style={styles.linkList}>
+                  <li style={styles.linkItem}>
+                    <Link to="/privacy-policy" style={styles.footerLink} className="footer-link">
+                      Privacy Policy
+                    </Link>
+                  </li>
+                  <li style={styles.linkItem}>
+                    <Link to="/terms-of-service" style={styles.footerLink} className="footer-link">
+                      Terms of Service
+                    </Link>
+                  </li>
+                  <li style={styles.linkItem}>
+                    <Link to="/cookie-policy" style={styles.footerLink} className="footer-link">
+                      Cookie Policy
+                    </Link>
+                  </li>
+                  <li style={styles.linkItem}>
+                    <Link to="/disclaimer" style={styles.footerLink} className="footer-link">
+                      Disclaimer
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </Col>
+          </Row>
+
+          {/* Compact Bottom Section */}
+          <div style={styles.bottomSection} className="bottom-section">
+            <p style={styles.copyright}>
+              © 2025 SpaceLink. All rights reserved.
+            </p>
+          </div>
         </Container>
-      </BootstrapNavbar>
+      </footer>
     </>
   );
 };
 
-export default Navbar;
+export default Footer;
