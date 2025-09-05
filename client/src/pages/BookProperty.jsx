@@ -1,391 +1,872 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
-import { useParams, useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { api, handleApiError, formatPrice, getImageUrl } from '../utils/api';
+import { Container, Row, Col, Card, Badge, Button, Form } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
-const BookProperty = () => {
-  const { propertyId } = useParams();
-  const { user } = useAuth();
+const FindProperty = () => {
   const navigate = useNavigate();
-  
-  const [property, setProperty] = useState(null);
-  const [formData, setFormData] = useState({
-    fromDate: '',
-    toDate: '',
-    bookingType: '',
-    notes: ''
+  const [properties, setProperties] = useState([]);
+  const [filteredProperties, setFilteredProperties] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filters, setFilters] = useState({
+    location: '',
+    propertyType: '',
+    priceRange: '',
+    bedrooms: ''
   });
-  const [loading, setLoading] = useState(true);
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState('');
-  const [profileIncomplete, setProfileIncomplete] = useState(false);
+  const [viewMode, setViewMode] = useState('grid');
+
+  const indianLocations = [
+    "All Locations", "Mumbai", "Delhi", "Bangalore", "Chennai", "Kolkata", 
+    "Hyderabad", "Pune", "Ahmedabad", "Jaipur", "Surat", "Lucknow", "Kanpur", 
+    "Nagpur", "Indore", "Thane", "Bhopal", "Visakhapatnam", "Patna", "Vadodara"
+  ];
+
+  const propertyTypes = [
+    "All Categories", "Properties", "Event Venues", "Turf", "Parking",
+    "Villa", "Apartment", "House", "Studio", "Commercial", "Office Space", 
+    "Shop", "Land", "Agricultural Land", "Residential Plot"
+  ];
+
+  const residentialTypes = ["Villa", "Apartment", "House", "Studio"];
+
+  const sampleProperties = [
+    {
+      id: 1,
+      image: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      title: 'Modern Studio Apartment',
+      location: 'Bangalore, Karnataka',
+      price: 1800,
+      priceType: 'month',
+      type: 'Studio',
+      category: 'Properties',
+      bedrooms: 1,
+      bathrooms: 1,
+      area: 600,
+      status: 'For Rent',
+      isResidential: true,
+      verified: true
+    },
+    {
+      id: 2,
+      image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      title: 'Premium Office Space',
+      location: 'Mumbai, Maharashtra',
+      price: 5000,
+      priceType: 'month',
+      type: 'Commercial',
+      category: 'Properties',
+      bedrooms: 0,
+      bathrooms: 3,
+      area: 3000,
+      status: 'For Rent',
+      isResidential: false,
+      verified: true
+    },
+    {
+      id: 3,
+      image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      title: 'Family Villa',
+      location: 'Pune, Maharashtra',
+      price: 3200,
+      priceType: 'month',
+      type: 'House',
+      category: 'Properties',
+      bedrooms: 3,
+      bathrooms: 2,
+      area: 1500,
+      status: 'For Rent',
+      isResidential: true,
+      verified: true
+    },
+    {
+      id: 4,
+      image: 'https://images.unsplash.com/photo-1519167758481-83f29c8d8d36?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      title: 'Grand Wedding Venue',
+      location: 'Chennai, Tamil Nadu',
+      price: 15000,
+      priceType: 'day',
+      type: 'Event Venues',
+      category: 'Event Venues',
+      bedrooms: 0,
+      bathrooms: 0,
+      area: 5000,
+      status: 'For Rent',
+      isResidential: false,
+      verified: true,
+      capacity: '500 guests'
+    },
+    {
+      id: 5,
+      image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      title: 'Professional Football Turf',
+      location: 'Delhi, India',
+      price: 2500,
+      priceType: 'hour',
+      type: 'Turf',
+      category: 'Turf',
+      bedrooms: 0,
+      bathrooms: 0,
+      area: 8000,
+      status: 'For Rent',
+      isResidential: false,
+      verified: true,
+      surface: 'Artificial Grass'
+    },
+    {
+      id: 6,
+      image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      title: 'Secure Parking Bay',
+      location: 'Gurgaon, Haryana',
+      price: 1500,
+      priceType: 'month',
+      type: 'Parking',
+      category: 'Parking',
+      bedrooms: 0,
+      bathrooms: 0,
+      area: 200,
+      status: 'For Rent',
+      isResidential: false,
+      verified: true,
+      security: '24/7 CCTV'
+    }
+  ];
 
   useEffect(() => {
-    fetchProperty();
-    checkProfileComplete();
-  }, [propertyId]);
+    setProperties(sampleProperties);
+    setFilteredProperties(sampleProperties);
+  }, []);
 
-  const fetchProperty = async () => {
-    try {
-      const response = await api.properties.getById(propertyId);
-      setProperty(response.data);
-      
-      // Set default booking type if only one available
-      if (response.data.rentType.length === 1) {
-        setFormData(prev => ({
-          ...prev,
-          bookingType: response.data.rentType[0]
-        }));
-      }
-    } catch (error) {
-      console.error('Error fetching property:', error);
-      setError(handleApiError(error));
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    let filtered = properties;
+
+    if (searchQuery) {
+      filtered = filtered.filter(property =>
+        property.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        property.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        property.type.toLowerCase().includes(searchQuery.toLowerCase())
+      );
     }
+
+    if (filters.location) {
+      filtered = filtered.filter(property =>
+        property.location.toLowerCase().includes(filters.location.toLowerCase())
+      );
+    }
+
+    if (filters.propertyType) {
+      filtered = filtered.filter(property =>
+        property.type === filters.propertyType || property.category === filters.propertyType
+      );
+    }
+
+    if (filters.priceRange) {
+      const [min, max] = filters.priceRange.split('-').map(Number);
+      filtered = filtered.filter(property =>
+        property.price >= min && property.price <= max
+      );
+    }
+
+    if (filters.bedrooms) {
+      filtered = filtered.filter(property =>
+        property.isResidential && property.bedrooms >= parseInt(filters.bedrooms)
+      );
+    }
+
+    setFilteredProperties(filtered);
+  }, [searchQuery, filters, properties]);
+
+  const handleFilterChange = (filterType, value) => {
+    setFilters(prev => ({ ...prev, [filterType]: value }));
   };
 
-  const checkProfileComplete = async () => {
-    try {
-      const response = await api.user.checkProfileComplete();
-      if (!response.data.profileComplete) {
-        setProfileIncomplete(true);
-      }
-    } catch (error) {
-      console.error('Error checking profile:', error);
-    }
+  const clearFilters = () => {
+    setFilters({ location: '', propertyType: '', priceRange: '', bedrooms: '' });
+    setSearchQuery('');
   };
 
-  const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  const shouldShowBedroomFilter = () => {
+    if (!filters.propertyType) return false;
+    return residentialTypes.includes(filters.propertyType) || filters.propertyType === 'Properties';
   };
 
-  const calculatePrice = () => {
-    if (!property || !formData.fromDate || !formData.toDate || !formData.bookingType) {
-      return 0;
-    }
-
-    const from = new Date(formData.fromDate);
-    const to = new Date(formData.toDate);
-    const timeDiff = to.getTime() - from.getTime();
-
-    switch (formData.bookingType) {
-      case 'hourly':
-        const hours = Math.ceil(timeDiff / (1000 * 3600));
-        return property.price * Math.max(1, hours);
-      case 'monthly':
-        const months = Math.ceil(timeDiff / (1000 * 3600 * 24 * 30));
-        return property.price * Math.max(1, months);
-      case 'yearly':
-        const years = Math.ceil(timeDiff / (1000 * 3600 * 24 * 365));
-        return property.price * Math.max(1, years);
-      default:
-        return property.price;
-    }
+  // NAVIGATION FUNCTIONS
+  const handleViewDetails = (propertyId) => {
+    navigate(`/property-details/${propertyId}`);
   };
 
-  const validateForm = () => {
-    if (!formData.fromDate) {
-      setError('Please select a start date');
-      return false;
-    }
-
-    if (!formData.toDate) {
-      setError('Please select an end date');
-      return false;
-    }
-
-    if (!formData.bookingType) {
-      setError('Please select a booking type');
-      return false;
-    }
-
-    const fromDate = new Date(formData.fromDate);
-    const toDate = new Date(formData.toDate);
-    const now = new Date();
-
-    if (fromDate < now.setHours(0, 0, 0, 0)) {
-      setError('Start date cannot be in the past');
-      return false;
-    }
-
-    if (fromDate >= toDate) {
-      setError('End date must be after start date');
-      return false;
-    }
-
-    return true;
+  const handleBookNow = (propertyId) => {
+    navigate(`/book-property/${propertyId}`);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setSubmitting(true);
-    setError('');
-
-    if (!validateForm()) {
-      setSubmitting(false);
-      return;
-    }
-
-    try {
-      const bookingData = {
-        propertyId,
-        fromDate: formData.fromDate,
-        toDate: formData.toDate,
-        bookingType: formData.bookingType,
-        notes: formData.notes
-      };
-
-      const response = await api.bookings.create(bookingData);
-      
-      // Redirect to bookings page with success message
-      navigate('/my-bookings', { 
-        state: { message: 'Booking created successfully!' } 
-      });
-    } catch (error) {
-      console.error('Error creating booking:', error);
-      const errorMessage = handleApiError(error);
-      
-      if (errorMessage.includes('profile')) {
-        setProfileIncomplete(true);
-      }
-      
-      setError(errorMessage);
-    } finally {
-      setSubmitting(false);
-    }
+  const handleImageError = (e) => {
+    // Fallback to a reliable placeholder service
+    e.target.src = 'https://via.placeholder.com/400x240/e2e8f0/64748b?text=Property+Image';
   };
 
-  if (loading) {
-    return (
-      <Container className="py-4">
-        <div className="text-center">
-          <div className="spinner-border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-          <p className="mt-2">Loading booking details...</p>
-        </div>
-      </Container>
+  const renderPropertyDetails = (property) => {
+    const details = [];
+
+    if (property.isResidential && property.bedrooms > 0) {
+      details.push(
+        <span key="bedrooms" className="custom-badge me-2 mb-2">
+          🛏️ {property.bedrooms} BHK
+        </span>
+      );
+    }
+
+    if (property.isResidential && property.bathrooms > 0) {
+      details.push(
+        <span key="bathrooms" className="custom-badge me-2 mb-2">
+          🚿 {property.bathrooms} Bath
+        </span>
+      );
+    }
+
+    if (!property.isResidential && property.bathrooms > 0) {
+      details.push(
+        <span key="washrooms" className="custom-badge me-2 mb-2">
+          🚻 {property.bathrooms} Washrooms
+        </span>
+      );
+    }
+
+    details.push(
+      <span key="area" className="custom-badge me-2 mb-2">
+        📐 {property.area.toLocaleString()} sq ft
+      </span>
     );
-  }
 
-  if (!property) {
-    return (
-      <Container className="py-4">
-        <Alert variant="danger">Property not found</Alert>
-        <Button as={Link} to="/find-property" variant="primary">
-          ← Back to Properties
-        </Button>
-      </Container>
-    );
-  }
+    if (property.capacity) {
+      details.push(
+        <span key="capacity" className="custom-badge-purple me-2 mb-2">
+          👥 {property.capacity}
+        </span>
+      );
+    }
 
-  if (profileIncomplete) {
-    return (
-      <Container className="py-4">
-        <Row className="justify-content-center">
-          <Col md={8}>
-            <Alert variant="warning" className="text-center">
-              <h4>Complete Your Profile</h4>
-              <p>You need to complete your profile before booking properties.</p>
-              <Button as={Link} to="/profile" variant="primary" size="lg">
-                Complete Profile
-              </Button>
-            </Alert>
-          </Col>
-        </Row>
-      </Container>
-    );
-  }
+    if (property.surface) {
+      details.push(
+        <span key="surface" className="custom-badge-green me-2 mb-2">
+          ⚽ {property.surface}
+        </span>
+      );
+    }
 
-  const totalPrice = calculatePrice();
+    if (property.security) {
+      details.push(
+        <span key="security" className="custom-badge-orange me-2 mb-2">
+          🔒 {property.security}
+        </span>
+      );
+    }
+
+    return details;
+  };
 
   return (
-    <Container className="py-4">
-      <Row>
-        <Col>
-          <div className="mb-4">
-            <Button as={Link} to={`/property/${propertyId}`} variant="outline-secondary" className="mb-3">
-              ← Back to Property Details
-            </Button>
+    <>
+      {/* PURPLE HERO */}
+      <section 
+        className="py-5 text-white"
+        style={{
+          background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%)',
+          minHeight: '300px',
+          display: 'flex',
+          alignItems: 'center',
+          position: 'relative'
+        }}
+      >
+        <div 
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='9' cy='9' r='9'/%3E%3Ccircle cx='51' cy='51' r='9'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            opacity: 0.6
+          }}
+        />
+        <Container className="position-relative">
+          <div className="text-center">
+            <h1 className="display-4 fw-bold mb-4" style={{ 
+              letterSpacing: '-0.025em',
+              textShadow: '0 2px 4px rgba(0,0,0,0.1)'
+            }}>
+              Find Your Perfect Property
+            </h1>
+            <p className="fs-5 mb-0 opacity-90" style={{ 
+              maxWidth: '600px', 
+              margin: '0 auto',
+              lineHeight: 1.6 
+            }}>
+              Discover verified properties from our premium collection across India
+            </p>
           </div>
-        </Col>
-      </Row>
+        </Container>
+      </section>
 
-      <Row>
-        <Col lg={8}>
-          <Card>
-            <Card.Header className="bg-primary text-white">
-              <h4 className="mb-0">📅 Book Property</h4>
-            </Card.Header>
-            <Card.Body>
-              {error && <Alert variant="danger">{error}</Alert>}
+      {/* MAIN LAYOUT */}
+      <div 
+        style={{ 
+          display: 'flex',
+          minHeight: '100vh',
+          backgroundColor: '#ffffff'
+        }}
+      >
+        
+        {/* SIDEBAR */}
+        <div 
+          style={{
+            width: '320px',
+            minHeight: '100vh',
+            backgroundColor: '#f8fafc',
+            position: 'sticky',
+            top: 0,
+            overflowY: 'auto',
+            borderRight: '1px solid #e2e8f0'
+          }}
+        >
+          
+          <div className="p-4 border-bottom bg-white" style={{ borderColor: '#e2e8f0' }}>
+            <div>
+              <h5 className="mb-2 fw-bold" style={{ color: '#1e293b' }}>Filters</h5>
+              <small className="text-muted">Refine your search</small>
+            </div>
+          </div>
 
-              <Form onSubmit={handleSubmit}>
-                <Row>
-                  <Col md={6}>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Start Date *</Form.Label>
-                      <Form.Control
-                        type="date"
-                        name="fromDate"
-                        value={formData.fromDate}
-                        onChange={handleInputChange}
-                        min={new Date().toISOString().split('T')[0]}
-                        required
-                      />
-                    </Form.Group>
-                  </Col>
-                  <Col md={6}>
-                    <Form.Group className="mb-3">
-                      <Form.Label>End Date *</Form.Label>
-                      <Form.Control
-                        type="date"
-                        name="toDate"
-                        value={formData.toDate}
-                        onChange={handleInputChange}
-                        min={formData.fromDate || new Date().toISOString().split('T')[0]}
-                        required
-                      />
-                    </Form.Group>
-                  </Col>
-                </Row>
+          <div className="p-4">
+            
+            {/* SEARCH INPUT WITH WORKING ICON */}
+            <div className="mb-4">
+              <Form.Label className="fw-semibold mb-3" style={{ color: '#374151' }}>
+                Search Properties
+              </Form.Label>
+              <div className="search-wrapper">
+                <svg 
+                  className="search-icon" 
+                  width="16" 
+                  height="16" 
+                  viewBox="0 0 16 16" 
+                  fill="currentColor"
+                >
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                </svg>
+                <Form.Control
+                  type="text"
+                  placeholder="Type to search..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="search-input"
+                />
+              </div>
+            </div>
 
-                <Form.Group className="mb-3">
-                  <Form.Label>Booking Type *</Form.Label>
-                  <Form.Select
-                    name="bookingType"
-                    value={formData.bookingType}
-                    onChange={handleInputChange}
-                    required
-                  >
-                    <option value="">Select booking type</option>
-                    {property.rentType.map(type => (
-                      <option key={type} value={type}>
-                        {type.charAt(0).toUpperCase() + type.slice(1)} - {formatPrice(property.price, type)}
-                      </option>
-                    ))}
-                  </Form.Select>
-                </Form.Group>
+            {/* Location */}
+            <div className="mb-4">
+              <Form.Label className="fw-semibold mb-3" style={{ color: '#374151' }}>
+                Location
+              </Form.Label>
+              <Form.Select
+                value={filters.location}
+                onChange={(e) => handleFilterChange('location', e.target.value)}
+                className="custom-select"
+              >
+                {indianLocations.map((location, index) => (
+                  <option key={index} value={location === "All Locations" ? "" : location}>
+                    {location}
+                  </option>
+                ))}
+              </Form.Select>
+            </div>
 
-                <Form.Group className="mb-4">
-                  <Form.Label>Additional Notes (Optional)</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={3}
-                    name="notes"
-                    value={formData.notes}
-                    onChange={handleInputChange}
-                    placeholder="Any special requirements or notes for the owner"
-                  />
-                </Form.Group>
+            {/* Property Type */}
+            <div className="mb-4">
+              <Form.Label className="fw-semibold mb-3" style={{ color: '#374151' }}>
+                Property Type
+              </Form.Label>
+              <Form.Select
+                value={filters.propertyType}
+                onChange={(e) => handleFilterChange('propertyType', e.target.value)}
+                className="custom-select"
+              >
+                {propertyTypes.map((type, index) => (
+                  <option key={index} value={type === "All Categories" ? "" : type}>
+                    {type}
+                  </option>
+                ))}
+              </Form.Select>
+            </div>
 
-                {/* Auto-filled user information */}
-                <Card className="mb-4 bg-light">
-                  <Card.Header>
-                    <h6 className="mb-0">👤 Your Information</h6>
-                  </Card.Header>
-                  <Card.Body>
-                    <Row>
-                      <Col md={6}>
-                        <p className="mb-1"><strong>Name:</strong> {user?.name}</p>
-                        <p className="mb-1"><strong>Email:</strong> {user?.email}</p>
-                      </Col>
-                      <Col md={6}>
-                        <p className="mb-1"><strong>Contact:</strong> {user?.contact}</p>
-                        <p className="mb-1"><strong>Address:</strong> {user?.address}</p>
-                      </Col>
-                    </Row>
-                  </Card.Body>
-                </Card>
+            {/* Price Range */}
+            <div className="mb-4">
+              <Form.Label className="fw-semibold mb-3" style={{ color: '#374151' }}>
+                Price Range
+              </Form.Label>
+              <Form.Select
+                value={filters.priceRange}
+                onChange={(e) => handleFilterChange('priceRange', e.target.value)}
+                className="custom-select"
+              >
+                <option value="">All Prices</option>
+                <option value="0-2000">₹0 - ₹2,000</option>
+                <option value="2000-5000">₹2,000 - ₹5,000</option>
+                <option value="5000-10000">₹5,000 - ₹10,000</option>
+                <option value="10000-999999">₹10,000+</option>
+              </Form.Select>
+            </div>
 
-                <div className="d-grid">
-                  <Button 
-                    type="submit" 
-                    variant="primary" 
-                    size="lg"
-                    disabled={submitting || !totalPrice}
-                  >
-                    {submitting ? 'Creating Booking...' : `Confirm Booking - ₹${totalPrice.toLocaleString()}`}
-                  </Button>
-                </div>
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
+            {/* Conditional Bedrooms */}
+            {shouldShowBedroomFilter() && (
+              <div className="mb-4">
+                <Form.Label className="fw-semibold mb-3" style={{ color: '#374151' }}>
+                  Bedrooms
+                </Form.Label>
+                <Form.Select
+                  value={filters.bedrooms}
+                  onChange={(e) => handleFilterChange('bedrooms', e.target.value)}
+                  className="custom-select"
+                >
+                  <option value="">Any Bedrooms</option>
+                  <option value="1">1+ BHK</option>
+                  <option value="2">2+ BHK</option>
+                  <option value="3">3+ BHK</option>
+                  <option value="4">4+ BHK</option>
+                </Form.Select>
+              </div>
+            )}
 
-        <Col lg={4}>
-          {/* Property Summary */}
-          <Card className="sticky-top" style={{ top: '20px' }}>
-            <Card.Header>
-              <h6 className="mb-0">🏠 Property Summary</h6>
-            </Card.Header>
-            <Card.Body>
-              <img 
-                src={getImageUrl(property.image)} 
-                alt={property.title}
-                className="img-fluid rounded mb-3"
-                style={{ height: '150px', objectFit: 'cover', width: '100%' }}
-              />
-              
-              <h6 className="mb-2">{property.title}</h6>
-              <p className="text-muted mb-2">
-                📍 {property.address.city}, {property.address.state}
-              </p>
-              <p className="text-muted mb-3">
-                📐 {property.size} • 🏷️ {property.category}
-              </p>
+            {/* Clear Filters */}
+            <Button 
+              variant="outline-secondary"
+              className="w-100 mb-4 fw-semibold custom-clear-btn"
+              onClick={clearFilters}
+            >
+              ✕ Clear All Filters
+            </Button>
 
-              <hr />
+            {/* Filter Status */}
+            <div className="filter-status">
+              <div className="d-flex justify-content-between align-items-center">
+                <span className="text-muted fw-semibold">Active Filters</span>
+                <span className="custom-badge-purple">
+                  {Object.values(filters).filter(f => f).length + (searchQuery ? 1 : 0)}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-              <div className="mb-3">
-                <h6 className="mb-2">💰 Pricing</h6>
-                <p className="mb-1">
-                  <strong>Base Price:</strong> {formatPrice(property.price, formData.bookingType || property.rentType[0])}
+        {/* MAIN CONTENT */}
+        <div style={{ flex: 1, backgroundColor: '#ffffff' }}>
+          <Container fluid className="py-5 px-5" style={{ paddingBottom: '140px' }}>
+            
+            {/* Results Header */}
+            <div className="d-flex justify-content-between align-items-center mb-5">
+              <div>
+                <h2 className="h2 fw-bold mb-3" style={{ color: '#1e293b' }}>
+                  {filteredProperties.length} Properties Found
+                </h2>
+                <p className="text-muted fs-6 mb-0">
+                  Browse our premium collection
                 </p>
-                {totalPrice > 0 && (
-                  <p className="mb-1">
-                    <strong>Total Amount:</strong> <span className="text-success">₹{totalPrice.toLocaleString()}</span>
-                  </p>
-                )}
               </div>
-
-              <hr />
-
-              <div className="mb-3">
-                <h6 className="mb-2">📋 Booking Details</h6>
-                {formData.fromDate && (
-                  <p className="mb-1">
-                    <strong>Start:</strong> {new Date(formData.fromDate).toLocaleDateString()}
-                  </p>
-                )}
-                {formData.toDate && (
-                  <p className="mb-1">
-                    <strong>End:</strong> {new Date(formData.toDate).toLocaleDateString()}
-                  </p>
-                )}
-                {formData.bookingType && (
-                  <p className="mb-1">
-                    <strong>Type:</strong> {formData.bookingType}
-                  </p>
-                )}
+              
+              {/* View Toggle */}
+              <div className="btn-group" role="group">
+                <input 
+                  type="radio" 
+                  className="btn-check" 
+                  name="viewMode" 
+                  id="gridView" 
+                  checked={viewMode === 'grid'}
+                  onChange={() => setViewMode('grid')}
+                />
+                <label 
+                  className={`btn fw-semibold custom-toggle-btn ${viewMode === 'grid' ? 'active' : ''}`}
+                  htmlFor="gridView"
+                >
+                  ⊞ Grid
+                </label>
+                
+                <input 
+                  type="radio" 
+                  className="btn-check" 
+                  name="viewMode" 
+                  id="listView"
+                  checked={viewMode === 'list'} 
+                  onChange={() => setViewMode('list')}
+                />
+                <label 
+                  className={`btn fw-semibold custom-toggle-btn ${viewMode === 'list' ? 'active' : ''}`}
+                  htmlFor="listView"
+                >
+                  ☰ List
+                </label>
               </div>
+            </div>
 
-              <Alert variant="info" className="small">
-                <strong>💳 Payment Mode:</strong> On Spot Only
-                <br />
-                <small>Payment will be made directly to the property owner upon arrival.</small>
-              </Alert>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+            {/* PROPERTY CARDS - WORKING IMAGES + NAVIGATION */}
+            {filteredProperties.length === 0 ? (
+              <Card className="border-0 shadow-sm text-center p-5">
+                <Card.Body>
+                  <div className="mb-4 text-muted" style={{ fontSize: '5rem' }}>
+                    🔍
+                  </div>
+                  <h3 className="fw-bold mb-4" style={{ color: '#1e293b' }}>No Properties Found</h3>
+                  <p className="text-muted fs-6 mb-4">
+                    We couldn't find any properties matching your criteria. Try adjusting your filters.
+                  </p>
+                  <Button 
+                    className="custom-primary-btn fw-semibold"
+                    size="lg"
+                    onClick={clearFilters}
+                  >
+                    Clear All Filters
+                  </Button>
+                </Card.Body>
+              </Card>
+            ) : (
+              <Row className={viewMode === 'grid' ? 'row-cols-1 row-cols-md-2 row-cols-xl-3 g-4' : 'g-4'}>
+                {filteredProperties.map((property) => (
+                  <Col key={property.id}>
+                    <Card 
+                      className="h-100 border-0 shadow-sm"
+                      style={{ 
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        cursor: 'pointer',
+                        borderRadius: '12px'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-4px)';
+                        e.currentTarget.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.15)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.12)';
+                      }}
+                    >
+                      <div className="position-relative">
+                        <img
+                          className="card-img-top"
+                          src={property.image}
+                          alt={property.title}
+                          onError={handleImageError}
+                          style={{ 
+                            height: viewMode === 'grid' ? '240px' : '200px', 
+                            objectFit: 'cover',
+                            borderRadius: '12px 12px 0 0'
+                          }}
+                        />
+                        
+                        {/* CUSTOM BADGES - NO BLUE */}
+                        <div className="position-absolute top-0 start-0 p-3">
+                          <span className="status-badge-green me-2">
+                            {property.status}
+                          </span>
+                          {property.verified && (
+                            <span className="status-badge-purple">
+                              ✓ Verified
+                            </span>
+                          )}
+                        </div>
+                        
+                        {/* PROPERTY TYPE BADGE - GRAY ONLY */}
+                        <div className="position-absolute top-0 end-0 p-3">
+                          <span className="status-badge-gray">
+                            {property.type}
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <Card.Body className="d-flex flex-column p-4">
+                        {/* Location */}
+                        <div className="d-flex align-items-center text-muted mb-3">
+                          <span className="me-2" style={{ color: '#7c3aed' }}>📍</span>
+                          <span className="fw-medium">{property.location}</span>
+                        </div>
+                        
+                        {/* Title */}
+                        <Card.Title className="h4 fw-bold mb-4" style={{ 
+                          lineHeight: '1.4',
+                          color: '#1e293b'
+                        }}>
+                          {property.title}
+                        </Card.Title>
+                        
+                        {/* Property Details */}
+                        <div className="mb-4 flex-grow-1">
+                          {renderPropertyDetails(property)}
+                        </div>
+                        
+                        {/* Price & Buttons */}
+                        <div className="mt-auto">
+                          <div className="mb-4">
+                            <div className="h3 fw-bold text-success mb-1">
+                              ₹{property.price.toLocaleString()}
+                            </div>
+                            <small className="text-muted fw-medium">per {property.priceType}</small>
+                          </div>
+                          
+                          {/* NAVIGATION BUTTONS */}
+                          <div className="d-grid gap-3 d-md-flex">
+                            <button 
+                              className="btn flex-fill fw-semibold custom-outline-btn"
+                              style={{ fontSize: '0.9rem', padding: '12px 20px' }}
+                              onClick={() => handleViewDetails(property.id)}
+                            >
+                              View Details
+                            </button>
+                            <button 
+                              className="btn flex-fill fw-semibold custom-primary-btn"
+                              style={{ fontSize: '0.9rem', padding: '12px 20px' }}
+                              onClick={() => handleBookNow(property.id)}
+                            >
+                              Book Now
+                            </button>
+                          </div>
+                        </div>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            )}
+          </Container>
+        </div>
+      </div>
+
+      {/* STYLES - WORKING EVERYTHING */}
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        
+        * {
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        
+        /* WORKING SEARCH INPUT WITH ICON */
+        .search-wrapper {
+          position: relative;
+        }
+        
+        .search-icon {
+          position: absolute;
+          left: 12px;
+          top: 50%;
+          transform: translateY(-50%);
+          color: #9ca3af;
+          z-index: 10;
+          pointer-events: none;
+        }
+        
+        .search-input {
+          padding-left: 40px !important;
+          border: 1.5px solid #d1d5db !important;
+          border-radius: 8px !important;
+          font-size: 0.95rem !important;
+          padding: 12px 16px 12px 40px !important;
+          background-color: #ffffff !important;
+        }
+        
+        .search-input:focus {
+          border-color: #7c3aed !important;
+          box-shadow: 0 0 0 0.2rem rgba(124, 58, 237, 0.25) !important;
+        }
+        
+        /* Custom selects */
+        .custom-select {
+          font-size: 0.95rem !important;
+          padding: 12px 16px !important;
+          border: 1.5px solid #d1d5db !important;
+          border-radius: 8px !important;
+          background-color: #ffffff !important;
+        }
+        
+        .custom-select:focus {
+          border-color: #7c3aed !important;
+          box-shadow: 0 0 0 0.2rem rgba(124, 58, 237, 0.25) !important;
+        }
+        
+        /* Custom badges */
+        .custom-badge {
+          display: inline-block;
+          background-color: #f3f4f6;
+          color: #4b5563;
+          font-size: 0.8rem;
+          font-weight: 500;
+          padding: 6px 12px;
+          border-radius: 6px;
+          border: 1px solid #e5e7eb;
+        }
+        
+        .custom-badge-purple {
+          display: inline-block;
+          background-color: #7c3aed;
+          color: white;
+          font-size: 0.8rem;
+          font-weight: 500;
+          padding: 6px 12px;
+          border-radius: 6px;
+        }
+        
+        .custom-badge-green {
+          display: inline-block;
+          background-color: #059669;
+          color: white;
+          font-size: 0.8rem;
+          font-weight: 500;
+          padding: 6px 12px;
+          border-radius: 6px;
+        }
+        
+        .custom-badge-orange {
+          display: inline-block;
+          background-color: #d97706;
+          color: white;
+          font-size: 0.8rem;
+          font-weight: 500;
+          padding: 6px 12px;
+          border-radius: 6px;
+        }
+        
+        /* Status badges */
+        .status-badge-green {
+          display: inline-block;
+          background-color: #059669;
+          color: white;
+          font-size: 0.8rem;
+          font-weight: 600;
+          padding: 8px 12px;
+          border-radius: 6px;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .status-badge-purple {
+          display: inline-block;
+          background-color: #7c3aed;
+          color: white;
+          font-size: 0.8rem;
+          font-weight: 600;
+          padding: 8px 12px;
+          border-radius: 6px;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .status-badge-gray {
+          display: inline-block;
+          background-color: #6b7280;
+          color: white;
+          font-size: 0.8rem;
+          font-weight: 600;
+          padding: 8px 12px;
+          border-radius: 6px;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* NAVIGATION BUTTONS */
+        .custom-primary-btn {
+          background-color: #7c3aed !important;
+          border: 1px solid #7c3aed !important;
+          color: white !important;
+          border-radius: 12px !important;
+          transition: all 0.2s ease !important;
+        }
+        
+        .custom-primary-btn:hover {
+          background-color: #6d28d9 !important;
+          border-color: #6d28d9 !important;
+          color: white !important;
+          transform: translateY(-1px) !important;
+        }
+        
+        .custom-outline-btn {
+          background-color: transparent !important;
+          border: 1.5px solid #d1d5db !important;
+          color: #6b7280 !important;
+          border-radius: 12px !important;
+          transition: all 0.2s ease !important;
+        }
+        
+        .custom-outline-btn:hover {
+          background-color: #7c3aed !important;
+          border-color: #7c3aed !important;
+          color: white !important;
+          transform: translateY(-1px) !important;
+        }
+        
+        .custom-clear-btn {
+          font-size: 0.95rem !important;
+          padding: 12px 16px !important;
+          border: 1.5px solid #d1d5db !important;
+          border-radius: 8px !important;
+          color: #6b7280 !important;
+          background-color: #ffffff !important;
+        }
+        
+        .custom-clear-btn:hover {
+          background-color: #7c3aed !important;
+          border-color: #7c3aed !important;
+          color: white !important;
+        }
+        
+        /* View toggle buttons */
+        .custom-toggle-btn {
+          font-size: 0.9rem !important;
+          padding: 12px 24px !important;
+          border: 1.5px solid #d1d5db !important;
+          color: #6b7280 !important;
+          background-color: #ffffff !important;
+          border-radius: 0 !important;
+        }
+        
+        .custom-toggle-btn:first-child {
+          border-radius: 8px 0 0 8px !important;
+        }
+        
+        .custom-toggle-btn:last-child {
+          border-radius: 0 8px 8px 0 !important;
+          border-left: none !important;
+        }
+        
+        .custom-toggle-btn.active {
+          background-color: #7c3aed !important;
+          border-color: #7c3aed !important;
+          color: white !important;
+        }
+        
+        .custom-toggle-btn:hover {
+          background-color: #7c3aed !important;
+          border-color: #7c3aed !important;
+          color: white !important;
+        }
+        
+        /* Filter status */
+        .filter-status {
+          padding: 12px;
+          border-radius: 8px;
+          background-color: #f8fafc;
+          border: 1px solid #e5e7eb;
+        }
+        
+        /* WORKING IMAGES */
+        .card-img-top {
+          object-fit: cover;
+          background-color: #f3f4f6;
+        }
+        
+        @media (max-width: 768px) {
+          .main-layout {
+            flex-direction: column !important;
+          }
+          .sidebar-container { 
+            position: relative !important;
+            width: 100% !important;
+            height: auto !important;
+          }
+        }
+      `}</style>
+    </>
   );
 };
 
-export default BookProperty;
+export default FindProperty;
