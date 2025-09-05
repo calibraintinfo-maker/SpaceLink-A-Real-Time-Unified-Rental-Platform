@@ -193,13 +193,13 @@ const FindProperty = () => {
     if (property.isResidential && property.bedrooms > 0) {
       details.push(
         <Badge key="bedrooms" className="me-2 mb-2" style={{ 
-          backgroundColor: '#f1f5f9', 
-          color: '#475569',
+          backgroundColor: '#f3f4f6', 
+          color: '#4b5563',
           fontSize: '0.8rem',
-          fontWeight: '600',
-          padding: '8px 14px',
+          fontWeight: '500',
+          padding: '6px 12px',
           borderRadius: '6px',
-          border: '1px solid #e2e8f0'
+          border: '1px solid #e5e7eb'
         }}>
           <i className="fas fa-bed me-1"></i>{property.bedrooms} BHK
         </Badge>
@@ -209,13 +209,13 @@ const FindProperty = () => {
     if (property.isResidential && property.bathrooms > 0) {
       details.push(
         <Badge key="bathrooms" className="me-2 mb-2" style={{ 
-          backgroundColor: '#f1f5f9', 
-          color: '#475569',
+          backgroundColor: '#f3f4f6', 
+          color: '#4b5563',
           fontSize: '0.8rem',
-          fontWeight: '600',
-          padding: '8px 14px',
+          fontWeight: '500',
+          padding: '6px 12px',
           borderRadius: '6px',
-          border: '1px solid #e2e8f0'
+          border: '1px solid #e5e7eb'
         }}>
           <i className="fas fa-bath me-1"></i>{property.bathrooms} Bath
         </Badge>
@@ -225,13 +225,13 @@ const FindProperty = () => {
     if (!property.isResidential && property.bathrooms > 0) {
       details.push(
         <Badge key="washrooms" className="me-2 mb-2" style={{ 
-          backgroundColor: '#f1f5f9', 
-          color: '#475569',
+          backgroundColor: '#f3f4f6', 
+          color: '#4b5563',
           fontSize: '0.8rem',
-          fontWeight: '600',
-          padding: '8px 14px',
+          fontWeight: '500',
+          padding: '6px 12px',
           borderRadius: '6px',
-          border: '1px solid #e2e8f0'
+          border: '1px solid #e5e7eb'
         }}>
           <i className="fas fa-restroom me-1"></i>{property.bathrooms} Washrooms
         </Badge>
@@ -240,13 +240,13 @@ const FindProperty = () => {
 
     details.push(
       <Badge key="area" className="me-2 mb-2" style={{ 
-        backgroundColor: '#f1f5f9', 
-        color: '#475569',
+        backgroundColor: '#f3f4f6', 
+        color: '#4b5563',
         fontSize: '0.8rem',
-        fontWeight: '600',
-        padding: '8px 14px',
+        fontWeight: '500',
+        padding: '6px 12px',
         borderRadius: '6px',
-        border: '1px solid #e2e8f0'
+        border: '1px solid #e5e7eb'
       }}>
         <i className="fas fa-ruler-combined me-1"></i>{property.area.toLocaleString()} sq ft
       </Badge>
@@ -255,11 +255,11 @@ const FindProperty = () => {
     if (property.capacity) {
       details.push(
         <Badge key="capacity" className="me-2 mb-2" style={{ 
-          backgroundColor: '#374151', 
+          backgroundColor: '#8b5cf6', 
           color: 'white',
           fontSize: '0.8rem',
-          fontWeight: '600',
-          padding: '8px 14px',
+          fontWeight: '500',
+          padding: '6px 12px',
           borderRadius: '6px'
         }}>
           <i className="fas fa-users me-1"></i>{property.capacity}
@@ -273,8 +273,8 @@ const FindProperty = () => {
           backgroundColor: '#059669', 
           color: 'white',
           fontSize: '0.8rem',
-          fontWeight: '600',
-          padding: '8px 14px',
+          fontWeight: '500',
+          padding: '6px 12px',
           borderRadius: '6px'
         }}>
           <i className="fas fa-futbol me-1"></i>{property.surface}
@@ -288,8 +288,8 @@ const FindProperty = () => {
           backgroundColor: '#d97706', 
           color: 'white',
           fontSize: '0.8rem',
-          fontWeight: '600',
-          padding: '8px 14px',
+          fontWeight: '500',
+          padding: '6px 12px',
           borderRadius: '6px'
         }}>
           <i className="fas fa-shield-alt me-1"></i>{property.security}
@@ -302,41 +302,28 @@ const FindProperty = () => {
 
   return (
     <>
-      {/* WORLD-CLASS HERO SECTION - ENTERPRISE NEUTRAL */}
+      {/* CLEAN LIGHT HERO - MATCHING HOME THEME */}
       <section 
-        className="text-white py-5"
+        className="py-5"
         style={{
-          background: 'linear-gradient(135deg, #111827 0%, #1f2937 50%, #374151 100%)',
-          minHeight: '300px',
+          background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
+          minHeight: '280px',
           display: 'flex',
-          alignItems: 'center',
-          position: 'relative'
+          alignItems: 'center'
         }}
       >
-        {/* Subtle dot pattern overlay */}
-        <div 
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E")`,
-            opacity: 0.6
-          }}
-        />
-        <Container className="position-relative">
+        <Container>
           <div className="text-center">
             <h1 className="display-4 fw-bold mb-4" style={{ 
-              letterSpacing: '-0.025em',
-              fontWeight: 800 
+              color: '#1e293b',
+              letterSpacing: '-0.025em'
             }}>
               Find Your Perfect Property
             </h1>
-            <p className="fs-5 mb-0 opacity-90" style={{ 
+            <p className="fs-5 mb-0" style={{ 
+              color: '#64748b',
               maxWidth: '600px', 
-              margin: '0 auto',
-              lineHeight: 1.6 
+              margin: '0 auto'
             }}>
               Discover verified properties from our premium collection across India
             </p>
@@ -344,48 +331,33 @@ const FindProperty = () => {
         </Container>
       </section>
 
-      {/* ENTERPRISE LAYOUT - ZERO OVERLAP GUARANTEED */}
+      {/* ENTERPRISE CLEAN LAYOUT */}
       <div 
         style={{ 
           display: 'flex',
           minHeight: '100vh',
-          backgroundColor: '#fafbfc'
+          backgroundColor: '#ffffff'
         }}
       >
         
-        {/* WORLD-CLASS SIDEBAR */}
+        {/* MINIMALIST SIDEBAR - NO SQUARE ICON */}
         <div 
-          className="border-end"
           style={{
             width: '320px',
             minHeight: '100vh',
-            backgroundColor: 'white',
+            backgroundColor: '#fafbfc',
             position: 'sticky',
             top: 0,
             overflowY: 'auto',
-            boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.05)',
-            borderColor: '#e5e7eb'
+            borderRight: '1px solid #e2e8f0'
           }}
         >
           
-          {/* Professional Sidebar Header */}
-          <div className="p-4 border-bottom bg-white" style={{ borderColor: '#e5e7eb' }}>
-            <div className="d-flex align-items-center">
-              <div 
-                className="rounded-3 me-3 d-flex align-items-center justify-content-center"
-                style={{ 
-                  width: '48px', 
-                  height: '48px',
-                  backgroundColor: '#111827',
-                  color: 'white'
-                }}
-              >
-                <i className="fas fa-filter fs-5"></i>
-              </div>
-              <div>
-                <h5 className="mb-1 fw-bold" style={{ color: '#111827' }}>Filters</h5>
-                <small className="text-muted">Refine your search</small>
-              </div>
+          {/* Clean Header - NO ICON */}
+          <div className="p-4 border-bottom bg-white" style={{ borderColor: '#e2e8f0' }}>
+            <div>
+              <h5 className="mb-2 fw-bold" style={{ color: '#1e293b' }}>Filters</h5>
+              <small className="text-muted">Refine your search</small>
             </div>
           </div>
 
@@ -399,22 +371,20 @@ const FindProperty = () => {
               </Form.Label>
               <InputGroup>
                 <InputGroup.Text 
-                  className="bg-white border-end-0"
-                  style={{ borderColor: '#d1d5db' }}
+                  className="bg-white"
+                  style={{ borderColor: '#d1d5db', color: '#9ca3af' }}
                 >
-                  <i className="fas fa-search text-muted"></i>
+                  <i className="fas fa-search"></i>
                 </InputGroup.Text>
                 <Form.Control
                   type="text"
                   placeholder="Type to search..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="border-start-0 ps-0"
                   style={{ 
-                    boxShadow: 'none',
+                    borderColor: '#d1d5db',
                     fontSize: '0.95rem',
-                    padding: '12px 16px',
-                    borderColor: '#d1d5db'
+                    padding: '12px 16px'
                   }}
                 />
               </InputGroup>
@@ -431,8 +401,7 @@ const FindProperty = () => {
                 style={{ 
                   fontSize: '0.95rem',
                   padding: '12px 16px',
-                  border: '1px solid #d1d5db',
-                  borderRadius: '8px'
+                  borderColor: '#d1d5db'
                 }}
               >
                 {indianLocations.map((location, index) => (
@@ -454,8 +423,7 @@ const FindProperty = () => {
                 style={{ 
                   fontSize: '0.95rem',
                   padding: '12px 16px',
-                  border: '1px solid #d1d5db',
-                  borderRadius: '8px'
+                  borderColor: '#d1d5db'
                 }}
               >
                 {propertyTypes.map((type, index) => (
@@ -477,8 +445,7 @@ const FindProperty = () => {
                 style={{ 
                   fontSize: '0.95rem',
                   padding: '12px 16px',
-                  border: '1px solid #d1d5db',
-                  borderRadius: '8px'
+                  borderColor: '#d1d5db'
                 }}
               >
                 <option value="">All Prices</option>
@@ -501,8 +468,7 @@ const FindProperty = () => {
                   style={{ 
                     fontSize: '0.95rem',
                     padding: '12px 16px',
-                    border: '1px solid #d1d5db',
-                    borderRadius: '8px'
+                    borderColor: '#d1d5db'
                   }}
                 >
                   <option value="">Any Bedrooms</option>
@@ -516,16 +482,14 @@ const FindProperty = () => {
 
             {/* Clear Filters */}
             <Button 
-              variant="outline-dark"
+              variant="outline-secondary"
               className="w-100 mb-4 fw-semibold"
               onClick={clearFilters}
               style={{ 
                 fontSize: '0.95rem',
                 padding: '12px 16px',
-                borderWidth: '1px',
-                borderRadius: '8px',
-                borderColor: '#374151',
-                color: '#374151'
+                borderColor: '#d1d5db',
+                color: '#6b7280'
               }}
             >
               <i className="fas fa-times me-2"></i>Clear All Filters
@@ -533,11 +497,8 @@ const FindProperty = () => {
 
             {/* Filter Status */}
             <div 
-              className="p-4 rounded-3"
-              style={{ 
-                backgroundColor: '#f8fafc',
-                border: '1px solid #e5e7eb'
-              }}
+              className="p-3 rounded-3 bg-white border"
+              style={{ borderColor: '#e5e7eb' }}
             >
               <div className="d-flex justify-content-between align-items-center">
                 <span className="text-muted fw-semibold">Active Filters</span>
@@ -545,7 +506,7 @@ const FindProperty = () => {
                   className="fw-semibold"
                   style={{ 
                     fontSize: '0.8rem',
-                    backgroundColor: '#111827',
+                    backgroundColor: '#8b5cf6',
                     color: 'white'
                   }}
                 >
@@ -556,14 +517,14 @@ const FindProperty = () => {
           </div>
         </div>
 
-        {/* MAIN CONTENT - ENTERPRISE PERFECTION */}
-        <div style={{ flex: 1, backgroundColor: '#fafbfc' }}>
+        {/* MAIN CONTENT */}
+        <div style={{ flex: 1, backgroundColor: '#ffffff' }}>
           <Container fluid className="py-5 px-5" style={{ paddingBottom: '140px' }}>
             
             {/* Results Header */}
             <div className="d-flex justify-content-between align-items-center mb-5">
               <div>
-                <h2 className="h2 fw-bold mb-3" style={{ color: '#111827' }}>
+                <h2 className="h2 fw-bold mb-3" style={{ color: '#1e293b' }}>
                   {filteredProperties.length} Properties Found
                 </h2>
                 <p className="text-muted fs-6 mb-0">
@@ -574,7 +535,7 @@ const FindProperty = () => {
               </div>
               
               {/* View Toggle */}
-              <div className="btn-group shadow-sm" role="group">
+              <div className="btn-group" role="group">
                 <input 
                   type="radio" 
                   className="btn-check" 
@@ -590,7 +551,7 @@ const FindProperty = () => {
                     fontSize: '0.9rem', 
                     padding: '12px 24px',
                     borderColor: '#d1d5db',
-                    color: '#374151'
+                    color: '#6b7280'
                   }}
                 >
                   <i className="fas fa-th me-2"></i>Grid
@@ -611,7 +572,7 @@ const FindProperty = () => {
                     fontSize: '0.9rem', 
                     padding: '12px 24px',
                     borderColor: '#d1d5db',
-                    color: '#374151'
+                    color: '#6b7280'
                   }}
                 >
                   <i className="fas fa-list me-2"></i>List
@@ -619,25 +580,25 @@ const FindProperty = () => {
               </div>
             </div>
 
-            {/* Enterprise Property Cards */}
+            {/* Clean Property Cards */}
             {filteredProperties.length === 0 ? (
-              <Card className="border-0 shadow-sm text-center p-5" style={{ backgroundColor: 'white' }}>
+              <Card className="border-0 shadow-sm text-center p-5">
                 <Card.Body>
                   <div className="mb-4 text-muted" style={{ fontSize: '5rem' }}>
                     <i className="fas fa-search"></i>
                   </div>
-                  <h3 className="fw-bold mb-4" style={{ color: '#111827' }}>No Properties Found</h3>
+                  <h3 className="fw-bold mb-4" style={{ color: '#1e293b' }}>No Properties Found</h3>
                   <p className="text-muted fs-6 mb-4">
                     We couldn't find any properties matching your criteria. Try adjusting your filters.
                   </p>
                   <Button 
-                    variant="dark"
+                    variant="primary"
                     size="lg"
                     onClick={clearFilters}
                     className="fw-semibold"
                     style={{ 
-                      backgroundColor: '#111827',
-                      borderColor: '#111827'
+                      backgroundColor: '#8b5cf6',
+                      borderColor: '#8b5cf6'
                     }}
                   >
                     Clear All Filters
@@ -649,21 +610,19 @@ const FindProperty = () => {
                 {filteredProperties.map((property) => (
                   <Col key={property.id}>
                     <Card 
-                      className="h-100 border-0"
+                      className="h-100 border-0 shadow-sm"
                       style={{ 
                         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                         cursor: 'pointer',
-                        borderRadius: '16px',
-                        backgroundColor: 'white',
-                        boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.05)'
+                        borderRadius: '12px'
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-8px)';
-                        e.currentTarget.style.boxShadow = '0 0 0 1px rgba(0, 0, 0, 0.05), 0 20px 40px rgba(0, 0, 0, 0.15)';
+                        e.currentTarget.style.transform = 'translateY(-4px)';
+                        e.currentTarget.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.15)';
                       }}
                       onMouseLeave={(e) => {
                         e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.05)';
+                        e.currentTarget.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.12)';
                       }}
                     >
                       <div className="position-relative">
@@ -673,33 +632,33 @@ const FindProperty = () => {
                           style={{ 
                             height: viewMode === 'grid' ? '240px' : '200px', 
                             objectFit: 'cover',
-                            borderRadius: '16px 16px 0 0'
+                            borderRadius: '12px 12px 0 0'
                           }}
                         />
                         
-                        {/* Professional Status Badges */}
+                        {/* Clean Status Badges */}
                         <div className="position-absolute top-0 start-0 p-3">
                           <Badge 
-                            className="me-2 fw-semibold shadow-sm"
+                            className="me-2 fw-semibold"
                             style={{ 
                               fontSize: '0.8rem',
-                              padding: '8px 16px',
-                              borderRadius: '8px',
+                              padding: '6px 12px',
                               backgroundColor: property.status === 'For Sale' ? '#dc2626' : '#059669',
-                              color: 'white'
+                              color: 'white',
+                              borderRadius: '6px'
                             }}
                           >
                             {property.status}
                           </Badge>
                           {property.verified && (
                             <Badge 
-                              className="fw-semibold shadow-sm"
+                              className="fw-semibold"
                               style={{ 
                                 fontSize: '0.8rem',
-                                padding: '8px 16px',
-                                borderRadius: '8px',
-                                backgroundColor: '#111827',
-                                color: 'white'
+                                padding: '6px 12px',
+                                backgroundColor: '#8b5cf6',
+                                color: 'white',
+                                borderRadius: '6px'
                               }}
                             >
                               <i className="fas fa-check me-1"></i>Verified
@@ -710,13 +669,13 @@ const FindProperty = () => {
                         {/* Property Type Badge */}
                         <div className="position-absolute top-0 end-0 p-3">
                           <Badge 
-                            className="fw-semibold shadow-sm"
+                            className="fw-semibold"
                             style={{ 
                               fontSize: '0.8rem',
-                              padding: '8px 16px',
-                              borderRadius: '8px',
-                              backgroundColor: 'rgba(17, 24, 39, 0.8)',
-                              color: 'white'
+                              padding: '6px 12px',
+                              backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                              color: 'white',
+                              borderRadius: '6px'
                             }}
                           >
                             {property.type}
@@ -727,14 +686,14 @@ const FindProperty = () => {
                       <Card.Body className="d-flex flex-column p-4">
                         {/* Location */}
                         <div className="d-flex align-items-center text-muted mb-3">
-                          <i className="fas fa-map-marker-alt me-2" style={{ color: '#111827' }}></i>
+                          <i className="fas fa-map-marker-alt me-2" style={{ color: '#8b5cf6' }}></i>
                           <span className="fw-medium">{property.location}</span>
                         </div>
                         
                         {/* Title */}
                         <Card.Title className="h4 fw-bold mb-4" style={{ 
                           lineHeight: '1.4',
-                          color: '#111827'
+                          color: '#1e293b'
                         }}>
                           {property.title}
                         </Card.Title>
@@ -753,7 +712,7 @@ const FindProperty = () => {
                             <small className="text-muted fw-medium">per {property.priceType}</small>
                           </div>
                           
-                          {/* World-Class Action Buttons */}
+                          {/* Clean Action Buttons */}
                           <div className="d-grid gap-3 d-md-flex">
                             <Button 
                               variant="outline-secondary" 
@@ -761,24 +720,21 @@ const FindProperty = () => {
                               className="flex-fill fw-semibold"
                               style={{ 
                                 fontSize: '0.9rem',
-                                padding: '14px 20px',
-                                borderRadius: '12px',
-                                borderWidth: '1px',
+                                padding: '12px 20px',
                                 borderColor: '#d1d5db',
-                                color: '#374151'
+                                color: '#6b7280'
                               }}
                             >
                               View Details
                             </Button>
                             <Button 
                               size="lg"
-                              className="flex-fill fw-semibold shadow"
+                              className="flex-fill fw-semibold"
                               style={{ 
                                 fontSize: '0.9rem',
-                                padding: '14px 20px',
-                                borderRadius: '12px',
-                                backgroundColor: '#111827',
-                                border: 'none',
+                                padding: '12px 20px',
+                                backgroundColor: '#8b5cf6',
+                                borderColor: '#8b5cf6',
                                 color: 'white'
                               }}
                             >
@@ -796,7 +752,7 @@ const FindProperty = () => {
         </div>
       </div>
 
-      {/* Enterprise-Grade Styles */}
+      {/* Clean Styles */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
         
@@ -805,25 +761,20 @@ const FindProperty = () => {
         }
         
         .form-control:focus, .form-select:focus {
-          border-color: #111827 !important;
-          box-shadow: 0 0 0 0.25rem rgba(17, 24, 39, 0.25) !important;
+          border-color: #8b5cf6 !important;
+          box-shadow: 0 0 0 0.2rem rgba(139, 92, 246, 0.25) !important;
         }
         
         .btn-outline-secondary:hover {
-          background-color: #111827 !important;
-          border-color: #111827 !important;
+          background-color: #8b5cf6 !important;
+          border-color: #8b5cf6 !important;
           color: white !important;
         }
         
         .btn-check:checked + .btn-outline-secondary {
-          background-color: #111827 !important;
-          border-color: #111827 !important;
+          background-color: #8b5cf6 !important;
+          border-color: #8b5cf6 !important;
           color: white !important;
-        }
-        
-        .btn-outline-dark:hover {
-          background-color: #111827 !important;
-          border-color: #111827 !important;
         }
         
         @media (max-width: 768px) {
