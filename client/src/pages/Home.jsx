@@ -8,13 +8,13 @@ const Home = () => {
 
   return (
     <>
-      {/* PERFECT HERO SECTION - CONTENT MOVED LEFT */}
+      {/* PROFESSIONAL HERO SECTION - CONTENT MOVED UP */}
       <section style={{
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         minHeight: '85vh',
         display: 'flex',
         alignItems: 'center',
-        paddingTop: '70px',
+        paddingTop: '50px',
         position: 'relative',
         overflow: 'hidden'
       }}>
@@ -32,10 +32,10 @@ const Home = () => {
         }}></div>
 
         <Container>
-          <Row className="align-items-center" style={{ minHeight: '75vh' }}>
-            {/* LEFT CONTENT - MOVED LEFT WITH BETTER SPACING */}
+          <Row className="align-items-center" style={{ minHeight: '70vh' }}>
+            {/* LEFT CONTENT - MOVED UP FOR PROFESSIONAL LOOK */}
             <Col lg={6} md={6} className="mb-4 mb-lg-0">
-              <div style={{ maxWidth: '100%', paddingLeft: '1rem' }}>
+              <div style={{ maxWidth: '100%', paddingLeft: '1rem', paddingTop: '1rem' }}>
                 {/* Professional Badge */}
                 <div style={{
                   display: 'inline-block',
@@ -43,7 +43,7 @@ const Home = () => {
                   border: '1px solid rgba(255, 255, 255, 0.2)',
                   borderRadius: '25px',
                   padding: '6px 20px',
-                  marginBottom: '20px'
+                  marginBottom: '24px'
                 }}>
                   <span style={{
                     color: 'rgba(255, 255, 255, 0.95)',
@@ -56,12 +56,12 @@ const Home = () => {
                   </span>
                 </div>
                 
-                {/* Perfect Typography */}
+                {/* Professional Typography */}
                 <h1 style={{
-                  fontSize: '3.8rem',
+                  fontSize: '4rem',
                   fontWeight: 900,
                   lineHeight: '1.1',
-                  marginBottom: '20px',
+                  marginBottom: '24px',
                   letterSpacing: '-0.02em',
                   color: 'white',
                   maxWidth: '85%'
@@ -81,7 +81,7 @@ const Home = () => {
                   fontSize: '1.1rem',
                   color: 'rgba(255, 255, 255, 0.9)',
                   lineHeight: '1.6',
-                  marginBottom: '28px',
+                  marginBottom: '32px',
                   maxWidth: '80%'
                 }}>
                   From properties to vehicles, venues to parking spaces - SpaceLink connects you with 
@@ -89,8 +89,8 @@ const Home = () => {
                   Professional service, trusted transactions.
                 </p>
                 
-                {/* Perfect CTA Button */}
-                <div style={{ marginBottom: '40px' }}>
+                {/* Professional CTA Button */}
+                <div style={{ marginBottom: '48px' }}>
                   <Link 
                     to="/find-property" 
                     style={{
@@ -121,14 +121,14 @@ const Home = () => {
                   </Link>
                 </div>
                 
-                {/* Perfect Stats - MOVED LEFT & BETTER SPACING */}
+                {/* Professional Stats - PERFECT POSITIONING */}
                 <div style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(3, 1fr)',
                   gap: '28px',
                   paddingTop: '32px',
                   borderTop: '1px solid rgba(255, 255, 255, 0.2)',
-                  maxWidth: '380px'
+                  maxWidth: '350px'
                 }}>
                   {[
                     { number: '10K+', label: 'Items Listed' },
@@ -156,14 +156,14 @@ const Home = () => {
               </div>
             </Col>
             
-            {/* RIGHT IMAGE - PERFECT SIZING MAINTAINED */}
+            {/* RIGHT IMAGE - PROFESSIONAL SIZING */}
             <Col lg={6} md={6}>
               <div style={{
                 position: 'relative',
                 maxWidth: '100%',
                 margin: '0 auto'
               }}>
-                {/* MAIN PROFESSIONAL IMAGE */}
+                {/* PROFESSIONAL IMAGE */}
                 <div style={{
                   position: 'relative',
                   borderRadius: '20px',
@@ -240,7 +240,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* ALL CATEGORIES - EXPLORE BUTTONS PERFECTLY ALIGNED */}
+      {/* ALL CATEGORIES - PERFECTLY ALIGNED EXPLORE BUTTONS */}
       <section style={{
         padding: '60px 0',
         background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)'
@@ -361,7 +361,7 @@ const Home = () => {
                     }}>{category.desc}</p>
                   </div>
                   
-                  {/* PERFECTLY ALIGNED EXPLORE BUTTON - ALL SAME */}
+                  {/* PERFECTLY ALIGNED EXPLORE BUTTON - FIXED WIDTH */}
                   <div style={{
                     display: 'flex',
                     justifyContent: 'center',
@@ -407,7 +407,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* PERFECT HOW IT WORKS SECTION - SIZE MAINTAINED */}
+      {/* HOW IT WORKS SECTION - FIXED MISSING CONTENT */}
       <section style={{
         padding: '60px 0',
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -489,7 +489,7 @@ const Home = () => {
                   e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.15)';
                 }}>
                   
-                  {/* STEP NUMBER */}
+                  {/* STEP NUMBER - ALWAYS VISIBLE */}
                   <div style={{
                     position: 'absolute',
                     top: '-12px',
@@ -507,6 +507,7 @@ const Home = () => {
                     boxShadow: '0 4px 12px rgba(102, 126, 234, 0.4)'
                   }}>{item.step}</div>
                   
+                  {/* ICON CIRCLE - ALWAYS VISIBLE */}
                   <div style={{
                     width: '80px',
                     height: '80px',
@@ -520,6 +521,7 @@ const Home = () => {
                     boxShadow: '0 12px 30px rgba(102, 126, 234, 0.3)'
                   }}>{item.icon}</div>
                   
+                  {/* TITLE - ALWAYS VISIBLE */}
                   <h3 style={{
                     fontSize: '1.5rem',
                     fontWeight: 800,
@@ -527,6 +529,7 @@ const Home = () => {
                     marginBottom: '16px'
                   }}>{item.title}</h3>
                   
+                  {/* DESCRIPTION - ALWAYS VISIBLE */}
                   <p style={{
                     color: '#64748b',
                     fontSize: '0.95rem',
@@ -539,7 +542,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* PERFECT FEATURED PROPERTIES - SMALLER CARDS, FULLY VISIBLE */}
+      {/* FEATURED PROPERTIES - PERFECT SIZE */}
       <section style={{
         padding: '60px 0',
         background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)'
@@ -605,7 +608,7 @@ const Home = () => {
                   boxShadow: '0 8px 25px rgba(0, 0, 0, 0.08)',
                   border: '1px solid #f1f5f9',
                   transition: 'all 0.3s ease',
-                  height: '380px'
+                  height: '400px'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-4px)';
@@ -615,7 +618,7 @@ const Home = () => {
                   e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.08)';
                 }}>
-                  <div style={{ position: 'relative', height: '200px', overflow: 'hidden' }}>
+                  <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
                     <img 
                       src={property.image}
                       alt={property.title}
@@ -641,7 +644,7 @@ const Home = () => {
                     </div>
                   </div>
                   
-                  <div style={{ padding: '20px' }}>
+                  <div style={{ padding: '24px' }}>
                     <div style={{
                       display: 'flex',
                       alignItems: 'center',
@@ -745,7 +748,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* PERFECT CTA SECTION - SIZE MAINTAINED */}
+      {/* PROFESSIONAL CTA SECTION */}
       <section style={{
         padding: '60px 0',
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
