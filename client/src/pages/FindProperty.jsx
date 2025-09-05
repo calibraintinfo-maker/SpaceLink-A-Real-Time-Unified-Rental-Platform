@@ -189,25 +189,15 @@ const FindProperty = () => {
     return residentialTypes.includes(filters.propertyType) || filters.propertyType === 'Properties';
   };
 
-  // NAVIGATION FUNCTIONS WITH FALLBACK
+  // NAVIGATION FUNCTIONS - MATCHING YOUR ROUTES
   const handleViewDetails = (propertyId) => {
     console.log('Navigating to property details:', propertyId);
-    try {
-      navigate(`/property-details/${propertyId}`);
-    } catch (error) {
-      console.error('Navigation failed, using fallback:', error);
-      window.location.href = `/property-details/${propertyId}`;
-    }
+    navigate(`/property/${propertyId}`); // Matches your route: /property/:id
   };
 
   const handleBookNow = (propertyId) => {
     console.log('Navigating to book property:', propertyId);
-    try {
-      navigate(`/book-property/${propertyId}`);
-    } catch (error) {
-      console.error('Navigation failed, using fallback:', error);
-      window.location.href = `/book-property/${propertyId}`;
-    }
+    navigate(`/book/${propertyId}`); // Matches your route: /book/:propertyId
   };
 
   const handleImageError = (e) => {
@@ -220,7 +210,7 @@ const FindProperty = () => {
     if (property.isResidential && property.bedrooms > 0) {
       details.push(
         <span key="bedrooms" className="custom-badge me-2 mb-2">
-          🛏️ {property.bedrooms} BHK
+          🛏 {property.bedrooms} BHK
         </span>
       );
     }
