@@ -20,27 +20,30 @@ const FindProperty = () => {
     "Mumbai", "Delhi", "Bangalore", "Chennai", "Kolkata", "Hyderabad", "Pune", "Ahmedabad", "Jaipur", "Surat", "Lucknow", "Kanpur", "Nagpur", "Indore", "Thane", "Bhopal", "Visakhapatnam", "Pimpri-Chinchwad", "Patna", "Vadodara", "Ghaziabad", "Ludhiana", "Agra", "Nashik", "Faridabad", "Meerut", "Rajkot", "Kalyan-Dombivli", "Vasai-Virar", "Varanasi", "Srinagar", "Aurangabad", "Dhanbad", "Amritsar", "Navi Mumbai", "Allahabad", "Ranchi", "Howrah", "Coimbatore", "Jabalpur", "Gwalior", "Vijayawada", "Jodhpur", "Madurai", "Raipur", "Kota", "Chandigarh", "Guwahati", "Solapur", "Hubli-Dharwad", "Bareilly", "Moradabad", "Mysore", "Gurgaon", "Aligarh", "Jalandhar", "Tiruchirappalli", "Bhubaneswar", "Salem", "Mira-Bhayandar", "Warangal", "Thiruvananthapuram", "Guntur", "Bhiwandi", "Saharanpur", "Gorakhpur", "Bikaner", "Amravati", "Noida", "Jamshedpur", "Bhilai Nagar", "Cuttack", "Firozabad", "Kochi", "Nellore", "Bhavnagar", "Dehradun", "Durgapur", "Asansol", "Rourkela", "Nanded", "Kolhapur", "Ajmer", "Akola", "Gulbarga", "Jamnagar", "Ujjain", "Loni", "Siliguri", "Jhansi", "Ulhasnagar", "Jammu", "Sangli-Miraj & Kupwad", "Mangalore", "Erode", "Belgaum", "Ambattur", "Tirunelveli", "Malegaon", "Gaya", "Jalgaon", "Udaipur", "Maheshtala"
   ];
 
-  // ALL CATEGORIES INCLUDING TURF
+  // ALL CATEGORIES WITH PROPER GROUPING
   const propertyTypes = [
     "All Categories",
-    "Properties",
-    "Event Venues", 
-    "Turf",
-    "Parking",
+    "Properties",      // Main category
+    "Event Venues",    // Main category 
+    "Turf",           // Main category
+    "Parking",        // Main category
+    // Sub-categories under Properties
     "Villa",
     "Apartment", 
     "House",
     "Studio",
     "Commercial",
     "Office Space",
-    "Warehouse",
     "Shop",
     "Land",
     "Agricultural Land",
     "Residential Plot"
   ];
 
-  // PERFECT SAMPLE DATA WITH ALL CATEGORIES
+  // RESIDENTIAL PROPERTY TYPES (for bedroom filter logic)
+  const residentialTypes = ["Villa", "Apartment", "House", "Studio"];
+
+  // PERFECT SAMPLE DATA 
   const sampleProperties = [
     {
       id: 1,
@@ -236,210 +239,313 @@ const FindProperty = () => {
     setSearchQuery('');
   };
 
+  // CHECK IF BEDROOM FILTER SHOULD BE SHOWN
+  const shouldShowBedroomFilter = () => {
+    if (!filters.propertyType) return false; // Don't show if no category selected
+    return residentialTypes.includes(filters.propertyType) || filters.propertyType === 'Properties';
+  };
+
   return (
     <>
-      {/* COMPACT HERO SEARCH SECTION */}
+      {/* COMPACT HERO SECTION */}
       <section style={{
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        padding: '80px 0 60px 0', // Reduced padding
-        position: 'relative',
-        overflow: 'hidden'
+        padding: '60px 0 40px 0',
+        position: 'relative'
       }}>
-        <div style={{
-          position: 'absolute',
-          top: '20%',
-          right: '15%',
-          width: '200px',
-          height: '200px',
-          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 100%)',
-          borderRadius: '50%',
-          filter: 'blur(40px)'
-        }}></div>
-
         <Container>
-          <div style={{ textAlign: 'center', marginBottom: '40px' }}> {/* Reduced margin */}
+          <div style={{ textAlign: 'center' }}>
             <h1 style={{
-              fontSize: '3rem', // Reduced size
+              fontSize: '2.8rem',
               fontWeight: 900,
               color: 'white',
-              marginBottom: '16px'
+              marginBottom: '12px'
             }}>Find Your Perfect Property</h1>
             <p style={{
-              fontSize: '1.1rem', // Reduced size
+              fontSize: '1.1rem',
               color: 'rgba(255, 255, 255, 0.9)',
-              maxWidth: '600px',
+              maxWidth: '500px',
               margin: '0 auto'
             }}>
-              Discover amazing properties tailored to your needs from our premium collection across India
+              Discover amazing properties from our premium collection across India
             </p>
           </div>
+        </Container>
+      </section>
 
-          {/* COMPACT SEARCH BAR */}
+      {/* MAIN LAYOUT WITH FIXED LEFT SIDEBAR */}
+      <div style={{ display: 'flex', minHeight: '100vh' }}>
+        
+        {/* FIXED LEFT SIDEBAR - LIKE SPEEDMEET.AI */}
+        <div style={{
+          position: 'fixed',
+          left: 0,
+          top: '0',
+          width: '300px',
+          height: '100vh',
+          background: 'linear-gradient(180deg, #1e293b 0%, #334155 100%)',
+          overflowY: 'auto',
+          zIndex: 1000,
+          borderRight: '3px solid #e5e7eb'
+        }}>
+          
+          {/* SIDEBAR HEADER */}
           <div style={{
-            background: 'rgba(255, 255, 255, 0.98)',
-            borderRadius: '16px',
-            padding: '32px', // Reduced padding
-            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.2)',
-            maxWidth: '900px', // Reduced width
-            margin: '0 auto'
+            padding: '24px',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+            background: 'rgba(0, 0, 0, 0.2)'
           }}>
-            <Row>
-              <Col lg={8} className="mb-3">
-                <input
-                  type="text"
-                  placeholder="🔍 Search by location, property type, or keywords..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '14px 18px', // Reduced padding
-                    border: '2px solid #f1f5f9',
-                    borderRadius: '12px',
-                    fontSize: '1rem',
-                    outline: 'none',
-                    transition: 'all 0.3s ease'
-                  }}
-                  onFocus={(e) => e.target.style.borderColor = '#667eea'}
-                  onBlur={(e) => e.target.style.borderColor = '#f1f5f9'}
-                />
-              </Col>
-              <Col lg={4} className="mb-3">
-                <select
-                  value={filters.location}
-                  onChange={(e) => handleFilterChange('location', e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '14px 18px',
-                    border: '2px solid #f1f5f9',
-                    borderRadius: '12px',
-                    fontSize: '1rem',
-                    outline: 'none',
-                    backgroundColor: 'white'
-                  }}
-                >
-                  {indianLocations.map((location, index) => (
-                    <option key={index} value={location === "All Locations" ? "" : location}>
-                      {location}
-                    </option>
-                  ))}
-                </select>
-              </Col>
-            </Row>
-            <Row>
-              <Col lg={3} md={6} className="mb-3">
-                <select
-                  value={filters.propertyType}
-                  onChange={(e) => handleFilterChange('propertyType', e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '12px 16px',
-                    border: '2px solid #f1f5f9',
-                    borderRadius: '10px',
-                    fontSize: '0.95rem',
-                    outline: 'none',
-                    backgroundColor: 'white'
-                  }}
-                >
-                  {propertyTypes.map((type, index) => (
-                    <option key={index} value={type === "All Categories" ? "" : type}>
-                      {type}
-                    </option>
-                  ))}
-                </select>
-              </Col>
-              <Col lg={3} md={6} className="mb-3">
-                <select
-                  value={filters.priceRange}
-                  onChange={(e) => handleFilterChange('priceRange', e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '12px 16px',
-                    border: '2px solid #f1f5f9',
-                    borderRadius: '10px',
-                    fontSize: '0.95rem',
-                    outline: 'none',
-                    backgroundColor: 'white'
-                  }}
-                >
-                  <option value="">Price Range</option>
-                  <option value="0-2000">₹0 - ₹2,000</option>
-                  <option value="2000-5000">₹2,000 - ₹5,000</option>
-                  <option value="5000-10000">₹5,000 - ₹10,000</option>
-                  <option value="10000-999999">₹10,000+</option>
-                </select>
-              </Col>
-              <Col lg={3} md={6} className="mb-3">
+            <h3 style={{
+              color: 'white',
+              fontSize: '1.3rem',
+              fontWeight: 800,
+              marginBottom: '8px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px'
+            }}>
+              🔍 Filters
+            </h3>
+            <p style={{
+              color: 'rgba(255, 255, 255, 0.7)',
+              fontSize: '0.9rem',
+              margin: '0'
+            }}>Refine your search</p>
+          </div>
+
+          {/* SIDEBAR CONTENT */}
+          <div style={{ padding: '24px' }}>
+            
+            {/* SEARCH INPUT */}
+            <div style={{ marginBottom: '24px' }}>
+              <label style={{
+                color: 'rgba(255, 255, 255, 0.9)',
+                fontSize: '0.9rem',
+                fontWeight: 600,
+                marginBottom: '8px',
+                display: 'block'
+              }}>Search</label>
+              <input
+                type="text"
+                placeholder="Search properties..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '12px 16px',
+                  border: '2px solid rgba(255, 255, 255, 0.1)',
+                  borderRadius: '10px',
+                  fontSize: '0.9rem',
+                  outline: 'none',
+                  transition: 'all 0.3s ease',
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  color: 'white'
+                }}
+                onFocus={(e) => e.target.style.borderColor = '#667eea'}
+                onBlur={(e) => e.target.style.borderColor = 'rgba(255, 255, 255, 0.1)'}
+              />
+            </div>
+
+            {/* LOCATION FILTER */}
+            <div style={{ marginBottom: '24px' }}>
+              <label style={{
+                color: 'rgba(255, 255, 255, 0.9)',
+                fontSize: '0.9rem',
+                fontWeight: 600,
+                marginBottom: '8px',
+                display: 'block'
+              }}>Location</label>
+              <select
+                value={filters.location}
+                onChange={(e) => handleFilterChange('location', e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '12px 16px',
+                  border: '2px solid rgba(255, 255, 255, 0.1)',
+                  borderRadius: '10px',
+                  fontSize: '0.9rem',
+                  outline: 'none',
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  color: 'white',
+                  cursor: 'pointer'
+                }}
+              >
+                {indianLocations.map((location, index) => (
+                  <option key={index} value={location === "All Locations" ? "" : location} style={{color: 'black'}}>
+                    {location}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* PROPERTY TYPE FILTER */}
+            <div style={{ marginBottom: '24px' }}>
+              <label style={{
+                color: 'rgba(255, 255, 255, 0.9)',
+                fontSize: '0.9rem',
+                fontWeight: 600,
+                marginBottom: '8px',
+                display: 'block'
+              }}>Property Type</label>
+              <select
+                value={filters.propertyType}
+                onChange={(e) => handleFilterChange('propertyType', e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '12px 16px',
+                  border: '2px solid rgba(255, 255, 255, 0.1)',
+                  borderRadius: '10px',
+                  fontSize: '0.9rem',
+                  outline: 'none',
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  color: 'white',
+                  cursor: 'pointer'
+                }}
+              >
+                {propertyTypes.map((type, index) => (
+                  <option key={index} value={type === "All Categories" ? "" : type} style={{color: 'black'}}>
+                    {type}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* PRICE RANGE FILTER */}
+            <div style={{ marginBottom: '24px' }}>
+              <label style={{
+                color: 'rgba(255, 255, 255, 0.9)',
+                fontSize: '0.9rem',
+                fontWeight: 600,
+                marginBottom: '8px',
+                display: 'block'
+              }}>Price Range</label>
+              <select
+                value={filters.priceRange}
+                onChange={(e) => handleFilterChange('priceRange', e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '12px 16px',
+                  border: '2px solid rgba(255, 255, 255, 0.1)',
+                  borderRadius: '10px',
+                  fontSize: '0.9rem',
+                  outline: 'none',
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  color: 'white',
+                  cursor: 'pointer'
+                }}
+              >
+                <option value="" style={{color: 'black'}}>All Prices</option>
+                <option value="0-2000" style={{color: 'black'}}>₹0 - ₹2,000</option>
+                <option value="2000-5000" style={{color: 'black'}}>₹2,000 - ₹5,000</option>
+                <option value="5000-10000" style={{color: 'black'}}>₹5,000 - ₹10,000</option>
+                <option value="10000-999999" style={{color: 'black'}}>₹10,000+</option>
+              </select>
+            </div>
+
+            {/* BEDROOMS FILTER - CONDITIONAL RENDERING */}
+            {shouldShowBedroomFilter() && (
+              <div style={{ marginBottom: '24px' }}>
+                <label style={{
+                  color: 'rgba(255, 255, 255, 0.9)',
+                  fontSize: '0.9rem',
+                  fontWeight: 600,
+                  marginBottom: '8px',
+                  display: 'block'
+                }}>Bedrooms</label>
                 <select
                   value={filters.bedrooms}
                   onChange={(e) => handleFilterChange('bedrooms', e.target.value)}
                   style={{
                     width: '100%',
                     padding: '12px 16px',
-                    border: '2px solid #f1f5f9',
+                    border: '2px solid rgba(255, 255, 255, 0.1)',
                     borderRadius: '10px',
-                    fontSize: '0.95rem',
+                    fontSize: '0.9rem',
                     outline: 'none',
-                    backgroundColor: 'white'
-                  }}
-                >
-                  <option value="">Bedrooms</option>
-                  <option value="1">1+ BHK</option>
-                  <option value="2">2+ BHK</option>
-                  <option value="3">3+ BHK</option>
-                  <option value="4">4+ BHK</option>
-                </select>
-              </Col>
-              <Col lg={3} md={6} className="mb-3">
-                <button
-                  onClick={clearFilters}
-                  style={{
-                    width: '100%',
-                    padding: '12px 16px',
-                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    background: 'rgba(255, 255, 255, 0.05)',
                     color: 'white',
-                    border: 'none',
-                    borderRadius: '10px',
-                    fontSize: '0.95rem',
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.transform = 'translateY(-2px)';
-                    e.target.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.3)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.transform = 'translateY(0)';
-                    e.target.style.boxShadow = 'none';
+                    cursor: 'pointer'
                   }}
                 >
-                  Clear Filters
-                </button>
-              </Col>
-            </Row>
-          </div>
-        </Container>
-      </section>
+                  <option value="" style={{color: 'black'}}>Any Bedrooms</option>
+                  <option value="1" style={{color: 'black'}}>1+ BHK</option>
+                  <option value="2" style={{color: 'black'}}>2+ BHK</option>
+                  <option value="3" style={{color: 'black'}}>3+ BHK</option>
+                  <option value="4" style={{color: 'black'}}>4+ BHK</option>
+                </select>
+              </div>
+            )}
 
-      {/* PERFECT RESULTS SECTION */}
-      <section style={{
-        padding: '60px 0', // Reduced padding
-        background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)',
-        minHeight: '80vh'
-      }}>
-        <Container>
-          {/* COMPACT RESULTS HEADER */}
+            {/* CLEAR FILTERS BUTTON */}
+            <button
+              onClick={clearFilters}
+              style={{
+                width: '100%',
+                padding: '12px 16px',
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                color: 'white',
+                border: 'none',
+                borderRadius: '10px',
+                fontSize: '0.9rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.3)';
+              }}
+            >
+              Clear All Filters
+            </button>
+
+            {/* FILTER STATUS */}
+            <div style={{ 
+              marginTop: '24px',
+              padding: '16px',
+              background: 'rgba(255, 255, 255, 0.05)',
+              borderRadius: '10px',
+              border: '1px solid rgba(255, 255, 255, 0.1)'
+            }}>
+              <div style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.8rem', marginBottom: '8px' }}>
+                Active Filters:
+              </div>
+              <div style={{ color: 'white', fontSize: '0.9rem', fontWeight: 600 }}>
+                {Object.values(filters).filter(f => f).length || searchQuery ? 
+                  `${Object.values(filters).filter(f => f).length + (searchQuery ? 1 : 0)} active` : 
+                  'None'
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* MAIN CONTENT AREA - WITH PROPER MARGIN */}
+        <div style={{ 
+          marginLeft: '300px', // Same as sidebar width
+          flex: 1,
+          padding: '40px 40px',
+          background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)',
+          minHeight: '100vh'
+        }}>
+          
+          {/* RESULTS HEADER */}
           <div style={{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginBottom: '40px', // Reduced margin
+            marginBottom: '40px',
             flexWrap: 'wrap',
             gap: '20px'
           }}>
             <div>
               <h2 style={{
-                fontSize: '2.2rem', // Reduced size
+                fontSize: '2.5rem',
                 fontWeight: 900,
                 color: '#1e293b',
                 marginBottom: '12px'
@@ -448,7 +554,7 @@ const FindProperty = () => {
               </h2>
               <p style={{
                 color: '#64748b',
-                fontSize: '1rem',
+                fontSize: '1.1rem',
                 marginBottom: '0'
               }}>
                 {searchQuery && `Results for "${searchQuery}"`}
@@ -457,7 +563,7 @@ const FindProperty = () => {
               </p>
             </div>
             
-            {/* COMPACT VIEW MODE TOGGLE */}
+            {/* VIEW MODE TOGGLE */}
             <div style={{
               display: 'flex',
               background: 'white',
@@ -469,7 +575,7 @@ const FindProperty = () => {
               <button
                 onClick={() => setViewMode('grid')}
                 style={{
-                  padding: '10px 20px', // Reduced padding
+                  padding: '10px 20px',
                   border: 'none',
                   borderRadius: '8px',
                   background: viewMode === 'grid' ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'transparent',
@@ -506,21 +612,21 @@ const FindProperty = () => {
           {filteredProperties.length === 0 ? (
             <div style={{
               textAlign: 'center',
-              padding: '60px 30px',
+              padding: '80px 40px',
               background: 'white',
               borderRadius: '16px',
               boxShadow: '0 8px 25px rgba(0, 0, 0, 0.08)'
             }}>
               <div style={{ fontSize: '4rem', marginBottom: '20px' }}>🏠</div>
               <h3 style={{
-                fontSize: '1.5rem',
+                fontSize: '1.8rem',
                 fontWeight: 700,
                 color: '#1e293b',
                 marginBottom: '12px'
               }}>No Properties Found</h3>
               <p style={{
                 color: '#64748b',
-                fontSize: '1rem',
+                fontSize: '1.1rem',
                 marginBottom: '24px'
               }}>
                 Try adjusting your search criteria or filters
@@ -556,7 +662,7 @@ const FindProperty = () => {
                     boxShadow: '0 8px 25px rgba(0, 0, 0, 0.08)',
                     border: '1px solid #f1f5f9',
                     transition: 'all 0.3s ease',
-                    height: viewMode === 'grid' ? '420px' : 'auto', // PERFECT HEIGHT
+                    height: viewMode === 'grid' ? '420px' : 'auto',
                     display: viewMode === 'list' ? 'flex' : 'block',
                     cursor: 'pointer'
                   }}
@@ -569,10 +675,10 @@ const FindProperty = () => {
                     e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.08)';
                   }}>
                     
-                    {/* PERFECT IMAGE SECTION */}
+                    {/* IMAGE SECTION */}
                     <div style={{
                       position: 'relative',
-                      height: viewMode === 'grid' ? '180px' : '160px', // Reduced height
+                      height: viewMode === 'grid' ? '180px' : '160px',
                       width: viewMode === 'list' ? '250px' : '100%',
                       flexShrink: 0,
                       overflow: 'hidden'
@@ -604,9 +710,9 @@ const FindProperty = () => {
                       </div>
                     </div>
                     
-                    {/* PERFECT CONTENT SECTION */}
+                    {/* CONTENT SECTION */}
                     <div style={{ 
-                      padding: '20px', // Perfect padding
+                      padding: '20px',
                       flex: 1,
                       display: 'flex',
                       flexDirection: 'column',
@@ -628,14 +734,14 @@ const FindProperty = () => {
                         
                         {/* TITLE */}
                         <h3 style={{
-                          fontSize: '1.2rem', // Perfect size
+                          fontSize: '1.2rem',
                           fontWeight: 800,
                           color: '#1e293b',
                           marginBottom: '14px',
                           lineHeight: '1.3'
                         }}>{property.title}</h3>
                         
-                        {/* SMART PROPERTY DETAILS - PERFECT LOGIC */}
+                        {/* PERFECT CONDITIONAL PROPERTY DETAILS */}
                         <div style={{
                           display: 'flex',
                           gap: '12px',
@@ -689,39 +795,38 @@ const FindProperty = () => {
                         </div>
                       </div>
                       
-                      {/* PERFECT PRICING & BUTTONS SECTION */}
+                      {/* PRICING & BUTTONS */}
                       <div style={{
                         paddingTop: '16px',
                         borderTop: '1px solid #f1f5f9'
                       }}>
-                        {/* PERFECT PRICING */}
                         <div style={{
-                          fontSize: '1.4rem', // Perfect size
+                          fontSize: '1.4rem',
                           fontWeight: 900,
                           color: '#10b981',
-                          marginBottom: '16px' // Perfect spacing
+                          marginBottom: '16px'
                         }}>
                           ₹{property.price.toLocaleString()}/{property.priceType}
                         </div>
                         
-                        {/* PERFECT BUTTON LAYOUT - ALWAYS VISIBLE */}
+                        {/* PERFECT BUTTONS - ALWAYS VISIBLE */}
                         <div style={{ 
                           display: 'flex', 
-                          gap: '10px' // Perfect gap
+                          gap: '10px'
                         }}>
                           <button style={{
                             background: 'transparent',
                             border: '2px solid #e5e7eb',
                             color: '#64748b',
-                            padding: '10px 16px', // PERFECT PADDING
+                            padding: '10px 16px',
                             borderRadius: '8px',
-                            fontSize: '0.85rem', // PERFECT FONT SIZE
+                            fontSize: '0.85rem',
                             fontWeight: 600,
                             cursor: 'pointer',
                             transition: 'all 0.3s ease',
                             whiteSpace: 'nowrap',
                             flex: '1',
-                            minWidth: '110px' // ENSURES VISIBILITY
+                            minWidth: '110px'
                           }}
                           onMouseEnter={(e) => {
                             e.target.style.borderColor = '#667eea';
@@ -738,16 +843,16 @@ const FindProperty = () => {
                             background: property.gradient,
                             border: 'none',
                             color: 'white',
-                            padding: '10px 16px', // PERFECT PADDING
+                            padding: '10px 16px',
                             borderRadius: '8px',
-                            fontSize: '0.85rem', // PERFECT FONT SIZE
+                            fontSize: '0.85rem',
                             fontWeight: 700,
                             cursor: 'pointer',
                             boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
                             transition: 'all 0.3s ease',
                             whiteSpace: 'nowrap',
                             flex: '1',
-                            minWidth: '110px' // ENSURES VISIBILITY
+                            minWidth: '110px'
                           }}
                           onMouseEnter={(e) => {
                             e.target.style.transform = 'translateY(-1px)';
@@ -768,7 +873,7 @@ const FindProperty = () => {
             </Row>
           )}
 
-          {/* COMPACT LOAD MORE BUTTON */}
+          {/* LOAD MORE BUTTON */}
           {filteredProperties.length > 0 && (
             <div style={{ textAlign: 'center', marginTop: '50px' }}>
               <button style={{
@@ -795,31 +900,19 @@ const FindProperty = () => {
               </button>
             </div>
           )}
-        </Container>
-      </section>
+        </div>
+      </div>
 
       <style>{`
         @media (max-width: 768px) {
-          h1 {
-            font-size: 2.5rem !important;
+          .main-content {
+            margin-left: 0 !important;
           }
           
-          h2 {
-            font-size: 1.8rem !important;
-          }
-          
-          .property-card {
+          .sidebar {
+            position: relative !important;
+            width: 100% !important;
             height: auto !important;
-          }
-        }
-        
-        @media (max-width: 480px) {
-          h1 {
-            font-size: 2rem !important;
-          }
-          
-          h2 {
-            font-size: 1.6rem !important;
           }
         }
       `}</style>
