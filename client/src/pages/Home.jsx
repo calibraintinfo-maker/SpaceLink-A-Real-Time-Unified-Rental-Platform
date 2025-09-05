@@ -8,7 +8,7 @@ const Home = () => {
 
   return (
     <>
-      {/* PROFESSIONAL HERO SECTION - BETTER IMAGE */}
+      {/* PROFESSIONAL HERO SECTION - MUSEMIND INSPIRED */}
       <section style={{
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         minHeight: '90vh',
@@ -22,9 +22,9 @@ const Home = () => {
         <div style={{
           position: 'absolute',
           top: '15%',
-          left: '10%',
-          width: '300px',
-          height: '300px',
+          right: '10%',
+          width: '350px',
+          height: '350px',
           background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
           borderRadius: '50%',
           filter: 'blur(60px)',
@@ -33,9 +33,9 @@ const Home = () => {
 
         <Container>
           <Row className="align-items-center" style={{ minHeight: '80vh' }}>
-            {/* LEFT CONTENT - PERFECTLY BALANCED */}
-            <Col lg={6} md={6} className="mb-5 mb-lg-0">
-              <div style={{ maxWidth: '100%', paddingRight: '2rem' }}>
+            {/* LEFT CONTENT - MUSEMIND STYLE POSITIONING */}
+            <Col lg={8} md={7} className="mb-5 mb-lg-0">
+              <div style={{ maxWidth: '100%', paddingRight: '3rem' }}>
                 {/* Professional Badge */}
                 <div style={{
                   display: 'inline-block',
@@ -43,7 +43,7 @@ const Home = () => {
                   border: '1px solid rgba(255, 255, 255, 0.2)',
                   borderRadius: '30px',
                   padding: '8px 24px',
-                  marginBottom: '24px'
+                  marginBottom: '32px'
                 }}>
                   <span style={{
                     color: 'rgba(255, 255, 255, 0.95)',
@@ -56,14 +56,15 @@ const Home = () => {
                   </span>
                 </div>
                 
-                {/* Perfect Typography */}
+                {/* Professional Typography - Musemind Style */}
                 <h1 style={{
-                  fontSize: '4rem',
+                  fontSize: '4.5rem',
                   fontWeight: 900,
                   lineHeight: '1.1',
-                  marginBottom: '24px',
+                  marginBottom: '32px',
                   letterSpacing: '-0.02em',
-                  color: 'white'
+                  color: 'white',
+                  maxWidth: '90%'
                 }}>
                   Rent Anything,
                   <br />
@@ -77,25 +78,26 @@ const Home = () => {
                 </h1>
                 
                 <p style={{
-                  fontSize: '1.2rem',
+                  fontSize: '1.3rem',
                   color: 'rgba(255, 255, 255, 0.9)',
                   lineHeight: '1.6',
-                  marginBottom: '32px',
-                  maxWidth: '95%'
+                  marginBottom: '40px',
+                  maxWidth: '85%',
+                  fontWeight: 400
                 }}>
                   From properties to vehicles, venues to parking spaces - SpaceLink connects you with 
-                  <strong style={{ color: 'white' }}> exceptional rentals worldwide</strong>. 
+                  <strong style={{ color: 'white', fontWeight: 600 }}> exceptional rentals worldwide</strong>. 
                   Professional service, trusted transactions.
                 </p>
                 
-                {/* Perfect CTA Button */}
-                <div style={{ marginBottom: '48px' }}>
+                {/* Professional CTA Button */}
+                <div style={{ marginBottom: '60px' }}>
                   <Link 
                     to="/find-property" 
                     style={{
                       background: 'rgba(255, 255, 255, 0.95)',
                       color: '#667eea',
-                      padding: '16px 32px',
+                      padding: '18px 36px',
                       borderRadius: '12px',
                       fontWeight: 700,
                       fontSize: '1.1rem',
@@ -120,13 +122,14 @@ const Home = () => {
                   </Link>
                 </div>
                 
-                {/* Perfect Stats */}
+                {/* Professional Stats - Better Positioned */}
                 <div style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(3, 1fr)',
-                  gap: '32px',
-                  paddingTop: '32px',
-                  borderTop: '1px solid rgba(255, 255, 255, 0.2)'
+                  gap: '40px',
+                  paddingTop: '40px',
+                  borderTop: '1px solid rgba(255, 255, 255, 0.2)',
+                  maxWidth: '500px'
                 }}>
                   {[
                     { number: '10K+', label: 'Items Listed' },
@@ -135,7 +138,7 @@ const Home = () => {
                   ].map((stat, index) => (
                     <div key={index}>
                       <div style={{
-                        fontSize: '2.4rem',
+                        fontSize: '2.6rem',
                         fontWeight: 900,
                         color: 'white',
                         marginBottom: '8px',
@@ -154,14 +157,14 @@ const Home = () => {
               </div>
             </Col>
             
-            {/* RIGHT IMAGE - BETTER RENTAL PLATFORM IMAGE */}
-            <Col lg={6} md={6}>
+            {/* RIGHT IMAGE - PROFESSIONAL SIZING */}
+            <Col lg={4} md={5}>
               <div style={{
                 position: 'relative',
                 maxWidth: '100%',
                 margin: '0 auto'
               }}>
-                {/* BETTER RENTAL PLATFORM HERO IMAGE */}
+                {/* PROFESSIONAL RENTAL PLATFORM IMAGE */}
                 <div style={{
                   position: 'relative',
                   borderRadius: '24px',
@@ -169,22 +172,22 @@ const Home = () => {
                   boxShadow: '0 30px 70px rgba(0, 0, 0, 0.3)'
                 }}>
                   <img 
-                    src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
-                    alt="Modern rental search interface showing properties, vehicles and booking options" 
+                    src="https://images.unsplash.com/photo-1556741504-9cb8d5b90d45?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                    alt="Professional rental platform showing modern workspace and collaboration" 
                     style={{
                       width: '100%',
-                      height: '520px',
+                      height: '480px',
                       objectFit: 'cover',
                       display: 'block'
                     }}
                   />
                 </div>
                 
-                {/* Perfect Floating Cards */}
+                {/* Professional Floating Cards */}
                 <div style={{
                   position: 'absolute',
-                  top: '30px',
-                  right: '30px',
+                  top: '25px',
+                  right: '25px',
                   background: 'rgba(255, 255, 255, 0.95)',
                   backdropFilter: 'blur(20px)',
                   borderRadius: '16px',
@@ -209,8 +212,8 @@ const Home = () => {
                 
                 <div style={{
                   position: 'absolute',
-                  bottom: '30px',
-                  left: '30px',
+                  bottom: '25px',
+                  left: '25px',
                   background: 'rgba(255, 255, 255, 0.95)',
                   backdropFilter: 'blur(20px)',
                   borderRadius: '16px',
@@ -240,11 +243,11 @@ const Home = () => {
 
       {/* PERFECTLY ALIGNED CATEGORIES SECTION */}
       <section style={{
-        padding: '80px 0',
+        padding: '100px 0',
         background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)'
       }}>
         <Container>
-          <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '80px' }}>
             <div style={{
               display: 'inline-block',
               background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -260,16 +263,16 @@ const Home = () => {
               RENTAL CATEGORIES
             </div>
             <h2 style={{
-              fontSize: '3.2rem',
+              fontSize: '3.5rem',
               fontWeight: 900,
               color: '#1e293b',
-              marginBottom: '20px',
+              marginBottom: '24px',
               lineHeight: '1.2'
             }}>What Would You Like to Rent?</h2>
             <p style={{
-              fontSize: '1.2rem',
+              fontSize: '1.3rem',
               color: '#64748b',
-              maxWidth: '600px',
+              maxWidth: '650px',
               margin: '0 auto',
               lineHeight: '1.6'
             }}>
@@ -292,9 +295,9 @@ const Home = () => {
                 gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
               },
               { 
-                icon: '🚗', 
-                title: 'Vehicles', 
-                desc: 'Cars, bikes, trucks, luxury vehicles and transportation', 
+                icon: '🌿', 
+                title: 'Turfs', 
+                desc: 'Sports turfs, football fields, cricket grounds and recreational areas', 
                 gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
               },
               { 
@@ -308,13 +311,13 @@ const Home = () => {
                 <div style={{
                   background: 'white',
                   borderRadius: '24px',
-                  padding: '40px 28px',
+                  padding: '48px 32px',
                   textAlign: 'center',
                   boxShadow: '0 12px 40px rgba(0, 0, 0, 0.08)',
                   border: '1px solid #f1f5f9',
                   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                   cursor: 'pointer',
-                  height: '400px',
+                  height: '450px',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
@@ -341,19 +344,19 @@ const Home = () => {
                   
                   <div>
                     <div style={{ 
-                      fontSize: '4.5rem', 
-                      marginBottom: '28px',
+                      fontSize: '5rem', 
+                      marginBottom: '32px',
                       filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.1))'
                     }}>{category.icon}</div>
                     <h3 style={{
-                      fontSize: '1.6rem',
+                      fontSize: '1.8rem',
                       fontWeight: 800,
                       color: '#1e293b',
-                      marginBottom: '16px'
+                      marginBottom: '20px'
                     }}>{category.title}</h3>
                     <p style={{
                       color: '#64748b',
-                      fontSize: '1rem',
+                      fontSize: '1.1rem',
                       lineHeight: '1.6',
                       marginBottom: '0'
                     }}>{category.desc}</p>
@@ -364,25 +367,25 @@ const Home = () => {
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    paddingTop: '20px'
+                    paddingTop: '24px'
                   }}>
                     <Link 
                       to="/find-property"
                       style={{
                         background: category.gradient,
                         color: 'white',
-                        padding: '14px 32px',
+                        padding: '16px 36px',
                         borderRadius: '30px',
-                        fontSize: '1rem',
+                        fontSize: '1.1rem',
                         fontWeight: 700,
                         textDecoration: 'none',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        gap: '10px',
+                        gap: '12px',
                         boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
                         transition: 'all 0.3s ease',
-                        minWidth: '140px'
+                        minWidth: '160px'
                       }}
                       onMouseEnter={(e) => {
                         e.target.style.transform = 'translateY(-3px)';
@@ -394,7 +397,7 @@ const Home = () => {
                       }}
                     >
                       Explore
-                      <span style={{ fontSize: '1.2rem' }}>→</span>
+                      <span style={{ fontSize: '1.3rem' }}>→</span>
                     </Link>
                   </div>
                 </div>
@@ -404,9 +407,9 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* HOW IT WORKS SECTION - WITH STEP NUMBERS RESTORED */}
+      {/* HOW IT WORKS SECTION - WITH STEP NUMBERS */}
       <section style={{
-        padding: '80px 0',
+        padding: '100px 0',
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         position: 'relative',
         overflow: 'hidden'
@@ -423,17 +426,17 @@ const Home = () => {
         }}></div>
 
         <Container style={{ position: 'relative', zIndex: 2 }}>
-          <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '80px' }}>
             <h2 style={{
-              fontSize: '3.2rem',
+              fontSize: '3.5rem',
               fontWeight: 900,
               color: 'white',
-              marginBottom: '20px'
+              marginBottom: '24px'
             }}>How It Works</h2>
             <p style={{
-              fontSize: '1.2rem',
+              fontSize: '1.3rem',
               color: 'rgba(255, 255, 255, 0.9)',
-              maxWidth: '600px',
+              maxWidth: '650px',
               margin: '0 auto'
             }}>
               Simple steps to find and rent anything you need, anywhere in the world
@@ -466,12 +469,12 @@ const Home = () => {
                   background: 'rgba(255, 255, 255, 0.95)',
                   backdropFilter: 'blur(20px)',
                   borderRadius: '24px',
-                  padding: '48px 32px',
+                  padding: '56px 36px',
                   textAlign: 'center',
                   boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15)',
                   border: '1px solid rgba(255, 255, 255, 0.2)',
                   transition: 'all 0.3s ease',
-                  height: '420px',
+                  height: '480px',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
@@ -486,47 +489,47 @@ const Home = () => {
                   e.currentTarget.style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.15)';
                 }}>
                   
-                  {/* STEP NUMBER RESTORED */}
+                  {/* STEP NUMBER */}
                   <div style={{
                     position: 'absolute',
-                    top: '-15px',
-                    left: '32px',
+                    top: '-18px',
+                    left: '36px',
                     background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                     color: 'white',
-                    width: '40px',
-                    height: '40px',
+                    width: '48px',
+                    height: '48px',
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: '0.9rem',
+                    fontSize: '1rem',
                     fontWeight: 900,
-                    boxShadow: '0 4px 15px rgba(102, 126, 234, 0.4)'
+                    boxShadow: '0 6px 20px rgba(102, 126, 234, 0.4)'
                   }}>{item.step}</div>
                   
                   <div style={{
-                    width: '100px',
-                    height: '100px',
+                    width: '120px',
+                    height: '120px',
                     background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    margin: '0 auto 32px auto',
-                    fontSize: '3rem',
+                    margin: '0 auto 36px auto',
+                    fontSize: '3.5rem',
                     boxShadow: '0 15px 40px rgba(102, 126, 234, 0.3)'
                   }}>{item.icon}</div>
                   
                   <h3 style={{
-                    fontSize: '1.8rem',
+                    fontSize: '2rem',
                     fontWeight: 800,
                     color: '#1e293b',
-                    marginBottom: '20px'
+                    marginBottom: '24px'
                   }}>{item.title}</h3>
                   
                   <p style={{
                     color: '#64748b',
-                    fontSize: '1.1rem',
+                    fontSize: '1.2rem',
                     lineHeight: '1.7'
                   }}>{item.desc}</p>
                 </div>
@@ -536,13 +539,13 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* PROPERLY SIZED FEATURED PROPERTIES */}
+      {/* PROFESSIONAL FEATURED PROPERTIES - ALL BUTTONS VISIBLE */}
       <section style={{
-        padding: '80px 0',
+        padding: '100px 0',
         background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)'
       }}>
         <Container>
-          <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '80px' }}>
             <div style={{
               display: 'inline-block',
               background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -558,15 +561,15 @@ const Home = () => {
               FEATURED LISTINGS
             </div>
             <h2 style={{
-              fontSize: '3.2rem',
+              fontSize: '3.5rem',
               fontWeight: 900,
               color: '#1e293b',
-              marginBottom: '20px'
+              marginBottom: '24px'
             }}>Featured Properties</h2>
             <p style={{
-              fontSize: '1.2rem',
+              fontSize: '1.3rem',
               color: '#64748b',
-              maxWidth: '600px',
+              maxWidth: '650px',
               margin: '0 auto'
             }}>
               Handpicked premium properties from our expert team
@@ -602,7 +605,7 @@ const Home = () => {
                   boxShadow: '0 12px 40px rgba(0, 0, 0, 0.08)',
                   border: '1px solid #f1f5f9',
                   transition: 'all 0.3s ease',
-                  height: '520px'
+                  height: '600px'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-6px)';
@@ -612,7 +615,7 @@ const Home = () => {
                   e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.08)';
                 }}>
-                  <div style={{ position: 'relative', height: '300px', overflow: 'hidden' }}>
+                  <div style={{ position: 'relative', height: '320px', overflow: 'hidden' }}>
                     <img 
                       src={property.image}
                       alt={property.title}
@@ -628,9 +631,9 @@ const Home = () => {
                       left: '20px',
                       background: property.gradient,
                       color: 'white',
-                      padding: '8px 16px',
+                      padding: '10px 20px',
                       borderRadius: '20px',
-                      fontSize: '0.8rem',
+                      fontSize: '0.85rem',
                       fontWeight: 700,
                       boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)'
                     }}>
@@ -638,42 +641,42 @@ const Home = () => {
                     </div>
                   </div>
                   
-                  <div style={{ padding: '32px' }}>
+                  <div style={{ padding: '36px' }}>
                     <div style={{
                       display: 'flex',
                       alignItems: 'center',
                       gap: '8px',
                       color: '#64748b',
-                      fontSize: '0.9rem',
-                      marginBottom: '12px'
+                      fontSize: '0.95rem',
+                      marginBottom: '16px'
                     }}>
                       <span>📍</span>
                       {property.location}
                     </div>
                     
                     <h3 style={{
-                      fontSize: '1.6rem',
+                      fontSize: '1.8rem',
                       fontWeight: 800,
                       color: '#1e293b',
-                      marginBottom: '12px'
+                      marginBottom: '16px'
                     }}>{property.title}</h3>
                     
                     <p style={{
                       color: '#64748b',
-                      fontSize: '1rem',
+                      fontSize: '1.1rem',
                       lineHeight: '1.6',
-                      marginBottom: '20px'
-                    }}>Spacious luxury {property.title.toLowerCase()} with premium amenities and modern design perfect for families</p>
+                      marginBottom: '24px'
+                    }}>Spacious luxury {property.title.toLowerCase()} with premium amenities and modern design perfect for families and professionals</p>
                     
                     <div style={{
                       display: 'flex',
-                      gap: '20px',
-                      marginBottom: '24px',
-                      fontSize: '0.9rem',
+                      gap: '24px',
+                      marginBottom: '32px',
+                      fontSize: '0.95rem',
                       color: '#64748b'
                     }}>
                       {property.features.map((feature, idx) => (
-                        <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <span>{idx === 0 ? '🛏️' : '📐'}</span>
                           {feature}
                         </div>
@@ -686,7 +689,7 @@ const Home = () => {
                       alignItems: 'center'
                     }}>
                       <div style={{
-                        fontSize: '1.8rem',
+                        fontSize: '2rem',
                         fontWeight: 900,
                         color: '#10b981'
                       }}>{property.price}</div>
@@ -696,24 +699,41 @@ const Home = () => {
                           background: 'transparent',
                           border: '2px solid #e5e7eb',
                           color: '#64748b',
-                          padding: '10px 20px',
+                          padding: '12px 24px',
                           borderRadius: '12px',
-                          fontSize: '0.9rem',
+                          fontSize: '0.95rem',
                           fontWeight: 600,
                           cursor: 'pointer',
                           transition: 'all 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.target.style.borderColor = '#667eea';
+                          e.target.style.color = '#667eea';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.borderColor = '#e5e7eb';
+                          e.target.style.color = '#64748b';
                         }}>View Details</button>
                         
                         <button style={{
                           background: property.gradient,
                           border: 'none',
                           color: 'white',
-                          padding: '10px 20px',
+                          padding: '12px 24px',
                           borderRadius: '12px',
-                          fontSize: '0.9rem',
+                          fontSize: '0.95rem',
                           fontWeight: 700,
                           cursor: 'pointer',
-                          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.15)'
+                          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.15)',
+                          transition: 'all 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.target.style.transform = 'translateY(-2px)';
+                          e.target.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.2)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.transform = 'translateY(0)';
+                          e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.15)';
                         }}>Book Now</button>
                       </div>
                     </div>
@@ -725,25 +745,25 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* PERFECT CTA SECTION */}
+      {/* PROFESSIONAL CTA SECTION */}
       <section style={{
-        padding: '80px 0',
+        padding: '100px 0',
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         textAlign: 'center'
       }}>
         <Container>
-          <div style={{ maxWidth: '700px', margin: '0 auto' }}>
+          <div style={{ maxWidth: '750px', margin: '0 auto' }}>
             <h2 style={{
-              fontSize: '3.2rem',
+              fontSize: '3.5rem',
               fontWeight: 900,
               color: 'white',
-              marginBottom: '24px'
+              marginBottom: '28px'
             }}>Ready to Start Renting?</h2>
             
             <p style={{
-              fontSize: '1.2rem',
+              fontSize: '1.3rem',
               color: 'rgba(255, 255, 255, 0.9)',
-              marginBottom: '40px',
+              marginBottom: '48px',
               lineHeight: '1.6'
             }}>Join thousands of renters and owners making seamless transactions worldwide with our trusted platform</p>
             
@@ -752,10 +772,10 @@ const Home = () => {
               style={{
                 background: 'rgba(255, 255, 255, 0.95)',
                 color: '#667eea',
-                padding: '18px 48px',
+                padding: '20px 52px',
                 borderRadius: '16px',
                 fontWeight: 800,
-                fontSize: '1.2rem',
+                fontSize: '1.3rem',
                 textDecoration: 'none',
                 display: 'inline-block',
                 boxShadow: '0 12px 40px rgba(0, 0, 0, 0.2)',
@@ -786,25 +806,25 @@ const Home = () => {
         @media (max-width: 768px) {
           .hero-stats {
             grid-template-columns: repeat(2, 1fr) !important;
-            gap: 20px !important;
+            gap: 30px !important;
           }
           
           h1 {
-            font-size: 2.8rem !important;
+            font-size: 3rem !important;
           }
           
           h2 {
-            font-size: 2.4rem !important;
+            font-size: 2.8rem !important;
           }
         }
         
         @media (max-width: 480px) {
           h1 {
-            font-size: 2.2rem !important;
+            font-size: 2.5rem !important;
           }
           
           h2 {
-            font-size: 2rem !important;
+            font-size: 2.2rem !important;
           }
           
           .hero-stats {
