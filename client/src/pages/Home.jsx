@@ -8,7 +8,7 @@ const Home = () => {
 
   return (
     <>
-      {/* PERFECT HERO SECTION - FINAL VERSION */}
+      {/* HERO SECTION - FIXED STATS POSITIONING */}
       <section style={{
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         minHeight: '85vh',
@@ -33,9 +33,13 @@ const Home = () => {
 
         <Container>
           <Row className="align-items-center" style={{ minHeight: '70vh' }}>
-            {/* LEFT CONTENT - PERFECTLY POSITIONED */}
+            {/* LEFT CONTENT - BETTER SPACING */}
             <Col lg={6} md={6} className="mb-4 mb-lg-0">
-              <div style={{ maxWidth: '100%', paddingLeft: '0.5rem' }}>
+              <div style={{ 
+                maxWidth: '100%', 
+                paddingLeft: '1rem',
+                paddingRight: '2rem' // Added right padding for better spacing
+              }}>
                 {/* Professional Badge */}
                 <div style={{
                   display: 'inline-block',
@@ -56,7 +60,7 @@ const Home = () => {
                   </span>
                 </div>
                 
-                {/* Perfect Typography */}
+                {/* Typography */}
                 <h1 style={{
                   fontSize: '4rem',
                   fontWeight: 900,
@@ -64,7 +68,7 @@ const Home = () => {
                   marginBottom: '24px',
                   letterSpacing: '-0.02em',
                   color: 'white',
-                  maxWidth: '90%'
+                  maxWidth: '85%'
                 }}>
                   Rent Anything,
                   <br />
@@ -82,14 +86,14 @@ const Home = () => {
                   color: 'rgba(255, 255, 255, 0.9)',
                   lineHeight: '1.6',
                   marginBottom: '32px',
-                  maxWidth: '85%'
+                  maxWidth: '80%'
                 }}>
                   From properties to vehicles, venues to parking spaces - SpaceLink connects you with 
                   <strong style={{ color: 'white' }}> exceptional rentals worldwide</strong>. 
                   Professional service, trusted transactions.
                 </p>
                 
-                {/* Perfect CTA Button */}
+                {/* CTA Button */}
                 <div style={{ marginBottom: '50px' }}>
                   <Link 
                     to="/find-property" 
@@ -121,21 +125,23 @@ const Home = () => {
                   </Link>
                 </div>
                 
-                {/* Perfect Stats - FINAL POSITIONING */}
+                {/* FIXED STATS - PROPER SPACING FROM EDGES */}
                 <div style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(3, 1fr)',
-                  gap: '30px',
+                  gap: '32px',
                   paddingTop: '32px',
                   borderTop: '1px solid rgba(255, 255, 255, 0.2)',
-                  maxWidth: '380px'
+                  maxWidth: '420px', // Increased from 380px
+                  marginLeft: '0', // Ensure left alignment
+                  marginRight: 'auto' // Prevent right edge collision
                 }}>
                   {[
                     { number: '10K+', label: 'Items Listed' },
                     { number: '500+', label: 'Cities' },
                     { number: '99%', label: 'Satisfaction' }
                   ].map((stat, index) => (
-                    <div key={index}>
+                    <div key={index} style={{ textAlign: 'center' }}>
                       <div style={{
                         fontSize: '2rem',
                         fontWeight: 900,
@@ -156,14 +162,14 @@ const Home = () => {
               </div>
             </Col>
             
-            {/* RIGHT IMAGE - PERFECT SIZING */}
+            {/* RIGHT IMAGE */}
             <Col lg={6} md={6}>
               <div style={{
                 position: 'relative',
                 maxWidth: '100%',
-                margin: '0 auto'
+                margin: '0 auto',
+                paddingLeft: '1rem' // Added padding for better spacing
               }}>
-                {/* PERFECT IMAGE */}
                 <div style={{
                   position: 'relative',
                   borderRadius: '20px',
@@ -182,7 +188,7 @@ const Home = () => {
                   />
                 </div>
                 
-                {/* Perfect Floating Cards */}
+                {/* Floating Cards */}
                 <div style={{
                   position: 'absolute',
                   top: '20px',
@@ -240,7 +246,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* ALL CATEGORIES - PERFECTLY ALIGNED EXPLORE BUTTONS */}
+      {/* CATEGORIES SECTION - FIXED BUTTON ALIGNMENT */}
       <section style={{
         padding: '60px 0',
         background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)'
@@ -316,7 +322,7 @@ const Home = () => {
                   border: '1px solid #f1f5f9',
                   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                   cursor: 'pointer',
-                  height: '280px',
+                  height: '320px', // Increased height for better spacing
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
@@ -341,7 +347,7 @@ const Home = () => {
                     background: category.gradient
                   }}></div>
                   
-                  <div>
+                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                     <div style={{ 
                       fontSize: '3.5rem', 
                       marginBottom: '20px',
@@ -361,31 +367,30 @@ const Home = () => {
                     }}>{category.desc}</p>
                   </div>
                   
-                  {/* PERFECTLY ALIGNED EXPLORE BUTTON - FIXED WIDTH */}
+                  {/* FIXED EXPLORE BUTTON - CONSISTENT ALIGNMENT */}
                   <div style={{
+                    paddingTop: '20px',
                     display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    paddingTop: '16px'
+                    justifyContent: 'center'
                   }}>
                     <Link 
                       to="/find-property"
                       style={{
                         background: category.gradient,
                         color: 'white',
-                        padding: '10px 24px',
+                        padding: '12px 28px', // Increased padding
                         borderRadius: '25px',
-                        fontSize: '0.9rem',
+                        fontSize: '0.95rem',
                         fontWeight: 700,
                         textDecoration: 'none',
-                        display: 'flex',
+                        display: 'inline-flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         gap: '8px',
                         boxShadow: '0 6px 18px rgba(0, 0, 0, 0.15)',
                         transition: 'all 0.3s ease',
-                        minWidth: '140px',
-                        width: '140px'
+                        minWidth: '150px', // Fixed width to prevent text cutoff
+                        whiteSpace: 'nowrap' // Prevent text wrapping
                       }}
                       onMouseEnter={(e) => {
                         e.target.style.transform = 'translateY(-2px)';
@@ -407,7 +412,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* HOW IT WORKS SECTION - PERFECT WITH ALL CONTENT */}
+      {/* HOW IT WORKS SECTION */}
       <section style={{
         padding: '60px 0',
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -489,7 +494,6 @@ const Home = () => {
                   e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.15)';
                 }}>
                   
-                  {/* STEP NUMBER - ALWAYS VISIBLE */}
                   <div style={{
                     position: 'absolute',
                     top: '-12px',
@@ -507,7 +511,6 @@ const Home = () => {
                     boxShadow: '0 4px 12px rgba(102, 126, 234, 0.4)'
                   }}>{item.step}</div>
                   
-                  {/* ICON CIRCLE - ALWAYS VISIBLE */}
                   <div style={{
                     width: '80px',
                     height: '80px',
@@ -521,7 +524,6 @@ const Home = () => {
                     boxShadow: '0 12px 30px rgba(102, 126, 234, 0.3)'
                   }}>{item.icon}</div>
                   
-                  {/* TITLE - ALWAYS VISIBLE */}
                   <h3 style={{
                     fontSize: '1.5rem',
                     fontWeight: 800,
@@ -529,7 +531,6 @@ const Home = () => {
                     marginBottom: '16px'
                   }}>{item.title}</h3>
                   
-                  {/* DESCRIPTION - ALWAYS VISIBLE */}
                   <p style={{
                     color: '#64748b',
                     fontSize: '0.95rem',
@@ -542,7 +543,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* PERFECT FEATURED PROPERTIES - FINAL VERSION */}
+      {/* FEATURED PROPERTIES - FIXED BUTTONS VISIBILITY */}
       <section style={{
         padding: '70px 0',
         background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)'
@@ -608,7 +609,9 @@ const Home = () => {
                   boxShadow: '0 8px 25px rgba(0, 0, 0, 0.08)',
                   border: '1px solid #f1f5f9',
                   transition: 'all 0.3s ease',
-                  height: '440px'
+                  height: '500px', // Increased height to ensure buttons are visible
+                  display: 'flex',
+                  flexDirection: 'column'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-6px)';
@@ -618,7 +621,8 @@ const Home = () => {
                   e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.08)';
                 }}>
-                  <div style={{ position: 'relative', height: '240px', overflow: 'hidden' }}>
+                  {/* Image Section */}
+                  <div style={{ position: 'relative', height: '240px', overflow: 'hidden', flexShrink: 0 }}>
                     <img 
                       src={property.image}
                       alt={property.title}
@@ -644,52 +648,64 @@ const Home = () => {
                     </div>
                   </div>
                   
-                  <div style={{ padding: '26px' }}>
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                      color: '#64748b',
-                      fontSize: '0.85rem',
-                      marginBottom: '10px'
-                    }}>
-                      <span>📍</span>
-                      {property.location}
+                  {/* Content Section - Flexible */}
+                  <div style={{ 
+                    padding: '26px', 
+                    flex: 1, 
+                    display: 'flex', 
+                    flexDirection: 'column',
+                    justifyContent: 'space-between' 
+                  }}>
+                    <div>
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        color: '#64748b',
+                        fontSize: '0.85rem',
+                        marginBottom: '10px'
+                      }}>
+                        <span>📍</span>
+                        {property.location}
+                      </div>
+                      
+                      <h3 style={{
+                        fontSize: '1.4rem',
+                        fontWeight: 800,
+                        color: '#1e293b',
+                        marginBottom: '10px'
+                      }}>{property.title}</h3>
+                      
+                      <p style={{
+                        color: '#64748b',
+                        fontSize: '0.9rem',
+                        lineHeight: '1.5',
+                        marginBottom: '16px'
+                      }}>Spacious luxury {property.title.toLowerCase()} with premium amenities and modern design perfect for families</p>
+                      
+                      <div style={{
+                        display: 'flex',
+                        gap: '16px',
+                        marginBottom: '20px',
+                        fontSize: '0.8rem',
+                        color: '#64748b'
+                      }}>
+                        {property.features.map((feature, idx) => (
+                          <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <span>{idx === 0 ? '🛏️' : '📐'}</span>
+                            {feature}
+                          </div>
+                        ))}
+                      </div>
                     </div>
                     
-                    <h3 style={{
-                      fontSize: '1.4rem',
-                      fontWeight: 800,
-                      color: '#1e293b',
-                      marginBottom: '10px'
-                    }}>{property.title}</h3>
-                    
-                    <p style={{
-                      color: '#64748b',
-                      fontSize: '0.9rem',
-                      lineHeight: '1.5',
-                      marginBottom: '16px'
-                    }}>Spacious luxury {property.title.toLowerCase()} with premium amenities and modern design perfect for families</p>
-                    
-                    <div style={{
-                      display: 'flex',
-                      gap: '16px',
-                      marginBottom: '20px',
-                      fontSize: '0.8rem',
-                      color: '#64748b'
-                    }}>
-                      {property.features.map((feature, idx) => (
-                        <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                          <span>{idx === 0 ? '🛏️' : '📐'}</span>
-                          {feature}
-                        </div>
-                      ))}
-                    </div>
-                    
+                    {/* FIXED BUTTONS SECTION - ALWAYS VISIBLE */}
                     <div style={{
                       display: 'flex',
                       justifyContent: 'space-between',
-                      alignItems: 'center'
+                      alignItems: 'center',
+                      paddingTop: '16px',
+                      borderTop: '1px solid #f1f5f9'
                     }}>
                       <div style={{
                         fontSize: '1.5rem',
@@ -702,33 +718,37 @@ const Home = () => {
                           background: 'transparent',
                           border: '1.5px solid #e5e7eb',
                           color: '#64748b',
-                          padding: '8px 14px',
+                          padding: '10px 16px',
                           borderRadius: '8px',
                           fontSize: '0.8rem',
                           fontWeight: 600,
                           cursor: 'pointer',
-                          transition: 'all 0.2s ease'
+                          transition: 'all 0.3s ease',
+                          whiteSpace: 'nowrap'
                         }}
                         onMouseEnter={(e) => {
                           e.target.style.borderColor = '#667eea';
                           e.target.style.color = '#667eea';
+                          e.target.style.transform = 'translateY(-1px)';
                         }}
                         onMouseLeave={(e) => {
                           e.target.style.borderColor = '#e5e7eb';
                           e.target.style.color = '#64748b';
+                          e.target.style.transform = 'translateY(0)';
                         }}>View Details</button>
                         
                         <button style={{
                           background: property.gradient,
                           border: 'none',
                           color: 'white',
-                          padding: '8px 14px',
+                          padding: '10px 16px',
                           borderRadius: '8px',
                           fontSize: '0.8rem',
                           fontWeight: 700,
                           cursor: 'pointer',
                           boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                          transition: 'all 0.2s ease'
+                          transition: 'all 0.3s ease',
+                          whiteSpace: 'nowrap'
                         }}
                         onMouseEnter={(e) => {
                           e.target.style.transform = 'translateY(-1px)';
@@ -748,7 +768,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* PROFESSIONAL CTA SECTION */}
+      {/* CTA SECTION */}
       <section style={{
         padding: '60px 0',
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -807,11 +827,6 @@ const Home = () => {
         }
         
         @media (max-width: 768px) {
-          .hero-stats {
-            grid-template-columns: repeat(2, 1fr) !important;
-            gap: 20px !important;
-          }
-          
           h1 {
             font-size: 2.8rem !important;
           }
@@ -828,10 +843,6 @@ const Home = () => {
           
           h2 {
             font-size: 1.8rem !important;
-          }
-          
-          .hero-stats {
-            grid-template-columns: 1fr !important;
           }
         }
       `}</style>
