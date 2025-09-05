@@ -255,7 +255,7 @@ const FindProperty = () => {
     if (property.capacity) {
       details.push(
         <Badge key="capacity" className="me-2 mb-2" style={{ 
-          backgroundColor: '#8b5cf6', 
+          backgroundColor: '#7c3aed', 
           color: 'white',
           fontSize: '0.8rem',
           fontWeight: '500',
@@ -302,18 +302,17 @@ const FindProperty = () => {
 
   return (
     <>
-      {/* BEAUTIFUL PROFESSIONAL HERO SECTION */}
+      {/* BEAUTIFUL PURPLE HERO */}
       <section 
         className="py-5 text-white"
         style={{
-          background: 'linear-gradient(135deg, #8b5cf6 0%, #a855f7 50%, #c084fc 100%)',
+          background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%)',
           minHeight: '300px',
           display: 'flex',
           alignItems: 'center',
           position: 'relative'
         }}
       >
-        {/* Subtle pattern overlay */}
         <div 
           style={{
             position: 'absolute',
@@ -344,7 +343,7 @@ const FindProperty = () => {
         </Container>
       </section>
 
-      {/* ENTERPRISE LAYOUT */}
+      {/* MAIN LAYOUT */}
       <div 
         style={{ 
           display: 'flex',
@@ -353,7 +352,7 @@ const FindProperty = () => {
         }}
       >
         
-        {/* PROFESSIONAL SIDEBAR */}
+        {/* SIDEBAR */}
         <div 
           style={{
             width: '320px',
@@ -366,7 +365,6 @@ const FindProperty = () => {
           }}
         >
           
-          {/* Clean Header */}
           <div className="p-4 border-bottom bg-white" style={{ borderColor: '#e2e8f0' }}>
             <div>
               <h5 className="mb-2 fw-bold" style={{ color: '#1e293b' }}>Filters</h5>
@@ -374,7 +372,6 @@ const FindProperty = () => {
             </div>
           </div>
 
-          {/* Sidebar Content */}
           <div className="p-4">
             
             {/* Search */}
@@ -519,7 +516,7 @@ const FindProperty = () => {
                   className="fw-semibold"
                   style={{ 
                     fontSize: '0.8rem',
-                    backgroundColor: '#8b5cf6',
+                    backgroundColor: '#7c3aed',
                     color: 'white'
                   }}
                 >
@@ -593,7 +590,7 @@ const FindProperty = () => {
               </div>
             </div>
 
-            {/* Property Cards - NO BLUE COLORS */}
+            {/* PROPERTY CARDS - ABSOLUTELY NO BLUE */}
             {filteredProperties.length === 0 ? (
               <Card className="border-0 shadow-sm text-center p-5">
                 <Card.Body>
@@ -610,8 +607,8 @@ const FindProperty = () => {
                     onClick={clearFilters}
                     className="fw-semibold"
                     style={{ 
-                      backgroundColor: '#8b5cf6',
-                      borderColor: '#8b5cf6'
+                      backgroundColor: '#7c3aed',
+                      borderColor: '#7c3aed'
                     }}
                   >
                     Clear All Filters
@@ -649,13 +646,13 @@ const FindProperty = () => {
                           }}
                         />
                         
-                        {/* NO BLUE BADGES - ONLY NEUTRAL + PURPLE */}
+                        {/* ABSOLUTELY NO BLUE BADGES */}
                         <div className="position-absolute top-0 start-0 p-3">
                           <Badge 
                             className="me-2 fw-semibold"
                             style={{ 
                               fontSize: '0.8rem',
-                              padding: '6px 12px',
+                              padding: '8px 12px',
                               backgroundColor: property.status === 'For Sale' ? '#dc2626' : '#059669',
                               color: 'white',
                               borderRadius: '6px'
@@ -668,8 +665,8 @@ const FindProperty = () => {
                               className="fw-semibold"
                               style={{ 
                                 fontSize: '0.8rem',
-                                padding: '6px 12px',
-                                backgroundColor: '#8b5cf6', // PURPLE INSTEAD OF BLUE
+                                padding: '8px 12px',
+                                backgroundColor: '#7c3aed', // PURPLE VERIFIED
                                 color: 'white',
                                 borderRadius: '6px'
                               }}
@@ -679,14 +676,14 @@ const FindProperty = () => {
                           )}
                         </div>
                         
-                        {/* Property Type Badge - NEUTRAL GRAY */}
+                        {/* PROPERTY TYPE BADGE - NEUTRAL GRAY ONLY */}
                         <div className="position-absolute top-0 end-0 p-3">
                           <Badge 
                             className="fw-semibold"
                             style={{ 
                               fontSize: '0.8rem',
-                              padding: '6px 12px',
-                              backgroundColor: '#6b7280', // NEUTRAL GRAY INSTEAD OF BLUE
+                              padding: '8px 12px',
+                              backgroundColor: '#6b7280', // GRAY ONLY
                               color: 'white',
                               borderRadius: '6px'
                             }}
@@ -699,7 +696,7 @@ const FindProperty = () => {
                       <Card.Body className="d-flex flex-column p-4">
                         {/* Location */}
                         <div className="d-flex align-items-center text-muted mb-3">
-                          <i className="fas fa-map-marker-alt me-2" style={{ color: '#8b5cf6' }}></i>
+                          <i className="fas fa-map-marker-alt me-2" style={{ color: '#7c3aed' }}></i>
                           <span className="fw-medium">{property.location}</span>
                         </div>
                         
@@ -711,7 +708,7 @@ const FindProperty = () => {
                           {property.title}
                         </Card.Title>
                         
-                        {/* Property Details - NO BLUE */}
+                        {/* Property Details */}
                         <div className="mb-4 flex-grow-1">
                           {renderPropertyDetails(property)}
                         </div>
@@ -746,8 +743,8 @@ const FindProperty = () => {
                               style={{ 
                                 fontSize: '0.9rem',
                                 padding: '12px 20px',
-                                backgroundColor: '#8b5cf6', // PURPLE PRIMARY BUTTON
-                                borderColor: '#8b5cf6',
+                                backgroundColor: '#7c3aed', // PURPLE PRIMARY
+                                borderColor: '#7c3aed',
                                 color: 'white'
                               }}
                             >
@@ -765,7 +762,7 @@ const FindProperty = () => {
         </div>
       </div>
 
-      {/* Professional Styles */}
+      {/* FINAL STYLES - NO BLUE ANYWHERE */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
         
@@ -774,20 +771,30 @@ const FindProperty = () => {
         }
         
         .form-control:focus, .form-select:focus {
-          border-color: #8b5cf6 !important;
-          box-shadow: 0 0 0 0.2rem rgba(139, 92, 246, 0.25) !important;
+          border-color: #7c3aed !important;
+          box-shadow: 0 0 0 0.2rem rgba(124, 58, 237, 0.25) !important;
         }
         
         .btn-outline-secondary:hover {
-          background-color: #8b5cf6 !important;
-          border-color: #8b5cf6 !important;
+          background-color: #7c3aed !important;
+          border-color: #7c3aed !important;
           color: white !important;
         }
         
         .btn-check:checked + .btn-outline-secondary {
-          background-color: #8b5cf6 !important;
-          border-color: #8b5cf6 !important;
+          background-color: #7c3aed !important;
+          border-color: #7c3aed !important;
           color: white !important;
+        }
+        
+        .btn-primary {
+          background-color: #7c3aed !important;
+          border-color: #7c3aed !important;
+        }
+        
+        .btn-primary:hover {
+          background-color: #6d28d9 !important;
+          border-color: #6d28d9 !important;
         }
         
         @media (max-width: 768px) {
