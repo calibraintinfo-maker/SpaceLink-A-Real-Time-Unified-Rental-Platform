@@ -12,58 +12,39 @@ const FindProperty = () => {
     priceRange: '',
     bedrooms: ''
   });
-  const [viewMode, setViewMode] = useState('grid'); // grid or list
+  const [viewMode, setViewMode] = useState('grid');
 
-  // Sample property data - replace with API call
+  // All Indian Locations
+  const indianLocations = [
+    "All Locations",
+    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Delhi",
+    "Mumbai", "Delhi", "Bangalore", "Chennai", "Kolkata", "Hyderabad", "Pune", "Ahmedabad", "Jaipur", "Surat", "Lucknow", "Kanpur", "Nagpur", "Indore", "Thane", "Bhopal", "Visakhapatnam", "Pimpri-Chinchwad", "Patna", "Vadodara", "Ghaziabad", "Ludhiana", "Agra", "Nashik", "Faridabad", "Meerut", "Rajkot", "Kalyan-Dombivli", "Vasai-Virar", "Varanasi", "Srinagar", "Aurangabad", "Dhanbad", "Amritsar", "Navi Mumbai", "Allahabad", "Ranchi", "Howrah", "Coimbatore", "Jabalpur", "Gwalior", "Vijayawada", "Jodhpur", "Madurai", "Raipur", "Kota", "Chandigarh", "Guwahati", "Solapur", "Hubli-Dharwad", "Bareilly", "Moradabad", "Mysore", "Gurgaon", "Aligarh", "Jalandhar", "Tiruchirappalli", "Bhubaneswar", "Salem", "Mira-Bhayandar", "Warangal", "Thiruvananthapuram", "Guntur", "Bhiwandi", "Saharanpur", "Gorakhpur", "Bikaner", "Amravati", "Noida", "Jamshedpur", "Bhilai Nagar", "Cuttack", "Firozabad", "Kochi", "Nellore", "Bhavnagar", "Dehradun", "Durgapur", "Asansol", "Rourkela", "Nanded", "Kolhapur", "Ajmer", "Akola", "Gulbarga", "Jamnagar", "Ujjain", "Loni", "Siliguri", "Jhansi", "Ulhasnagar", "Jammu", "Sangli-Miraj & Kupwad", "Mangalore", "Erode", "Belgaum", "Ambattur", "Tirunelveli", "Malegaon", "Gaya", "Jalgaon", "Udaipur", "Maheshtala"
+  ];
+
+  // All Property Categories
+  const propertyTypes = [
+    "All Categories",
+    "Property Rentals",
+    "Commercial", 
+    "Land",
+    "Parking",
+    "Event Venues",
+    "Villa",
+    "Apartment",
+    "House",
+    "Studio",
+    "Office Space",
+    "Warehouse",
+    "Shop",
+    "Agricultural Land",
+    "Residential Plot"
+  ];
+
+  // Sample property data - expanded with all categories
   const sampleProperties = [
     {
       id: 1,
       image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      title: 'Modern Villa',
-      location: 'Namakkal, Tamil Nadu',
-      price: 1234,
-      priceType: 'month',
-      features: ['4 BHK', '2,500 sq ft'],
-      type: 'Villa',
-      bedrooms: 4,
-      bathrooms: 3,
-      area: 2500,
-      status: 'For Rent',
-      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-    },
-    {
-      id: 2,
-      image: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      title: 'Premium Land',
-      location: 'Namakkal, Tamil Nadu',
-      price: 122345,
-      priceType: 'year',
-      features: ['Agricultural', '10,000 sq ft'],
-      type: 'Land',
-      bedrooms: 0,
-      bathrooms: 0,
-      area: 10000,
-      status: 'For Sale',
-      gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
-    },
-    {
-      id: 3,
-      image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      title: 'Luxury Apartment',
-      location: 'Chennai, Tamil Nadu',
-      price: 2500,
-      priceType: 'month',
-      features: ['3 BHK', '1,800 sq ft'],
-      type: 'Apartment',
-      bedrooms: 3,
-      bathrooms: 2,
-      area: 1800,
-      status: 'For Rent',
-      gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
-    },
-    {
-      id: 4,
-      image: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       title: 'Cozy Studio',
       location: 'Bangalore, Karnataka',
       price: 1800,
@@ -77,23 +58,23 @@ const FindProperty = () => {
       gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
     },
     {
-      id: 5,
-      image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      id: 2,
+      image: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       title: 'Commercial Space',
       location: 'Mumbai, Maharashtra',
       price: 5000,
       priceType: 'month',
-      features: ['Commercial', '3,000 sq ft'],
+      features: ['2 Bath', '3,000 sq ft'],
       type: 'Commercial',
       bedrooms: 0,
       bathrooms: 2,
       area: 3000,
       status: 'For Rent',
-      gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)'
+      gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
     },
     {
-      id: 6,
-      image: 'https://images.unsplash.com/photo-1600573472592-401b489a3cdc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      id: 3,
+      image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       title: 'Family House',
       location: 'Pune, Maharashtra',
       price: 3200,
@@ -104,7 +85,7 @@ const FindProperty = () => {
       bathrooms: 2,
       area: 1200,
       status: 'For Rent',
-      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+      gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
     }
   ];
 
@@ -117,7 +98,6 @@ const FindProperty = () => {
   useEffect(() => {
     let filtered = properties;
 
-    // Search filter
     if (searchQuery) {
       filtered = filtered.filter(property =>
         property.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -126,21 +106,18 @@ const FindProperty = () => {
       );
     }
 
-    // Location filter
     if (filters.location) {
       filtered = filtered.filter(property =>
         property.location.toLowerCase().includes(filters.location.toLowerCase())
       );
     }
 
-    // Property type filter
     if (filters.propertyType) {
       filtered = filtered.filter(property =>
         property.type === filters.propertyType
       );
     }
 
-    // Price range filter
     if (filters.priceRange) {
       const [min, max] = filters.priceRange.split('-').map(Number);
       filtered = filtered.filter(property =>
@@ -148,7 +125,6 @@ const FindProperty = () => {
       );
     }
 
-    // Bedrooms filter
     if (filters.bedrooms) {
       filtered = filtered.filter(property =>
         property.bedrooms >= parseInt(filters.bedrooms)
@@ -209,21 +185,21 @@ const FindProperty = () => {
               maxWidth: '600px',
               margin: '0 auto'
             }}>
-              Discover thousands of verified properties across India
+              Discover amazing properties tailored to your needs from our premium collection
             </p>
           </div>
 
-          {/* SEARCH BAR */}
+          {/* IMPROVED SEARCH BAR */}
           <div style={{
             background: 'white',
             borderRadius: '16px',
-            padding: '32px',
+            padding: '40px', // Increased padding
             boxShadow: '0 20px 60px rgba(0, 0, 0, 0.2)',
-            maxWidth: '900px',
+            maxWidth: '1000px', // Increased width
             margin: '0 auto'
           }}>
             <Row>
-              <Col lg={6} className="mb-3">
+              <Col lg={6} className="mb-4"> {/* Increased margin bottom */}
                 <input
                   type="text"
                   placeholder="Search by location, property type..."
@@ -231,10 +207,10 @@ const FindProperty = () => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   style={{
                     width: '100%',
-                    padding: '14px 16px',
+                    padding: '16px 20px', // Increased padding
                     border: '2px solid #f1f5f9',
-                    borderRadius: '10px',
-                    fontSize: '1rem',
+                    borderRadius: '12px',
+                    fontSize: '1.1rem', // Increased font size
                     outline: 'none',
                     transition: 'all 0.3s ease'
                   }}
@@ -242,63 +218,60 @@ const FindProperty = () => {
                   onBlur={(e) => e.target.style.borderColor = '#f1f5f9'}
                 />
               </Col>
-              <Col lg={6} className="mb-3">
+              <Col lg={6} className="mb-4">
                 <select
                   value={filters.location}
                   onChange={(e) => handleFilterChange('location', e.target.value)}
                   style={{
                     width: '100%',
-                    padding: '14px 16px',
+                    padding: '16px 20px', // Increased padding
                     border: '2px solid #f1f5f9',
-                    borderRadius: '10px',
-                    fontSize: '1rem',
+                    borderRadius: '12px',
+                    fontSize: '1.1rem', // Increased font size
                     outline: 'none',
                     backgroundColor: 'white'
                   }}
                 >
-                  <option value="">All Locations</option>
-                  <option value="Chennai">Chennai</option>
-                  <option value="Bangalore">Bangalore</option>
-                  <option value="Mumbai">Mumbai</option>
-                  <option value="Pune">Pune</option>
-                  <option value="Namakkal">Namakkal</option>
+                  {indianLocations.map((location, index) => (
+                    <option key={index} value={location === "All Locations" ? "" : location}>
+                      {location}
+                    </option>
+                  ))}
                 </select>
               </Col>
             </Row>
             <Row>
-              <Col lg={3} md={6} className="mb-3">
+              <Col lg={3} md={6} className="mb-4"> {/* Increased margin */}
                 <select
                   value={filters.propertyType}
                   onChange={(e) => handleFilterChange('propertyType', e.target.value)}
                   style={{
                     width: '100%',
-                    padding: '14px 16px',
+                    padding: '16px 20px',
                     border: '2px solid #f1f5f9',
-                    borderRadius: '10px',
-                    fontSize: '1rem',
+                    borderRadius: '12px',
+                    fontSize: '1.1rem',
                     outline: 'none',
                     backgroundColor: 'white'
                   }}
                 >
-                  <option value="">Property Type</option>
-                  <option value="Villa">Villa</option>
-                  <option value="Apartment">Apartment</option>
-                  <option value="House">House</option>
-                  <option value="Studio">Studio</option>
-                  <option value="Commercial">Commercial</option>
-                  <option value="Land">Land</option>
+                  {propertyTypes.map((type, index) => (
+                    <option key={index} value={type === "All Categories" ? "" : type}>
+                      {type}
+                    </option>
+                  ))}
                 </select>
               </Col>
-              <Col lg={3} md={6} className="mb-3">
+              <Col lg={3} md={6} className="mb-4">
                 <select
                   value={filters.priceRange}
                   onChange={(e) => handleFilterChange('priceRange', e.target.value)}
                   style={{
                     width: '100%',
-                    padding: '14px 16px',
+                    padding: '16px 20px',
                     border: '2px solid #f1f5f9',
-                    borderRadius: '10px',
-                    fontSize: '1rem',
+                    borderRadius: '12px',
+                    fontSize: '1.1rem',
                     outline: 'none',
                     backgroundColor: 'white'
                   }}
@@ -310,16 +283,16 @@ const FindProperty = () => {
                   <option value="10000-999999">₹10,000+</option>
                 </select>
               </Col>
-              <Col lg={3} md={6} className="mb-3">
+              <Col lg={3} md={6} className="mb-4">
                 <select
                   value={filters.bedrooms}
                   onChange={(e) => handleFilterChange('bedrooms', e.target.value)}
                   style={{
                     width: '100%',
-                    padding: '14px 16px',
+                    padding: '16px 20px',
                     border: '2px solid #f1f5f9',
-                    borderRadius: '10px',
-                    fontSize: '1rem',
+                    borderRadius: '12px',
+                    fontSize: '1.1rem',
                     outline: 'none',
                     backgroundColor: 'white'
                   }}
@@ -331,17 +304,17 @@ const FindProperty = () => {
                   <option value="4">4+ BHK</option>
                 </select>
               </Col>
-              <Col lg={3} md={6} className="mb-3">
+              <Col lg={3} md={6} className="mb-4">
                 <button
                   onClick={clearFilters}
                   style={{
                     width: '100%',
-                    padding: '14px 16px',
+                    padding: '16px 20px',
                     background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                     color: 'white',
                     border: 'none',
-                    borderRadius: '10px',
-                    fontSize: '1rem',
+                    borderRadius: '12px',
+                    fontSize: '1.1rem',
                     fontWeight: 600,
                     cursor: 'pointer',
                     transition: 'all 0.3s ease'
@@ -363,7 +336,7 @@ const FindProperty = () => {
         </Container>
       </section>
 
-      {/* RESULTS SECTION */}
+      {/* RESULTS SECTION - IMPROVED SPACING */}
       <section style={{
         padding: '80px 0',
         background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)',
@@ -375,22 +348,23 @@ const FindProperty = () => {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginBottom: '40px',
+            marginBottom: '50px', // Increased margin
             flexWrap: 'wrap',
-            gap: '20px'
+            gap: '30px' // Increased gap
           }}>
             <div>
               <h2 style={{
                 fontSize: '2.5rem',
                 fontWeight: 900,
                 color: '#1e293b',
-                marginBottom: '8px'
+                marginBottom: '12px' // Increased margin
               }}>
                 {filteredProperties.length} Properties Found
               </h2>
               <p style={{
                 color: '#64748b',
-                fontSize: '1.1rem'
+                fontSize: '1.1rem',
+                marginBottom: '0'
               }}>
                 {searchQuery && `Results for "${searchQuery}"`}
                 {Object.values(filters).some(f => f) && ' with filters applied'}
@@ -401,22 +375,23 @@ const FindProperty = () => {
             <div style={{
               display: 'flex',
               background: 'white',
-              borderRadius: '10px',
-              padding: '4px',
-              boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
+              borderRadius: '12px',
+              padding: '6px', // Increased padding
+              boxShadow: '0 6px 20px rgba(0, 0, 0, 0.1)',
               border: '1px solid #f1f5f9'
             }}>
               <button
                 onClick={() => setViewMode('grid')}
                 style={{
-                  padding: '10px 20px',
+                  padding: '14px 24px', // Increased padding
                   border: 'none',
-                  borderRadius: '8px',
+                  borderRadius: '10px',
                   background: viewMode === 'grid' ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'transparent',
                   color: viewMode === 'grid' ? 'white' : '#64748b',
                   fontWeight: 600,
                   cursor: 'pointer',
-                  transition: 'all 0.3s ease'
+                  transition: 'all 0.3s ease',
+                  marginRight: '6px' // Added margin between buttons
                 }}
               >
                 🔲 Grid
@@ -424,9 +399,9 @@ const FindProperty = () => {
               <button
                 onClick={() => setViewMode('list')}
                 style={{
-                  padding: '10px 20px',
+                  padding: '14px 24px', // Increased padding
                   border: 'none',
-                  borderRadius: '8px',
+                  borderRadius: '10px',
                   background: viewMode === 'list' ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'transparent',
                   color: viewMode === 'list' ? 'white' : '#64748b',
                   fontWeight: 600,
@@ -439,7 +414,7 @@ const FindProperty = () => {
             </div>
           </div>
 
-          {/* PROPERTIES GRID/LIST */}
+          {/* PROPERTIES GRID/LIST - IMPROVED SPACING */}
           {filteredProperties.length === 0 ? (
             <div style={{
               textAlign: 'center',
@@ -480,7 +455,7 @@ const FindProperty = () => {
           ) : (
             <Row>
               {filteredProperties.map((property) => (
-                <Col lg={viewMode === 'grid' ? 4 : 12} md={viewMode === 'grid' ? 6 : 12} className="mb-4" key={property.id}>
+                <Col lg={viewMode === 'grid' ? 4 : 12} md={viewMode === 'grid' ? 6 : 12} className="mb-5" key={property.id}> {/* Increased margin */}
                   <div style={{
                     background: 'white',
                     borderRadius: '16px',
@@ -488,7 +463,7 @@ const FindProperty = () => {
                     boxShadow: '0 8px 25px rgba(0, 0, 0, 0.08)',
                     border: '1px solid #f1f5f9',
                     transition: 'all 0.3s ease',
-                    height: viewMode === 'grid' ? '500px' : 'auto',
+                    height: viewMode === 'grid' ? '540px' : 'auto', // Increased height
                     display: viewMode === 'list' ? 'flex' : 'block',
                     cursor: 'pointer'
                   }}
@@ -503,8 +478,8 @@ const FindProperty = () => {
                     {/* IMAGE */}
                     <div style={{
                       position: 'relative',
-                      height: viewMode === 'grid' ? '240px' : '200px',
-                      width: viewMode === 'list' ? '300px' : '100%',
+                      height: viewMode === 'grid' ? '250px' : '220px', // Increased height
+                      width: viewMode === 'list' ? '320px' : '100%', // Increased width
                       flexShrink: 0,
                       overflow: 'hidden'
                     }}>
@@ -523,9 +498,9 @@ const FindProperty = () => {
                         left: '16px',
                         background: property.gradient,
                         color: 'white',
-                        padding: '6px 14px',
+                        padding: '8px 16px', // Increased padding
                         borderRadius: '12px',
-                        fontSize: '0.75rem',
+                        fontSize: '0.8rem', // Increased font size
                         fontWeight: 700,
                         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
                       }}>
@@ -533,9 +508,9 @@ const FindProperty = () => {
                       </div>
                     </div>
                     
-                    {/* CONTENT */}
+                    {/* CONTENT - IMPROVED SPACING */}
                     <div style={{ 
-                      padding: '24px',
+                      padding: '32px', // Increased padding
                       flex: 1,
                       display: 'flex',
                       flexDirection: 'column',
@@ -545,83 +520,93 @@ const FindProperty = () => {
                         <div style={{
                           display: 'flex',
                           alignItems: 'center',
-                          gap: '6px',
+                          gap: '8px', // Increased gap
                           color: '#64748b',
-                          fontSize: '0.85rem',
-                          marginBottom: '12px'
+                          fontSize: '0.9rem', // Increased font size
+                          marginBottom: '16px' // Increased margin
                         }}>
                           <span>📍</span>
                           {property.location}
                         </div>
                         
                         <h3 style={{
-                          fontSize: '1.3rem',
+                          fontSize: '1.4rem', // Increased font size
                           fontWeight: 800,
                           color: '#1e293b',
-                          marginBottom: '12px'
+                          marginBottom: '16px' // Increased margin
                         }}>{property.title}</h3>
                         
                         <div style={{
                           display: 'flex',
-                          gap: '16px',
-                          marginBottom: '16px',
-                          fontSize: '0.8rem',
+                          gap: '20px', // Increased gap
+                          marginBottom: '24px', // Increased margin
+                          fontSize: '0.85rem', // Increased font size
                           color: '#64748b',
                           flexWrap: 'wrap'
                         }}>
                           {property.bedrooms > 0 && (
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                               <span>🛏️</span>
                               {property.bedrooms} BHK
                             </div>
                           )}
                           {property.bathrooms > 0 && (
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                               <span>🚿</span>
                               {property.bathrooms} Bath
                             </div>
                           )}
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                             <span>📐</span>
                             {property.area.toLocaleString()} sq ft
                           </div>
                         </div>
                       </div>
                       
+                      {/* IMPROVED BUTTON LAYOUT - LESS CONGESTED */}
                       <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        paddingTop: '16px',
-                        borderTop: '1px solid #f1f5f9'
+                        paddingTop: '24px', // Increased padding
+                        borderTop: '2px solid #f1f5f9'
                       }}>
+                        {/* Price with more breathing room */}
                         <div style={{
-                          fontSize: '1.4rem',
+                          fontSize: '1.6rem', // Increased size
                           fontWeight: 900,
-                          color: '#10b981'
+                          color: '#10b981',
+                          marginBottom: '20px' // Added significant margin
                         }}>
                           ₹{property.price.toLocaleString()}/{property.priceType}
                         </div>
                         
-                        <div style={{ display: 'flex', gap: '8px' }}>
+                        {/* Button row with better spacing */}
+                        <div style={{ 
+                          display: 'flex', 
+                          gap: '16px', // Increased gap
+                          justifyContent: 'space-between'
+                        }}>
                           <button style={{
                             background: 'transparent',
                             border: '2px solid #e5e7eb',
                             color: '#64748b',
-                            padding: '8px 16px',
-                            borderRadius: '8px',
-                            fontSize: '0.8rem',
+                            padding: '14px 20px', // Increased padding
+                            borderRadius: '10px',
+                            fontSize: '0.9rem', // Increased font size
                             fontWeight: 600,
                             cursor: 'pointer',
-                            transition: 'all 0.3s ease'
+                            transition: 'all 0.3s ease',
+                            whiteSpace: 'nowrap',
+                            flex: '1',
+                            maxWidth: '140px'
                           }}
                           onMouseEnter={(e) => {
                             e.target.style.borderColor = '#667eea';
                             e.target.style.color = '#667eea';
+                            e.target.style.transform = 'translateY(-1px)';
                           }}
                           onMouseLeave={(e) => {
                             e.target.style.borderColor = '#e5e7eb';
                             e.target.style.color = '#64748b';
+                            e.target.style.transform = 'translateY(0)';
                           }}>
                             View Details
                           </button>
@@ -630,13 +615,16 @@ const FindProperty = () => {
                             background: property.gradient,
                             border: 'none',
                             color: 'white',
-                            padding: '8px 16px',
-                            borderRadius: '8px',
-                            fontSize: '0.8rem',
+                            padding: '14px 20px', // Increased padding
+                            borderRadius: '10px',
+                            fontSize: '0.9rem', // Increased font size
                             fontWeight: 700,
                             cursor: 'pointer',
                             boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                            transition: 'all 0.3s ease'
+                            transition: 'all 0.3s ease',
+                            whiteSpace: 'nowrap',
+                            flex: '1',
+                            maxWidth: '140px'
                           }}
                           onMouseEnter={(e) => {
                             e.target.style.transform = 'translateY(-1px)';
@@ -663,7 +651,7 @@ const FindProperty = () => {
               <button style={{
                 background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                 color: 'white',
-                padding: '16px 40px',
+                padding: '18px 45px', // Increased padding
                 border: 'none',
                 borderRadius: '12px',
                 fontSize: '1.1rem',
