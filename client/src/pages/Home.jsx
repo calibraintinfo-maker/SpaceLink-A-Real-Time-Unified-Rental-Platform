@@ -8,10 +8,10 @@ const Home = () => {
 
   return (
     <>
-      {/* PROFESSIONAL HERO SECTION - MUSEMIND INSPIRED */}
+      {/* PERFECT PROFESSIONAL HERO SECTION */}
       <section style={{
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        minHeight: '90vh',
+        minHeight: '85vh',
         display: 'flex',
         alignItems: 'center',
         paddingTop: '70px',
@@ -23,45 +23,45 @@ const Home = () => {
           position: 'absolute',
           top: '15%',
           right: '10%',
-          width: '350px',
-          height: '350px',
+          width: '300px',
+          height: '300px',
           background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
           borderRadius: '50%',
-          filter: 'blur(60px)',
-          animation: 'float 12s ease-in-out infinite'
+          filter: 'blur(50px)',
+          animation: 'float 10s ease-in-out infinite'
         }}></div>
 
         <Container>
-          <Row className="align-items-center" style={{ minHeight: '80vh' }}>
-            {/* LEFT CONTENT - MUSEMIND STYLE POSITIONING */}
-            <Col lg={8} md={7} className="mb-5 mb-lg-0">
-              <div style={{ maxWidth: '100%', paddingRight: '3rem' }}>
+          <Row className="align-items-center" style={{ minHeight: '75vh' }}>
+            {/* LEFT CONTENT - PROFESSIONAL SIZING */}
+            <Col lg={8} md={7} className="mb-4 mb-lg-0">
+              <div style={{ maxWidth: '100%', paddingRight: '2rem' }}>
                 {/* Professional Badge */}
                 <div style={{
                   display: 'inline-block',
                   background: 'rgba(255, 255, 255, 0.15)',
                   border: '1px solid rgba(255, 255, 255, 0.2)',
-                  borderRadius: '30px',
-                  padding: '8px 24px',
-                  marginBottom: '32px'
+                  borderRadius: '25px',
+                  padding: '6px 20px',
+                  marginBottom: '20px'
                 }}>
                   <span style={{
                     color: 'rgba(255, 255, 255, 0.95)',
-                    fontSize: '0.75rem',
+                    fontSize: '0.7rem',
                     fontWeight: 700,
-                    letterSpacing: '1px',
+                    letterSpacing: '0.8px',
                     textTransform: 'uppercase'
                   }}>
                     Leading Rental Platform
                   </span>
                 </div>
                 
-                {/* Professional Typography - Musemind Style */}
+                {/* Perfect Typography */}
                 <h1 style={{
-                  fontSize: '4.5rem',
+                  fontSize: '3.8rem',
                   fontWeight: 900,
                   lineHeight: '1.1',
-                  marginBottom: '32px',
+                  marginBottom: '20px',
                   letterSpacing: '-0.02em',
                   color: 'white',
                   maxWidth: '90%'
@@ -78,58 +78,57 @@ const Home = () => {
                 </h1>
                 
                 <p style={{
-                  fontSize: '1.3rem',
+                  fontSize: '1.1rem',
                   color: 'rgba(255, 255, 255, 0.9)',
                   lineHeight: '1.6',
-                  marginBottom: '40px',
-                  maxWidth: '85%',
-                  fontWeight: 400
+                  marginBottom: '28px',
+                  maxWidth: '85%'
                 }}>
                   From properties to vehicles, venues to parking spaces - SpaceLink connects you with 
-                  <strong style={{ color: 'white', fontWeight: 600 }}> exceptional rentals worldwide</strong>. 
+                  <strong style={{ color: 'white' }}> exceptional rentals worldwide</strong>. 
                   Professional service, trusted transactions.
                 </p>
                 
-                {/* Professional CTA Button */}
-                <div style={{ marginBottom: '60px' }}>
+                {/* Perfect CTA Button */}
+                <div style={{ marginBottom: '40px' }}>
                   <Link 
                     to="/find-property" 
                     style={{
                       background: 'rgba(255, 255, 255, 0.95)',
                       color: '#667eea',
-                      padding: '18px 36px',
-                      borderRadius: '12px',
+                      padding: '14px 28px',
+                      borderRadius: '10px',
                       fontWeight: 700,
-                      fontSize: '1.1rem',
+                      fontSize: '1rem',
                       textDecoration: 'none',
                       display: 'inline-flex',
                       alignItems: 'center',
-                      gap: '12px',
-                      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.15)',
+                      gap: '10px',
+                      boxShadow: '0 6px 20px rgba(0, 0, 0, 0.15)',
                       transition: 'all 0.3s ease'
                     }}
                     onMouseEnter={(e) => {
                       e.target.style.transform = 'translateY(-2px)';
-                      e.target.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.2)';
+                      e.target.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.2)';
                     }}
                     onMouseLeave={(e) => {
                       e.target.style.transform = 'translateY(0)';
-                      e.target.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.15)';
+                      e.target.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.15)';
                     }}
                   >
-                    <span style={{ fontSize: '1.2rem' }}>🔍</span>
+                    <span style={{ fontSize: '1.1rem' }}>🔍</span>
                     Explore Rentals
                   </Link>
                 </div>
                 
-                {/* Professional Stats - Better Positioned */}
+                {/* Perfect Stats */}
                 <div style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(3, 1fr)',
-                  gap: '40px',
-                  paddingTop: '40px',
+                  gap: '32px',
+                  paddingTop: '32px',
                   borderTop: '1px solid rgba(255, 255, 255, 0.2)',
-                  maxWidth: '500px'
+                  maxWidth: '450px'
                 }}>
                   {[
                     { number: '10K+', label: 'Items Listed' },
@@ -138,14 +137,14 @@ const Home = () => {
                   ].map((stat, index) => (
                     <div key={index}>
                       <div style={{
-                        fontSize: '2.6rem',
+                        fontSize: '2rem',
                         fontWeight: 900,
                         color: 'white',
-                        marginBottom: '8px',
+                        marginBottom: '6px',
                         lineHeight: '1'
                       }}>{stat.number}</div>
                       <div style={{
-                        fontSize: '0.9rem',
+                        fontSize: '0.8rem',
                         color: 'rgba(255, 255, 255, 0.8)',
                         fontWeight: 500,
                         textTransform: 'uppercase',
@@ -157,81 +156,81 @@ const Home = () => {
               </div>
             </Col>
             
-            {/* RIGHT IMAGE - PROFESSIONAL SIZING */}
+            {/* RIGHT IMAGE - PERFECT SIZING */}
             <Col lg={4} md={5}>
               <div style={{
                 position: 'relative',
                 maxWidth: '100%',
                 margin: '0 auto'
               }}>
-                {/* PROFESSIONAL RENTAL PLATFORM IMAGE */}
+                {/* PROFESSIONAL IMAGE */}
                 <div style={{
                   position: 'relative',
-                  borderRadius: '24px',
+                  borderRadius: '20px',
                   overflow: 'hidden',
-                  boxShadow: '0 30px 70px rgba(0, 0, 0, 0.3)'
+                  boxShadow: '0 20px 50px rgba(0, 0, 0, 0.25)'
                 }}>
                   <img 
                     src="https://images.unsplash.com/photo-1556741504-9cb8d5b90d45?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
-                    alt="Professional rental platform showing modern workspace and collaboration" 
+                    alt="Professional rental platform workspace" 
                     style={{
                       width: '100%',
-                      height: '480px',
+                      height: '400px',
                       objectFit: 'cover',
                       display: 'block'
                     }}
                   />
                 </div>
                 
-                {/* Professional Floating Cards */}
+                {/* Perfect Floating Cards */}
                 <div style={{
                   position: 'absolute',
-                  top: '25px',
-                  right: '25px',
+                  top: '20px',
+                  right: '20px',
                   background: 'rgba(255, 255, 255, 0.95)',
-                  backdropFilter: 'blur(20px)',
-                  borderRadius: '16px',
-                  padding: '16px 20px',
-                  boxShadow: '0 12px 32px rgba(0, 0, 0, 0.15)',
-                  animation: 'float 8s ease-in-out infinite'
+                  backdropFilter: 'blur(15px)',
+                  borderRadius: '12px',
+                  padding: '12px 16px',
+                  boxShadow: '0 8px 25px rgba(0, 0, 0, 0.15)',
+                  animation: 'float 6s ease-in-out infinite'
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <div style={{
                       background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                      borderRadius: '10px',
-                      padding: '8px'
+                      borderRadius: '8px',
+                      padding: '6px'
                     }}>
-                      <span style={{ fontSize: '16px', color: 'white' }}>🏆</span>
+                      <span style={{ fontSize: '12px', color: 'white' }}>🏆</span>
                     </div>
                     <div>
-                      <div style={{ fontWeight: 700, color: '#1e293b', fontSize: '0.9rem' }}>Premium Quality</div>
-                      <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Verified & Trusted</div>
+                      <div style={{ fontWeight: 700, color: '#1e293b', fontSize: '0.8rem' }}>Premium Quality</div>
+                      <div style={{ fontSize: '0.7rem', color: '#64748b' }}>Verified & Trusted</div>
                     </div>
                   </div>
                 </div>
                 
                 <div style={{
                   position: 'absolute',
-                  bottom: '25px',
-                  left: '25px',
+                  bottom: '20px',
+                  left: '20px',
                   background: 'rgba(255, 255, 255, 0.95)',
-                  backdropFilter: 'blur(20px)',
-                  borderRadius: '16px',
-                  padding: '16px 20px',
-                  boxShadow: '0 12px 32px rgba(0, 0, 0, 0.15)',
-                  animation: 'float 8s ease-in-out infinite 4s'
+                  backdropFilter: 'blur(15px)',
+                  borderRadius: '12px',
+                  padding: '12px 16px',
+                  boxShadow: '0 8px 25px rgba(0, 0, 0, 0.15)',
+                  animation: 'float 6s ease-in-out infinite 3s'
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <div style={{
                       background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                      borderRadius: '10px',
-                      padding: '8px'
+                      borderRadius: '8px',
+                      padding: '6px'
                     }}>
-                      <span style={{ fontSize: '16px', color: 'white' }}>⚡</span>
+                      <span style={{ fontSize: '12px', color: 'white' }}>⚡</span>
                     </div>
                     <div>
-                      <div style={{ fontWeight: 700, color: '#1e293b', fontSize: '0.9rem' }}>Instant Booking</div>
-                      <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Book in Seconds</div>
+                      <div style={{ fontWeight: 700, color: '#1e293b', fontSize: '0.8rem' }}>Instant Booking</div>
+                      <div style={{ fontSize: '0.7rem', color: '#64748b' }}>Book in Seconds</div>
                     </div>
                   </div>
                 </div>
@@ -241,38 +240,38 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* PERFECTLY ALIGNED CATEGORIES SECTION */}
+      {/* PERFECT RENTAL CATEGORIES - PARKING ONLY */}
       <section style={{
-        padding: '100px 0',
+        padding: '60px 0',
         background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)'
       }}>
         <Container>
-          <div style={{ textAlign: 'center', marginBottom: '80px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
             <div style={{
               display: 'inline-block',
               background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              borderRadius: '25px',
-              padding: '8px 20px',
+              borderRadius: '20px',
+              padding: '6px 16px',
               color: 'white',
-              fontSize: '0.8rem',
+              fontSize: '0.75rem',
               fontWeight: 700,
               letterSpacing: '0.5px',
-              marginBottom: '24px',
+              marginBottom: '20px',
               textTransform: 'uppercase'
             }}>
               RENTAL CATEGORIES
             </div>
             <h2 style={{
-              fontSize: '3.5rem',
+              fontSize: '2.8rem',
               fontWeight: 900,
               color: '#1e293b',
-              marginBottom: '24px',
+              marginBottom: '16px',
               lineHeight: '1.2'
             }}>What Would You Like to Rent?</h2>
             <p style={{
-              fontSize: '1.3rem',
+              fontSize: '1.1rem',
               color: '#64748b',
-              maxWidth: '650px',
+              maxWidth: '500px',
               margin: '0 auto',
               lineHeight: '1.6'
             }}>
@@ -280,136 +279,109 @@ const Home = () => {
             </p>
           </div>
           
-          <Row>
-            {[
-              { 
-                icon: '🏠', 
-                title: 'Properties', 
-                desc: 'Houses, apartments, commercial spaces and office buildings', 
-                gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-              },
-              { 
-                icon: '🎪', 
-                title: 'Event Venues', 
-                desc: 'Wedding halls, conference rooms, studios and event spaces', 
-                gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
-              },
-              { 
-                icon: '🌿', 
-                title: 'Turfs', 
-                desc: 'Sports turfs, football fields, cricket grounds and recreational areas', 
-                gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
-              },
-              { 
-                icon: '🅿️', 
-                title: 'Parking & Turfs', 
-                desc: 'Parking spots, sports turfs, playgrounds and recreational spaces', 
-                gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)'
-              }
-            ].map((category, index) => (
-              <Col lg={3} md={6} className="mb-5" key={index}>
+          <Row className="justify-content-center">
+            <Col lg={3} md={4} className="mb-4">
+              <div style={{
+                background: 'white',
+                borderRadius: '20px',
+                padding: '32px 24px',
+                textAlign: 'center',
+                boxShadow: '0 8px 25px rgba(0, 0, 0, 0.08)',
+                border: '1px solid #f1f5f9',
+                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                cursor: 'pointer',
+                height: '280px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                position: 'relative',
+                overflow: 'hidden'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
+                e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.15)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.08)';
+              }}>
+                {/* Gradient Top Border */}
                 <div style={{
-                  background: 'white',
-                  borderRadius: '24px',
-                  padding: '48px 32px',
-                  textAlign: 'center',
-                  boxShadow: '0 12px 40px rgba(0, 0, 0, 0.08)',
-                  border: '1px solid #f1f5f9',
-                  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                  cursor: 'pointer',
-                  height: '450px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-12px) scale(1.02)';
-                  e.currentTarget.style.boxShadow = '0 25px 60px rgba(0, 0, 0, 0.15)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.08)';
-                }}>
-                  {/* Gradient Top Border */}
-                  <div style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    height: '6px',
-                    background: category.gradient
-                  }}></div>
-                  
-                  <div>
-                    <div style={{ 
-                      fontSize: '5rem', 
-                      marginBottom: '32px',
-                      filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.1))'
-                    }}>{category.icon}</div>
-                    <h3 style={{
-                      fontSize: '1.8rem',
-                      fontWeight: 800,
-                      color: '#1e293b',
-                      marginBottom: '20px'
-                    }}>{category.title}</h3>
-                    <p style={{
-                      color: '#64748b',
-                      fontSize: '1.1rem',
-                      lineHeight: '1.6',
-                      marginBottom: '0'
-                    }}>{category.desc}</p>
-                  </div>
-                  
-                  {/* PERFECTLY ALIGNED EXPLORE BUTTON */}
-                  <div style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    paddingTop: '24px'
-                  }}>
-                    <Link 
-                      to="/find-property"
-                      style={{
-                        background: category.gradient,
-                        color: 'white',
-                        padding: '16px 36px',
-                        borderRadius: '30px',
-                        fontSize: '1.1rem',
-                        fontWeight: 700,
-                        textDecoration: 'none',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '12px',
-                        boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
-                        transition: 'all 0.3s ease',
-                        minWidth: '160px'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.target.style.transform = 'translateY(-3px)';
-                        e.target.style.boxShadow = '0 12px 32px rgba(0, 0, 0, 0.2)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.target.style.transform = 'translateY(0)';
-                        e.target.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.15)';
-                      }}
-                    >
-                      Explore
-                      <span style={{ fontSize: '1.3rem' }}>→</span>
-                    </Link>
-                  </div>
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: '4px',
+                  background: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)'
+                }}></div>
+                
+                <div>
+                  <div style={{ 
+                    fontSize: '3.5rem', 
+                    marginBottom: '20px',
+                    filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))'
+                  }}>🅿️</div>
+                  <h3 style={{
+                    fontSize: '1.4rem',
+                    fontWeight: 800,
+                    color: '#1e293b',
+                    marginBottom: '12px'
+                  }}>Parking</h3>
+                  <p style={{
+                    color: '#64748b',
+                    fontSize: '0.95rem',
+                    lineHeight: '1.5',
+                    marginBottom: '0'
+                  }}>Parking spots, garages, and secure parking spaces for your convenience</p>
                 </div>
-              </Col>
-            ))}
+                
+                {/* EXPLORE BUTTON */}
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  paddingTop: '16px'
+                }}>
+                  <Link 
+                    to="/find-property"
+                    style={{
+                      background: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+                      color: 'white',
+                      padding: '10px 24px',
+                      borderRadius: '25px',
+                      fontSize: '0.9rem',
+                      fontWeight: 700,
+                      textDecoration: 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '8px',
+                      boxShadow: '0 6px 18px rgba(0, 0, 0, 0.15)',
+                      transition: 'all 0.3s ease',
+                      minWidth: '120px'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.transform = 'translateY(-2px)';
+                      e.target.style.boxShadow = '0 8px 22px rgba(0, 0, 0, 0.2)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.transform = 'translateY(0)';
+                      e.target.style.boxShadow = '0 6px 18px rgba(0, 0, 0, 0.15)';
+                    }}
+                  >
+                    Explore
+                    <span style={{ fontSize: '1rem' }}>→</span>
+                  </Link>
+                </div>
+              </div>
+            </Col>
           </Row>
         </Container>
       </section>
 
-      {/* HOW IT WORKS SECTION - WITH STEP NUMBERS */}
+      {/* PERFECT HOW IT WORKS SECTION */}
       <section style={{
-        padding: '100px 0',
+        padding: '60px 0',
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         position: 'relative',
         overflow: 'hidden'
@@ -418,25 +390,25 @@ const Home = () => {
           position: 'absolute',
           top: '-20%',
           left: '-10%',
-          width: '400px',
-          height: '400px',
+          width: '300px',
+          height: '300px',
           background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
           borderRadius: '50%',
-          filter: 'blur(80px)'
+          filter: 'blur(60px)'
         }}></div>
 
         <Container style={{ position: 'relative', zIndex: 2 }}>
-          <div style={{ textAlign: 'center', marginBottom: '80px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
             <h2 style={{
-              fontSize: '3.5rem',
+              fontSize: '2.8rem',
               fontWeight: 900,
               color: 'white',
-              marginBottom: '24px'
+              marginBottom: '16px'
             }}>How It Works</h2>
             <p style={{
-              fontSize: '1.3rem',
+              fontSize: '1.1rem',
               color: 'rgba(255, 255, 255, 0.9)',
-              maxWidth: '650px',
+              maxWidth: '500px',
               margin: '0 auto'
             }}>
               Simple steps to find and rent anything you need, anywhere in the world
@@ -448,89 +420,89 @@ const Home = () => {
               { 
                 step: '01',
                 title: 'Search & Discover', 
-                desc: 'Browse through thousands of verified listings in your area with advanced filters and smart recommendations powered by AI', 
+                desc: 'Browse through thousands of verified listings with advanced filters and smart recommendations', 
                 icon: '🔍'
               },
               { 
                 step: '02',
                 title: 'Compare & Choose', 
-                desc: 'Compare prices, features, and reviews to find the perfect match with our intelligent comparison tools and detailed analytics', 
+                desc: 'Compare prices, features, and reviews to find the perfect match with intelligent tools', 
                 icon: '⚖️'
               },
               { 
                 step: '03',
                 title: 'Book & Enjoy', 
-                desc: 'Secure booking with instant confirmation, flexible payment options and 24/7 customer support for peace of mind', 
+                desc: 'Secure booking with instant confirmation, flexible payment and 24/7 customer support', 
                 icon: '✨'
               }
             ].map((item, index) => (
-              <Col lg={4} key={index} className="mb-5">
+              <Col lg={4} key={index} className="mb-4">
                 <div style={{
                   background: 'rgba(255, 255, 255, 0.95)',
                   backdropFilter: 'blur(20px)',
-                  borderRadius: '24px',
-                  padding: '56px 36px',
+                  borderRadius: '20px',
+                  padding: '36px 28px',
                   textAlign: 'center',
-                  boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15)',
+                  boxShadow: '0 15px 40px rgba(0, 0, 0, 0.15)',
                   border: '1px solid rgba(255, 255, 255, 0.2)',
                   transition: 'all 0.3s ease',
-                  height: '480px',
+                  height: '320px',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
                   position: 'relative'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-8px)';
-                  e.currentTarget.style.boxShadow = '0 30px 80px rgba(0, 0, 0, 0.2)';
+                  e.currentTarget.style.transform = 'translateY(-6px)';
+                  e.currentTarget.style.boxShadow = '0 20px 50px rgba(0, 0, 0, 0.2)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.15)';
+                  e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.15)';
                 }}>
                   
                   {/* STEP NUMBER */}
                   <div style={{
                     position: 'absolute',
-                    top: '-18px',
-                    left: '36px',
+                    top: '-12px',
+                    left: '28px',
                     background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                     color: 'white',
-                    width: '48px',
-                    height: '48px',
+                    width: '32px',
+                    height: '32px',
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: '1rem',
+                    fontSize: '0.8rem',
                     fontWeight: 900,
-                    boxShadow: '0 6px 20px rgba(102, 126, 234, 0.4)'
+                    boxShadow: '0 4px 12px rgba(102, 126, 234, 0.4)'
                   }}>{item.step}</div>
                   
                   <div style={{
-                    width: '120px',
-                    height: '120px',
+                    width: '80px',
+                    height: '80px',
                     background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    margin: '0 auto 36px auto',
-                    fontSize: '3.5rem',
-                    boxShadow: '0 15px 40px rgba(102, 126, 234, 0.3)'
+                    margin: '0 auto 24px auto',
+                    fontSize: '2.5rem',
+                    boxShadow: '0 12px 30px rgba(102, 126, 234, 0.3)'
                   }}>{item.icon}</div>
                   
                   <h3 style={{
-                    fontSize: '2rem',
+                    fontSize: '1.5rem',
                     fontWeight: 800,
                     color: '#1e293b',
-                    marginBottom: '24px'
+                    marginBottom: '16px'
                   }}>{item.title}</h3>
                   
                   <p style={{
                     color: '#64748b',
-                    fontSize: '1.2rem',
-                    lineHeight: '1.7'
+                    fontSize: '0.95rem',
+                    lineHeight: '1.6'
                   }}>{item.desc}</p>
                 </div>
               </Col>
@@ -539,37 +511,37 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* PROFESSIONAL FEATURED PROPERTIES - ALL BUTTONS VISIBLE */}
+      {/* PERFECT FEATURED PROPERTIES */}
       <section style={{
-        padding: '100px 0',
+        padding: '60px 0',
         background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)'
       }}>
         <Container>
-          <div style={{ textAlign: 'center', marginBottom: '80px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
             <div style={{
               display: 'inline-block',
               background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              borderRadius: '25px',
-              padding: '8px 20px',
+              borderRadius: '20px',
+              padding: '6px 16px',
               color: 'white',
-              fontSize: '0.8rem',
+              fontSize: '0.75rem',
               fontWeight: 700,
               letterSpacing: '0.5px',
-              marginBottom: '24px',
+              marginBottom: '20px',
               textTransform: 'uppercase'
             }}>
               FEATURED LISTINGS
             </div>
             <h2 style={{
-              fontSize: '3.5rem',
+              fontSize: '2.8rem',
               fontWeight: 900,
               color: '#1e293b',
-              marginBottom: '24px'
+              marginBottom: '16px'
             }}>Featured Properties</h2>
             <p style={{
-              fontSize: '1.3rem',
+              fontSize: '1.1rem',
               color: '#64748b',
-              maxWidth: '650px',
+              maxWidth: '500px',
               margin: '0 auto'
             }}>
               Handpicked premium properties from our expert team
@@ -597,25 +569,25 @@ const Home = () => {
                 gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
               }
             ].map((property, index) => (
-              <Col lg={6} className="mb-5" key={index}>
+              <Col lg={6} className="mb-4" key={index}>
                 <div style={{
                   background: 'white',
-                  borderRadius: '24px',
+                  borderRadius: '20px',
                   overflow: 'hidden',
-                  boxShadow: '0 12px 40px rgba(0, 0, 0, 0.08)',
+                  boxShadow: '0 8px 25px rgba(0, 0, 0, 0.08)',
                   border: '1px solid #f1f5f9',
                   transition: 'all 0.3s ease',
-                  height: '600px'
+                  height: '420px'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-6px)';
-                  e.currentTarget.style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.12)';
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.12)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.08)';
+                  e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.08)';
                 }}>
-                  <div style={{ position: 'relative', height: '320px', overflow: 'hidden' }}>
+                  <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
                     <img 
                       src={property.image}
                       alt={property.title}
@@ -627,56 +599,56 @@ const Home = () => {
                     />
                     <div style={{
                       position: 'absolute',
-                      top: '20px',
-                      left: '20px',
+                      top: '16px',
+                      left: '16px',
                       background: property.gradient,
                       color: 'white',
-                      padding: '10px 20px',
-                      borderRadius: '20px',
-                      fontSize: '0.85rem',
+                      padding: '6px 12px',
+                      borderRadius: '16px',
+                      fontSize: '0.75rem',
                       fontWeight: 700,
-                      boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)'
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
                     }}>
                       {property.type}
                     </div>
                   </div>
                   
-                  <div style={{ padding: '36px' }}>
+                  <div style={{ padding: '24px' }}>
                     <div style={{
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '8px',
+                      gap: '6px',
                       color: '#64748b',
-                      fontSize: '0.95rem',
-                      marginBottom: '16px'
+                      fontSize: '0.85rem',
+                      marginBottom: '8px'
                     }}>
                       <span>📍</span>
                       {property.location}
                     </div>
                     
                     <h3 style={{
-                      fontSize: '1.8rem',
+                      fontSize: '1.4rem',
                       fontWeight: 800,
                       color: '#1e293b',
-                      marginBottom: '16px'
+                      marginBottom: '8px'
                     }}>{property.title}</h3>
                     
                     <p style={{
                       color: '#64748b',
-                      fontSize: '1.1rem',
-                      lineHeight: '1.6',
-                      marginBottom: '24px'
-                    }}>Spacious luxury {property.title.toLowerCase()} with premium amenities and modern design perfect for families and professionals</p>
+                      fontSize: '0.9rem',
+                      lineHeight: '1.5',
+                      marginBottom: '16px'
+                    }}>Spacious luxury {property.title.toLowerCase()} with premium amenities and modern design</p>
                     
                     <div style={{
                       display: 'flex',
-                      gap: '24px',
-                      marginBottom: '32px',
-                      fontSize: '0.95rem',
+                      gap: '16px',
+                      marginBottom: '20px',
+                      fontSize: '0.8rem',
                       color: '#64748b'
                     }}>
                       {property.features.map((feature, idx) => (
-                        <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                           <span>{idx === 0 ? '🛏️' : '📐'}</span>
                           {feature}
                         </div>
@@ -689,19 +661,19 @@ const Home = () => {
                       alignItems: 'center'
                     }}>
                       <div style={{
-                        fontSize: '2rem',
+                        fontSize: '1.6rem',
                         fontWeight: 900,
                         color: '#10b981'
                       }}>{property.price}</div>
                       
-                      <div style={{ display: 'flex', gap: '12px' }}>
+                      <div style={{ display: 'flex', gap: '8px' }}>
                         <button style={{
                           background: 'transparent',
-                          border: '2px solid #e5e7eb',
+                          border: '1px solid #e5e7eb',
                           color: '#64748b',
-                          padding: '12px 24px',
-                          borderRadius: '12px',
-                          fontSize: '0.95rem',
+                          padding: '8px 16px',
+                          borderRadius: '10px',
+                          fontSize: '0.8rem',
                           fontWeight: 600,
                           cursor: 'pointer',
                           transition: 'all 0.2s ease'
@@ -719,21 +691,21 @@ const Home = () => {
                           background: property.gradient,
                           border: 'none',
                           color: 'white',
-                          padding: '12px 24px',
-                          borderRadius: '12px',
-                          fontSize: '0.95rem',
+                          padding: '8px 16px',
+                          borderRadius: '10px',
+                          fontSize: '0.8rem',
                           fontWeight: 700,
                           cursor: 'pointer',
-                          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.15)',
+                          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
                           transition: 'all 0.2s ease'
                         }}
                         onMouseEnter={(e) => {
-                          e.target.style.transform = 'translateY(-2px)';
-                          e.target.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.2)';
+                          e.target.style.transform = 'translateY(-1px)';
+                          e.target.style.boxShadow = '0 6px 18px rgba(0, 0, 0, 0.2)';
                         }}
                         onMouseLeave={(e) => {
                           e.target.style.transform = 'translateY(0)';
-                          e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.15)';
+                          e.target.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
                         }}>Book Now</button>
                       </div>
                     </div>
@@ -745,49 +717,49 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* PROFESSIONAL CTA SECTION */}
+      {/* PERFECT CTA SECTION */}
       <section style={{
-        padding: '100px 0',
+        padding: '60px 0',
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         textAlign: 'center'
       }}>
         <Container>
-          <div style={{ maxWidth: '750px', margin: '0 auto' }}>
+          <div style={{ maxWidth: '600px', margin: '0 auto' }}>
             <h2 style={{
-              fontSize: '3.5rem',
+              fontSize: '2.8rem',
               fontWeight: 900,
               color: 'white',
-              marginBottom: '28px'
+              marginBottom: '20px'
             }}>Ready to Start Renting?</h2>
             
             <p style={{
-              fontSize: '1.3rem',
+              fontSize: '1.1rem',
               color: 'rgba(255, 255, 255, 0.9)',
-              marginBottom: '48px',
+              marginBottom: '32px',
               lineHeight: '1.6'
-            }}>Join thousands of renters and owners making seamless transactions worldwide with our trusted platform</p>
+            }}>Join thousands of renters and owners making seamless transactions worldwide</p>
             
             <Link 
               to="/find-property" 
               style={{
                 background: 'rgba(255, 255, 255, 0.95)',
                 color: '#667eea',
-                padding: '20px 52px',
-                borderRadius: '16px',
+                padding: '16px 40px',
+                borderRadius: '12px',
                 fontWeight: 800,
-                fontSize: '1.3rem',
+                fontSize: '1.1rem',
                 textDecoration: 'none',
                 display: 'inline-block',
-                boxShadow: '0 12px 40px rgba(0, 0, 0, 0.2)',
+                boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)',
                 transition: 'all 0.3s ease'
               }}
               onMouseEnter={(e) => {
-                e.target.style.transform = 'translateY(-3px)';
-                e.target.style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.25)';
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.boxShadow = '0 12px 35px rgba(0, 0, 0, 0.25)';
               }}
               onMouseLeave={(e) => {
                 e.target.style.transform = 'translateY(0)';
-                e.target.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.2)';
+                e.target.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.2)';
               }}
             >
               Start Your Search
@@ -800,31 +772,31 @@ const Home = () => {
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
+          50% { transform: translateY(-15px); }
         }
         
         @media (max-width: 768px) {
           .hero-stats {
             grid-template-columns: repeat(2, 1fr) !important;
-            gap: 30px !important;
+            gap: 20px !important;
           }
           
           h1 {
-            font-size: 3rem !important;
+            font-size: 2.8rem !important;
           }
           
           h2 {
-            font-size: 2.8rem !important;
+            font-size: 2.2rem !important;
           }
         }
         
         @media (max-width: 480px) {
           h1 {
-            font-size: 2.5rem !important;
+            font-size: 2.2rem !important;
           }
           
           h2 {
-            font-size: 2.2rem !important;
+            font-size: 1.8rem !important;
           }
           
           .hero-stats {
