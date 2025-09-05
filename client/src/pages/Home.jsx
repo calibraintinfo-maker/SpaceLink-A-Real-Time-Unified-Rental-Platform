@@ -8,7 +8,7 @@ const Home = () => {
 
   return (
     <>
-      {/* HERO SECTION - NORMAL SIZE */}
+      {/* HERO SECTION - FIXED STATS SPACING */}
       <section style={{
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         minHeight: '85vh',
@@ -33,7 +33,11 @@ const Home = () => {
         <Container>
           <Row className="align-items-center" style={{ minHeight: '70vh' }}>
             <Col lg={6} md={6} className="mb-4 mb-lg-0">
-              <div style={{ maxWidth: '100%', paddingLeft: '0.5rem', paddingRight: '2rem' }}>
+              <div style={{ 
+                maxWidth: '100%', 
+                paddingLeft: '1rem',
+                paddingRight: '3rem' // Added more right padding
+              }}>
                 <div style={{
                   display: 'inline-block',
                   background: 'rgba(255, 255, 255, 0.15)',
@@ -116,14 +120,17 @@ const Home = () => {
                   </Link>
                 </div>
                 
+                {/* FIXED STATS - PROPER SPACING FROM EDGES */}
                 <div style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(3, 1fr)',
-                  gap: '32px',
-                  paddingTop: '32px',
-                  paddingBottom: '32px',
+                  gap: '40px', // Increased gap
+                  paddingTop: '40px',
+                  paddingBottom: '40px',
+                  paddingLeft: '20px', // Added left padding
+                  paddingRight: '60px', // Added right padding  
                   borderTop: '1px solid rgba(255, 255, 255, 0.2)',
-                  maxWidth: '420px',
+                  maxWidth: '500px', // Increased max width
                   textAlign: 'center'
                 }}>
                   {[
@@ -304,18 +311,18 @@ const Home = () => {
                 <div style={{
                   background: 'white',
                   borderRadius: '20px',
-                  padding: '32px 24px',
+                  padding: '32px 24px 24px 24px', // Adjusted padding
                   textAlign: 'center',
                   boxShadow: '0 8px 25px rgba(0, 0, 0, 0.08)',
                   border: '1px solid #f1f5f9',
                   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                   cursor: 'pointer',
-                  height: '320px',
+                  minHeight: '350px', // Fixed minimum height
                   display: 'flex',
                   flexDirection: 'column',
-                  justifyContent: 'space-between',
+                  justifyContent: 'space-between', // KEY: This pushes button to bottom
                   position: 'relative',
-                  overflow: 'hidden'
+                  overflow: 'visible' // Changed to visible
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
@@ -334,6 +341,7 @@ const Home = () => {
                     background: category.gradient
                   }}></div>
                   
+                  {/* Content wrapper */}
                   <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                     <div style={{ 
                       fontSize: '3.5rem', 
@@ -356,17 +364,16 @@ const Home = () => {
                   
                   {/* FIXED BUTTON - FULLY VISIBLE */}
                   <div style={{
-                    paddingTop: '20px',
+                    paddingTop: '24px',
                     display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'flex-end'
+                    justifyContent: 'center'
                   }}>
                     <Link 
                       to="/find-property"
                       style={{
                         background: category.gradient,
                         color: 'white',
-                        padding: '12px 24px', // Normal padding
+                        padding: '14px 28px', // Increased padding
                         borderRadius: '25px',
                         fontSize: '0.9rem',
                         fontWeight: 700,
@@ -377,10 +384,9 @@ const Home = () => {
                         gap: '8px',
                         boxShadow: '0 6px 18px rgba(0, 0, 0, 0.15)',
                         transition: 'all 0.3s ease',
-                        minWidth: '140px', // Ensure button width
-                        width: '140px',
-                        whiteSpace: 'nowrap', // Prevent text wrap
-                        overflow: 'visible' // Ensure text is visible
+                        minWidth: '150px', // Increased min width
+                        whiteSpace: 'nowrap', // Prevent text wrapping
+                        overflow: 'visible' // Ensure visibility
                       }}
                       onMouseEnter={(e) => {
                         e.target.style.transform = 'translateY(-2px)';
@@ -402,7 +408,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* HOW IT WORKS SECTION - NORMAL SIZE */}
+      {/* HOW IT WORKS SECTION */}
       <section style={{
         padding: '60px 0',
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -533,7 +539,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* FEATURED PROPERTIES - NORMAL SIZE WITH BUTTONS */}
+      {/* FEATURED PROPERTIES - FIXED BUTTONS VISIBILITY */}
       <section style={{
         padding: '60px 0',
         background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)'
@@ -599,7 +605,7 @@ const Home = () => {
                   boxShadow: '0 8px 25px rgba(0, 0, 0, 0.08)',
                   border: '1px solid #f1f5f9',
                   transition: 'all 0.3s ease',
-                  height: '450px', // Normal size
+                  minHeight: '500px', // Increased height to ensure buttons show
                   display: 'flex',
                   flexDirection: 'column'
                 }}
@@ -611,7 +617,8 @@ const Home = () => {
                   e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.08)';
                 }}>
-                  <div style={{ position: 'relative', height: '220px', overflow: 'hidden', flexShrink: 0 }}>
+                  {/* Image section */}
+                  <div style={{ position: 'relative', height: '240px', overflow: 'hidden', flexShrink: 0 }}>
                     <img 
                       src={property.image}
                       alt={property.title}
@@ -637,13 +644,15 @@ const Home = () => {
                     </div>
                   </div>
                   
+                  {/* Content section - Using flexbox for proper spacing */}
                   <div style={{ 
-                    padding: '26px', // Normal padding
+                    padding: '28px',
                     flex: 1, 
                     display: 'flex', 
                     flexDirection: 'column',
-                    justifyContent: 'space-between' 
+                    justifyContent: 'space-between' // KEY: This ensures proper spacing
                   }}>
+                    {/* Content wrapper */}
                     <div>
                       <div style={{
                         display: 'flex',
@@ -651,7 +660,7 @@ const Home = () => {
                         gap: '6px',
                         color: '#64748b',
                         fontSize: '0.85rem',
-                        marginBottom: '10px'
+                        marginBottom: '12px'
                       }}>
                         <span>📍</span>
                         {property.location}
@@ -661,20 +670,20 @@ const Home = () => {
                         fontSize: '1.4rem',
                         fontWeight: 800,
                         color: '#1e293b',
-                        marginBottom: '10px'
+                        marginBottom: '12px'
                       }}>{property.title}</h3>
                       
                       <p style={{
                         color: '#64748b',
                         fontSize: '0.9rem',
                         lineHeight: '1.5',
-                        marginBottom: '16px'
-                      }}>Spacious luxury {property.title.toLowerCase()} with premium amenities and modern design</p>
+                        marginBottom: '18px'
+                      }}>Spacious luxury {property.title.toLowerCase()} with premium amenities and modern design perfect for families</p>
                       
                       <div style={{
                         display: 'flex',
                         gap: '16px',
-                        marginBottom: '20px',
+                        marginBottom: '24px',
                         fontSize: '0.8rem',
                         color: '#64748b'
                       }}>
@@ -687,33 +696,40 @@ const Home = () => {
                       </div>
                     </div>
                     
-                    {/* BUTTONS SECTION - PRICE LEFT, BUTTONS RIGHT */}
+                    {/* BUTTONS SECTION - GUARANTEED VISIBILITY */}
                     <div style={{
                       display: 'flex',
                       justifyContent: 'space-between',
                       alignItems: 'center',
-                      paddingTop: '16px',
-                      borderTop: '1px solid #f1f5f9'
+                      paddingTop: '20px',
+                      borderTop: '2px solid #f1f5f9', // Stronger divider
+                      marginTop: 'auto' // Push to bottom
                     }}>
+                      {/* Price on left */}
                       <div style={{
                         fontSize: '1.5rem',
                         fontWeight: 900,
                         color: '#10b981'
                       }}>{property.price}</div>
                       
-                      {/* BUTTONS - BOTH VISIBLE */}
-                      <div style={{ display: 'flex', gap: '8px' }}>
+                      {/* Buttons on right - BOTH VISIBLE */}
+                      <div style={{ 
+                        display: 'flex', 
+                        gap: '10px',
+                        flexShrink: 0 // Prevent shrinking
+                      }}>
                         <button style={{
                           background: 'transparent',
-                          border: '1.5px solid #e5e7eb',
+                          border: '2px solid #e5e7eb',
                           color: '#64748b',
-                          padding: '8px 14px',
+                          padding: '10px 16px',
                           borderRadius: '8px',
                           fontSize: '0.8rem',
                           fontWeight: 600,
                           cursor: 'pointer',
                           transition: 'all 0.3s ease',
-                          whiteSpace: 'nowrap'
+                          whiteSpace: 'nowrap',
+                          minWidth: '110px' // Ensure minimum width
                         }}
                         onMouseEnter={(e) => {
                           e.target.style.borderColor = '#667eea';
@@ -730,14 +746,15 @@ const Home = () => {
                           background: property.gradient,
                           border: 'none',
                           color: 'white',
-                          padding: '8px 14px',
+                          padding: '10px 16px',
                           borderRadius: '8px',
                           fontSize: '0.8rem',
                           fontWeight: 700,
                           cursor: 'pointer',
                           boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
                           transition: 'all 0.3s ease',
-                          whiteSpace: 'nowrap'
+                          whiteSpace: 'nowrap',
+                          minWidth: '110px' // Ensure minimum width
                         }}
                         onMouseEnter={(e) => {
                           e.target.style.transform = 'translateY(-1px)';
