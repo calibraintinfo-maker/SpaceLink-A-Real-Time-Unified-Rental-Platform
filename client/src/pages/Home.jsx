@@ -8,7 +8,7 @@ const Home = () => {
 
   return (
     <>
-      {/* PROFESSIONAL HERO SECTION WITH IMAGES */}
+      {/* PERFECT HERO SECTION - CONTENT MOVED LEFT */}
       <section style={{
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         minHeight: '85vh',
@@ -33,9 +33,9 @@ const Home = () => {
 
         <Container>
           <Row className="align-items-center" style={{ minHeight: '75vh' }}>
-            {/* LEFT CONTENT - PROFESSIONAL SIZING */}
+            {/* LEFT CONTENT - MOVED LEFT WITH BETTER SPACING */}
             <Col lg={6} md={6} className="mb-4 mb-lg-0">
-              <div style={{ maxWidth: '100%', paddingRight: '2rem' }}>
+              <div style={{ maxWidth: '100%', paddingLeft: '1rem' }}>
                 {/* Professional Badge */}
                 <div style={{
                   display: 'inline-block',
@@ -64,7 +64,7 @@ const Home = () => {
                   marginBottom: '20px',
                   letterSpacing: '-0.02em',
                   color: 'white',
-                  maxWidth: '90%'
+                  maxWidth: '85%'
                 }}>
                   Rent Anything,
                   <br />
@@ -82,7 +82,7 @@ const Home = () => {
                   color: 'rgba(255, 255, 255, 0.9)',
                   lineHeight: '1.6',
                   marginBottom: '28px',
-                  maxWidth: '85%'
+                  maxWidth: '80%'
                 }}>
                   From properties to vehicles, venues to parking spaces - SpaceLink connects you with 
                   <strong style={{ color: 'white' }}> exceptional rentals worldwide</strong>. 
@@ -121,14 +121,14 @@ const Home = () => {
                   </Link>
                 </div>
                 
-                {/* Perfect Stats */}
+                {/* Perfect Stats - MOVED LEFT & BETTER SPACING */}
                 <div style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(3, 1fr)',
-                  gap: '32px',
+                  gap: '28px',
                   paddingTop: '32px',
                   borderTop: '1px solid rgba(255, 255, 255, 0.2)',
-                  maxWidth: '450px'
+                  maxWidth: '380px'
                 }}>
                   {[
                     { number: '10K+', label: 'Items Listed' },
@@ -156,7 +156,7 @@ const Home = () => {
               </div>
             </Col>
             
-            {/* RIGHT IMAGE - PROFESSIONAL WITH IMAGES */}
+            {/* RIGHT IMAGE - PERFECT SIZING MAINTAINED */}
             <Col lg={6} md={6}>
               <div style={{
                 position: 'relative',
@@ -240,7 +240,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* ALL RENTAL CATEGORIES - BROUGHT BACK */}
+      {/* ALL CATEGORIES - EXPLORE BUTTONS PERFECTLY ALIGNED */}
       <section style={{
         padding: '60px 0',
         background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)'
@@ -361,7 +361,7 @@ const Home = () => {
                     }}>{category.desc}</p>
                   </div>
                   
-                  {/* PERFECTLY ALIGNED EXPLORE BUTTON */}
+                  {/* PERFECTLY ALIGNED EXPLORE BUTTON - ALL SAME */}
                   <div style={{
                     display: 'flex',
                     justifyContent: 'center',
@@ -384,7 +384,8 @@ const Home = () => {
                         gap: '8px',
                         boxShadow: '0 6px 18px rgba(0, 0, 0, 0.15)',
                         transition: 'all 0.3s ease',
-                        minWidth: '120px'
+                        minWidth: '140px',
+                        width: '140px'
                       }}
                       onMouseEnter={(e) => {
                         e.target.style.transform = 'translateY(-2px)';
@@ -406,7 +407,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* PERFECT HOW IT WORKS SECTION - KEPT AS IS */}
+      {/* PERFECT HOW IT WORKS SECTION - SIZE MAINTAINED */}
       <section style={{
         padding: '60px 0',
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -538,7 +539,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* FIXED FEATURED PROPERTIES - NOT CHOPPED */}
+      {/* PERFECT FEATURED PROPERTIES - SMALLER CARDS, FULLY VISIBLE */}
       <section style={{
         padding: '60px 0',
         background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)'
@@ -604,7 +605,7 @@ const Home = () => {
                   boxShadow: '0 8px 25px rgba(0, 0, 0, 0.08)',
                   border: '1px solid #f1f5f9',
                   transition: 'all 0.3s ease',
-                  height: '480px'
+                  height: '380px'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-4px)';
@@ -614,7 +615,7 @@ const Home = () => {
                   e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.08)';
                 }}>
-                  <div style={{ position: 'relative', height: '240px', overflow: 'hidden' }}>
+                  <div style={{ position: 'relative', height: '200px', overflow: 'hidden' }}>
                     <img 
                       src={property.image}
                       alt={property.title}
@@ -626,56 +627,56 @@ const Home = () => {
                     />
                     <div style={{
                       position: 'absolute',
-                      top: '16px',
-                      left: '16px',
+                      top: '12px',
+                      left: '12px',
                       background: property.gradient,
                       color: 'white',
-                      padding: '6px 12px',
-                      borderRadius: '16px',
-                      fontSize: '0.75rem',
+                      padding: '4px 10px',
+                      borderRadius: '12px',
+                      fontSize: '0.7rem',
                       fontWeight: 700,
-                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
+                      boxShadow: '0 3px 8px rgba(0, 0, 0, 0.2)'
                     }}>
                       {property.type}
                     </div>
                   </div>
                   
-                  <div style={{ padding: '28px' }}>
+                  <div style={{ padding: '20px' }}>
                     <div style={{
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '6px',
+                      gap: '4px',
                       color: '#64748b',
-                      fontSize: '0.85rem',
-                      marginBottom: '10px'
+                      fontSize: '0.8rem',
+                      marginBottom: '8px'
                     }}>
                       <span>📍</span>
                       {property.location}
                     </div>
                     
                     <h3 style={{
-                      fontSize: '1.5rem',
+                      fontSize: '1.3rem',
                       fontWeight: 800,
                       color: '#1e293b',
-                      marginBottom: '10px'
+                      marginBottom: '8px'
                     }}>{property.title}</h3>
                     
                     <p style={{
                       color: '#64748b',
-                      fontSize: '0.95rem',
-                      lineHeight: '1.5',
-                      marginBottom: '18px'
-                    }}>Spacious luxury {property.title.toLowerCase()} with premium amenities and modern design perfect for families</p>
+                      fontSize: '0.85rem',
+                      lineHeight: '1.4',
+                      marginBottom: '12px'
+                    }}>Spacious luxury {property.title.toLowerCase()} with premium amenities and modern design</p>
                     
                     <div style={{
                       display: 'flex',
-                      gap: '16px',
-                      marginBottom: '24px',
-                      fontSize: '0.85rem',
+                      gap: '12px',
+                      marginBottom: '16px',
+                      fontSize: '0.75rem',
                       color: '#64748b'
                     }}>
                       {property.features.map((feature, idx) => (
-                        <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
                           <span>{idx === 0 ? '🛏️' : '📐'}</span>
                           {feature}
                         </div>
@@ -688,19 +689,19 @@ const Home = () => {
                       alignItems: 'center'
                     }}>
                       <div style={{
-                        fontSize: '1.6rem',
+                        fontSize: '1.4rem',
                         fontWeight: 900,
                         color: '#10b981'
                       }}>{property.price}</div>
                       
-                      <div style={{ display: 'flex', gap: '8px' }}>
+                      <div style={{ display: 'flex', gap: '6px' }}>
                         <button style={{
                           background: 'transparent',
                           border: '1px solid #e5e7eb',
                           color: '#64748b',
-                          padding: '10px 18px',
-                          borderRadius: '10px',
-                          fontSize: '0.85rem',
+                          padding: '6px 12px',
+                          borderRadius: '8px',
+                          fontSize: '0.75rem',
                           fontWeight: 600,
                           cursor: 'pointer',
                           transition: 'all 0.2s ease'
@@ -718,21 +719,21 @@ const Home = () => {
                           background: property.gradient,
                           border: 'none',
                           color: 'white',
-                          padding: '10px 18px',
-                          borderRadius: '10px',
-                          fontSize: '0.85rem',
+                          padding: '6px 12px',
+                          borderRadius: '8px',
+                          fontSize: '0.75rem',
                           fontWeight: 700,
                           cursor: 'pointer',
-                          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                          boxShadow: '0 3px 8px rgba(0, 0, 0, 0.15)',
                           transition: 'all 0.2s ease'
                         }}
                         onMouseEnter={(e) => {
                           e.target.style.transform = 'translateY(-1px)';
-                          e.target.style.boxShadow = '0 6px 18px rgba(0, 0, 0, 0.2)';
+                          e.target.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
                         }}
                         onMouseLeave={(e) => {
                           e.target.style.transform = 'translateY(0)';
-                          e.target.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+                          e.target.style.boxShadow = '0 3px 8px rgba(0, 0, 0, 0.15)';
                         }}>Book Now</button>
                       </div>
                     </div>
@@ -744,7 +745,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* PERFECT CTA SECTION */}
+      {/* PERFECT CTA SECTION - SIZE MAINTAINED */}
       <section style={{
         padding: '60px 0',
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
