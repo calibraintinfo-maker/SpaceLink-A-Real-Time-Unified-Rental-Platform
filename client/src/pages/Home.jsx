@@ -154,14 +154,14 @@ const Home = () => {
               </div>
             </Col>
             
-            {/* RIGHT IMAGE - PERFECTLY BALANCED */}
+            {/* RIGHT IMAGE - PERFECTLY BALANCED WITH RELEVANT RENTAL IMAGE */}
             <Col lg={5} md={6}>
               <div style={{
                 position: 'relative',
                 maxWidth: '100%',
                 margin: '0'
               }}>
-                {/* GENERAL RENTAL PLATFORM IMAGE */}
+                {/* UNIVERSAL RENTAL PLATFORM IMAGE - CARS, PROPERTIES, VENUES */}
                 <div style={{
                   position: 'relative',
                   borderRadius: '20px',
@@ -169,8 +169,8 @@ const Home = () => {
                   boxShadow: '0 20px 50px rgba(0, 0, 0, 0.25)'
                 }}>
                   <img 
-                    src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
-                    alt="General rental platform - cars, events, properties" 
+                    src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+                    alt="Universal rental platform - luxury cars, modern properties, event venues" 
                     style={{
                       width: '100%',
                       height: '400px',
@@ -240,11 +240,11 @@ const Home = () => {
 
       {/* COMPACT CATEGORIES SECTION */}
       <section style={{
-        padding: '70px 0',
+        padding: '60px 0',
         background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)'
       }}>
         <Container>
-          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
             <div style={{
               display: 'inline-block',
               background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -308,13 +308,13 @@ const Home = () => {
                 <div style={{
                   background: 'white',
                   borderRadius: '20px',
-                  padding: '36px 24px',
+                  padding: '30px 20px',
                   textAlign: 'center',
                   boxShadow: '0 8px 25px rgba(0, 0, 0, 0.08)',
                   border: '1px solid #f1f5f9',
                   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                   cursor: 'pointer',
-                  height: '300px',
+                  height: '260px',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
@@ -341,19 +341,19 @@ const Home = () => {
                   
                   <div>
                     <div style={{ 
-                      fontSize: '3.5rem', 
-                      marginBottom: '20px',
+                      fontSize: '3rem', 
+                      marginBottom: '16px',
                       filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))'
                     }}>{category.icon}</div>
                     <h3 style={{
-                      fontSize: '1.4rem',
+                      fontSize: '1.3rem',
                       fontWeight: 800,
                       color: '#1e293b',
-                      marginBottom: '12px'
+                      marginBottom: '10px'
                     }}>{category.title}</h3>
                     <p style={{
                       color: '#64748b',
-                      fontSize: '0.95rem',
+                      fontSize: '0.9rem',
                       lineHeight: '1.5',
                       marginBottom: '0'
                     }}>{category.desc}</p>
@@ -365,29 +365,29 @@ const Home = () => {
                     style={{
                       background: category.gradient,
                       color: 'white',
-                      padding: '10px 24px',
-                      borderRadius: '25px',
-                      fontSize: '0.9rem',
+                      padding: '8px 20px',
+                      borderRadius: '20px',
+                      fontSize: '0.85rem',
                       fontWeight: 700,
                       textDecoration: 'none',
                       display: 'inline-flex',
                       alignItems: 'center',
-                      gap: '8px',
-                      boxShadow: '0 6px 18px rgba(0, 0, 0, 0.15)',
+                      gap: '6px',
+                      boxShadow: '0 4px 15px rgba(0, 0, 0, 0.15)',
                       transition: 'all 0.3s ease',
                       alignSelf: 'center'
                     }}
                     onMouseEnter={(e) => {
                       e.target.style.transform = 'translateY(-2px)';
-                      e.target.style.boxShadow = '0 8px 22px rgba(0, 0, 0, 0.2)';
+                      e.target.style.boxShadow = '0 6px 18px rgba(0, 0, 0, 0.2)';
                     }}
                     onMouseLeave={(e) => {
                       e.target.style.transform = 'translateY(0)';
-                      e.target.style.boxShadow = '0 6px 18px rgba(0, 0, 0, 0.15)';
+                      e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.15)';
                     }}
                   >
                     Explore
-                    <span style={{ fontSize: '1.1rem' }}>→</span>
+                    <span style={{ fontSize: '1rem' }}>→</span>
                   </Link>
                 </div>
               </Col>
@@ -398,7 +398,7 @@ const Home = () => {
 
       {/* COMPACT HOW IT WORKS SECTION */}
       <section style={{
-        padding: '70px 0',
+        padding: '60px 0',
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         position: 'relative',
         overflow: 'hidden'
@@ -415,7 +415,7 @@ const Home = () => {
         }}></div>
 
         <Container style={{ position: 'relative', zIndex: 2 }}>
-          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
             <h2 style={{
               fontSize: '2.8rem',
               fontWeight: 900,
@@ -455,12 +455,12 @@ const Home = () => {
                   background: 'rgba(255, 255, 255, 0.95)',
                   backdropFilter: 'blur(20px)',
                   borderRadius: '20px',
-                  padding: '36px 28px',
+                  padding: '30px 24px',
                   textAlign: 'center',
                   boxShadow: '0 15px 40px rgba(0, 0, 0, 0.15)',
                   border: '1px solid rgba(255, 255, 255, 0.2)',
                   transition: 'all 0.3s ease',
-                  height: '280px',
+                  height: '240px',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center'
@@ -475,28 +475,28 @@ const Home = () => {
                 }}>
                   
                   <div style={{
-                    width: '80px',
-                    height: '80px',
+                    width: '70px',
+                    height: '70px',
                     background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    margin: '0 auto 24px auto',
-                    fontSize: '2.2rem',
+                    margin: '0 auto 20px auto',
+                    fontSize: '2rem',
                     boxShadow: '0 8px 20px rgba(102, 126, 234, 0.3)'
                   }}>{item.icon}</div>
                   
                   <h3 style={{
-                    fontSize: '1.5rem',
+                    fontSize: '1.4rem',
                     fontWeight: 800,
                     color: '#1e293b',
-                    marginBottom: '16px'
+                    marginBottom: '12px'
                   }}>{item.title}</h3>
                   
                   <p style={{
                     color: '#64748b',
-                    fontSize: '0.95rem',
+                    fontSize: '0.9rem',
                     lineHeight: '1.6'
                   }}>{item.desc}</p>
                 </div>
@@ -506,13 +506,13 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* COMPACT FEATURED PROPERTIES */}
+      {/* PERFECTLY BALANCED FEATURED PROPERTIES */}
       <section style={{
-        padding: '70px 0',
+        padding: '60px 0',
         background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)'
       }}>
         <Container>
-          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
             <div style={{
               display: 'inline-block',
               background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -572,7 +572,7 @@ const Home = () => {
                   boxShadow: '0 8px 25px rgba(0, 0, 0, 0.08)',
                   border: '1px solid #f1f5f9',
                   transition: 'all 0.3s ease',
-                  height: '380px'
+                  height: '340px'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-4px)';
@@ -582,7 +582,7 @@ const Home = () => {
                   e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.08)';
                 }}>
-                  <div style={{ position: 'relative', height: '180px', overflow: 'hidden' }}>
+                  <div style={{ position: 'relative', height: '160px', overflow: 'hidden' }}>
                     <img 
                       src={property.image}
                       alt={property.title}
@@ -594,13 +594,13 @@ const Home = () => {
                     />
                     <div style={{
                       position: 'absolute',
-                      top: '16px',
-                      left: '16px',
+                      top: '12px',
+                      left: '12px',
                       background: property.gradient,
                       color: 'white',
-                      padding: '6px 12px',
-                      borderRadius: '16px',
-                      fontSize: '0.75rem',
+                      padding: '4px 12px',
+                      borderRadius: '12px',
+                      fontSize: '0.7rem',
                       fontWeight: 700,
                       boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
                     }}>
@@ -608,38 +608,38 @@ const Home = () => {
                     </div>
                   </div>
                   
-                  <div style={{ padding: '24px' }}>
+                  <div style={{ padding: '20px' }}>
                     <div style={{
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '6px',
+                      gap: '4px',
                       color: '#64748b',
-                      fontSize: '0.85rem',
-                      marginBottom: '8px'
+                      fontSize: '0.8rem',
+                      marginBottom: '6px'
                     }}>
                       <span>📍</span>
                       {property.location}
                     </div>
                     
                     <h3 style={{
-                      fontSize: '1.4rem',
+                      fontSize: '1.3rem',
                       fontWeight: 800,
                       color: '#1e293b',
-                      marginBottom: '8px'
+                      marginBottom: '6px'
                     }}>{property.title}</h3>
                     
                     <p style={{
                       color: '#64748b',
-                      fontSize: '0.9rem',
+                      fontSize: '0.85rem',
                       lineHeight: '1.5',
-                      marginBottom: '16px'
+                      marginBottom: '12px'
                     }}>Spacious luxury {property.title.toLowerCase()} with premium amenities</p>
                     
                     <div style={{
                       display: 'flex',
-                      gap: '16px',
-                      marginBottom: '20px',
-                      fontSize: '0.8rem',
+                      gap: '14px',
+                      marginBottom: '16px',
+                      fontSize: '0.75rem',
                       color: '#64748b'
                     }}>
                       {property.features.map((feature, idx) => (
@@ -656,19 +656,19 @@ const Home = () => {
                       alignItems: 'center'
                     }}>
                       <div style={{
-                        fontSize: '1.6rem',
+                        fontSize: '1.4rem',
                         fontWeight: 900,
                         color: '#10b981'
                       }}>{property.price}</div>
                       
-                      <div style={{ display: 'flex', gap: '8px' }}>
+                      <div style={{ display: 'flex', gap: '6px' }}>
                         <button style={{
                           background: 'transparent',
                           border: '1px solid #e5e7eb',
                           color: '#64748b',
-                          padding: '8px 16px',
-                          borderRadius: '10px',
-                          fontSize: '0.8rem',
+                          padding: '6px 12px',
+                          borderRadius: '8px',
+                          fontSize: '0.75rem',
                           fontWeight: 600,
                           cursor: 'pointer'
                         }}>View Details</button>
@@ -677,9 +677,9 @@ const Home = () => {
                           background: property.gradient,
                           border: 'none',
                           color: 'white',
-                          padding: '8px 16px',
-                          borderRadius: '10px',
-                          fontSize: '0.8rem',
+                          padding: '6px 12px',
+                          borderRadius: '8px',
+                          fontSize: '0.75rem',
                           fontWeight: 700,
                           cursor: 'pointer'
                         }}>Book Now</button>
@@ -695,7 +695,7 @@ const Home = () => {
 
       {/* COMPACT CTA SECTION */}
       <section style={{
-        padding: '70px 0',
+        padding: '60px 0',
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         textAlign: 'center'
       }}>
