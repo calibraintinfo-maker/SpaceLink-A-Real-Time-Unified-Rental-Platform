@@ -78,7 +78,7 @@ const FindProperty = () => {
     },
     {
       id: 4,
-      image: '', // NO IMAGE - WILL SHOW PLACEHOLDER
+      image: 'https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       title: 'Grand Wedding Venue',
       location: 'Chennai, Tamil Nadu',
       price: 15000,
@@ -112,7 +112,7 @@ const FindProperty = () => {
     },
     {
       id: 6,
-      image: '', // NO IMAGE - WILL SHOW PLACEHOLDER
+      image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       title: 'Secure Parking Bay',
       location: 'Gurgaon, Haryana',
       price: 1500,
@@ -374,18 +374,19 @@ const FindProperty = () => {
 
           <div className="p-4">
             
-            {/* SEARCH INPUT WITH ICON */}
+            {/* SEARCH INPUT WITH ICON FIXED */}
             <div className="mb-4">
               <Form.Label className="fw-semibold mb-3" style={{ color: '#374151' }}>
                 Search Properties
               </Form.Label>
-              <div className="position-relative">
-                <i className="fas fa-search position-absolute" style={{ 
+              <div style={{ position: 'relative' }}>
+                <i className="fas fa-search" style={{ 
+                  position: 'absolute',
                   left: '12px', 
                   top: '50%', 
                   transform: 'translateY(-50%)', 
                   color: '#9ca3af',
-                  zIndex: 10
+                  zIndex: 5
                 }}></i>
                 <Form.Control
                   type="text"
@@ -404,7 +405,7 @@ const FindProperty = () => {
               </div>
             </div>
 
-            {/* All other form inputs remain the same... */}
+            {/* Location */}
             <div className="mb-4">
               <Form.Label className="fw-semibold mb-3" style={{ color: '#374151' }}>
                 Location
@@ -428,6 +429,7 @@ const FindProperty = () => {
               </Form.Select>
             </div>
 
+            {/* Property Type */}
             <div className="mb-4">
               <Form.Label className="fw-semibold mb-3" style={{ color: '#374151' }}>
                 Property Type
@@ -451,6 +453,7 @@ const FindProperty = () => {
               </Form.Select>
             </div>
 
+            {/* Price Range */}
             <div className="mb-4">
               <Form.Label className="fw-semibold mb-3" style={{ color: '#374151' }}>
                 Price Range
@@ -474,6 +477,7 @@ const FindProperty = () => {
               </Form.Select>
             </div>
 
+            {/* Conditional Bedrooms */}
             {shouldShowBedroomFilter() && (
               <div className="mb-4">
                 <Form.Label className="fw-semibold mb-3" style={{ color: '#374151' }}>
@@ -499,6 +503,7 @@ const FindProperty = () => {
               </div>
             )}
 
+            {/* Clear Filters */}
             <Button 
               variant="outline-secondary"
               className="w-100 mb-4 fw-semibold"
@@ -515,6 +520,7 @@ const FindProperty = () => {
               <i className="fas fa-times me-2"></i>Clear All Filters
             </Button>
 
+            {/* Filter Status */}
             <div 
               className="p-3 rounded-3 bg-white border"
               style={{ 
@@ -543,6 +549,7 @@ const FindProperty = () => {
         <div style={{ flex: 1, backgroundColor: '#ffffff' }}>
           <Container fluid className="py-5 px-5" style={{ paddingBottom: '140px' }}>
             
+            {/* Results Header */}
             <div className="d-flex justify-content-between align-items-center mb-5">
               <div>
                 <h2 className="h2 fw-bold mb-3" style={{ color: '#1e293b' }}>
@@ -553,6 +560,7 @@ const FindProperty = () => {
                 </p>
               </div>
               
+              {/* View Toggle */}
               <div className="btn-group" role="group">
                 <input 
                   type="radio" 
@@ -603,7 +611,7 @@ const FindProperty = () => {
               </div>
             </div>
 
-            {/* PROPERTY CARDS - ABSOLUTELY NO BLUE COLORS */}
+            {/* PROPERTY CARDS - NO BLUE COLORS AT ALL */}
             {filteredProperties.length === 0 ? (
               <Card className="border-0 shadow-sm text-center p-5">
                 <Card.Body>
@@ -651,7 +659,10 @@ const FindProperty = () => {
                       <div className="position-relative">
                         <Card.Img 
                           variant="top" 
-                          src={property.image || 'https://via.placeholder.com/400x240/f3f4f6/9ca3af?text=No+Image+Available'}
+                          src={property.image}
+                          onError={(e) => {
+                            e.target.src = 'https://via.placeholder.com/400x240/f3f4f6/9ca3af?text=No+Image+Available';
+                          }}
                           style={{ 
                             height: viewMode === 'grid' ? '240px' : '200px', 
                             objectFit: 'cover',
@@ -666,7 +677,7 @@ const FindProperty = () => {
                             style={{ 
                               fontSize: '0.8rem',
                               padding: '8px 12px',
-                              backgroundColor: property.status === 'For Sale' ? '#dc2626' : '#059669',
+                              backgroundColor: '#059669', // GREEN FOR "FOR RENT" - NO BLUE
                               color: 'white',
                               borderRadius: '6px'
                             }}
@@ -679,7 +690,7 @@ const FindProperty = () => {
                               style={{ 
                                 fontSize: '0.8rem',
                                 padding: '8px 12px',
-                                backgroundColor: '#7c3aed', // PURPLE - NO BLUE
+                                backgroundColor: '#7c3aed', // PURPLE FOR "VERIFIED" - NO BLUE
                                 color: 'white',
                                 borderRadius: '6px'
                               }}
@@ -689,14 +700,14 @@ const FindProperty = () => {
                           )}
                         </div>
                         
-                        {/* PROPERTY TYPE BADGE - GRAY ONLY */}
+                        {/* PROPERTY TYPE BADGE - GRAY ONLY, NO BLUE */}
                         <div className="position-absolute top-0 end-0 p-3">
                           <Badge 
                             className="fw-semibold"
                             style={{ 
                               fontSize: '0.8rem',
                               padding: '8px 12px',
-                              backgroundColor: '#6b7280', // GRAY - NO BLUE
+                              backgroundColor: '#6b7280', // GRAY FOR ALL PROPERTY TYPES - NO BLUE
                               color: 'white',
                               borderRadius: '6px'
                             }}
@@ -707,11 +718,13 @@ const FindProperty = () => {
                       </div>
                       
                       <Card.Body className="d-flex flex-column p-4">
+                        {/* Location */}
                         <div className="d-flex align-items-center text-muted mb-3">
                           <i className="fas fa-map-marker-alt me-2" style={{ color: '#7c3aed' }}></i>
                           <span className="fw-medium">{property.location}</span>
                         </div>
                         
+                        {/* Title */}
                         <Card.Title className="h4 fw-bold mb-4" style={{ 
                           lineHeight: '1.4',
                           color: '#1e293b'
@@ -719,10 +732,12 @@ const FindProperty = () => {
                           {property.title}
                         </Card.Title>
                         
+                        {/* Property Details - ALL GRAY AND PURPLE */}
                         <div className="mb-4 flex-grow-1">
                           {renderPropertyDetails(property)}
                         </div>
                         
+                        {/* Price & Buttons */}
                         <div className="mt-auto">
                           <div className="mb-4">
                             <div className="h3 fw-bold text-success mb-1">
@@ -731,6 +746,7 @@ const FindProperty = () => {
                             <small className="text-muted fw-medium">per {property.priceType}</small>
                           </div>
                           
+                          {/* Action Buttons */}
                           <div className="d-grid gap-3 d-md-flex">
                             <Button 
                               variant="outline-secondary" 
@@ -771,7 +787,7 @@ const FindProperty = () => {
         </div>
       </div>
 
-      {/* PERFECT STYLES - ZERO BLUE */}
+      {/* STYLES - ZERO BLUE */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
         
