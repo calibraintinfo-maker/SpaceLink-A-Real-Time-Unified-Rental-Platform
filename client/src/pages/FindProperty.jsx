@@ -30,7 +30,7 @@ const FindProperty = () => {
   const sampleProperties = [
     {
       id: 1,
-      image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      image: 'https://picsum.photos/400/240?random=1',
       title: 'Modern Studio Apartment',
       location: 'Bangalore, Karnataka',
       price: 1800,
@@ -46,7 +46,7 @@ const FindProperty = () => {
     },
     {
       id: 2,
-      image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      image: 'https://picsum.photos/400/240?random=2',
       title: 'Premium Office Space',
       location: 'Mumbai, Maharashtra',
       price: 5000,
@@ -62,7 +62,7 @@ const FindProperty = () => {
     },
     {
       id: 3,
-      image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      image: 'https://picsum.photos/400/240?random=3',
       title: 'Family Villa',
       location: 'Pune, Maharashtra',
       price: 3200,
@@ -78,7 +78,7 @@ const FindProperty = () => {
     },
     {
       id: 4,
-      image: 'https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      image: 'https://picsum.photos/400/240?random=4',
       title: 'Grand Wedding Venue',
       location: 'Chennai, Tamil Nadu',
       price: 15000,
@@ -95,7 +95,7 @@ const FindProperty = () => {
     },
     {
       id: 5,
-      image: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      image: 'https://picsum.photos/400/240?random=5',
       title: 'Professional Football Turf',
       location: 'Delhi, India',
       price: 2500,
@@ -112,7 +112,7 @@ const FindProperty = () => {
     },
     {
       id: 6,
-      image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      image: 'https://picsum.photos/400/240?random=6',
       title: 'Secure Parking Bay',
       location: 'Gurgaon, Haryana',
       price: 1500,
@@ -193,7 +193,7 @@ const FindProperty = () => {
     if (property.isResidential && property.bedrooms > 0) {
       details.push(
         <span key="bedrooms" className="custom-badge me-2 mb-2">
-          <i className="fas fa-bed me-1"></i>{property.bedrooms} BHK
+          🛏️ {property.bedrooms} BHK
         </span>
       );
     }
@@ -201,7 +201,7 @@ const FindProperty = () => {
     if (property.isResidential && property.bathrooms > 0) {
       details.push(
         <span key="bathrooms" className="custom-badge me-2 mb-2">
-          <i className="fas fa-bath me-1"></i>{property.bathrooms} Bath
+          🚿 {property.bathrooms} Bath
         </span>
       );
     }
@@ -209,21 +209,21 @@ const FindProperty = () => {
     if (!property.isResidential && property.bathrooms > 0) {
       details.push(
         <span key="washrooms" className="custom-badge me-2 mb-2">
-          <i className="fas fa-restroom me-1"></i>{property.bathrooms} Washrooms
+          🚻 {property.bathrooms} Washrooms
         </span>
       );
     }
 
     details.push(
       <span key="area" className="custom-badge me-2 mb-2">
-        <i className="fas fa-ruler-combined me-1"></i>{property.area.toLocaleString()} sq ft
+        📐 {property.area.toLocaleString()} sq ft
       </span>
     );
 
     if (property.capacity) {
       details.push(
         <span key="capacity" className="custom-badge-purple me-2 mb-2">
-          <i className="fas fa-users me-1"></i>{property.capacity}
+          👥 {property.capacity}
         </span>
       );
     }
@@ -231,7 +231,7 @@ const FindProperty = () => {
     if (property.surface) {
       details.push(
         <span key="surface" className="custom-badge-green me-2 mb-2">
-          <i className="fas fa-futbol me-1"></i>{property.surface}
+          ⚽ {property.surface}
         </span>
       );
     }
@@ -239,7 +239,7 @@ const FindProperty = () => {
     if (property.security) {
       details.push(
         <span key="security" className="custom-badge-orange me-2 mb-2">
-          <i className="fas fa-shield-alt me-1"></i>{property.security}
+          🔒 {property.security}
         </span>
       );
     }
@@ -248,7 +248,7 @@ const FindProperty = () => {
   };
 
   const handleImageError = (e) => {
-    e.target.src = 'https://via.placeholder.com/400x240/f3f4f6/9ca3af?text=Property+Image';
+    e.target.src = 'https://via.placeholder.com/400x240/e2e8f0/64748b?text=Property+Image';
   };
 
   return (
@@ -325,13 +325,21 @@ const FindProperty = () => {
 
           <div className="p-4">
             
-            {/* SEARCH INPUT WITH ICON */}
+            {/* SEARCH INPUT WITH WORKING ICON */}
             <div className="mb-4">
               <Form.Label className="fw-semibold mb-3" style={{ color: '#374151' }}>
                 Search Properties
               </Form.Label>
               <div className="search-wrapper">
-                <i className="fas fa-search search-icon"></i>
+                <svg 
+                  className="search-icon" 
+                  width="16" 
+                  height="16" 
+                  viewBox="0 0 16 16" 
+                  fill="currentColor"
+                >
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                </svg>
                 <Form.Control
                   type="text"
                   placeholder="Type to search..."
@@ -422,7 +430,7 @@ const FindProperty = () => {
               className="w-100 mb-4 fw-semibold custom-clear-btn"
               onClick={clearFilters}
             >
-              <i className="fas fa-times me-2"></i>Clear All Filters
+              ✕ Clear All Filters
             </Button>
 
             {/* Filter Status */}
@@ -466,7 +474,7 @@ const FindProperty = () => {
                   className={`btn fw-semibold custom-toggle-btn ${viewMode === 'grid' ? 'active' : ''}`}
                   htmlFor="gridView"
                 >
-                  <i className="fas fa-th me-2"></i>Grid
+                  ⊞ Grid
                 </label>
                 
                 <input 
@@ -481,17 +489,17 @@ const FindProperty = () => {
                   className={`btn fw-semibold custom-toggle-btn ${viewMode === 'list' ? 'active' : ''}`}
                   htmlFor="listView"
                 >
-                  <i className="fas fa-list me-2"></i>List
+                  ☰ List
                 </label>
               </div>
             </div>
 
-            {/* PROPERTY CARDS - FIXED BUTTONS & IMAGES */}
+            {/* PROPERTY CARDS - WORKING IMAGES */}
             {filteredProperties.length === 0 ? (
               <Card className="border-0 shadow-sm text-center p-5">
                 <Card.Body>
                   <div className="mb-4 text-muted" style={{ fontSize: '5rem' }}>
-                    <i className="fas fa-search"></i>
+                    🔍
                   </div>
                   <h3 className="fw-bold mb-4" style={{ color: '#1e293b' }}>No Properties Found</h3>
                   <p className="text-muted fs-6 mb-4">
@@ -539,14 +547,14 @@ const FindProperty = () => {
                           }}
                         />
                         
-                        {/* CUSTOM BADGES - NO BOOTSTRAP COLORS */}
+                        {/* CUSTOM BADGES - NO BLUE */}
                         <div className="position-absolute top-0 start-0 p-3">
                           <span className="status-badge-green me-2">
                             {property.status}
                           </span>
                           {property.verified && (
                             <span className="status-badge-purple">
-                              <i className="fas fa-check me-1"></i>Verified
+                              ✓ Verified
                             </span>
                           )}
                         </div>
@@ -562,7 +570,7 @@ const FindProperty = () => {
                       <Card.Body className="d-flex flex-column p-4">
                         {/* Location */}
                         <div className="d-flex align-items-center text-muted mb-3">
-                          <i className="fas fa-map-marker-alt me-2" style={{ color: '#7c3aed' }}></i>
+                          <span className="me-2" style={{ color: '#7c3aed' }}>📍</span>
                           <span className="fw-medium">{property.location}</span>
                         </div>
                         
@@ -588,7 +596,7 @@ const FindProperty = () => {
                             <small className="text-muted fw-medium">per {property.priceType}</small>
                           </div>
                           
-                          {/* FIXED ACTION BUTTONS - VISIBLE TEXT */}
+                          {/* ACTION BUTTONS - FIXED */}
                           <div className="d-grid gap-3 d-md-flex">
                             <button 
                               className="btn flex-fill fw-semibold custom-outline-btn"
@@ -614,7 +622,7 @@ const FindProperty = () => {
         </div>
       </div>
 
-      {/* FIXED STYLES - VISIBLE BUTTON TEXT + WORKING IMAGES */}
+      {/* FIXED STYLES - WORKING ICON + IMAGES */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
         
@@ -622,7 +630,7 @@ const FindProperty = () => {
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
         
-        /* Search input with icon */
+        /* FIXED SEARCH INPUT WITH SVG ICON */
         .search-wrapper {
           position: relative;
         }
@@ -633,8 +641,8 @@ const FindProperty = () => {
           top: 50%;
           transform: translateY(-50%);
           color: #9ca3af;
-          z-index: 5;
-          font-size: 1rem;
+          z-index: 10;
+          pointer-events: none;
         }
         
         .search-input {
@@ -653,7 +661,7 @@ const FindProperty = () => {
         
         /* Custom selects */
         .custom-select {
-          fontSize: 0.95rem !important;
+          font-size: 0.95rem !important;
           padding: 12px 16px !important;
           border: 1.5px solid #d1d5db !important;
           border-radius: 8px !important;
@@ -665,7 +673,7 @@ const FindProperty = () => {
           box-shadow: 0 0 0 0.2rem rgba(124, 58, 237, 0.25) !important;
         }
         
-        /* Custom badges - NO BOOTSTRAP CLASSES */
+        /* Custom badges with emojis */
         .custom-badge {
           display: inline-block;
           background-color: #f3f4f6;
@@ -707,7 +715,7 @@ const FindProperty = () => {
           border-radius: 6px;
         }
         
-        /* Status badges - COMPLETELY CUSTOM */
+        /* Status badges */
         .status-badge-green {
           display: inline-block;
           background-color: #059669;
@@ -741,7 +749,7 @@ const FindProperty = () => {
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
         
-        /* FIXED BUTTONS - VISIBLE TEXT */
+        /* FIXED BUTTONS */
         .custom-primary-btn {
           background-color: #7c3aed !important;
           border: 1px solid #7c3aed !important;
@@ -826,29 +834,10 @@ const FindProperty = () => {
           border: 1px solid #e5e7eb;
         }
         
-        /* Image fallback */
+        /* FIXED IMAGES */
         .card-img-top {
           object-fit: cover;
           background-color: #f3f4f6;
-        }
-        
-        /* Override any remaining Bootstrap blues */
-        .badge-primary, .bg-primary {
-          background-color: #7c3aed !important;
-        }
-        
-        .text-primary {
-          color: #7c3aed !important;
-        }
-        
-        .btn-primary {
-          background-color: #7c3aed !important;
-          border-color: #7c3aed !important;
-        }
-        
-        .btn-primary:hover {
-          background-color: #6d28d9 !important;
-          border-color: #6d28d9 !important;
         }
         
         @media (max-width: 768px) {
