@@ -8,7 +8,7 @@ const Home = () => {
 
   return (
     <>
-      {/* PROFESSIONAL HERO SECTION - PERFECT PROPORTIONS */}
+      {/* PROFESSIONAL HERO SECTION - BETTER IMAGE */}
       <section style={{
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         minHeight: '90vh',
@@ -154,14 +154,14 @@ const Home = () => {
               </div>
             </Col>
             
-            {/* RIGHT IMAGE - PROFESSIONAL RENTAL SEARCH MOCKUP */}
+            {/* RIGHT IMAGE - BETTER RENTAL PLATFORM IMAGE */}
             <Col lg={6} md={6}>
               <div style={{
                 position: 'relative',
                 maxWidth: '100%',
                 margin: '0 auto'
               }}>
-                {/* PROFESSIONAL RENTAL SEARCH INTERFACE IMAGE */}
+                {/* BETTER RENTAL PLATFORM HERO IMAGE */}
                 <div style={{
                   position: 'relative',
                   borderRadius: '24px',
@@ -169,8 +169,8 @@ const Home = () => {
                   boxShadow: '0 30px 70px rgba(0, 0, 0, 0.3)'
                 }}>
                   <img 
-                    src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
-                    alt="Professional rental platform dashboard showing properties, cars, and venues" 
+                    src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+                    alt="Modern rental search interface showing properties, vehicles and booking options" 
                     style={{
                       width: '100%',
                       height: '520px',
@@ -238,7 +238,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* PERFECTLY PROPORTIONED CATEGORIES SECTION */}
+      {/* PERFECTLY ALIGNED CATEGORIES SECTION */}
       <section style={{
         padding: '80px 0',
         background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)'
@@ -314,7 +314,7 @@ const Home = () => {
                   border: '1px solid #f1f5f9',
                   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                   cursor: 'pointer',
-                  height: '380px',
+                  height: '400px',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
@@ -342,7 +342,7 @@ const Home = () => {
                   <div>
                     <div style={{ 
                       fontSize: '4.5rem', 
-                      marginBottom: '24px',
+                      marginBottom: '28px',
                       filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.1))'
                     }}>{category.icon}</div>
                     <h3 style={{
@@ -359,36 +359,44 @@ const Home = () => {
                     }}>{category.desc}</p>
                   </div>
                   
-                  {/* EXPLORE BUTTON LINKS TO FIND-PROPERTY */}
-                  <Link 
-                    to="/find-property"
-                    style={{
-                      background: category.gradient,
-                      color: 'white',
-                      padding: '14px 32px',
-                      borderRadius: '30px',
-                      fontSize: '1rem',
-                      fontWeight: 700,
-                      textDecoration: 'none',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '10px',
-                      boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
-                      transition: 'all 0.3s ease',
-                      alignSelf: 'center'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.transform = 'translateY(-3px)';
-                      e.target.style.boxShadow = '0 12px 32px rgba(0, 0, 0, 0.2)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.transform = 'translateY(0)';
-                      e.target.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.15)';
-                    }}
-                  >
-                    Explore
-                    <span style={{ fontSize: '1.2rem' }}>→</span>
-                  </Link>
+                  {/* PERFECTLY ALIGNED EXPLORE BUTTON */}
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    paddingTop: '20px'
+                  }}>
+                    <Link 
+                      to="/find-property"
+                      style={{
+                        background: category.gradient,
+                        color: 'white',
+                        padding: '14px 32px',
+                        borderRadius: '30px',
+                        fontSize: '1rem',
+                        fontWeight: 700,
+                        textDecoration: 'none',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '10px',
+                        boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
+                        transition: 'all 0.3s ease',
+                        minWidth: '140px'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.transform = 'translateY(-3px)';
+                        e.target.style.boxShadow = '0 12px 32px rgba(0, 0, 0, 0.2)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.transform = 'translateY(0)';
+                        e.target.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.15)';
+                      }}
+                    >
+                      Explore
+                      <span style={{ fontSize: '1.2rem' }}>→</span>
+                    </Link>
+                  </div>
                 </div>
               </Col>
             ))}
@@ -396,7 +404,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* PROFESSIONAL HOW IT WORKS SECTION */}
+      {/* HOW IT WORKS SECTION - WITH STEP NUMBERS RESTORED */}
       <section style={{
         padding: '80px 0',
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -435,16 +443,19 @@ const Home = () => {
           <Row>
             {[
               { 
+                step: '01',
                 title: 'Search & Discover', 
                 desc: 'Browse through thousands of verified listings in your area with advanced filters and smart recommendations powered by AI', 
                 icon: '🔍'
               },
               { 
+                step: '02',
                 title: 'Compare & Choose', 
                 desc: 'Compare prices, features, and reviews to find the perfect match with our intelligent comparison tools and detailed analytics', 
                 icon: '⚖️'
               },
               { 
+                step: '03',
                 title: 'Book & Enjoy', 
                 desc: 'Secure booking with instant confirmation, flexible payment options and 24/7 customer support for peace of mind', 
                 icon: '✨'
@@ -460,10 +471,11 @@ const Home = () => {
                   boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15)',
                   border: '1px solid rgba(255, 255, 255, 0.2)',
                   transition: 'all 0.3s ease',
-                  height: '380px',
+                  height: '420px',
                   display: 'flex',
                   flexDirection: 'column',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  position: 'relative'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-8px)';
@@ -473,6 +485,24 @@ const Home = () => {
                   e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.15)';
                 }}>
+                  
+                  {/* STEP NUMBER RESTORED */}
+                  <div style={{
+                    position: 'absolute',
+                    top: '-15px',
+                    left: '32px',
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    color: 'white',
+                    width: '40px',
+                    height: '40px',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '0.9rem',
+                    fontWeight: 900,
+                    boxShadow: '0 4px 15px rgba(102, 126, 234, 0.4)'
+                  }}>{item.step}</div>
                   
                   <div style={{
                     width: '100px',
@@ -506,7 +536,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* PERFECTLY SIZED FEATURED PROPERTIES */}
+      {/* PROPERLY SIZED FEATURED PROPERTIES */}
       <section style={{
         padding: '80px 0',
         background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)'
@@ -572,7 +602,7 @@ const Home = () => {
                   boxShadow: '0 12px 40px rgba(0, 0, 0, 0.08)',
                   border: '1px solid #f1f5f9',
                   transition: 'all 0.3s ease',
-                  height: '480px'
+                  height: '520px'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-6px)';
@@ -582,7 +612,7 @@ const Home = () => {
                   e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.08)';
                 }}>
-                  <div style={{ position: 'relative', height: '280px', overflow: 'hidden' }}>
+                  <div style={{ position: 'relative', height: '300px', overflow: 'hidden' }}>
                     <img 
                       src={property.image}
                       alt={property.title}
