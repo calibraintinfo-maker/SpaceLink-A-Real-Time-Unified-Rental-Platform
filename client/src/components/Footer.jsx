@@ -7,32 +7,32 @@ const Footer = () => {
     <footer style={{
       background: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)',
       color: 'white',
-      padding: '50px 0 30px 0'
+      padding: '40px 0 25px 0'
     }}>
       <Container>
         <Row>
-          <Col lg={4} className="mb-4">
+          <Col lg={4} className="mb-3">
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '12px',
-              marginBottom: '20px'
+              gap: '10px',
+              marginBottom: '16px'
             }}>
               <div style={{
                 background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                borderRadius: '10px',
-                padding: '6px'
+                borderRadius: '8px',
+                padding: '5px'
               }}>
-                <span style={{ fontSize: '1.3rem' }}>🏠</span>
+                <span style={{ fontSize: '1.2rem' }}>🏠</span>
               </div>
-              <span style={{ fontSize: '1.6rem', fontWeight: 800 }}>SpaceLink</span>
+              <span style={{ fontSize: '1.5rem', fontWeight: 800 }}>SpaceLink</span>
             </div>
             <p style={{
               color: 'rgba(255, 255, 255, 0.8)',
-              fontSize: '0.95rem',
+              fontSize: '0.9rem',
               lineHeight: '1.6',
-              maxWidth: '300px',
-              marginBottom: '24px'
+              maxWidth: '280px',
+              marginBottom: '20px'
             }}>
               Your trusted global rental platform. Helping clients find exceptional rentals and empowering seamless transactions worldwide.
             </p>
@@ -40,38 +40,38 @@ const Footer = () => {
             {/* Newsletter Signup */}
             <div>
               <h5 style={{
-                fontSize: '1rem',
+                fontSize: '0.95rem',
                 fontWeight: 700,
-                marginBottom: '12px',
+                marginBottom: '10px',
                 color: 'white'
               }}>Stay Updated</h5>
               <div style={{ 
                 display: 'flex', 
-                gap: '8px',
-                maxWidth: '300px'
+                gap: '6px',
+                maxWidth: '280px'
               }}>
                 <input 
                   type="email" 
                   placeholder="Enter your email"
                   style={{
                     flex: 1,
-                    padding: '10px 14px',
+                    padding: '8px 12px',
                     border: '1px solid rgba(255, 255, 255, 0.2)',
-                    borderRadius: '8px',
+                    borderRadius: '6px',
                     background: 'rgba(255, 255, 255, 0.1)',
                     color: 'white',
-                    fontSize: '0.85rem'
+                    fontSize: '0.8rem'
                   }}
                 />
                 <button style={{
                   background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                   border: 'none',
-                  borderRadius: '8px',
-                  padding: '10px 16px',
+                  borderRadius: '6px',
+                  padding: '8px 14px',
                   color: 'white',
                   fontWeight: 700,
                   cursor: 'pointer',
-                  fontSize: '0.85rem'
+                  fontSize: '0.8rem'
                 }}>
                   Subscribe
                 </button>
@@ -81,9 +81,9 @@ const Footer = () => {
           
           <Col lg={2} md={6} className="mb-3">
             <h5 style={{
-              fontSize: '1rem',
+              fontSize: '0.95rem',
               fontWeight: 700,
-              marginBottom: '16px',
+              marginBottom: '12px',
               color: 'white'
             }}>Quick Links</h5>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
@@ -93,13 +93,13 @@ const Footer = () => {
                 { name: 'My Bookings', path: '/my-bookings' },
                 { name: 'Profile', path: '/profile' }
               ].map((item, index) => (
-                <li key={index} style={{ marginBottom: '10px' }}>
+                <li key={index} style={{ marginBottom: '8px' }}>
                   <Link 
                     to={item.path}
                     style={{
                       color: 'rgba(255, 255, 255, 0.7)',
                       textDecoration: 'none',
-                      fontSize: '0.9rem',
+                      fontSize: '0.85rem',
                       transition: 'color 0.2s ease'
                     }}
                     onMouseEnter={(e) => e.target.style.color = '#667eea'}
@@ -114,20 +114,20 @@ const Footer = () => {
           
           <Col lg={2} md={6} className="mb-3">
             <h5 style={{
-              fontSize: '1rem',
+              fontSize: '0.95rem',
               fontWeight: 700,
-              marginBottom: '16px',
+              marginBottom: '12px',
               color: 'white'
             }}>Categories</h5>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               {['Properties', 'Event Venues', 'Vehicles', 'Parking & Turfs'].map((item, index) => (
-                <li key={index} style={{ marginBottom: '10px' }}>
+                <li key={index} style={{ marginBottom: '8px' }}>
                   <Link 
                     to="/find-property"
                     style={{
                       color: 'rgba(255, 255, 255, 0.7)',
                       textDecoration: 'none',
-                      fontSize: '0.9rem',
+                      fontSize: '0.85rem',
                       transition: 'color 0.2s ease'
                     }}
                     onMouseEnter={(e) => e.target.style.color = '#667eea'}
@@ -142,9 +142,9 @@ const Footer = () => {
           
           <Col lg={2} md={6} className="mb-3">
             <h5 style={{
-              fontSize: '1rem',
+              fontSize: '0.95rem',
               fontWeight: 700,
-              marginBottom: '16px',
+              marginBottom: '12px',
               color: 'white'
             }}>Support</h5>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
@@ -154,13 +154,13 @@ const Footer = () => {
                 { name: 'About Us', path: '/about' },
                 { name: 'Blog', path: '/blog' }
               ].map((item, index) => (
-                <li key={index} style={{ marginBottom: '10px' }}>
+                <li key={index} style={{ marginBottom: '8px' }}>
                   <Link 
                     to={item.path}
                     style={{
                       color: 'rgba(255, 255, 255, 0.7)',
                       textDecoration: 'none',
-                      fontSize: '0.9rem',
+                      fontSize: '0.85rem',
                       transition: 'color 0.2s ease'
                     }}
                     onMouseEnter={(e) => e.target.style.color = '#667eea'}
@@ -175,9 +175,9 @@ const Footer = () => {
           
           <Col lg={2} md={6} className="mb-3">
             <h5 style={{
-              fontSize: '1rem',
+              fontSize: '0.95rem',
               fontWeight: 700,
-              marginBottom: '16px',
+              marginBottom: '12px',
               color: 'white'
             }}>Legal</h5>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
@@ -187,13 +187,13 @@ const Footer = () => {
                 { name: 'Cookie Policy', path: '/cookies' },
                 { name: 'Disclaimer', path: '/disclaimer' }
               ].map((item, index) => (
-                <li key={index} style={{ marginBottom: '10px' }}>
+                <li key={index} style={{ marginBottom: '8px' }}>
                   <Link 
                     to={item.path}
                     style={{
                       color: 'rgba(255, 255, 255, 0.7)',
                       textDecoration: 'none',
-                      fontSize: '0.9rem',
+                      fontSize: '0.85rem',
                       transition: 'color 0.2s ease'
                     }}
                     onMouseEnter={(e) => e.target.style.color = '#667eea'}
@@ -210,13 +210,13 @@ const Footer = () => {
         <hr style={{
           border: 'none',
           borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-          margin: '30px 0 20px 0'
+          margin: '25px 0 15px 0'
         }} />
         
         <div style={{
           textAlign: 'center',
           color: 'rgba(255, 255, 255, 0.6)',
-          fontSize: '0.9rem'
+          fontSize: '0.85rem'
         }}>
           Made with ❤️ by SpaceLink Team
         </div>
