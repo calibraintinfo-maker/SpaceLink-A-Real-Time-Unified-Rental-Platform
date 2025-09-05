@@ -8,7 +8,7 @@ const Home = () => {
 
   return (
     <>
-      {/* HERO SECTION - FIXED STATS POSITIONING */}
+      {/* HERO SECTION - PERFECT */}
       <section style={{
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         minHeight: '85vh',
@@ -33,12 +33,12 @@ const Home = () => {
 
         <Container>
           <Row className="align-items-center" style={{ minHeight: '70vh' }}>
-            {/* LEFT CONTENT - BETTER SPACING */}
+            {/* LEFT CONTENT */}
             <Col lg={6} md={6} className="mb-4 mb-lg-0">
               <div style={{ 
                 maxWidth: '100%', 
-                paddingLeft: '1rem',
-                paddingRight: '2rem' // Added right padding for better spacing
+                paddingLeft: '0.5rem',
+                paddingRight: '2rem'
               }}>
                 {/* Professional Badge */}
                 <div style={{
@@ -60,7 +60,6 @@ const Home = () => {
                   </span>
                 </div>
                 
-                {/* Typography */}
                 <h1 style={{
                   fontSize: '4rem',
                   fontWeight: 900,
@@ -68,7 +67,7 @@ const Home = () => {
                   marginBottom: '24px',
                   letterSpacing: '-0.02em',
                   color: 'white',
-                  maxWidth: '85%'
+                  maxWidth: '90%'
                 }}>
                   Rent Anything,
                   <br />
@@ -86,14 +85,13 @@ const Home = () => {
                   color: 'rgba(255, 255, 255, 0.9)',
                   lineHeight: '1.6',
                   marginBottom: '32px',
-                  maxWidth: '80%'
+                  maxWidth: '85%'
                 }}>
                   From properties to vehicles, venues to parking spaces - SpaceLink connects you with 
                   <strong style={{ color: 'white' }}> exceptional rentals worldwide</strong>. 
                   Professional service, trusted transactions.
                 </p>
                 
-                {/* CTA Button */}
                 <div style={{ marginBottom: '50px' }}>
                   <Link 
                     to="/find-property" 
@@ -125,16 +123,15 @@ const Home = () => {
                   </Link>
                 </div>
                 
-                {/* FIXED STATS - PROPER SPACING FROM EDGES */}
                 <div style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(3, 1fr)',
-                  gap: '32px',
+                  gap: '30px',
                   paddingTop: '32px',
                   borderTop: '1px solid rgba(255, 255, 255, 0.2)',
-                  maxWidth: '420px', // Increased from 380px
-                  marginLeft: '0', // Ensure left alignment
-                  marginRight: 'auto' // Prevent right edge collision
+                  maxWidth: '420px',
+                  marginLeft: '0',
+                  marginRight: 'auto'
                 }}>
                   {[
                     { number: '10K+', label: 'Items Listed' },
@@ -168,7 +165,7 @@ const Home = () => {
                 position: 'relative',
                 maxWidth: '100%',
                 margin: '0 auto',
-                paddingLeft: '1rem' // Added padding for better spacing
+                paddingLeft: '1rem'
               }}>
                 <div style={{
                   position: 'relative',
@@ -188,7 +185,6 @@ const Home = () => {
                   />
                 </div>
                 
-                {/* Floating Cards */}
                 <div style={{
                   position: 'absolute',
                   top: '20px',
@@ -246,7 +242,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* CATEGORIES SECTION - FIXED BUTTON ALIGNMENT */}
+      {/* CATEGORIES SECTION - FIXED CARD HEIGHTS & BUTTON ALIGNMENT */}
       <section style={{
         padding: '60px 0',
         background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)'
@@ -316,13 +312,13 @@ const Home = () => {
                 <div style={{
                   background: 'white',
                   borderRadius: '20px',
-                  padding: '32px 24px',
+                  padding: '36px 28px 28px 28px', // More top padding for better spacing
                   textAlign: 'center',
                   boxShadow: '0 8px 25px rgba(0, 0, 0, 0.08)',
                   border: '1px solid #f1f5f9',
                   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                   cursor: 'pointer',
-                  height: '320px', // Increased height for better spacing
+                  height: '340px', // Fixed height for all cards
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
@@ -330,8 +326,8 @@ const Home = () => {
                   overflow: 'hidden'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
-                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.15)';
+                  e.currentTarget.style.transform = 'translateY(-12px) scale(1.03)'; // Enhanced hover effect
+                  e.currentTarget.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.15)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0) scale(1)';
@@ -347,17 +343,18 @@ const Home = () => {
                     background: category.gradient
                   }}></div>
                   
+                  {/* Content Area */}
                   <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                     <div style={{ 
-                      fontSize: '3.5rem', 
-                      marginBottom: '20px',
+                      fontSize: '3.8rem', 
+                      marginBottom: '24px',
                       filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))'
                     }}>{category.icon}</div>
                     <h3 style={{
-                      fontSize: '1.4rem',
+                      fontSize: '1.5rem',
                       fontWeight: 800,
                       color: '#1e293b',
-                      marginBottom: '12px'
+                      marginBottom: '16px'
                     }}>{category.title}</h3>
                     <p style={{
                       color: '#64748b',
@@ -367,18 +364,19 @@ const Home = () => {
                     }}>{category.desc}</p>
                   </div>
                   
-                  {/* FIXED EXPLORE BUTTON - CONSISTENT ALIGNMENT */}
+                  {/* PERFECTLY ALIGNED EXPLORE BUTTON - NO TEXT CUTOFF */}
                   <div style={{
-                    paddingTop: '20px',
+                    paddingTop: '24px',
                     display: 'flex',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    alignItems: 'flex-end' // Ensures all buttons align to same baseline
                   }}>
                     <Link 
                       to="/find-property"
                       style={{
                         background: category.gradient,
                         color: 'white',
-                        padding: '12px 28px', // Increased padding
+                        padding: '14px 32px', // Increased padding to prevent text cutoff
                         borderRadius: '25px',
                         fontSize: '0.95rem',
                         fontWeight: 700,
@@ -389,12 +387,13 @@ const Home = () => {
                         gap: '8px',
                         boxShadow: '0 6px 18px rgba(0, 0, 0, 0.15)',
                         transition: 'all 0.3s ease',
-                        minWidth: '150px', // Fixed width to prevent text cutoff
-                        whiteSpace: 'nowrap' // Prevent text wrapping
+                        minWidth: '160px', // Fixed width prevents text cutoff
+                        width: '160px', // Ensures all buttons same size
+                        whiteSpace: 'nowrap' // Prevents text wrapping
                       }}
                       onMouseEnter={(e) => {
-                        e.target.style.transform = 'translateY(-2px)';
-                        e.target.style.boxShadow = '0 8px 22px rgba(0, 0, 0, 0.2)';
+                        e.target.style.transform = 'translateY(-3px)';
+                        e.target.style.boxShadow = '0 12px 28px rgba(0, 0, 0, 0.25)';
                       }}
                       onMouseLeave={(e) => {
                         e.target.style.transform = 'translateY(0)';
@@ -402,7 +401,7 @@ const Home = () => {
                       }}
                     >
                       Explore
-                      <span style={{ fontSize: '1rem' }}>→</span>
+                      <span style={{ fontSize: '1.1rem' }}>→</span>
                     </Link>
                   </div>
                 </div>
@@ -412,7 +411,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* HOW IT WORKS SECTION */}
+      {/* HOW IT WORKS SECTION - UNCHANGED */}
       <section style={{
         padding: '60px 0',
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -543,7 +542,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* FEATURED PROPERTIES - FIXED BUTTONS VISIBILITY */}
+      {/* FEATURED PROPERTIES - IMPROVED LAYOUT & BUTTON SPACING */}
       <section style={{
         padding: '70px 0',
         background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)'
@@ -601,7 +600,7 @@ const Home = () => {
                 gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
               }
             ].map((property, index) => (
-              <Col lg={5} md={6} className="mb-4" key={index} style={{ maxWidth: '450px' }}>
+              <Col lg={5} md={6} className="mb-4" key={index} style={{ maxWidth: '480px' }}>
                 <div style={{
                   background: 'white',
                   borderRadius: '20px',
@@ -609,20 +608,20 @@ const Home = () => {
                   boxShadow: '0 8px 25px rgba(0, 0, 0, 0.08)',
                   border: '1px solid #f1f5f9',
                   transition: 'all 0.3s ease',
-                  height: '500px', // Increased height to ensure buttons are visible
+                  height: '520px', // Increased height for better spacing
                   display: 'flex',
                   flexDirection: 'column'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-6px)';
-                  e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.12)';
+                  e.currentTarget.style.transform = 'translateY(-8px)';
+                  e.currentTarget.style.boxShadow = '0 20px 50px rgba(0, 0, 0, 0.12)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.08)';
                 }}>
                   {/* Image Section */}
-                  <div style={{ position: 'relative', height: '240px', overflow: 'hidden', flexShrink: 0 }}>
+                  <div style={{ position: 'relative', height: '250px', overflow: 'hidden', flexShrink: 0 }}>
                     <img 
                       src={property.image}
                       alt={property.title}
@@ -638,9 +637,9 @@ const Home = () => {
                       left: '16px',
                       background: property.gradient,
                       color: 'white',
-                      padding: '6px 14px',
-                      borderRadius: '14px',
-                      fontSize: '0.75rem',
+                      padding: '8px 16px',
+                      borderRadius: '16px',
+                      fontSize: '0.8rem',
                       fontWeight: 700,
                       boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
                     }}>
@@ -648,9 +647,9 @@ const Home = () => {
                     </div>
                   </div>
                   
-                  {/* Content Section - Flexible */}
+                  {/* Content Section - Improved Layout */}
                   <div style={{ 
-                    padding: '26px', 
+                    padding: '32px', 
                     flex: 1, 
                     display: 'flex', 
                     flexDirection: 'column',
@@ -660,38 +659,38 @@ const Home = () => {
                       <div style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '6px',
+                        gap: '8px',
                         color: '#64748b',
-                        fontSize: '0.85rem',
-                        marginBottom: '10px'
+                        fontSize: '0.9rem',
+                        marginBottom: '12px'
                       }}>
                         <span>📍</span>
                         {property.location}
                       </div>
                       
                       <h3 style={{
-                        fontSize: '1.4rem',
+                        fontSize: '1.5rem',
                         fontWeight: 800,
                         color: '#1e293b',
-                        marginBottom: '10px'
+                        marginBottom: '12px'
                       }}>{property.title}</h3>
                       
                       <p style={{
                         color: '#64748b',
-                        fontSize: '0.9rem',
-                        lineHeight: '1.5',
-                        marginBottom: '16px'
+                        fontSize: '1rem',
+                        lineHeight: '1.6',
+                        marginBottom: '20px'
                       }}>Spacious luxury {property.title.toLowerCase()} with premium amenities and modern design perfect for families</p>
                       
                       <div style={{
                         display: 'flex',
-                        gap: '16px',
-                        marginBottom: '20px',
-                        fontSize: '0.8rem',
+                        gap: '20px',
+                        marginBottom: '24px',
+                        fontSize: '0.9rem',
                         color: '#64748b'
                       }}>
                         {property.features.map((feature, idx) => (
-                          <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                          <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                             <span>{idx === 0 ? '🛏️' : '📐'}</span>
                             {feature}
                           </div>
@@ -699,64 +698,77 @@ const Home = () => {
                       </div>
                     </div>
                     
-                    {/* FIXED BUTTONS SECTION - ALWAYS VISIBLE */}
+                    {/* IMPROVED PRICING & BUTTONS SECTION */}
                     <div style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      paddingTop: '16px',
+                      paddingTop: '20px',
                       borderTop: '1px solid #f1f5f9'
                     }}>
+                      {/* Price Section - Separate for better spacing */}
                       <div style={{
-                        fontSize: '1.5rem',
-                        fontWeight: 900,
-                        color: '#10b981'
-                      }}>{property.price}</div>
+                        marginBottom: '20px' // Added spacing between price and buttons
+                      }}>
+                        <div style={{
+                          fontSize: '1.8rem',
+                          fontWeight: 900,
+                          color: '#10b981'
+                        }}>{property.price}</div>
+                      </div>
                       
-                      <div style={{ display: 'flex', gap: '8px' }}>
+                      {/* PROFESSIONAL BUTTON LAYOUT */}
+                      <div style={{
+                        display: 'flex',
+                        gap: '12px', // Better spacing between buttons
+                        justifyContent: 'center' // Center buttons for cleaner look
+                      }}>
                         <button style={{
                           background: 'transparent',
-                          border: '1.5px solid #e5e7eb',
+                          border: '2px solid #e5e7eb',
                           color: '#64748b',
-                          padding: '10px 16px',
-                          borderRadius: '8px',
-                          fontSize: '0.8rem',
+                          padding: '12px 20px', // Consistent button size
+                          borderRadius: '12px', // Modern rounded corners
+                          fontSize: '0.9rem',
                           fontWeight: 600,
                           cursor: 'pointer',
                           transition: 'all 0.3s ease',
-                          whiteSpace: 'nowrap'
+                          whiteSpace: 'nowrap',
+                          flex: 1, // Equal button widths
+                          maxWidth: '140px'
                         }}
                         onMouseEnter={(e) => {
                           e.target.style.borderColor = '#667eea';
                           e.target.style.color = '#667eea';
-                          e.target.style.transform = 'translateY(-1px)';
+                          e.target.style.transform = 'translateY(-2px)';
+                          e.target.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.15)';
                         }}
                         onMouseLeave={(e) => {
                           e.target.style.borderColor = '#e5e7eb';
                           e.target.style.color = '#64748b';
                           e.target.style.transform = 'translateY(0)';
+                          e.target.style.boxShadow = 'none';
                         }}>View Details</button>
                         
                         <button style={{
                           background: property.gradient,
                           border: 'none',
                           color: 'white',
-                          padding: '10px 16px',
-                          borderRadius: '8px',
-                          fontSize: '0.8rem',
+                          padding: '12px 20px', // Consistent button size
+                          borderRadius: '12px', // Modern rounded corners
+                          fontSize: '0.9rem',
                           fontWeight: 700,
                           cursor: 'pointer',
-                          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.15)',
                           transition: 'all 0.3s ease',
-                          whiteSpace: 'nowrap'
+                          whiteSpace: 'nowrap',
+                          flex: 1, // Equal button widths
+                          maxWidth: '140px'
                         }}
                         onMouseEnter={(e) => {
-                          e.target.style.transform = 'translateY(-1px)';
-                          e.target.style.boxShadow = '0 6px 16px rgba(0, 0, 0, 0.2)';
+                          e.target.style.transform = 'translateY(-2px)';
+                          e.target.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.25)';
                         }}
                         onMouseLeave={(e) => {
                           e.target.style.transform = 'translateY(0)';
-                          e.target.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+                          e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.15)';
                         }}>Book Now</button>
                       </div>
                     </div>
@@ -819,7 +831,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* CSS Animations */}
+      {/* CSS ANIMATIONS */}
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px); }
