@@ -192,108 +192,55 @@ const FindProperty = () => {
 
     if (property.isResidential && property.bedrooms > 0) {
       details.push(
-        <Badge key="bedrooms" className="me-2 mb-2" style={{ 
-          backgroundColor: '#f3f4f6', 
-          color: '#4b5563',
-          fontSize: '0.8rem',
-          fontWeight: '500',
-          padding: '6px 12px',
-          borderRadius: '6px',
-          border: '1px solid #e5e7eb'
-        }}>
+        <span key="bedrooms" className="custom-badge me-2 mb-2">
           <i className="fas fa-bed me-1"></i>{property.bedrooms} BHK
-        </Badge>
+        </span>
       );
     }
 
     if (property.isResidential && property.bathrooms > 0) {
       details.push(
-        <Badge key="bathrooms" className="me-2 mb-2" style={{ 
-          backgroundColor: '#f3f4f6', 
-          color: '#4b5563',
-          fontSize: '0.8rem',
-          fontWeight: '500',
-          padding: '6px 12px',
-          borderRadius: '6px',
-          border: '1px solid #e5e7eb'
-        }}>
+        <span key="bathrooms" className="custom-badge me-2 mb-2">
           <i className="fas fa-bath me-1"></i>{property.bathrooms} Bath
-        </Badge>
+        </span>
       );
     }
 
     if (!property.isResidential && property.bathrooms > 0) {
       details.push(
-        <Badge key="washrooms" className="me-2 mb-2" style={{ 
-          backgroundColor: '#f3f4f6', 
-          color: '#4b5563',
-          fontSize: '0.8rem',
-          fontWeight: '500',
-          padding: '6px 12px',
-          borderRadius: '6px',
-          border: '1px solid #e5e7eb'
-        }}>
+        <span key="washrooms" className="custom-badge me-2 mb-2">
           <i className="fas fa-restroom me-1"></i>{property.bathrooms} Washrooms
-        </Badge>
+        </span>
       );
     }
 
     details.push(
-      <Badge key="area" className="me-2 mb-2" style={{ 
-        backgroundColor: '#f3f4f6', 
-        color: '#4b5563',
-        fontSize: '0.8rem',
-        fontWeight: '500',
-        padding: '6px 12px',
-        borderRadius: '6px',
-        border: '1px solid #e5e7eb'
-      }}>
+      <span key="area" className="custom-badge me-2 mb-2">
         <i className="fas fa-ruler-combined me-1"></i>{property.area.toLocaleString()} sq ft
-      </Badge>
+      </span>
     );
 
     if (property.capacity) {
       details.push(
-        <Badge key="capacity" className="me-2 mb-2" style={{ 
-          backgroundColor: '#7c3aed', 
-          color: 'white',
-          fontSize: '0.8rem',
-          fontWeight: '500',
-          padding: '6px 12px',
-          borderRadius: '6px'
-        }}>
+        <span key="capacity" className="custom-badge-purple me-2 mb-2">
           <i className="fas fa-users me-1"></i>{property.capacity}
-        </Badge>
+        </span>
       );
     }
 
     if (property.surface) {
       details.push(
-        <Badge key="surface" className="me-2 mb-2" style={{ 
-          backgroundColor: '#059669', 
-          color: 'white',
-          fontSize: '0.8rem',
-          fontWeight: '500',
-          padding: '6px 12px',
-          borderRadius: '6px'
-        }}>
+        <span key="surface" className="custom-badge-green me-2 mb-2">
           <i className="fas fa-futbol me-1"></i>{property.surface}
-        </Badge>
+        </span>
       );
     }
 
     if (property.security) {
       details.push(
-        <Badge key="security" className="me-2 mb-2" style={{ 
-          backgroundColor: '#d97706', 
-          color: 'white',
-          fontSize: '0.8rem',
-          fontWeight: '500',
-          padding: '6px 12px',
-          borderRadius: '6px'
-        }}>
+        <span key="security" className="custom-badge-orange me-2 mb-2">
           <i className="fas fa-shield-alt me-1"></i>{property.security}
-        </Badge>
+        </span>
       );
     }
 
@@ -374,33 +321,19 @@ const FindProperty = () => {
 
           <div className="p-4">
             
-            {/* SEARCH INPUT WITH ICON FIXED */}
+            {/* SEARCH INPUT WITH ICON */}
             <div className="mb-4">
               <Form.Label className="fw-semibold mb-3" style={{ color: '#374151' }}>
                 Search Properties
               </Form.Label>
-              <div style={{ position: 'relative' }}>
-                <i className="fas fa-search" style={{ 
-                  position: 'absolute',
-                  left: '12px', 
-                  top: '50%', 
-                  transform: 'translateY(-50%)', 
-                  color: '#9ca3af',
-                  zIndex: 5
-                }}></i>
+              <div className="search-wrapper">
+                <i className="fas fa-search search-icon"></i>
                 <Form.Control
                   type="text"
                   placeholder="Type to search..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  style={{ 
-                    paddingLeft: '40px',
-                    border: '1.5px solid #d1d5db',
-                    borderRadius: '8px',
-                    fontSize: '0.95rem',
-                    padding: '12px 16px 12px 40px',
-                    backgroundColor: '#ffffff'
-                  }}
+                  className="search-input"
                 />
               </div>
             </div>
@@ -413,13 +346,7 @@ const FindProperty = () => {
               <Form.Select
                 value={filters.location}
                 onChange={(e) => handleFilterChange('location', e.target.value)}
-                style={{ 
-                  fontSize: '0.95rem',
-                  padding: '12px 16px',
-                  border: '1.5px solid #d1d5db',
-                  borderRadius: '8px',
-                  backgroundColor: '#ffffff'
-                }}
+                className="custom-select"
               >
                 {indianLocations.map((location, index) => (
                   <option key={index} value={location === "All Locations" ? "" : location}>
@@ -437,13 +364,7 @@ const FindProperty = () => {
               <Form.Select
                 value={filters.propertyType}
                 onChange={(e) => handleFilterChange('propertyType', e.target.value)}
-                style={{ 
-                  fontSize: '0.95rem',
-                  padding: '12px 16px',
-                  border: '1.5px solid #d1d5db',
-                  borderRadius: '8px',
-                  backgroundColor: '#ffffff'
-                }}
+                className="custom-select"
               >
                 {propertyTypes.map((type, index) => (
                   <option key={index} value={type === "All Categories" ? "" : type}>
@@ -461,13 +382,7 @@ const FindProperty = () => {
               <Form.Select
                 value={filters.priceRange}
                 onChange={(e) => handleFilterChange('priceRange', e.target.value)}
-                style={{ 
-                  fontSize: '0.95rem',
-                  padding: '12px 16px',
-                  border: '1.5px solid #d1d5db',
-                  borderRadius: '8px',
-                  backgroundColor: '#ffffff'
-                }}
+                className="custom-select"
               >
                 <option value="">All Prices</option>
                 <option value="0-2000">₹0 - ₹2,000</option>
@@ -486,13 +401,7 @@ const FindProperty = () => {
                 <Form.Select
                   value={filters.bedrooms}
                   onChange={(e) => handleFilterChange('bedrooms', e.target.value)}
-                  style={{ 
-                    fontSize: '0.95rem',
-                    padding: '12px 16px',
-                    border: '1.5px solid #d1d5db',
-                    borderRadius: '8px',
-                    backgroundColor: '#ffffff'
-                  }}
+                  className="custom-select"
                 >
                   <option value="">Any Bedrooms</option>
                   <option value="1">1+ BHK</option>
@@ -506,40 +415,19 @@ const FindProperty = () => {
             {/* Clear Filters */}
             <Button 
               variant="outline-secondary"
-              className="w-100 mb-4 fw-semibold"
+              className="w-100 mb-4 fw-semibold custom-clear-btn"
               onClick={clearFilters}
-              style={{ 
-                fontSize: '0.95rem',
-                padding: '12px 16px',
-                border: '1.5px solid #d1d5db',
-                borderRadius: '8px',
-                color: '#6b7280',
-                backgroundColor: '#ffffff'
-              }}
             >
               <i className="fas fa-times me-2"></i>Clear All Filters
             </Button>
 
             {/* Filter Status */}
-            <div 
-              className="p-3 rounded-3 bg-white border"
-              style={{ 
-                borderColor: '#e5e7eb',
-                borderRadius: '8px'
-              }}
-            >
+            <div className="filter-status">
               <div className="d-flex justify-content-between align-items-center">
                 <span className="text-muted fw-semibold">Active Filters</span>
-                <Badge 
-                  className="fw-semibold"
-                  style={{ 
-                    fontSize: '0.8rem',
-                    backgroundColor: '#7c3aed',
-                    color: 'white'
-                  }}
-                >
+                <span className="custom-badge-purple">
                   {Object.values(filters).filter(f => f).length + (searchQuery ? 1 : 0)}
-                </Badge>
+                </span>
               </div>
             </div>
           </div>
@@ -571,16 +459,8 @@ const FindProperty = () => {
                   onChange={() => setViewMode('grid')}
                 />
                 <label 
-                  className="btn fw-semibold" 
+                  className={`btn fw-semibold custom-toggle-btn ${viewMode === 'grid' ? 'active' : ''}`}
                   htmlFor="gridView"
-                  style={{ 
-                    fontSize: '0.9rem', 
-                    padding: '12px 24px',
-                    border: '1.5px solid #d1d5db',
-                    borderRadius: '8px 0 0 8px',
-                    color: viewMode === 'grid' ? 'white' : '#6b7280',
-                    backgroundColor: viewMode === 'grid' ? '#7c3aed' : '#ffffff'
-                  }}
                 >
                   <i className="fas fa-th me-2"></i>Grid
                 </label>
@@ -594,24 +474,15 @@ const FindProperty = () => {
                   onChange={() => setViewMode('list')}
                 />
                 <label 
-                  className="btn fw-semibold" 
+                  className={`btn fw-semibold custom-toggle-btn ${viewMode === 'list' ? 'active' : ''}`}
                   htmlFor="listView"
-                  style={{ 
-                    fontSize: '0.9rem', 
-                    padding: '12px 24px',
-                    border: '1.5px solid #d1d5db',
-                    borderLeft: 'none',
-                    borderRadius: '0 8px 8px 0',
-                    color: viewMode === 'list' ? 'white' : '#6b7280',
-                    backgroundColor: viewMode === 'list' ? '#7c3aed' : '#ffffff'
-                  }}
                 >
                   <i className="fas fa-list me-2"></i>List
                 </label>
               </div>
             </div>
 
-            {/* PROPERTY CARDS - NO BLUE COLORS AT ALL */}
+            {/* PROPERTY CARDS - CUSTOM BADGES, NO BOOTSTRAP COLORS */}
             {filteredProperties.length === 0 ? (
               <Card className="border-0 shadow-sm text-center p-5">
                 <Card.Body>
@@ -623,14 +494,9 @@ const FindProperty = () => {
                     We couldn't find any properties matching your criteria. Try adjusting your filters.
                   </p>
                   <Button 
-                    variant="primary"
+                    className="custom-primary-btn fw-semibold"
                     size="lg"
                     onClick={clearFilters}
-                    className="fw-semibold"
-                    style={{ 
-                      backgroundColor: '#7c3aed',
-                      borderColor: '#7c3aed'
-                    }}
                   >
                     Clear All Filters
                   </Button>
@@ -670,50 +536,23 @@ const FindProperty = () => {
                           }}
                         />
                         
-                        {/* ABSOLUTELY NO BLUE - ONLY PURPLE, GRAY, RED, GREEN */}
+                        {/* CUSTOM BADGES - NO BOOTSTRAP COLORS */}
                         <div className="position-absolute top-0 start-0 p-3">
-                          <Badge 
-                            className="me-2 fw-semibold"
-                            style={{ 
-                              fontSize: '0.8rem',
-                              padding: '8px 12px',
-                              backgroundColor: '#059669', // GREEN FOR "FOR RENT" - NO BLUE
-                              color: 'white',
-                              borderRadius: '6px'
-                            }}
-                          >
+                          <span className="status-badge-green me-2">
                             {property.status}
-                          </Badge>
+                          </span>
                           {property.verified && (
-                            <Badge 
-                              className="fw-semibold"
-                              style={{ 
-                                fontSize: '0.8rem',
-                                padding: '8px 12px',
-                                backgroundColor: '#7c3aed', // PURPLE FOR "VERIFIED" - NO BLUE
-                                color: 'white',
-                                borderRadius: '6px'
-                              }}
-                            >
+                            <span className="status-badge-purple">
                               <i className="fas fa-check me-1"></i>Verified
-                            </Badge>
+                            </span>
                           )}
                         </div>
                         
-                        {/* PROPERTY TYPE BADGE - GRAY ONLY, NO BLUE */}
+                        {/* PROPERTY TYPE BADGE - GRAY ONLY */}
                         <div className="position-absolute top-0 end-0 p-3">
-                          <Badge 
-                            className="fw-semibold"
-                            style={{ 
-                              fontSize: '0.8rem',
-                              padding: '8px 12px',
-                              backgroundColor: '#6b7280', // GRAY FOR ALL PROPERTY TYPES - NO BLUE
-                              color: 'white',
-                              borderRadius: '6px'
-                            }}
-                          >
+                          <span className="status-badge-gray">
                             {property.type}
-                          </Badge>
+                          </span>
                         </div>
                       </div>
                       
@@ -732,7 +571,7 @@ const FindProperty = () => {
                           {property.title}
                         </Card.Title>
                         
-                        {/* Property Details - ALL GRAY AND PURPLE */}
+                        {/* Property Details */}
                         <div className="mb-4 flex-grow-1">
                           {renderPropertyDetails(property)}
                         </div>
@@ -749,29 +588,14 @@ const FindProperty = () => {
                           {/* Action Buttons */}
                           <div className="d-grid gap-3 d-md-flex">
                             <Button 
-                              variant="outline-secondary" 
+                              className="flex-fill fw-semibold custom-outline-btn"
                               size="lg"
-                              className="flex-fill fw-semibold"
-                              style={{ 
-                                fontSize: '0.9rem',
-                                padding: '12px 20px',
-                                borderColor: '#d1d5db',
-                                color: '#6b7280',
-                                backgroundColor: '#ffffff'
-                              }}
                             >
                               View Details
                             </Button>
                             <Button 
+                              className="flex-fill fw-semibold custom-primary-btn"
                               size="lg"
-                              className="flex-fill fw-semibold"
-                              style={{ 
-                                fontSize: '0.9rem',
-                                padding: '12px 20px',
-                                backgroundColor: '#7c3aed', // PURPLE - NO BLUE
-                                borderColor: '#7c3aed',
-                                color: 'white'
-                              }}
                             >
                               Book Now
                             </Button>
@@ -787,7 +611,7 @@ const FindProperty = () => {
         </div>
       </div>
 
-      {/* STYLES - ZERO BLUE */}
+      {/* CUSTOM STYLES - OVERRIDE ALL BOOTSTRAP BLUES */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
         
@@ -795,21 +619,218 @@ const FindProperty = () => {
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
         
-        .form-control:focus, .form-select:focus {
+        /* Search input with icon */
+        .search-wrapper {
+          position: relative;
+        }
+        
+        .search-icon {
+          position: absolute;
+          left: 12px;
+          top: 50%;
+          transform: translateY(-50%);
+          color: #9ca3af;
+          z-index: 5;
+          font-size: 1rem;
+        }
+        
+        .search-input {
+          padding-left: 40px !important;
+          border: 1.5px solid #d1d5db !important;
+          border-radius: 8px !important;
+          font-size: 0.95rem !important;
+          padding: 12px 16px 12px 40px !important;
+          background-color: #ffffff !important;
+        }
+        
+        .search-input:focus {
           border-color: #7c3aed !important;
           box-shadow: 0 0 0 0.2rem rgba(124, 58, 237, 0.25) !important;
         }
         
-        .btn-outline-secondary:hover {
+        /* Custom selects */
+        .custom-select {
+          fontSize: 0.95rem !important;
+          padding: 12px 16px !important;
+          border: 1.5px solid #d1d5db !important;
+          border-radius: 8px !important;
+          background-color: #ffffff !important;
+        }
+        
+        .custom-select:focus {
+          border-color: #7c3aed !important;
+          box-shadow: 0 0 0 0.2rem rgba(124, 58, 237, 0.25) !important;
+        }
+        
+        /* Custom badges - NO BOOTSTRAP CLASSES */
+        .custom-badge {
+          display: inline-block;
+          background-color: #f3f4f6;
+          color: #4b5563;
+          font-size: 0.8rem;
+          font-weight: 500;
+          padding: 6px 12px;
+          border-radius: 6px;
+          border: 1px solid #e5e7eb;
+        }
+        
+        .custom-badge-purple {
+          display: inline-block;
+          background-color: #7c3aed;
+          color: white;
+          font-size: 0.8rem;
+          font-weight: 500;
+          padding: 6px 12px;
+          border-radius: 6px;
+        }
+        
+        .custom-badge-green {
+          display: inline-block;
+          background-color: #059669;
+          color: white;
+          font-size: 0.8rem;
+          font-weight: 500;
+          padding: 6px 12px;
+          border-radius: 6px;
+        }
+        
+        .custom-badge-orange {
+          display: inline-block;
+          background-color: #d97706;
+          color: white;
+          font-size: 0.8rem;
+          font-weight: 500;
+          padding: 6px 12px;
+          border-radius: 6px;
+        }
+        
+        /* Status badges - COMPLETELY CUSTOM */
+        .status-badge-green {
+          display: inline-block;
+          background-color: #059669;
+          color: white;
+          font-size: 0.8rem;
+          font-weight: 600;
+          padding: 8px 12px;
+          border-radius: 6px;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .status-badge-purple {
+          display: inline-block;
+          background-color: #7c3aed;
+          color: white;
+          font-size: 0.8rem;
+          font-weight: 600;
+          padding: 8px 12px;
+          border-radius: 6px;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .status-badge-gray {
+          display: inline-block;
+          background-color: #6b7280;
+          color: white;
+          font-size: 0.8rem;
+          font-weight: 600;
+          padding: 8px 12px;
+          border-radius: 6px;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Custom buttons */
+        .custom-primary-btn {
+          background-color: #7c3aed !important;
+          border-color: #7c3aed !important;
+          color: white !important;
+          font-size: 0.9rem !important;
+          padding: 12px 20px !important;
+          border-radius: 12px !important;
+          border: none !important;
+        }
+        
+        .custom-primary-btn:hover {
+          background-color: #6d28d9 !important;
+          border-color: #6d28d9 !important;
+          color: white !important;
+        }
+        
+        .custom-outline-btn {
+          background-color: #ffffff !important;
+          border: 1.5px solid #d1d5db !important;
+          color: #6b7280 !important;
+          font-size: 0.9rem !important;
+          padding: 12px 20px !important;
+          border-radius: 12px !important;
+        }
+        
+        .custom-outline-btn:hover {
           background-color: #7c3aed !important;
           border-color: #7c3aed !important;
           color: white !important;
         }
         
-        .btn-check:checked + .btn-outline-secondary {
+        .custom-clear-btn {
+          font-size: 0.95rem !important;
+          padding: 12px 16px !important;
+          border: 1.5px solid #d1d5db !important;
+          border-radius: 8px !important;
+          color: #6b7280 !important;
+          background-color: #ffffff !important;
+        }
+        
+        .custom-clear-btn:hover {
           background-color: #7c3aed !important;
           border-color: #7c3aed !important;
           color: white !important;
+        }
+        
+        /* View toggle buttons */
+        .custom-toggle-btn {
+          font-size: 0.9rem !important;
+          padding: 12px 24px !important;
+          border: 1.5px solid #d1d5db !important;
+          color: #6b7280 !important;
+          background-color: #ffffff !important;
+          border-radius: 0 !important;
+        }
+        
+        .custom-toggle-btn:first-child {
+          border-radius: 8px 0 0 8px !important;
+        }
+        
+        .custom-toggle-btn:last-child {
+          border-radius: 0 8px 8px 0 !important;
+          border-left: none !important;
+        }
+        
+        .custom-toggle-btn.active {
+          background-color: #7c3aed !important;
+          border-color: #7c3aed !important;
+          color: white !important;
+        }
+        
+        .custom-toggle-btn:hover {
+          background-color: #7c3aed !important;
+          border-color: #7c3aed !important;
+          color: white !important;
+        }
+        
+        /* Filter status */
+        .filter-status {
+          padding: 12px;
+          border-radius: 8px;
+          background-color: #f8fafc;
+          border: 1px solid #e5e7eb;
+        }
+        
+        /* Override any remaining Bootstrap blues */
+        .badge-primary, .bg-primary {
+          background-color: #7c3aed !important;
+        }
+        
+        .text-primary {
+          color: #7c3aed !important;
         }
         
         .btn-primary {
