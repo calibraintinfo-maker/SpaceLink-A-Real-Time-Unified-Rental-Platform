@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Badge, Button, Form, InputGroup } from 'react-bootstrap';
+import { Container, Row, Col, Card, Badge, Button, Form } from 'react-bootstrap';
 
 const FindProperty = () => {
   const [properties, setProperties] = useState([]);
@@ -302,7 +302,7 @@ const FindProperty = () => {
 
   return (
     <>
-      {/* BEAUTIFUL PURPLE HERO */}
+      {/* PURPLE HERO */}
       <section 
         className="py-5 text-white"
         style={{
@@ -374,30 +374,34 @@ const FindProperty = () => {
 
           <div className="p-4">
             
-            {/* Search */}
+            {/* FIXED SEARCH INPUT - NO DOUBLE BOXES */}
             <div className="mb-4">
               <Form.Label className="fw-semibold mb-3" style={{ color: '#374151' }}>
                 Search Properties
               </Form.Label>
-              <InputGroup>
-                <InputGroup.Text 
-                  className="bg-white"
-                  style={{ borderColor: '#d1d5db', color: '#9ca3af' }}
-                >
-                  <i className="fas fa-search"></i>
-                </InputGroup.Text>
+              <div className="position-relative">
+                <i className="fas fa-search position-absolute" style={{ 
+                  left: '12px', 
+                  top: '50%', 
+                  transform: 'translateY(-50%)', 
+                  color: '#9ca3af',
+                  zIndex: 10
+                }}></i>
                 <Form.Control
                   type="text"
                   placeholder="Type to search..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   style={{ 
-                    borderColor: '#d1d5db',
+                    paddingLeft: '40px',
+                    border: '1.5px solid #d1d5db',
+                    borderRadius: '8px',
                     fontSize: '0.95rem',
-                    padding: '12px 16px'
+                    padding: '12px 16px 12px 40px',
+                    backgroundColor: '#ffffff'
                   }}
                 />
-              </InputGroup>
+              </div>
             </div>
 
             {/* Location */}
@@ -411,7 +415,9 @@ const FindProperty = () => {
                 style={{ 
                   fontSize: '0.95rem',
                   padding: '12px 16px',
-                  borderColor: '#d1d5db'
+                  border: '1.5px solid #d1d5db',
+                  borderRadius: '8px',
+                  backgroundColor: '#ffffff'
                 }}
               >
                 {indianLocations.map((location, index) => (
@@ -433,7 +439,9 @@ const FindProperty = () => {
                 style={{ 
                   fontSize: '0.95rem',
                   padding: '12px 16px',
-                  borderColor: '#d1d5db'
+                  border: '1.5px solid #d1d5db',
+                  borderRadius: '8px',
+                  backgroundColor: '#ffffff'
                 }}
               >
                 {propertyTypes.map((type, index) => (
@@ -455,7 +463,9 @@ const FindProperty = () => {
                 style={{ 
                   fontSize: '0.95rem',
                   padding: '12px 16px',
-                  borderColor: '#d1d5db'
+                  border: '1.5px solid #d1d5db',
+                  borderRadius: '8px',
+                  backgroundColor: '#ffffff'
                 }}
               >
                 <option value="">All Prices</option>
@@ -478,7 +488,9 @@ const FindProperty = () => {
                   style={{ 
                     fontSize: '0.95rem',
                     padding: '12px 16px',
-                    borderColor: '#d1d5db'
+                    border: '1.5px solid #d1d5db',
+                    borderRadius: '8px',
+                    backgroundColor: '#ffffff'
                   }}
                 >
                   <option value="">Any Bedrooms</option>
@@ -498,8 +510,10 @@ const FindProperty = () => {
               style={{ 
                 fontSize: '0.95rem',
                 padding: '12px 16px',
-                borderColor: '#d1d5db',
-                color: '#6b7280'
+                border: '1.5px solid #d1d5db',
+                borderRadius: '8px',
+                color: '#6b7280',
+                backgroundColor: '#ffffff'
               }}
             >
               <i className="fas fa-times me-2"></i>Clear All Filters
@@ -508,7 +522,10 @@ const FindProperty = () => {
             {/* Filter Status */}
             <div 
               className="p-3 rounded-3 bg-white border"
-              style={{ borderColor: '#e5e7eb' }}
+              style={{ 
+                borderColor: '#e5e7eb',
+                borderRadius: '8px'
+              }}
             >
               <div className="d-flex justify-content-between align-items-center">
                 <span className="text-muted fw-semibold">Active Filters</span>
@@ -590,7 +607,7 @@ const FindProperty = () => {
               </div>
             </div>
 
-            {/* PROPERTY CARDS - ABSOLUTELY NO BLUE */}
+            {/* PROPERTY CARDS - ZERO BLUE COLORS */}
             {filteredProperties.length === 0 ? (
               <Card className="border-0 shadow-sm text-center p-5">
                 <Card.Body>
@@ -646,7 +663,7 @@ const FindProperty = () => {
                           }}
                         />
                         
-                        {/* ABSOLUTELY NO BLUE BADGES */}
+                        {/* NO BLUE BADGES - PURPLE AND GRAY ONLY */}
                         <div className="position-absolute top-0 start-0 p-3">
                           <Badge 
                             className="me-2 fw-semibold"
@@ -666,7 +683,7 @@ const FindProperty = () => {
                               style={{ 
                                 fontSize: '0.8rem',
                                 padding: '8px 12px',
-                                backgroundColor: '#7c3aed', // PURPLE VERIFIED
+                                backgroundColor: '#7c3aed', // PURPLE VERIFIED - NO BLUE
                                 color: 'white',
                                 borderRadius: '6px'
                               }}
@@ -676,14 +693,14 @@ const FindProperty = () => {
                           )}
                         </div>
                         
-                        {/* PROPERTY TYPE BADGE - NEUTRAL GRAY ONLY */}
+                        {/* PROPERTY TYPE BADGE - GRAY ONLY, NO BLUE */}
                         <div className="position-absolute top-0 end-0 p-3">
                           <Badge 
                             className="fw-semibold"
                             style={{ 
                               fontSize: '0.8rem',
                               padding: '8px 12px',
-                              backgroundColor: '#6b7280', // GRAY ONLY
+                              backgroundColor: '#6b7280', // GRAY ONLY - NO BLUE
                               color: 'white',
                               borderRadius: '6px'
                             }}
@@ -708,7 +725,7 @@ const FindProperty = () => {
                           {property.title}
                         </Card.Title>
                         
-                        {/* Property Details */}
+                        {/* Property Details - ALL GRAY AND PURPLE */}
                         <div className="mb-4 flex-grow-1">
                           {renderPropertyDetails(property)}
                         </div>
@@ -732,7 +749,8 @@ const FindProperty = () => {
                                 fontSize: '0.9rem',
                                 padding: '12px 20px',
                                 borderColor: '#d1d5db',
-                                color: '#6b7280'
+                                color: '#6b7280',
+                                backgroundColor: '#ffffff'
                               }}
                             >
                               View Details
@@ -743,7 +761,7 @@ const FindProperty = () => {
                               style={{ 
                                 fontSize: '0.9rem',
                                 padding: '12px 20px',
-                                backgroundColor: '#7c3aed', // PURPLE PRIMARY
+                                backgroundColor: '#7c3aed', // PURPLE PRIMARY - NO BLUE
                                 borderColor: '#7c3aed',
                                 color: 'white'
                               }}
@@ -762,7 +780,7 @@ const FindProperty = () => {
         </div>
       </div>
 
-      {/* FINAL STYLES - NO BLUE ANYWHERE */}
+      {/* PERFECT STYLES - ZERO BLUE ANYWHERE */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
         
