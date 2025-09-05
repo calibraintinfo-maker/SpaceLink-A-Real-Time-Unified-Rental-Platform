@@ -37,10 +37,10 @@ const Navbar = () => {
         zIndex: 1050,
         height: '80px',
         background: scrolled 
-          ? 'rgba(15, 23, 42, 0.95)' 
-          : 'linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%)',
+          ? 'rgba(30, 41, 59, 0.95)' 
+          : 'linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(51, 65, 85, 0.95) 100%)',
         backdropFilter: 'blur(20px) saturate(180%)',
-        borderBottom: scrolled ? '1px solid rgba(148, 163, 184, 0.2)' : 'none',
+        borderBottom: scrolled ? '1px solid rgba(59, 130, 246, 0.2)' : 'none',
         boxShadow: scrolled 
           ? '0 8px 32px rgba(0, 0, 0, 0.3)' 
           : '0 4px 20px rgba(0, 0, 0, 0.1)',
@@ -56,7 +56,7 @@ const Navbar = () => {
           width: '100%',
           height: '100%'
         }}>
-          {/* Ultra Creative Logo */}
+          {/* Professional Logo */}
           <BootstrapNavbar.Brand 
             as={Link} 
             to="/" 
@@ -72,36 +72,17 @@ const Navbar = () => {
             }}
           >
             <div style={{
-              background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #4facfe 100%)',
+              background: 'linear-gradient(135deg, #3b82f6 0%, #6366f1 100%)',
               borderRadius: '12px',
               padding: '8px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 4px 15px rgba(241, 87, 108, 0.3)'
+              boxShadow: '0 4px 15px rgba(59, 130, 246, 0.3)'
             }}>
               <span style={{ fontSize: '1.5rem' }}>🏠</span>
             </div>
-            <span style={{
-              background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text'
-            }}>
-              SpaceLink
-            </span>
-            
-            {/* Creative Accent */}
-            <div style={{
-              position: 'absolute',
-              top: '-4px',
-              right: '-8px',
-              width: '8px',
-              height: '8px',
-              background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-              borderRadius: '50%',
-              animation: 'pulse 2s infinite'
-            }}></div>
+            <span style={{ color: 'white' }}>SpaceLink</span>
           </BootstrapNavbar.Brand>
           
           <BootstrapNavbar.Toggle 
@@ -109,7 +90,7 @@ const Navbar = () => {
             style={{
               border: 'none',
               padding: '4px 8px',
-              background: 'rgba(255, 255, 255, 0.1)',
+              background: 'rgba(59, 130, 246, 0.1)',
               borderRadius: '8px'
             }}
           />
@@ -121,13 +102,13 @@ const Navbar = () => {
               gap: '2rem',
               marginLeft: 'auto'
             }}>
-              {/* Navigation Links with Creative Hover */}
+              {/* Navigation Links */}
               <Nav style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
                 <Nav.Link 
                   as={Link} 
                   to="/find-property"
                   style={{
-                    color: isActive('/find-property') ? '#f093fb' : 'rgba(255, 255, 255, 0.9)',
+                    color: isActive('/find-property') ? '#60a5fa' : 'rgba(255, 255, 255, 0.9)',
                     fontWeight: 600,
                     fontSize: '0.95rem',
                     padding: '8px 16px',
@@ -135,12 +116,12 @@ const Navbar = () => {
                     position: 'relative',
                     transition: 'all 0.3s ease',
                     textDecoration: 'none',
-                    background: isActive('/find-property') ? 'rgba(240, 147, 251, 0.1)' : 'transparent'
+                    background: isActive('/find-property') ? 'rgba(59, 130, 246, 0.1)' : 'transparent'
                   }}
                   onMouseEnter={(e) => {
                     if (!isActive('/find-property')) {
-                      e.target.style.color = '#f093fb';
-                      e.target.style.background = 'rgba(240, 147, 251, 0.1)';
+                      e.target.style.color = '#60a5fa';
+                      e.target.style.background = 'rgba(59, 130, 246, 0.1)';
                     }
                   }}
                   onMouseLeave={(e) => {
@@ -159,26 +140,14 @@ const Navbar = () => {
                       as={Link} 
                       to="/my-bookings"
                       style={{
-                        color: isActive('/my-bookings') ? '#f093fb' : 'rgba(255, 255, 255, 0.9)',
+                        color: isActive('/my-bookings') ? '#60a5fa' : 'rgba(255, 255, 255, 0.9)',
                         fontWeight: 600,
                         fontSize: '0.95rem',
                         padding: '8px 16px',
                         borderRadius: '8px',
                         transition: 'all 0.3s ease',
                         textDecoration: 'none',
-                        background: isActive('/my-bookings') ? 'rgba(240, 147, 251, 0.1)' : 'transparent'
-                      }}
-                      onMouseEnter={(e) => {
-                        if (!isActive('/my-bookings')) {
-                          e.target.style.color = '#f093fb';
-                          e.target.style.background = 'rgba(240, 147, 251, 0.1)';
-                        }
-                      }}
-                      onMouseLeave={(e) => {
-                        if (!isActive('/my-bookings')) {
-                          e.target.style.color = 'rgba(255, 255, 255, 0.9)';
-                          e.target.style.background = 'transparent';
-                        }
+                        background: isActive('/my-bookings') ? 'rgba(59, 130, 246, 0.1)' : 'transparent'
                       }}
                     >
                       My Bookings
@@ -187,19 +156,14 @@ const Navbar = () => {
                     <NavDropdown 
                       title="Properties" 
                       id="property-dropdown"
-                      style={{
-                        color: 'rgba(255, 255, 255, 0.9)',
-                        fontWeight: 600,
-                        fontSize: '0.95rem'
-                      }}
+                      style={{ color: 'rgba(255, 255, 255, 0.9)' }}
                     >
                       <NavDropdown.Item 
                         as={Link} 
                         to="/add-property"
                         style={{
-                          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                          background: 'linear-gradient(135deg, #3b82f6 0%, #6366f1 100%)',
                           color: 'white',
-                          border: 'none',
                           borderRadius: '8px',
                           margin: '4px',
                           padding: '8px 16px'
@@ -211,9 +175,8 @@ const Navbar = () => {
                         as={Link} 
                         to="/manage-properties"
                         style={{
-                          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                          background: 'linear-gradient(135deg, #3b82f6 0%, #6366f1 100%)',
                           color: 'white',
-                          border: 'none',
                           borderRadius: '8px',
                           margin: '4px',
                           padding: '8px 16px'
@@ -226,7 +189,7 @@ const Navbar = () => {
                 )}
               </Nav>
               
-              {/* Creative Auth Section */}
+              {/* Auth Section */}
               {isAuthenticated ? (
                 <NavDropdown 
                   title={
@@ -239,7 +202,7 @@ const Navbar = () => {
                       <div style={{
                         width: '32px',
                         height: '32px',
-                        background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                        background: 'linear-gradient(135deg, #3b82f6 0%, #6366f1 100%)',
                         borderRadius: '50%',
                         display: 'flex',
                         alignItems: 'center',
@@ -255,34 +218,9 @@ const Navbar = () => {
                   id="user-dropdown" 
                   align="end"
                 >
-                  <NavDropdown.Item 
-                    as={Link} 
-                    to="/profile"
-                    style={{
-                      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '8px',
-                      margin: '4px',
-                      padding: '8px 16px'
-                    }}
-                  >
-                    Profile
-                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/profile">Profile</NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item 
-                    onClick={handleLogout}
-                    style={{
-                      background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '8px',
-                      margin: '4px',
-                      padding: '8px 16px'
-                    }}
-                  >
-                    Logout
-                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
                 </NavDropdown>
               ) : (
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -290,7 +228,7 @@ const Navbar = () => {
                     to="/login" 
                     style={{
                       background: 'transparent',
-                      border: '2px solid rgba(255, 255, 255, 0.2)',
+                      border: '2px solid rgba(59, 130, 246, 0.3)',
                       borderRadius: '12px',
                       padding: '10px 20px',
                       color: 'rgba(255, 255, 255, 0.9)',
@@ -300,24 +238,23 @@ const Navbar = () => {
                       transition: 'all 0.3s ease'
                     }}
                     onMouseEnter={(e) => {
-                      e.target.style.background = 'rgba(255, 255, 255, 0.1)';
-                      e.target.style.borderColor = 'rgba(240, 147, 251, 0.5)';
-                      e.target.style.color = '#f093fb';
+                      e.target.style.background = 'rgba(59, 130, 246, 0.1)';
+                      e.target.style.borderColor = 'rgba(59, 130, 246, 0.5)';
+                      e.target.style.color = '#60a5fa';
                     }}
                     onMouseLeave={(e) => {
                       e.target.style.background = 'transparent';
-                      e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                      e.target.style.borderColor = 'rgba(59, 130, 246, 0.3)';
                       e.target.style.color = 'rgba(255, 255, 255, 0.9)';
                     }}
                   >
                     Login
                   </Link>
                   
-                  {/* Ultra Creative CTA Button */}
                   <Link 
                     to="/register" 
                     style={{
-                      background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                      background: 'linear-gradient(135deg, #3b82f6 0%, #6366f1 100%)',
                       border: 'none',
                       borderRadius: '12px',
                       padding: '12px 24px',
@@ -325,21 +262,19 @@ const Navbar = () => {
                       fontSize: '0.9rem',
                       fontWeight: 700,
                       textDecoration: 'none',
-                      boxShadow: '0 4px 15px rgba(241, 87, 108, 0.3)',
-                      position: 'relative',
-                      overflow: 'hidden',
+                      boxShadow: '0 4px 15px rgba(59, 130, 246, 0.3)',
                       transition: 'all 0.3s ease'
                     }}
                     onMouseEnter={(e) => {
                       e.target.style.transform = 'translateY(-2px)';
-                      e.target.style.boxShadow = '0 8px 25px rgba(241, 87, 108, 0.4)';
+                      e.target.style.boxShadow = '0 8px 25px rgba(59, 130, 246, 0.4)';
                     }}
                     onMouseLeave={(e) => {
                       e.target.style.transform = 'translateY(0)';
-                      e.target.style.boxShadow = '0 4px 15px rgba(241, 87, 108, 0.3)';
+                      e.target.style.boxShadow = '0 4px 15px rgba(59, 130, 246, 0.3)';
                     }}
                   >
-                    <span style={{ position: 'relative', zIndex: 2 }}>Get Started</span>
+                    Get Started
                   </Link>
                 </div>
               )}
@@ -347,14 +282,6 @@ const Navbar = () => {
           </BootstrapNavbar.Collapse>
         </div>
       </Container>
-      
-      {/* Add CSS for animations */}
-      <style>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.7; transform: scale(1.2); }
-        }
-      `}</style>
     </BootstrapNavbar>
   );
 };
