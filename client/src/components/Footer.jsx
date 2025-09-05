@@ -7,7 +7,7 @@ const Footer = () => {
     <footer style={{
       background: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)',
       color: 'white',
-      padding: '40px 0 25px 0'
+      padding: '40px 0 20px 0'
     }}>
       <Container>
         <Row>
@@ -120,7 +120,7 @@ const Footer = () => {
               color: 'white'
             }}>Categories</h5>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              {['Properties', 'Event Venues', 'Vehicles', 'Parking & Turfs'].map((item, index) => (
+              {['Properties', 'Event Venues', 'Vehicles', 'Parking Spaces'].map((item, index) => (
                 <li key={index} style={{ marginBottom: '8px' }}>
                   <Link 
                     to="/find-property"
@@ -206,20 +206,6 @@ const Footer = () => {
             </ul>
           </Col>
         </Row>
-        
-        <hr style={{
-          border: 'none',
-          borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-          margin: '25px 0 15px 0'
-        }} />
-        
-        <div style={{
-          textAlign: 'center',
-          color: 'rgba(255, 255, 255, 0.6)',
-          fontSize: '0.85rem'
-        }}>
-          Made with ❤️ by SpaceLink Team
-        </div>
       </Container>
     </footer>
   );
