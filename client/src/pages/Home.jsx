@@ -8,10 +8,10 @@ const Home = () => {
 
   return (
     <>
-      {/* PERFECTLY ALIGNED HERO SECTION */}
+      {/* PERFECT HERO SECTION - REDUCED LEFT SPACE */}
       <section style={{
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        minHeight: '90vh',
+        minHeight: '85vh',
         display: 'flex',
         alignItems: 'center',
         paddingTop: '70px',
@@ -32,9 +32,9 @@ const Home = () => {
         }}></div>
 
         <Container>
-          <Row className="align-items-center" style={{ minHeight: '80vh' }}>
+          <Row className="align-items-center" style={{ minHeight: '75vh' }}>
             <Col lg={6} className="mb-5 mb-lg-0">
-              <div style={{ maxWidth: '550px' }}>
+              <div style={{ maxWidth: '550px', paddingLeft: '0' }}>
                 {/* Professional Badge */}
                 <div style={{
                   display: 'inline-block',
@@ -82,7 +82,7 @@ const Home = () => {
                   marginBottom: '32px',
                   maxWidth: '480px'
                 }}>
-                  From properties to equipment, venues to vehicles - SpaceLink connects you with 
+                  From properties to vehicles, venues to parking spaces - SpaceLink connects you with 
                   <strong style={{ color: 'white' }}> exceptional rentals worldwide</strong>. 
                   Professional service, trusted transactions.
                 </p>
@@ -159,7 +159,7 @@ const Home = () => {
                 maxWidth: '600px',
                 margin: '0 auto'
               }}>
-                {/* Perfect Image Container */}
+                {/* GENERAL RENTAL PLATFORM IMAGE */}
                 <div style={{
                   position: 'relative',
                   borderRadius: '24px',
@@ -167,8 +167,8 @@ const Home = () => {
                   boxShadow: '0 25px 60px rgba(0, 0, 0, 0.25)'
                 }}>
                   <img 
-                    src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
-                    alt="Premium rental properties" 
+                    src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
+                    alt="General rental platform - cars, events, properties" 
                     style={{
                       width: '100%',
                       height: '500px',
@@ -236,7 +236,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* PERFECTLY SIZED CATEGORIES SECTION */}
+      {/* ENHANCED CATEGORIES SECTION */}
       <section style={{
         padding: '80px 0',
         background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)'
@@ -305,51 +305,88 @@ const Home = () => {
               <Col lg={3} md={6} className="mb-4" key={index}>
                 <div style={{
                   background: 'white',
-                  borderRadius: '16px',
-                  padding: '32px 24px',
+                  borderRadius: '20px',
+                  padding: '40px 28px',
                   textAlign: 'center',
-                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.06)',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08)',
                   border: '1px solid #f1f5f9',
-                  transition: 'all 0.3s ease',
+                  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                   cursor: 'pointer',
-                  height: '280px',
+                  height: '320px',
                   display: 'flex',
                   flexDirection: 'column',
-                  justifyContent: 'center'
+                  justifyContent: 'space-between',
+                  position: 'relative',
+                  overflow: 'hidden'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-8px)';
-                  e.currentTarget.style.boxShadow = '0 20px 48px rgba(0, 0, 0, 0.12)';
+                  e.currentTarget.style.transform = 'translateY(-12px) scale(1.02)';
+                  e.currentTarget.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.15)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.06)';
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                  e.currentTarget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.08)';
                 }}>
-                  <div style={{ fontSize: '3.5rem', marginBottom: '20px' }}>{category.icon}</div>
-                  <h3 style={{
-                    fontSize: '1.4rem',
-                    fontWeight: 800,
-                    color: '#1e293b',
-                    marginBottom: '12px'
-                  }}>{category.title}</h3>
-                  <p style={{
-                    color: '#64748b',
-                    fontSize: '0.95rem',
-                    lineHeight: '1.5',
-                    marginBottom: '20px'
-                  }}>{category.desc}</p>
+                  {/* Top border accent */}
                   <div style={{
-                    background: category.gradient,
-                    color: 'white',
-                    padding: '8px 20px',
-                    borderRadius: '20px',
-                    fontSize: '0.9rem',
-                    fontWeight: 700,
-                    display: 'inline-block',
-                    margin: '0 auto'
-                  }}>
-                    Explore →
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: '4px',
+                    background: category.gradient
+                  }}></div>
+                  
+                  <div>
+                    <div style={{ 
+                      fontSize: '4rem', 
+                      marginBottom: '24px',
+                      filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))'
+                    }}>{category.icon}</div>
+                    <h3 style={{
+                      fontSize: '1.5rem',
+                      fontWeight: 800,
+                      color: '#1e293b',
+                      marginBottom: '16px'
+                    }}>{category.title}</h3>
+                    <p style={{
+                      color: '#64748b',
+                      fontSize: '1rem',
+                      lineHeight: '1.5',
+                      marginBottom: '0'
+                    }}>{category.desc}</p>
                   </div>
+                  
+                  {/* EXPLORE BUTTON LINKS TO FIND-PROPERTY */}
+                  <Link 
+                    to="/find-property"
+                    style={{
+                      background: category.gradient,
+                      color: 'white',
+                      padding: '12px 28px',
+                      borderRadius: '25px',
+                      fontSize: '0.95rem',
+                      fontWeight: 700,
+                      textDecoration: 'none',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      boxShadow: '0 6px 20px rgba(0, 0, 0, 0.15)',
+                      transition: 'all 0.3s ease',
+                      alignSelf: 'center'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.transform = 'translateY(-2px)';
+                      e.target.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.2)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.transform = 'translateY(0)';
+                      e.target.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.15)';
+                    }}
+                  >
+                    Explore
+                    <span style={{ fontSize: '1.1rem' }}>→</span>
+                  </Link>
                 </div>
               </Col>
             ))}
@@ -357,7 +394,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* PERFECTLY PROPORTIONED HOW IT WORKS */}
+      {/* HOW IT WORKS SECTION */}
       <section style={{
         padding: '80px 0',
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -424,7 +461,7 @@ const Home = () => {
                   boxShadow: '0 16px 48px rgba(0, 0, 0, 0.15)',
                   border: '1px solid rgba(255, 255, 255, 0.2)',
                   transition: 'all 0.3s ease',
-                  height: '320px',
+                  height: '300px',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
@@ -485,7 +522,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* PERFECTLY SIZED FEATURED PROPERTIES */}
+      {/* FEATURED PROPERTIES */}
       <section style={{
         padding: '80px 0',
         background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)'
@@ -671,9 +708,9 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* PERFECT CTA SECTION */}
+      {/* PERFECT CTA SECTION WITH SPACING */}
       <section style={{
-        padding: '80px 0',
+        padding: '100px 0',
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         textAlign: 'center'
       }}>
@@ -721,6 +758,169 @@ const Home = () => {
           </div>
         </Container>
       </section>
+
+      {/* PERFECT FOOTER - PROPER SIZE & SPACING */}
+      <footer style={{
+        background: '#1e293b',
+        color: 'white',
+        padding: '60px 0 40px 0'
+      }}>
+        <Container>
+          <Row>
+            <Col lg={4} className="mb-4">
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                marginBottom: '20px'
+              }}>
+                <div style={{
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  borderRadius: '10px',
+                  padding: '6px'
+                }}>
+                  <span style={{ fontSize: '1.3rem' }}>🏠</span>
+                </div>
+                <span style={{ fontSize: '1.5rem', fontWeight: 800 }}>SpaceLink</span>
+              </div>
+              <p style={{
+                color: 'rgba(255, 255, 255, 0.8)',
+                fontSize: '0.95rem',
+                lineHeight: '1.6',
+                maxWidth: '280px'
+              }}>
+                Your trusted global rental platform. Helping clients find exceptional rentals and empowering seamless transactions.
+              </p>
+            </Col>
+            
+            <Col lg={2} md={6} className="mb-4">
+              <h5 style={{
+                fontSize: '1rem',
+                fontWeight: 700,
+                marginBottom: '20px',
+                color: 'white'
+              }}>Quick Links</h5>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                {['Find Property', 'List Property', 'My Bookings', 'Profile'].map((item, index) => (
+                  <li key={index} style={{ marginBottom: '12px' }}>
+                    <Link 
+                      to={`/${item.toLowerCase().replace(' ', '-')}`}
+                      style={{
+                        color: 'rgba(255, 255, 255, 0.7)',
+                        textDecoration: 'none',
+                        fontSize: '0.9rem',
+                        transition: 'color 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => e.target.style.color = '#667eea'}
+                      onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}
+                    >
+                      {item}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </Col>
+            
+            <Col lg={2} md={6} className="mb-4">
+              <h5 style={{
+                fontSize: '1rem',
+                fontWeight: 700,
+                marginBottom: '20px',
+                color: 'white'
+              }}>Categories</h5>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                {['Residential', 'Commercial', 'Event Venues', 'Parking & Turfs'].map((item, index) => (
+                  <li key={index} style={{ marginBottom: '12px' }}>
+                    <Link 
+                      to="/find-property"
+                      style={{
+                        color: 'rgba(255, 255, 255, 0.7)',
+                        textDecoration: 'none',
+                        fontSize: '0.9rem',
+                        transition: 'color 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => e.target.style.color = '#667eea'}
+                      onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}
+                    >
+                      {item}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </Col>
+            
+            <Col lg={2} md={6} className="mb-4">
+              <h5 style={{
+                fontSize: '1rem',
+                fontWeight: 700,
+                marginBottom: '20px',
+                color: 'white'
+              }}>Support</h5>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                {['Help Center', 'Contact Us', 'About Us', 'Blog'].map((item, index) => (
+                  <li key={index} style={{ marginBottom: '12px' }}>
+                    <Link 
+                      to={`/${item.toLowerCase().replace(' ', '-')}`}
+                      style={{
+                        color: 'rgba(255, 255, 255, 0.7)',
+                        textDecoration: 'none',
+                        fontSize: '0.9rem',
+                        transition: 'color 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => e.target.style.color = '#667eea'}
+                      onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}
+                    >
+                      {item}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </Col>
+            
+            <Col lg={2} md={6} className="mb-4">
+              <h5 style={{
+                fontSize: '1rem',
+                fontWeight: 700,
+                marginBottom: '20px',
+                color: 'white'
+              }}>Legal</h5>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                {['Privacy Policy', 'Terms of Service', 'Cookie Policy', 'Disclaimer'].map((item, index) => (
+                  <li key={index} style={{ marginBottom: '12px' }}>
+                    <Link 
+                      to={`/${item.toLowerCase().replace(' ', '-')}`}
+                      style={{
+                        color: 'rgba(255, 255, 255, 0.7)',
+                        textDecoration: 'none',
+                        fontSize: '0.9rem',
+                        transition: 'color 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => e.target.style.color = '#667eea'}
+                      onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}
+                    >
+                      {item}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </Col>
+          </Row>
+          
+          <hr style={{
+            border: 'none',
+            borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+            margin: '40px 0 20px 0'
+          }} />
+          
+          <div style={{
+            textAlign: 'center',
+            color: 'rgba(255, 255, 255, 0.6)',
+            fontSize: '0.9rem'
+          }}>
+            Made with ❤️ by SpaceLink Team
+          </div>
+        </Container>
+      </footer>
 
       {/* CSS Animations */}
       <style>{`
