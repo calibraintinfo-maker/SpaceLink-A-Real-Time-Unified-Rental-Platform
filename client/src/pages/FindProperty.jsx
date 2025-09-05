@@ -20,7 +20,6 @@ const FindProperty = () => {
     "Mumbai", "Delhi", "Bangalore", "Chennai", "Kolkata", "Hyderabad", "Pune", "Ahmedabad", "Jaipur", "Surat", "Lucknow", "Kanpur", "Nagpur", "Indore", "Thane", "Bhopal", "Visakhapatnam", "Pimpri-Chinchwad", "Patna", "Vadodara", "Ghaziabad", "Ludhiana", "Agra", "Nashik", "Faridabad", "Meerut", "Rajkot", "Kalyan-Dombivli", "Vasai-Virar", "Varanasi", "Srinagar", "Aurangabad", "Dhanbad", "Amritsar", "Navi Mumbai", "Allahabad", "Ranchi", "Howrah", "Coimbatore", "Jabalpur", "Gwalior", "Vijayawada", "Jodhpur", "Madurai", "Raipur", "Kota", "Chandigarh", "Guwahati", "Solapur", "Hubli-Dharwad", "Bareilly", "Moradabad", "Mysore", "Gurgaon", "Aligarh", "Jalandhar", "Tiruchirappalli", "Bhubaneswar", "Salem", "Mira-Bhayandar", "Warangal", "Thiruvananthapuram", "Guntur", "Bhiwandi", "Saharanpur", "Gorakhpur", "Bikaner", "Amravati", "Noida", "Jamshedpur", "Bhilai Nagar", "Cuttack", "Firozabad", "Kochi", "Nellore", "Bhavnagar", "Dehradun", "Durgapur", "Asansol", "Rourkela", "Nanded", "Kolhapur", "Ajmer", "Akola", "Gulbarga", "Jamnagar", "Ujjain", "Loni", "Siliguri", "Jhansi", "Ulhasnagar", "Jammu", "Sangli-Miraj & Kupwad", "Mangalore", "Erode", "Belgaum", "Ambattur", "Tirunelveli", "Malegaon", "Gaya", "Jalgaon", "Udaipur", "Maheshtala"
   ];
 
-  // ALL CATEGORIES WITH PROPER GROUPING
   const propertyTypes = [
     "All Categories",
     "Properties",
@@ -39,10 +38,8 @@ const FindProperty = () => {
     "Residential Plot"
   ];
 
-  // RESIDENTIAL PROPERTY TYPES (for bedroom filter logic)
   const residentialTypes = ["Villa", "Apartment", "House", "Studio"];
 
-  // PROFESSIONAL SAMPLE DATA WITH CONSISTENT COLORS
   const sampleProperties = [
     {
       id: 1,
@@ -57,7 +54,6 @@ const FindProperty = () => {
       bathrooms: 1,
       area: 600,
       status: 'For Rent',
-      statusColor: '#10b981',
       isResidential: true
     },
     {
@@ -73,7 +69,6 @@ const FindProperty = () => {
       bathrooms: 2,
       area: 3000,
       status: 'For Rent',
-      statusColor: '#10b981',
       isResidential: false
     },
     {
@@ -89,7 +84,6 @@ const FindProperty = () => {
       bathrooms: 2,
       area: 1500,
       status: 'For Rent',
-      statusColor: '#10b981',
       isResidential: true
     },
     {
@@ -105,7 +99,6 @@ const FindProperty = () => {
       bathrooms: 4,
       area: 5000,
       status: 'For Rent',
-      statusColor: '#10b981',
       isResidential: false
     },
     {
@@ -121,7 +114,6 @@ const FindProperty = () => {
       bathrooms: 2,
       area: 8000,
       status: 'For Rent',
-      statusColor: '#10b981',
       isResidential: false
     },
     {
@@ -137,7 +129,6 @@ const FindProperty = () => {
       bathrooms: 0,
       area: 200,
       status: 'For Rent',
-      statusColor: '#10b981',
       isResidential: false
     },
     {
@@ -153,7 +144,6 @@ const FindProperty = () => {
       bathrooms: 3,
       area: 2800,
       status: 'For Sale',
-      statusColor: '#f59e0b',
       isResidential: true
     },
     {
@@ -169,7 +159,6 @@ const FindProperty = () => {
       bathrooms: 3,
       area: 10000,
       status: 'For Rent',
-      statusColor: '#10b981',
       isResidential: false
     }
   ];
@@ -179,7 +168,6 @@ const FindProperty = () => {
     setFilteredProperties(sampleProperties);
   }, []);
 
-  // PERFECT FILTER LOGIC
   useEffect(() => {
     let filtered = properties;
 
@@ -211,7 +199,6 @@ const FindProperty = () => {
       );
     }
 
-    // BEDROOM FILTER ONLY FOR RESIDENTIAL PROPERTIES
     if (filters.bedrooms) {
       filtered = filtered.filter(property =>
         property.isResidential && property.bedrooms >= parseInt(filters.bedrooms)
@@ -238,7 +225,6 @@ const FindProperty = () => {
     setSearchQuery('');
   };
 
-  // CHECK IF BEDROOM FILTER SHOULD BE SHOWN
   const shouldShowBedroomFilter = () => {
     if (!filters.propertyType) return false;
     return residentialTypes.includes(filters.propertyType) || filters.propertyType === 'Properties';
@@ -272,30 +258,31 @@ const FindProperty = () => {
         </Container>
       </section>
 
-      {/* MAIN LAYOUT WITH FIXED LEFT SIDEBAR */}
-      <div style={{ display: 'flex', minHeight: '100vh' }}>
+      {/* MAIN LAYOUT - IMPROVED COLOR HARMONY */}
+      <div style={{ display: 'flex', minHeight: '100vh', background: '#f8fafc' }}>
         
-        {/* FIXED LEFT SIDEBAR */}
+        {/* HARMONIOUS SIDEBAR - LIGHTER GREY FOR BETTER HARMONY */}
         <div style={{
           position: 'fixed',
           left: 0,
           top: '0',
-          width: '280px', // Slightly reduced width
+          width: '280px',
           height: '100vh',
-          background: 'linear-gradient(180deg, #1e293b 0%, #334155 100%)',
+          background: 'linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%)', // MUCH LIGHTER GREY
           overflowY: 'auto',
           zIndex: 1000,
-          borderRight: '3px solid #e5e7eb'
+          borderRight: '2px solid #cbd5e1', // Softer border
+          boxShadow: '4px 0 20px rgba(0, 0, 0, 0.08)' // Subtle shadow
         }}>
           
           {/* SIDEBAR HEADER */}
           <div style={{
             padding: '24px',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-            background: 'rgba(0, 0, 0, 0.2)'
+            borderBottom: '1px solid #cbd5e1',
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', // Brand color header
+            color: 'white'
           }}>
             <h3 style={{
-              color: 'white',
               fontSize: '1.3rem',
               fontWeight: 800,
               marginBottom: '8px',
@@ -306,19 +293,19 @@ const FindProperty = () => {
               🔍 Filters
             </h3>
             <p style={{
-              color: 'rgba(255, 255, 255, 0.7)',
               fontSize: '0.9rem',
-              margin: '0'
+              margin: '0',
+              opacity: 0.9
             }}>Refine your search</p>
           </div>
 
-          {/* SIDEBAR CONTENT */}
+          {/* SIDEBAR CONTENT - DARK TEXT ON LIGHT BACKGROUND */}
           <div style={{ padding: '24px' }}>
             
-            {/* SEARCH INPUT */}
+            {/* Search Input */}
             <div style={{ marginBottom: '24px' }}>
               <label style={{
-                color: 'rgba(255, 255, 255, 0.9)',
+                color: '#1e293b',
                 fontSize: '0.9rem',
                 fontWeight: 600,
                 marginBottom: '8px',
@@ -332,23 +319,23 @@ const FindProperty = () => {
                 style={{
                   width: '100%',
                   padding: '12px 16px',
-                  border: '2px solid rgba(255, 255, 255, 0.1)',
+                  border: '2px solid #cbd5e1',
                   borderRadius: '10px',
                   fontSize: '0.9rem',
                   outline: 'none',
                   transition: 'all 0.3s ease',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  color: 'white'
+                  background: 'white',
+                  color: '#1e293b'
                 }}
                 onFocus={(e) => e.target.style.borderColor = '#667eea'}
-                onBlur={(e) => e.target.style.borderColor = 'rgba(255, 255, 255, 0.1)'}
+                onBlur={(e) => e.target.style.borderColor = '#cbd5e1'}
               />
             </div>
 
-            {/* LOCATION FILTER */}
+            {/* Location Filter */}
             <div style={{ marginBottom: '24px' }}>
               <label style={{
-                color: 'rgba(255, 255, 255, 0.9)',
+                color: '#1e293b',
                 fontSize: '0.9rem',
                 fontWeight: 600,
                 marginBottom: '8px',
@@ -360,27 +347,27 @@ const FindProperty = () => {
                 style={{
                   width: '100%',
                   padding: '12px 16px',
-                  border: '2px solid rgba(255, 255, 255, 0.1)',
+                  border: '2px solid #cbd5e1',
                   borderRadius: '10px',
                   fontSize: '0.9rem',
                   outline: 'none',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  color: 'white',
+                  background: 'white',
+                  color: '#1e293b',
                   cursor: 'pointer'
                 }}
               >
                 {indianLocations.map((location, index) => (
-                  <option key={index} value={location === "All Locations" ? "" : location} style={{color: 'black'}}>
+                  <option key={index} value={location === "All Locations" ? "" : location}>
                     {location}
                   </option>
                 ))}
               </select>
             </div>
 
-            {/* PROPERTY TYPE FILTER */}
+            {/* Property Type Filter */}
             <div style={{ marginBottom: '24px' }}>
               <label style={{
-                color: 'rgba(255, 255, 255, 0.9)',
+                color: '#1e293b',
                 fontSize: '0.9rem',
                 fontWeight: 600,
                 marginBottom: '8px',
@@ -392,27 +379,27 @@ const FindProperty = () => {
                 style={{
                   width: '100%',
                   padding: '12px 16px',
-                  border: '2px solid rgba(255, 255, 255, 0.1)',
+                  border: '2px solid #cbd5e1',
                   borderRadius: '10px',
                   fontSize: '0.9rem',
                   outline: 'none',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  color: 'white',
+                  background: 'white',
+                  color: '#1e293b',
                   cursor: 'pointer'
                 }}
               >
                 {propertyTypes.map((type, index) => (
-                  <option key={index} value={type === "All Categories" ? "" : type} style={{color: 'black'}}>
+                  <option key={index} value={type === "All Categories" ? "" : type}>
                     {type}
                   </option>
                 ))}
               </select>
             </div>
 
-            {/* PRICE RANGE FILTER */}
+            {/* Price Range Filter */}
             <div style={{ marginBottom: '24px' }}>
               <label style={{
-                color: 'rgba(255, 255, 255, 0.9)',
+                color: '#1e293b',
                 fontSize: '0.9rem',
                 fontWeight: 600,
                 marginBottom: '8px',
@@ -424,28 +411,28 @@ const FindProperty = () => {
                 style={{
                   width: '100%',
                   padding: '12px 16px',
-                  border: '2px solid rgba(255, 255, 255, 0.1)',
+                  border: '2px solid #cbd5e1',
                   borderRadius: '10px',
                   fontSize: '0.9rem',
                   outline: 'none',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  color: 'white',
+                  background: 'white',
+                  color: '#1e293b',
                   cursor: 'pointer'
                 }}
               >
-                <option value="" style={{color: 'black'}}>All Prices</option>
-                <option value="0-2000" style={{color: 'black'}}>₹0 - ₹2,000</option>
-                <option value="2000-5000" style={{color: 'black'}}>₹2,000 - ₹5,000</option>
-                <option value="5000-10000" style={{color: 'black'}}>₹5,000 - ₹10,000</option>
-                <option value="10000-999999" style={{color: 'black'}}>₹10,000+</option>
+                <option value="">All Prices</option>
+                <option value="0-2000">₹0 - ₹2,000</option>
+                <option value="2000-5000">₹2,000 - ₹5,000</option>
+                <option value="5000-10000">₹5,000 - ₹10,000</option>
+                <option value="10000-999999">₹10,000+</option>
               </select>
             </div>
 
-            {/* BEDROOMS FILTER - CONDITIONAL RENDERING */}
+            {/* Bedrooms Filter - Conditional */}
             {shouldShowBedroomFilter() && (
               <div style={{ marginBottom: '24px' }}>
                 <label style={{
-                  color: 'rgba(255, 255, 255, 0.9)',
+                  color: '#1e293b',
                   fontSize: '0.9rem',
                   fontWeight: 600,
                   marginBottom: '8px',
@@ -457,25 +444,25 @@ const FindProperty = () => {
                   style={{
                     width: '100%',
                     padding: '12px 16px',
-                    border: '2px solid rgba(255, 255, 255, 0.1)',
+                    border: '2px solid #cbd5e1',
                     borderRadius: '10px',
                     fontSize: '0.9rem',
                     outline: 'none',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    color: 'white',
+                    background: 'white',
+                    color: '#1e293b',
                     cursor: 'pointer'
                   }}
                 >
-                  <option value="" style={{color: 'black'}}>Any Bedrooms</option>
-                  <option value="1" style={{color: 'black'}}>1+ BHK</option>
-                  <option value="2" style={{color: 'black'}}>2+ BHK</option>
-                  <option value="3" style={{color: 'black'}}>3+ BHK</option>
-                  <option value="4" style={{color: 'black'}}>4+ BHK</option>
+                  <option value="">Any Bedrooms</option>
+                  <option value="1">1+ BHK</option>
+                  <option value="2">2+ BHK</option>
+                  <option value="3">3+ BHK</option>
+                  <option value="4">4+ BHK</option>
                 </select>
               </div>
             )}
 
-            {/* CLEAR FILTERS BUTTON */}
+            {/* Clear Filters */}
             <button
               onClick={clearFilters}
               style={{
@@ -503,18 +490,18 @@ const FindProperty = () => {
               Clear All Filters
             </button>
 
-            {/* FILTER STATUS */}
+            {/* Filter Status */}
             <div style={{ 
               marginTop: '24px',
               padding: '16px',
-              background: 'rgba(255, 255, 255, 0.05)',
+              background: 'white',
               borderRadius: '10px',
-              border: '1px solid rgba(255, 255, 255, 0.1)'
+              border: '2px solid #cbd5e1'
             }}>
-              <div style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.8rem', marginBottom: '8px' }}>
+              <div style={{ color: '#64748b', fontSize: '0.8rem', marginBottom: '8px' }}>
                 Active Filters:
               </div>
-              <div style={{ color: 'white', fontSize: '0.9rem', fontWeight: 600 }}>
+              <div style={{ color: '#1e293b', fontSize: '0.9rem', fontWeight: 600 }}>
                 {Object.values(filters).filter(f => f).length || searchQuery ? 
                   `${Object.values(filters).filter(f => f).length + (searchQuery ? 1 : 0)} active` : 
                   'None'
@@ -524,16 +511,17 @@ const FindProperty = () => {
           </div>
         </div>
 
-        {/* MAIN CONTENT AREA */}
+        {/* MAIN CONTENT - HARMONIOUS WHITE WITH SUBTLE BACKGROUND */}
         <div style={{ 
-          marginLeft: '280px', // Same as sidebar width
+          marginLeft: '280px',
           flex: 1,
-          padding: '40px 40px',
-          background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)',
+          padding: '40px',
+          paddingBottom: '120px', // FOOTER OVERLAP FIX
+          background: 'white', // Clean white background
           minHeight: '100vh'
         }}>
           
-          {/* RESULTS HEADER */}
+          {/* Results Header */}
           <div style={{
             display: 'flex',
             justifyContent: 'space-between',
@@ -562,14 +550,13 @@ const FindProperty = () => {
               </p>
             </div>
             
-            {/* VIEW MODE TOGGLE */}
+            {/* View Mode Toggle */}
             <div style={{
               display: 'flex',
-              background: 'white',
+              background: '#f8fafc',
               borderRadius: '12px',
               padding: '6px',
-              boxShadow: '0 6px 20px rgba(0, 0, 0, 0.08)',
-              border: '1px solid #f1f5f9'
+              border: '2px solid #e2e8f0'
             }}>
               <button
                 onClick={() => setViewMode('grid')}
@@ -607,14 +594,14 @@ const FindProperty = () => {
             </div>
           </div>
 
-          {/* PROFESSIONAL PROPERTY CARDS */}
+          {/* Property Cards */}
           {filteredProperties.length === 0 ? (
             <div style={{
               textAlign: 'center',
               padding: '80px 40px',
-              background: 'white',
+              background: '#f8fafc',
               borderRadius: '16px',
-              boxShadow: '0 8px 25px rgba(0, 0, 0, 0.08)'
+              border: '2px solid #e2e8f0'
             }}>
               <div style={{ fontSize: '4rem', marginBottom: '20px' }}>🏠</div>
               <h3 style={{
@@ -655,30 +642,31 @@ const FindProperty = () => {
                   key={property.id}
                 >
                   <div style={{
-                    background: 'white',
+                    background: '#f8fafc', // Subtle background for cards
                     borderRadius: '16px',
                     overflow: 'hidden',
-                    boxShadow: '0 8px 25px rgba(0, 0, 0, 0.08)',
-                    border: '1px solid #f1f5f9',
+                    border: '2px solid #e2e8f0',
                     transition: 'all 0.3s ease',
-                    height: viewMode === 'grid' ? '480px' : 'auto', // INCREASED HEIGHT
+                    height: viewMode === 'grid' ? '520px' : 'auto',
                     display: viewMode === 'list' ? 'flex' : 'block',
                     cursor: 'pointer'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'translateY(-4px)';
                     e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.12)';
+                    e.currentTarget.style.borderColor = '#cbd5e1';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.08)';
+                    e.currentTarget.style.boxShadow = 'none';
+                    e.currentTarget.style.borderColor = '#e2e8f0';
                   }}>
                     
-                    {/* IMAGE SECTION */}
+                    {/* Image Section */}
                     <div style={{
                       position: 'relative',
-                      height: viewMode === 'grid' ? '200px' : '180px', // INCREASED HEIGHT
-                      width: viewMode === 'list' ? '280px' : '100%',
+                      height: viewMode === 'grid' ? '220px' : '180px',
+                      width: viewMode === 'list' ? '300px' : '100%',
                       flexShrink: 0,
                       overflow: 'hidden'
                     }}>
@@ -692,12 +680,12 @@ const FindProperty = () => {
                         }}
                       />
                       
-                      {/* PROFESSIONAL STATUS BADGE - CONSISTENT COLOR */}
+                      {/* Status Badge */}
                       <div style={{
                         position: 'absolute',
                         top: '16px',
                         left: '16px',
-                        background: property.statusColor,
+                        background: property.status === 'For Sale' ? '#f59e0b' : '#10b981',
                         color: 'white',
                         padding: '8px 16px',
                         borderRadius: '12px',
@@ -708,7 +696,7 @@ const FindProperty = () => {
                         {property.status}
                       </div>
 
-                      {/* PROPERTY TYPE BADGE */}
+                      {/* Property Type Badge */}
                       <div style={{
                         position: 'absolute',
                         top: '16px',
@@ -725,48 +713,48 @@ const FindProperty = () => {
                       </div>
                     </div>
                     
-                    {/* CONTENT SECTION - IMPROVED SPACING */}
+                    {/* Content Section */}
                     <div style={{ 
-                      padding: '24px', // INCREASED PADDING
+                      padding: '28px',
                       flex: 1,
                       display: 'flex',
                       flexDirection: 'column',
-                      justifyContent: 'space-between'
+                      justifyContent: 'space-between',
+                      background: 'white' // White card content
                     }}>
                       <div>
-                        {/* LOCATION */}
+                        {/* Location */}
                         <div style={{
                           display: 'flex',
                           alignItems: 'center',
                           gap: '8px',
                           color: '#64748b',
                           fontSize: '0.9rem',
-                          marginBottom: '16px', // INCREASED MARGIN
+                          marginBottom: '16px',
                           fontWeight: 500
                         }}>
                           <span>📍</span>
                           {property.location}
                         </div>
                         
-                        {/* TITLE */}
+                        {/* Title */}
                         <h3 style={{
-                          fontSize: '1.3rem', // INCREASED SIZE
+                          fontSize: '1.4rem',
                           fontWeight: 800,
                           color: '#1e293b',
-                          marginBottom: '16px', // INCREASED MARGIN
+                          marginBottom: '18px',
                           lineHeight: '1.3'
                         }}>{property.title}</h3>
                         
-                        {/* PERFECT CONDITIONAL PROPERTY DETAILS */}
+                        {/* Property Details */}
                         <div style={{
                           display: 'flex',
-                          gap: '16px', // INCREASED GAP
-                          marginBottom: '20px', // INCREASED MARGIN
+                          gap: '16px',
+                          marginBottom: '24px',
                           fontSize: '0.85rem',
                           color: '#64748b',
                           flexWrap: 'wrap'
                         }}>
-                          {/* ONLY SHOW BEDROOMS FOR RESIDENTIAL PROPERTIES */}
                           {property.isResidential && property.bedrooms > 0 && (
                             <div style={{ 
                               display: 'flex', 
@@ -782,7 +770,6 @@ const FindProperty = () => {
                             </div>
                           )}
                           
-                          {/* SHOW BATHROOMS FOR ALL EXCEPT PARKING */}
                           {property.bathrooms > 0 && property.type !== 'Parking' && (
                             <div style={{ 
                               display: 'flex', 
@@ -798,7 +785,6 @@ const FindProperty = () => {
                             </div>
                           )}
                           
-                          {/* ALWAYS SHOW AREA */}
                           <div style={{ 
                             display: 'flex', 
                             alignItems: 'center', 
@@ -814,47 +800,47 @@ const FindProperty = () => {
                         </div>
                       </div>
                       
-                      {/* PRICING & BUTTONS - GUARANTEED SPACE */}
+                      {/* Pricing & Buttons */}
                       <div style={{
-                        paddingTop: '20px', // INCREASED PADDING
+                        paddingTop: '24px',
                         borderTop: '2px solid #f1f5f9'
                       }}>
                         <div style={{
-                          fontSize: '1.6rem', // INCREASED SIZE
+                          fontSize: '1.7rem',
                           fontWeight: 900,
                           color: '#10b981',
-                          marginBottom: '20px' // INCREASED MARGIN
+                          marginBottom: '24px'
                         }}>
                           ₹{property.price.toLocaleString()}/{property.priceType}
                         </div>
                         
-                        {/* PERFECT BUTTONS - ALWAYS FULLY VISIBLE */}
+                        {/* Buttons - FULLY VISIBLE */}
                         <div style={{ 
                           display: 'flex', 
-                          gap: '12px' // PERFECT GAP
+                          gap: '12px',
+                          alignItems: 'center'
                         }}>
                           <button style={{
                             background: 'transparent',
-                            border: '2px solid #e5e7eb',
+                            border: '2px solid #e2e8f0',
                             color: '#64748b',
-                            padding: '12px 20px', // PERFECT PADDING
+                            padding: '14px 20px',
                             borderRadius: '10px',
-                            fontSize: '0.9rem', // PERFECT FONT SIZE
+                            fontSize: '0.9rem',
                             fontWeight: 600,
                             cursor: 'pointer',
                             transition: 'all 0.3s ease',
                             whiteSpace: 'nowrap',
                             flex: '1',
-                            minWidth: '120px', // ENSURES VISIBILITY
-                            maxWidth: '140px'
+                            minWidth: '130px'
                           }}
                           onMouseEnter={(e) => {
-                            e.target.style.borderColor = '#667eea';
-                            e.target.style.color = '#667eea';
+                            e.target.style.borderColor = '#cbd5e1';
+                            e.target.style.color = '#475569';
                             e.target.style.transform = 'translateY(-1px)';
                           }}
                           onMouseLeave={(e) => {
-                            e.target.style.borderColor = '#e5e7eb';
+                            e.target.style.borderColor = '#e2e8f0';
                             e.target.style.color = '#64748b';
                             e.target.style.transform = 'translateY(0)';
                           }}>
@@ -862,28 +848,27 @@ const FindProperty = () => {
                           </button>
                           
                           <button style={{
-                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', // CONSISTENT COLOR
+                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                             border: 'none',
                             color: 'white',
-                            padding: '12px 20px', // PERFECT PADDING
+                            padding: '14px 20px',
                             borderRadius: '10px',
-                            fontSize: '0.9rem', // PERFECT FONT SIZE
+                            fontSize: '0.9rem',
                             fontWeight: 700,
                             cursor: 'pointer',
-                            boxShadow: '0 4px 12px rgba(102, 126, 234, 0.3)',
+                            boxShadow: '0 6px 20px rgba(102, 126, 234, 0.3)',
                             transition: 'all 0.3s ease',
                             whiteSpace: 'nowrap',
                             flex: '1',
-                            minWidth: '120px', // ENSURES VISIBILITY
-                            maxWidth: '140px'
+                            minWidth: '130px'
                           }}
                           onMouseEnter={(e) => {
                             e.target.style.transform = 'translateY(-1px)';
-                            e.target.style.boxShadow = '0 6px 16px rgba(102, 126, 234, 0.4)';
+                            e.target.style.boxShadow = '0 8px 25px rgba(102, 126, 234, 0.4)';
                           }}
                           onMouseLeave={(e) => {
                             e.target.style.transform = 'translateY(0)';
-                            e.target.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.3)';
+                            e.target.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.3)';
                           }}>
                             Book Now
                           </button>
@@ -896,28 +881,28 @@ const FindProperty = () => {
             </Row>
           )}
 
-          {/* LOAD MORE BUTTON */}
+          {/* Load More Button */}
           {filteredProperties.length > 0 && (
-            <div style={{ textAlign: 'center', marginTop: '50px' }}>
+            <div style={{ textAlign: 'center', marginTop: '60px' }}>
               <button style={{
                 background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                 color: 'white',
-                padding: '14px 32px',
+                padding: '16px 40px',
                 border: 'none',
                 borderRadius: '12px',
                 fontSize: '1rem',
                 fontWeight: 700,
                 cursor: 'pointer',
-                boxShadow: '0 6px 20px rgba(102, 126, 234, 0.2)',
+                boxShadow: '0 8px 25px rgba(102, 126, 234, 0.2)',
                 transition: 'all 0.3s ease'
               }}
               onMouseEnter={(e) => {
                 e.target.style.transform = 'translateY(-2px)';
-                e.target.style.boxShadow = '0 10px 30px rgba(102, 126, 234, 0.3)';
+                e.target.style.boxShadow = '0 12px 35px rgba(102, 126, 234, 0.3)';
               }}
               onMouseLeave={(e) => {
                 e.target.style.transform = 'translateY(0)';
-                e.target.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.2)';
+                e.target.style.boxShadow = '0 8px 25px rgba(102, 126, 234, 0.2)';
               }}>
                 Load More Properties
               </button>
