@@ -1,248 +1,254 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
-  const [email, setEmail] = useState('');
-  const [isSubscribed, setIsSubscribed] = useState(false);
-
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    if (email) {
-      setIsSubscribed(true);
-      setEmail('');
-      setTimeout(() => setIsSubscribed(false), 3000);
-    }
-  };
-
   return (
-    <div style={{
-      background: '#ffffff',
-      borderTop: '1px solid #e2e8f0',
-      padding: '40px 0',  // Normal size - not too big, not too small
-      marginTop: '40px',
-      boxShadow: '0 -2px 8px rgba(0, 0, 0, 0.08)'
+    <footer style={{
+      background: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)',
+      color: 'white',
+      padding: '80px 0 40px 0',
+      marginTop: '0'
     }}>
       <Container>
         <Row>
-          {/* Brand & Newsletter - Perfect Size */}
-          <Col lg={4} md={6} className="mb-4">
-            <Link to="/" style={{
-              color: '#0f172a',
-              fontSize: '1.3rem',  // Normal size
-              fontWeight: '700',
-              textDecoration: 'none',
-              display: 'block',
-              marginBottom: '12px'
+          <Col lg={4} className="mb-5">
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              marginBottom: '24px'
             }}>
-              🏠 SpaceLink
-            </Link>
-            
+              <div style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                borderRadius: '12px',
+                padding: '8px'
+              }}>
+                <span style={{ fontSize: '1.5rem' }}>🏠</span>
+              </div>
+              <span style={{ fontSize: '1.8rem', fontWeight: 800 }}>SpaceLink</span>
+            </div>
             <p style={{
-              color: '#64748b',
-              fontSize: '0.9rem',   // Normal size
-              lineHeight: '1.5',
-              marginBottom: '20px',
-              maxWidth: '300px'
+              color: 'rgba(255, 255, 255, 0.8)',
+              fontSize: '1rem',
+              lineHeight: '1.7',
+              maxWidth: '320px',
+              marginBottom: '32px'
             }}>
-              Your trusted global property platform. Helping clients find exceptional properties and empowering seamless transactions.
+              Your trusted global rental platform. Helping clients find exceptional rentals and empowering seamless transactions worldwide.
             </p>
-
+            
+            {/* Newsletter Signup */}
             <div>
-              <h6 style={{
-                color: '#0f172a',
-                fontSize: '1rem',    // Normal size
-                fontWeight: '600',
-                marginBottom: '10px'
+              <h5 style={{
+                fontSize: '1.1rem',
+                fontWeight: 700,
+                marginBottom: '16px',
+                color: 'white'
+              }}>Stay Updated</h5>
+              <div style={{ 
+                display: 'flex', 
+                gap: '12px',
+                maxWidth: '320px'
               }}>
-                Stay Updated
-              </h6>
-              
-              <form onSubmit={handleSubscribe} style={{
-                display: 'flex',
-                gap: '8px',
-                maxWidth: '300px',
-                marginBottom: '12px'
-              }}>
-                <input
-                  type="email"
+                <input 
+                  type="email" 
                   placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
                   style={{
-                    background: '#f8fafc',
-                    border: '1px solid #e2e8f0',
-                    borderRadius: '6px',
-                    padding: '8px 12px',  // Normal padding
-                    fontSize: '0.9rem',   // Normal size
-                    color: '#0f172a',
                     flex: 1,
-                    outline: 'none'
+                    padding: '12px 16px',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    borderRadius: '10px',
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    color: 'white',
+                    fontSize: '0.9rem'
                   }}
-                  required
                 />
-                <button type="submit" style={{
-                  background: '#6366f1',
-                  color: 'white',
+                <button style={{
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                   border: 'none',
-                  borderRadius: '6px',
-                  padding: '8px 16px',  // Normal padding
-                  fontSize: '0.9rem',   // Normal size
-                  fontWeight: '600',
+                  borderRadius: '10px',
+                  padding: '12px 20px',
+                  color: 'white',
+                  fontWeight: 700,
                   cursor: 'pointer',
-                  whiteSpace: 'nowrap'
+                  fontSize: '0.9rem'
                 }}>
                   Subscribe
                 </button>
-              </form>
-              
-              {isSubscribed && (
-                <p style={{ color: '#10b981', fontSize: '0.85rem', fontWeight: '600', margin: 0 }}>
-                  ✓ Successfully subscribed!
-                </p>
-              )}
+              </div>
             </div>
           </Col>
-
-          {/* Quick Links - Normal Size */}
-          <Col lg={2} md={3} className="mb-4">
-            <h6 style={{
-              color: '#0f172a',
-              fontSize: '0.95rem',  // Normal size
-              fontWeight: '600',
-              marginBottom: '12px'
-            }}>
-              Quick Links
-            </h6>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          
+          <Col lg={2} md={6} className="mb-4">
+            <h5 style={{
+              fontSize: '1.1rem',
+              fontWeight: 700,
+              marginBottom: '24px',
+              color: 'white'
+            }}>Quick Links</h5>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               {[
-                { to: '/find-property', text: 'Find Property' },
-                { to: '/add-property', text: 'List Property' },
-                { to: '/my-bookings', text: 'My Bookings' },
-                { to: '/profile', text: 'Profile' }
-              ].map((link, i) => (
-                <Link key={i} to={link.to} style={{
-                  color: '#64748b',
-                  textDecoration: 'none',
-                  fontSize: '0.85rem',  // Normal size
-                  fontWeight: '500',
-                  transition: 'color 0.2s ease'
-                }}>
-                  {link.text}
-                </Link>
+                { name: 'Find Property', path: '/find-property' },
+                { name: 'List Property', path: '/add-property' },
+                { name: 'My Bookings', path: '/my-bookings' },
+                { name: 'Profile', path: '/profile' }
+              ].map((item, index) => (
+                <li key={index} style={{ marginBottom: '14px' }}>
+                  <Link 
+                    to={item.path}
+                    style={{
+                      color: 'rgba(255, 255, 255, 0.7)',
+                      textDecoration: 'none',
+                      fontSize: '0.95rem',
+                      transition: 'color 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => e.target.style.color = '#667eea'}
+                    onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
               ))}
-            </div>
+            </ul>
           </Col>
-
-          {/* Categories - Normal Size */}
-          <Col lg={2} md={3} className="mb-4">
-            <h6 style={{
-              color: '#0f172a',
-              fontSize: '0.95rem',
-              fontWeight: '600',
-              marginBottom: '12px'
-            }}>
-              Categories
-            </h6>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {[
-                { to: '/find-property?category=Property Rentals', text: 'Residential' },
-                { to: '/find-property?category=Commercial', text: 'Commercial' },
-                { to: '/find-property?category=Land', text: 'Land & Plots' },
-                { to: '/find-property?category=Event', text: 'Event Venues' }
-              ].map((link, i) => (
-                <Link key={i} to={link.to} style={{
-                  color: '#64748b',
-                  textDecoration: 'none',
-                  fontSize: '0.85rem',
-                  fontWeight: '500',
-                  transition: 'color 0.2s ease'
-                }}>
-                  {link.text}
-                </Link>
+          
+          <Col lg={2} md={6} className="mb-4">
+            <h5 style={{
+              fontSize: '1.1rem',
+              fontWeight: 700,
+              marginBottom: '24px',
+              color: 'white'
+            }}>Categories</h5>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+              {['Properties', 'Event Venues', 'Vehicles', 'Parking & Turfs'].map((item, index) => (
+                <li key={index} style={{ marginBottom: '14px' }}>
+                  <Link 
+                    to="/find-property"
+                    style={{
+                      color: 'rgba(255, 255, 255, 0.7)',
+                      textDecoration: 'none',
+                      fontSize: '0.95rem',
+                      transition: 'color 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => e.target.style.color = '#667eea'}
+                    onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}
+                  >
+                    {item}
+                  </Link>
+                </li>
               ))}
-            </div>
+            </ul>
           </Col>
-
-          {/* Support - Normal Size */}
-          <Col lg={2} md={3} className="mb-4">
-            <h6 style={{
-              color: '#0f172a',
-              fontSize: '0.95rem',
-              fontWeight: '600',
-              marginBottom: '12px'
-            }}>
-              Support
-            </h6>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          
+          <Col lg={2} md={6} className="mb-4">
+            <h5 style={{
+              fontSize: '1.1rem',
+              fontWeight: 700,
+              marginBottom: '24px',
+              color: 'white'
+            }}>Support</h5>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               {[
-                { to: '/help', text: 'Help Center' },
-                { to: '/contact', text: 'Contact Us' },
-                { to: '/about', text: 'About Us' },
-                { to: '/blog', text: 'Blog' }
-              ].map((link, i) => (
-                <Link key={i} to={link.to} style={{
-                  color: '#64748b',
-                  textDecoration: 'none',
-                  fontSize: '0.85rem',
-                  fontWeight: '500',
-                  transition: 'color 0.2s ease'
-                }}>
-                  {link.text}
-                </Link>
+                { name: 'Help Center', path: '/help' },
+                { name: 'Contact Us', path: '/contact' },
+                { name: 'About Us', path: '/about' },
+                { name: 'Blog', path: '/blog' }
+              ].map((item, index) => (
+                <li key={index} style={{ marginBottom: '14px' }}>
+                  <Link 
+                    to={item.path}
+                    style={{
+                      color: 'rgba(255, 255, 255, 0.7)',
+                      textDecoration: 'none',
+                      fontSize: '0.95rem',
+                      transition: 'color 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => e.target.style.color = '#667eea'}
+                    onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
               ))}
-            </div>
+            </ul>
           </Col>
-
-          {/* Legal - Normal Size */}
-          <Col lg={2} md={3} className="mb-4">
-            <h6 style={{
-              color: '#0f172a',
-              fontSize: '0.95rem',
-              fontWeight: '600',
-              marginBottom: '12px'
-            }}>
-              Legal
-            </h6>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          
+          <Col lg={2} md={6} className="mb-4">
+            <h5 style={{
+              fontSize: '1.1rem',
+              fontWeight: 700,
+              marginBottom: '24px',
+              color: 'white'
+            }}>Legal</h5>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               {[
-                { to: '/privacy', text: 'Privacy Policy' },
-                { to: '/terms', text: 'Terms of Service' },
-                { to: '/cookies', text: 'Cookie Policy' },
-                { to: '/disclaimer', text: 'Disclaimer' }
-              ].map((link, i) => (
-                <Link key={i} to={link.to} style={{
-                  color: '#64748b',
-                  textDecoration: 'none',
-                  fontSize: '0.85rem',
-                  fontWeight: '500',
-                  transition: 'color 0.2s ease'
-                }}>
-                  {link.text}
-                </Link>
+                { name: 'Privacy Policy', path: '/privacy' },
+                { name: 'Terms of Service', path: '/terms' },
+                { name: 'Cookie Policy', path: '/cookies' },
+                { name: 'Disclaimer', path: '/disclaimer' }
+              ].map((item, index) => (
+                <li key={index} style={{ marginBottom: '14px' }}>
+                  <Link 
+                    to={item.path}
+                    style={{
+                      color: 'rgba(255, 255, 255, 0.7)',
+                      textDecoration: 'none',
+                      fontSize: '0.95rem',
+                      transition: 'color 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => e.target.style.color = '#667eea'}
+                    onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
               ))}
-            </div>
+            </ul>
           </Col>
         </Row>
-
-        {/* Copyright Section - Normal Size, No Social Icons */}
+        
+        <hr style={{
+          border: 'none',
+          borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+          margin: '50px 0 30px 0'
+        }} />
+        
         <div style={{
-          borderTop: '1px solid #e2e8f0',
-          paddingTop: '24px',
-          marginTop: '30px',
-          textAlign: 'center'
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '20px'
         }}>
-          <p style={{
-            color: '#64748b',
-            fontSize: '0.9rem',    // Normal size
-            margin: 0,
-            fontWeight: '500'
+          <div style={{
+            color: 'rgba(255, 255, 255, 0.6)',
+            fontSize: '0.95rem'
           }}>
-            © 2025 SpaceLink. All rights reserved.
-          </p>
+            Made with ❤️ by SpaceLink Team
+          </div>
+          
+          <div style={{ display: 'flex', gap: '20px' }}>
+            {['Facebook', 'Twitter', 'Instagram', 'LinkedIn'].map((social, index) => (
+              <a 
+                key={index}
+                href="#" 
+                style={{
+                  color: 'rgba(255, 255, 255, 0.6)',
+                  textDecoration: 'none',
+                  fontSize: '0.9rem',
+                  transition: 'color 0.2s ease'
+                }}
+                onMouseEnter={(e) => e.target.style.color = '#667eea'}
+                onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.6)'}
+              >
+                {social}
+              </a>
+            ))}
+          </div>
         </div>
       </Container>
-    </div>
+    </footer>
   );
 };
 
