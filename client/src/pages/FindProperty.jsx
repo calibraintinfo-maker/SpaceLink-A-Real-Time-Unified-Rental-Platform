@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap';
 
 const FindProperty = () => {
   const [properties, setProperties] = useState([]);
@@ -16,30 +15,22 @@ const FindProperty = () => {
 
   // All Indian Locations
   const indianLocations = [
-    "All Locations",
-    "Mumbai", "Delhi", "Bangalore", "Chennai", "Kolkata", "Hyderabad", "Pune", "Ahmedabad", "Jaipur", "Surat", "Lucknow", "Kanpur", "Nagpur", "Indore", "Thane", "Bhopal", "Visakhapatnam", "Pimpri-Chinchwad", "Patna", "Vadodara", "Ghaziabad", "Ludhiana", "Agra", "Nashik", "Faridabad", "Meerut", "Rajkot", "Kalyan-Dombivli", "Vasai-Virar", "Varanasi", "Srinagar", "Aurangabad", "Dhanbad", "Amritsar", "Navi Mumbai", "Allahabad", "Ranchi", "Howrah", "Coimbatore", "Jabalpur", "Gwalior", "Vijayawada", "Jodhpur", "Madurai", "Raipur", "Kota", "Chandigarh", "Guwahati", "Solapur", "Hubli-Dharwad", "Bareilly", "Moradabad", "Mysore", "Gurgaon", "Aligarh", "Jalandhar", "Tiruchirappalli", "Bhubaneswar", "Salem", "Mira-Bhayandar", "Warangal", "Thiruvananthapuram", "Guntur", "Bhiwandi", "Saharanpur", "Gorakhpur", "Bikaner", "Amravati", "Noida", "Jamshedpur", "Bhilai Nagar", "Cuttack", "Firozabad", "Kochi", "Nellore", "Bhavnagar", "Dehradun", "Durgapur", "Asansol", "Rourkela", "Nanded", "Kolhapur", "Ajmer", "Akola", "Gulbarga", "Jamnagar", "Ujjain", "Loni", "Siliguri", "Jhansi", "Ulhasnagar", "Jammu", "Sangli-Miraj & Kupwad", "Mangalore", "Erode", "Belgaum", "Ambattur", "Tirunelveli", "Malegaon", "Gaya", "Jalgaon", "Udaipur", "Maheshtala"
+    "All Locations", "Mumbai", "Delhi", "Bangalore", "Chennai", "Kolkata", 
+    "Hyderabad", "Pune", "Ahmedabad", "Jaipur", "Surat", "Lucknow", "Kanpur", 
+    "Nagpur", "Indore", "Thane", "Bhopal", "Visakhapatnam", "Patna", "Vadodara",
+    "Ghaziabad", "Ludhiana", "Agra", "Nashik", "Faridabad", "Meerut", "Rajkot",
+    "Gurgaon", "Noida", "Kochi", "Coimbatore", "Chandigarh", "Guwahati"
   ];
 
   const propertyTypes = [
-    "All Categories",
-    "Properties",
-    "Event Venues",
-    "Turf",
-    "Parking",
-    "Villa",
-    "Apartment", 
-    "House",
-    "Studio",
-    "Commercial",
-    "Office Space",
-    "Shop",
-    "Land",
-    "Agricultural Land",
-    "Residential Plot"
+    "All Categories", "Properties", "Event Venues", "Turf", "Parking",
+    "Villa", "Apartment", "House", "Studio", "Commercial", "Office Space", 
+    "Shop", "Land", "Agricultural Land", "Residential Plot"
   ];
 
   const residentialTypes = ["Villa", "Apartment", "House", "Studio"];
 
+  // PROFESSIONAL SAMPLE DATA - LOGICAL PROPERTY DETAILS
   const sampleProperties = [
     {
       id: 1,
@@ -54,7 +45,8 @@ const FindProperty = () => {
       bathrooms: 1,
       area: 600,
       status: 'For Rent',
-      isResidential: true
+      isResidential: true,
+      hasToilets: true
     },
     {
       id: 2,
@@ -69,7 +61,8 @@ const FindProperty = () => {
       bathrooms: 2,
       area: 3000,
       status: 'For Rent',
-      isResidential: false
+      isResidential: false,
+      hasToilets: true
     },
     {
       id: 3,
@@ -84,7 +77,8 @@ const FindProperty = () => {
       bathrooms: 2,
       area: 1500,
       status: 'For Rent',
-      isResidential: true
+      isResidential: true,
+      hasToilets: true
     },
     {
       id: 4,
@@ -96,10 +90,12 @@ const FindProperty = () => {
       type: 'Event Venues',
       category: 'Event Venues',
       bedrooms: 0,
-      bathrooms: 4,
+      bathrooms: 0,
       area: 5000,
       status: 'For Rent',
-      isResidential: false
+      isResidential: false,
+      hasToilets: false,
+      capacity: 500
     },
     {
       id: 5,
@@ -111,10 +107,12 @@ const FindProperty = () => {
       type: 'Turf',
       category: 'Turf',
       bedrooms: 0,
-      bathrooms: 2,
+      bathrooms: 0,
       area: 8000,
       status: 'For Rent',
-      isResidential: false
+      isResidential: false,
+      hasToilets: false,
+      surface: 'Artificial Grass'
     },
     {
       id: 6,
@@ -129,7 +127,9 @@ const FindProperty = () => {
       bathrooms: 0,
       area: 200,
       status: 'For Rent',
-      isResidential: false
+      isResidential: false,
+      hasToilets: false,
+      security: 'CCTV + Guards'
     },
     {
       id: 7,
@@ -144,7 +144,8 @@ const FindProperty = () => {
       bathrooms: 3,
       area: 2800,
       status: 'For Sale',
-      isResidential: true
+      isResidential: true,
+      hasToilets: true
     },
     {
       id: 8,
@@ -156,10 +157,12 @@ const FindProperty = () => {
       type: 'Turf',
       category: 'Turf',
       bedrooms: 0,
-      bathrooms: 3,
+      bathrooms: 0,
       area: 10000,
       status: 'For Rent',
-      isResidential: false
+      isResidential: false,
+      hasToilets: false,
+      surface: 'Natural Grass'
     }
   ];
 
@@ -230,278 +233,190 @@ const FindProperty = () => {
     return residentialTypes.includes(filters.propertyType) || filters.propertyType === 'Properties';
   };
 
+  // SMART PROPERTY DETAILS RENDERER
+  const renderPropertyDetails = (property) => {
+    const details = [];
+
+    // Only show bedrooms for residential properties
+    if (property.isResidential && property.bedrooms > 0) {
+      details.push(
+        <span key="bedrooms" className="badge bg-light text-dark me-2 mb-1">
+          <i className="fas fa-bed me-1"></i>{property.bedrooms} BHK
+        </span>
+      );
+    }
+
+    // Only show bathrooms for properties that actually have them
+    if (property.hasToilets && property.bathrooms > 0) {
+      details.push(
+        <span key="bathrooms" className="badge bg-light text-dark me-2 mb-1">
+          <i className="fas fa-bath me-1"></i>{property.bathrooms} Bath
+        </span>
+      );
+    }
+
+    // Always show area
+    details.push(
+      <span key="area" className="badge bg-light text-dark me-2 mb-1">
+        <i className="fas fa-ruler-combined me-1"></i>{property.area.toLocaleString()} sq ft
+      </span>
+    );
+
+    // Show relevant details based on property type
+    if (property.type === 'Event Venues' && property.capacity) {
+      details.push(
+        <span key="capacity" className="badge bg-info text-white me-2 mb-1">
+          <i className="fas fa-users me-1"></i>{property.capacity} guests
+        </span>
+      );
+    }
+
+    if (property.type === 'Turf' && property.surface) {
+      details.push(
+        <span key="surface" className="badge bg-success text-white me-2 mb-1">
+          <i className="fas fa-futbol me-1"></i>{property.surface}
+        </span>
+      );
+    }
+
+    if (property.type === 'Parking' && property.security) {
+      details.push(
+        <span key="security" className="badge bg-warning text-dark me-2 mb-1">
+          <i className="fas fa-shield-alt me-1"></i>{property.security}
+        </span>
+      );
+    }
+
+    return details;
+  };
+
   return (
     <>
-      {/* COMPACT HERO SECTION */}
-      <section style={{
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        padding: '60px 0 40px 0',
-        position: 'relative'
-      }}>
+      {/* HERO SECTION */}
+      <section className="bg-primary text-white py-5">
         <Container>
-          <div style={{ textAlign: 'center' }}>
-            <h1 style={{
-              fontSize: '2.8rem',
-              fontWeight: 900,
-              color: 'white',
-              marginBottom: '12px'
-            }}>Find Your Perfect Property</h1>
-            <p style={{
-              fontSize: '1.1rem',
-              color: 'rgba(255, 255, 255, 0.9)',
-              maxWidth: '500px',
-              margin: '0 auto'
-            }}>
-              Discover amazing properties from our premium collection across India
-            </p>
+          <div className="text-center">
+            <h1 className="display-4 fw-bold mb-3">Find Your Perfect Property</h1>
+            <p className="lead mb-0">Discover amazing properties from our premium collection across India</p>
           </div>
         </Container>
       </section>
 
-      {/* MAIN LAYOUT - IMPROVED COLOR HARMONY */}
-      <div style={{ display: 'flex', minHeight: '100vh', background: '#f8fafc' }}>
+      {/* MAIN LAYOUT */}
+      <div className="d-flex min-vh-100">
         
-        {/* HARMONIOUS SIDEBAR - LIGHTER GREY FOR BETTER HARMONY */}
-        <div style={{
-          position: 'fixed',
-          left: 0,
-          top: '0',
-          width: '280px',
-          height: '100vh',
-          background: 'linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%)', // MUCH LIGHTER GREY
-          overflowY: 'auto',
-          zIndex: 1000,
-          borderRight: '2px solid #cbd5e1', // Softer border
-          boxShadow: '4px 0 20px rgba(0, 0, 0, 0.08)' // Subtle shadow
-        }}>
+        {/* PROFESSIONAL SIDEBAR */}
+        <div className="position-fixed start-0 top-0 bg-light border-end" 
+             style={{
+               width: '300px', 
+               height: '100vh', 
+               overflowY: 'auto', 
+               zIndex: 1000,
+               marginTop: '0'
+             }}>
           
-          {/* SIDEBAR HEADER */}
-          <div style={{
-            padding: '24px',
-            borderBottom: '1px solid #cbd5e1',
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', // Brand color header
-            color: 'white'
-          }}>
-            <h3 style={{
-              fontSize: '1.3rem',
-              fontWeight: 800,
-              marginBottom: '8px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px'
-            }}>
-              🔍 Filters
-            </h3>
-            <p style={{
-              fontSize: '0.9rem',
-              margin: '0',
-              opacity: 0.9
-            }}>Refine your search</p>
+          {/* Sidebar Header */}
+          <div className="p-4 bg-primary text-white">
+            <h5 className="mb-1 fw-bold">
+              <i className="fas fa-filter me-2"></i>Filters
+            </h5>
+            <small>Refine your search</small>
           </div>
 
-          {/* SIDEBAR CONTENT - DARK TEXT ON LIGHT BACKGROUND */}
-          <div style={{ padding: '24px' }}>
+          {/* Sidebar Content */}
+          <div className="p-4">
             
-            {/* Search Input */}
-            <div style={{ marginBottom: '24px' }}>
-              <label style={{
-                color: '#1e293b',
-                fontSize: '0.9rem',
-                fontWeight: 600,
-                marginBottom: '8px',
-                display: 'block'
-              }}>Search</label>
-              <input
+            {/* Search */}
+            <div className="mb-4">
+              <Form.Label className="fw-semibold text-dark">Search</Form.Label>
+              <Form.Control
                 type="text"
                 placeholder="Search properties..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                style={{
-                  width: '100%',
-                  padding: '12px 16px',
-                  border: '2px solid #cbd5e1',
-                  borderRadius: '10px',
-                  fontSize: '0.9rem',
-                  outline: 'none',
-                  transition: 'all 0.3s ease',
-                  background: 'white',
-                  color: '#1e293b'
-                }}
-                onFocus={(e) => e.target.style.borderColor = '#667eea'}
-                onBlur={(e) => e.target.style.borderColor = '#cbd5e1'}
+                className="border-2"
               />
             </div>
 
-            {/* Location Filter */}
-            <div style={{ marginBottom: '24px' }}>
-              <label style={{
-                color: '#1e293b',
-                fontSize: '0.9rem',
-                fontWeight: 600,
-                marginBottom: '8px',
-                display: 'block'
-              }}>Location</label>
-              <select
+            {/* Location */}
+            <div className="mb-4">
+              <Form.Label className="fw-semibold text-dark">Location</Form.Label>
+              <Form.Select
                 value={filters.location}
                 onChange={(e) => handleFilterChange('location', e.target.value)}
-                style={{
-                  width: '100%',
-                  padding: '12px 16px',
-                  border: '2px solid #cbd5e1',
-                  borderRadius: '10px',
-                  fontSize: '0.9rem',
-                  outline: 'none',
-                  background: 'white',
-                  color: '#1e293b',
-                  cursor: 'pointer'
-                }}
+                className="border-2"
               >
                 {indianLocations.map((location, index) => (
                   <option key={index} value={location === "All Locations" ? "" : location}>
                     {location}
                   </option>
                 ))}
-              </select>
+              </Form.Select>
             </div>
 
-            {/* Property Type Filter */}
-            <div style={{ marginBottom: '24px' }}>
-              <label style={{
-                color: '#1e293b',
-                fontSize: '0.9rem',
-                fontWeight: 600,
-                marginBottom: '8px',
-                display: 'block'
-              }}>Property Type</label>
-              <select
+            {/* Property Type */}
+            <div className="mb-4">
+              <Form.Label className="fw-semibold text-dark">Property Type</Form.Label>
+              <Form.Select
                 value={filters.propertyType}
                 onChange={(e) => handleFilterChange('propertyType', e.target.value)}
-                style={{
-                  width: '100%',
-                  padding: '12px 16px',
-                  border: '2px solid #cbd5e1',
-                  borderRadius: '10px',
-                  fontSize: '0.9rem',
-                  outline: 'none',
-                  background: 'white',
-                  color: '#1e293b',
-                  cursor: 'pointer'
-                }}
+                className="border-2"
               >
                 {propertyTypes.map((type, index) => (
                   <option key={index} value={type === "All Categories" ? "" : type}>
                     {type}
                   </option>
                 ))}
-              </select>
+              </Form.Select>
             </div>
 
-            {/* Price Range Filter */}
-            <div style={{ marginBottom: '24px' }}>
-              <label style={{
-                color: '#1e293b',
-                fontSize: '0.9rem',
-                fontWeight: 600,
-                marginBottom: '8px',
-                display: 'block'
-              }}>Price Range</label>
-              <select
+            {/* Price Range */}
+            <div className="mb-4">
+              <Form.Label className="fw-semibold text-dark">Price Range</Form.Label>
+              <Form.Select
                 value={filters.priceRange}
                 onChange={(e) => handleFilterChange('priceRange', e.target.value)}
-                style={{
-                  width: '100%',
-                  padding: '12px 16px',
-                  border: '2px solid #cbd5e1',
-                  borderRadius: '10px',
-                  fontSize: '0.9rem',
-                  outline: 'none',
-                  background: 'white',
-                  color: '#1e293b',
-                  cursor: 'pointer'
-                }}
+                className="border-2"
               >
                 <option value="">All Prices</option>
                 <option value="0-2000">₹0 - ₹2,000</option>
                 <option value="2000-5000">₹2,000 - ₹5,000</option>
                 <option value="5000-10000">₹5,000 - ₹10,000</option>
                 <option value="10000-999999">₹10,000+</option>
-              </select>
+              </Form.Select>
             </div>
 
-            {/* Bedrooms Filter - Conditional */}
+            {/* Bedrooms - Conditional */}
             {shouldShowBedroomFilter() && (
-              <div style={{ marginBottom: '24px' }}>
-                <label style={{
-                  color: '#1e293b',
-                  fontSize: '0.9rem',
-                  fontWeight: 600,
-                  marginBottom: '8px',
-                  display: 'block'
-                }}>Bedrooms</label>
-                <select
+              <div className="mb-4">
+                <Form.Label className="fw-semibold text-dark">Bedrooms</Form.Label>
+                <Form.Select
                   value={filters.bedrooms}
                   onChange={(e) => handleFilterChange('bedrooms', e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '12px 16px',
-                    border: '2px solid #cbd5e1',
-                    borderRadius: '10px',
-                    fontSize: '0.9rem',
-                    outline: 'none',
-                    background: 'white',
-                    color: '#1e293b',
-                    cursor: 'pointer'
-                  }}
+                  className="border-2"
                 >
                   <option value="">Any Bedrooms</option>
                   <option value="1">1+ BHK</option>
                   <option value="2">2+ BHK</option>
                   <option value="3">3+ BHK</option>
                   <option value="4">4+ BHK</option>
-                </select>
+                </Form.Select>
               </div>
             )}
 
             {/* Clear Filters */}
-            <button
+            <Button 
+              variant="primary" 
+              className="w-100 mb-4"
               onClick={clearFilters}
-              style={{
-                width: '100%',
-                padding: '12px 16px',
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                color: 'white',
-                border: 'none',
-                borderRadius: '10px',
-                fontSize: '0.9rem',
-                fontWeight: 700,
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-                boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = 'translateY(-2px)';
-                e.target.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.4)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = 'translateY(0)';
-                e.target.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.3)';
-              }}
             >
-              Clear All Filters
-            </button>
+              <i className="fas fa-times me-2"></i>Clear All Filters
+            </Button>
 
             {/* Filter Status */}
-            <div style={{ 
-              marginTop: '24px',
-              padding: '16px',
-              background: 'white',
-              borderRadius: '10px',
-              border: '2px solid #cbd5e1'
-            }}>
-              <div style={{ color: '#64748b', fontSize: '0.8rem', marginBottom: '8px' }}>
-                Active Filters:
-              </div>
-              <div style={{ color: '#1e293b', fontSize: '0.9rem', fontWeight: 600 }}>
+            <div className="bg-light p-3 rounded border">
+              <small className="text-muted d-block mb-1">Active Filters:</small>
+              <div className="fw-semibold text-dark">
                 {Object.values(filters).filter(f => f).length || searchQuery ? 
                   `${Object.values(filters).filter(f => f).length + (searchQuery ? 1 : 0)} active` : 
                   'None'
@@ -511,419 +426,137 @@ const FindProperty = () => {
           </div>
         </div>
 
-        {/* MAIN CONTENT - HARMONIOUS WHITE WITH SUBTLE BACKGROUND */}
-        <div style={{ 
-          marginLeft: '280px',
-          flex: 1,
-          padding: '40px',
-          paddingBottom: '120px', // FOOTER OVERLAP FIX
-          background: 'white', // Clean white background
-          minHeight: '100vh'
-        }}>
-          
-          {/* Results Header */}
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: '40px',
-            flexWrap: 'wrap',
-            gap: '20px'
-          }}>
-            <div>
-              <h2 style={{
-                fontSize: '2.5rem',
-                fontWeight: 900,
-                color: '#1e293b',
-                marginBottom: '12px'
-              }}>
-                {filteredProperties.length} Properties Found
-              </h2>
-              <p style={{
-                color: '#64748b',
-                fontSize: '1.1rem',
-                marginBottom: '0'
-              }}>
-                {searchQuery && `Results for "${searchQuery}"`}
-                {Object.values(filters).some(f => f) && ' with filters applied'}
-                {!searchQuery && !Object.values(filters).some(f => f) && 'Browse our premium collection'}
-              </p>
-            </div>
+        {/* MAIN CONTENT - FIXED FOOTER OVERLAP */}
+        <div style={{ marginLeft: '300px', flex: 1, paddingBottom: '100px' }}>
+          <Container fluid className="p-4">
             
-            {/* View Mode Toggle */}
-            <div style={{
-              display: 'flex',
-              background: '#f8fafc',
-              borderRadius: '12px',
-              padding: '6px',
-              border: '2px solid #e2e8f0'
-            }}>
-              <button
-                onClick={() => setViewMode('grid')}
-                style={{
-                  padding: '10px 20px',
-                  border: 'none',
-                  borderRadius: '8px',
-                  background: viewMode === 'grid' ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'transparent',
-                  color: viewMode === 'grid' ? 'white' : '#64748b',
-                  fontWeight: 600,
-                  fontSize: '0.9rem',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  marginRight: '4px'
-                }}
-              >
-                🔲 Grid
-              </button>
-              <button
-                onClick={() => setViewMode('list')}
-                style={{
-                  padding: '10px 20px',
-                  border: 'none',
-                  borderRadius: '8px',
-                  background: viewMode === 'list' ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'transparent',
-                  color: viewMode === 'list' ? 'white' : '#64748b',
-                  fontWeight: 600,
-                  fontSize: '0.9rem',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease'
-                }}
-              >
-                📋 List
-              </button>
-            </div>
-          </div>
-
-          {/* Property Cards */}
-          {filteredProperties.length === 0 ? (
-            <div style={{
-              textAlign: 'center',
-              padding: '80px 40px',
-              background: '#f8fafc',
-              borderRadius: '16px',
-              border: '2px solid #e2e8f0'
-            }}>
-              <div style={{ fontSize: '4rem', marginBottom: '20px' }}>🏠</div>
-              <h3 style={{
-                fontSize: '1.8rem',
-                fontWeight: 700,
-                color: '#1e293b',
-                marginBottom: '12px'
-              }}>No Properties Found</h3>
-              <p style={{
-                color: '#64748b',
-                fontSize: '1.1rem',
-                marginBottom: '24px'
-              }}>
-                Try adjusting your search criteria or filters
-              </p>
-              <button
-                onClick={clearFilters}
-                style={{
-                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                  color: 'white',
-                  padding: '12px 24px',
-                  border: 'none',
-                  borderRadius: '8px',
-                  fontWeight: 600,
-                  cursor: 'pointer'
-                }}
-              >
-                Clear All Filters
-              </button>
-            </div>
-          ) : (
-            <Row>
-              {filteredProperties.map((property) => (
-                <Col 
-                  lg={viewMode === 'grid' ? 4 : 12} 
-                  md={viewMode === 'grid' ? 6 : 12} 
-                  className="mb-4" 
-                  key={property.id}
+            {/* Results Header */}
+            <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+              <div>
+                <h2 className="h3 fw-bold text-dark mb-2">
+                  {filteredProperties.length} Properties Found
+                </h2>
+                <p className="text-muted mb-0">
+                  {searchQuery && `Results for "${searchQuery}"`}
+                  {Object.values(filters).some(f => f) && ' with filters applied'}
+                  {!searchQuery && !Object.values(filters).some(f => f) && 'Browse our premium collection'}
+                </p>
+              </div>
+              
+              {/* View Toggle */}
+              <div className="btn-group" role="group">
+                <Button
+                  variant={viewMode === 'grid' ? 'primary' : 'outline-primary'}
+                  onClick={() => setViewMode('grid')}
+                  size="sm"
                 >
-                  <div style={{
-                    background: '#f8fafc', // Subtle background for cards
-                    borderRadius: '16px',
-                    overflow: 'hidden',
-                    border: '2px solid #e2e8f0',
-                    transition: 'all 0.3s ease',
-                    height: viewMode === 'grid' ? '520px' : 'auto',
-                    display: viewMode === 'list' ? 'flex' : 'block',
-                    cursor: 'pointer'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-4px)';
-                    e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.12)';
-                    e.currentTarget.style.borderColor = '#cbd5e1';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = 'none';
-                    e.currentTarget.style.borderColor = '#e2e8f0';
-                  }}>
-                    
-                    {/* Image Section */}
-                    <div style={{
-                      position: 'relative',
-                      height: viewMode === 'grid' ? '220px' : '180px',
-                      width: viewMode === 'list' ? '300px' : '100%',
-                      flexShrink: 0,
-                      overflow: 'hidden'
-                    }}>
-                      <img 
-                        src={property.image}
-                        alt={property.title}
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover'
-                        }}
-                      />
-                      
-                      {/* Status Badge */}
-                      <div style={{
-                        position: 'absolute',
-                        top: '16px',
-                        left: '16px',
-                        background: property.status === 'For Sale' ? '#f59e0b' : '#10b981',
-                        color: 'white',
-                        padding: '8px 16px',
-                        borderRadius: '12px',
-                        fontSize: '0.8rem',
-                        fontWeight: 700,
-                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
-                      }}>
-                        {property.status}
-                      </div>
+                  <i className="fas fa-th me-1"></i>Grid
+                </Button>
+                <Button
+                  variant={viewMode === 'list' ? 'primary' : 'outline-primary'}
+                  onClick={() => setViewMode('list')}
+                  size="sm"
+                >
+                  <i className="fas fa-list me-1"></i>List
+                </Button>
+              </div>
+            </div>
 
-                      {/* Property Type Badge */}
-                      <div style={{
-                        position: 'absolute',
-                        top: '16px',
-                        right: '16px',
-                        background: 'rgba(255, 255, 255, 0.9)',
-                        color: '#1e293b',
-                        padding: '6px 12px',
-                        borderRadius: '8px',
-                        fontSize: '0.75rem',
-                        fontWeight: 600,
-                        backdropFilter: 'blur(10px)'
-                      }}>
-                        {property.type}
+            {/* Property Cards */}
+            {filteredProperties.length === 0 ? (
+              <Card className="text-center p-5">
+                <Card.Body>
+                  <div className="display-1 text-muted mb-3">
+                    <i className="fas fa-home"></i>
+                  </div>
+                  <h4 className="mb-3">No Properties Found</h4>
+                  <p className="text-muted mb-4">Try adjusting your search criteria or filters</p>
+                  <Button variant="primary" onClick={clearFilters}>
+                    Clear All Filters
+                  </Button>
+                </Card.Body>
+              </Card>
+            ) : (
+              <Row className={viewMode === 'grid' ? 'row-cols-1 row-cols-md-2 row-cols-lg-3' : 'row-cols-1'}>
+                {filteredProperties.map((property) => (
+                  <Col key={property.id} className="mb-4">
+                    <Card className="h-100 border-2 shadow-sm">
+                      <div className="position-relative">
+                        <Card.Img 
+                          variant="top" 
+                          src={property.image} 
+                          style={{ height: viewMode === 'grid' ? '200px' : '180px', objectFit: 'cover' }}
+                        />
+                        
+                        {/* Status Badge */}
+                        <span className={`position-absolute top-0 start-0 m-3 badge ${
+                          property.status === 'For Sale' ? 'bg-warning text-dark' : 'bg-success'
+                        }`}>
+                          {property.status}
+                        </span>
+                        
+                        {/* Property Type Badge */}
+                        <span className="position-absolute top-0 end-0 m-3 badge bg-dark">
+                          {property.type}
+                        </span>
                       </div>
-                    </div>
-                    
-                    {/* Content Section */}
-                    <div style={{ 
-                      padding: '28px',
-                      flex: 1,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'space-between',
-                      background: 'white' // White card content
-                    }}>
-                      <div>
+                      
+                      <Card.Body className="d-flex flex-column">
                         {/* Location */}
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          color: '#64748b',
-                          fontSize: '0.9rem',
-                          marginBottom: '16px',
-                          fontWeight: 500
-                        }}>
-                          <span>📍</span>
+                        <div className="text-muted mb-2">
+                          <i className="fas fa-map-marker-alt me-1"></i>
                           {property.location}
                         </div>
                         
                         {/* Title */}
-                        <h3 style={{
-                          fontSize: '1.4rem',
-                          fontWeight: 800,
-                          color: '#1e293b',
-                          marginBottom: '18px',
-                          lineHeight: '1.3'
-                        }}>{property.title}</h3>
+                        <Card.Title className="h5 mb-3">{property.title}</Card.Title>
                         
                         {/* Property Details */}
-                        <div style={{
-                          display: 'flex',
-                          gap: '16px',
-                          marginBottom: '24px',
-                          fontSize: '0.85rem',
-                          color: '#64748b',
-                          flexWrap: 'wrap'
-                        }}>
-                          {property.isResidential && property.bedrooms > 0 && (
-                            <div style={{ 
-                              display: 'flex', 
-                              alignItems: 'center', 
-                              gap: '6px',
-                              background: '#f1f5f9',
-                              padding: '6px 12px',
-                              borderRadius: '8px',
-                              fontWeight: 500
-                            }}>
-                              <span>🛏️</span>
-                              <span>{property.bedrooms} BHK</span>
-                            </div>
-                          )}
-                          
-                          {property.bathrooms > 0 && property.type !== 'Parking' && (
-                            <div style={{ 
-                              display: 'flex', 
-                              alignItems: 'center', 
-                              gap: '6px',
-                              background: '#f1f5f9',
-                              padding: '6px 12px',
-                              borderRadius: '8px',
-                              fontWeight: 500
-                            }}>
-                              <span>🚿</span>
-                              <span>{property.bathrooms} Bath</span>
-                            </div>
-                          )}
-                          
-                          <div style={{ 
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            gap: '6px',
-                            background: '#f1f5f9',
-                            padding: '6px 12px',
-                            borderRadius: '8px',
-                            fontWeight: 500
-                          }}>
-                            <span>📐</span>
-                            <span>{property.area.toLocaleString()} sq ft</span>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      {/* Pricing & Buttons */}
-                      <div style={{
-                        paddingTop: '24px',
-                        borderTop: '2px solid #f1f5f9'
-                      }}>
-                        <div style={{
-                          fontSize: '1.7rem',
-                          fontWeight: 900,
-                          color: '#10b981',
-                          marginBottom: '24px'
-                        }}>
-                          ₹{property.price.toLocaleString()}/{property.priceType}
+                        <div className="mb-3">
+                          {renderPropertyDetails(property)}
                         </div>
                         
-                        {/* Buttons - FULLY VISIBLE */}
-                        <div style={{ 
-                          display: 'flex', 
-                          gap: '12px',
-                          alignItems: 'center'
-                        }}>
-                          <button style={{
-                            background: 'transparent',
-                            border: '2px solid #e2e8f0',
-                            color: '#64748b',
-                            padding: '14px 20px',
-                            borderRadius: '10px',
-                            fontSize: '0.9rem',
-                            fontWeight: 600,
-                            cursor: 'pointer',
-                            transition: 'all 0.3s ease',
-                            whiteSpace: 'nowrap',
-                            flex: '1',
-                            minWidth: '130px'
-                          }}
-                          onMouseEnter={(e) => {
-                            e.target.style.borderColor = '#cbd5e1';
-                            e.target.style.color = '#475569';
-                            e.target.style.transform = 'translateY(-1px)';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.target.style.borderColor = '#e2e8f0';
-                            e.target.style.color = '#64748b';
-                            e.target.style.transform = 'translateY(0)';
-                          }}>
-                            View Details
-                          </button>
+                        {/* Spacer */}
+                        <div className="mt-auto">
+                          {/* Price */}
+                          <div className="h4 text-success fw-bold mb-3">
+                            ₹{property.price.toLocaleString()}/{property.priceType}
+                          </div>
                           
-                          <button style={{
-                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                            border: 'none',
-                            color: 'white',
-                            padding: '14px 20px',
-                            borderRadius: '10px',
-                            fontSize: '0.9rem',
-                            fontWeight: 700,
-                            cursor: 'pointer',
-                            boxShadow: '0 6px 20px rgba(102, 126, 234, 0.3)',
-                            transition: 'all 0.3s ease',
-                            whiteSpace: 'nowrap',
-                            flex: '1',
-                            minWidth: '130px'
-                          }}
-                          onMouseEnter={(e) => {
-                            e.target.style.transform = 'translateY(-1px)';
-                            e.target.style.boxShadow = '0 8px 25px rgba(102, 126, 234, 0.4)';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.target.style.transform = 'translateY(0)';
-                            e.target.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.3)';
-                          }}>
-                            Book Now
-                          </button>
+                          {/* Buttons */}
+                          <div className="d-grid gap-2">
+                            <div className="row g-2">
+                              <div className="col">
+                                <Button variant="outline-primary" size="sm" className="w-100">
+                                  View Details
+                                </Button>
+                              </div>
+                              <div className="col">
+                                <Button variant="primary" size="sm" className="w-100">
+                                  Book Now
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                </Col>
-              ))}
-            </Row>
-          )}
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            )}
 
-          {/* Load More Button */}
-          {filteredProperties.length > 0 && (
-            <div style={{ textAlign: 'center', marginTop: '60px' }}>
-              <button style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                color: 'white',
-                padding: '16px 40px',
-                border: 'none',
-                borderRadius: '12px',
-                fontSize: '1rem',
-                fontWeight: 700,
-                cursor: 'pointer',
-                boxShadow: '0 8px 25px rgba(102, 126, 234, 0.2)',
-                transition: 'all 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = 'translateY(-2px)';
-                e.target.style.boxShadow = '0 12px 35px rgba(102, 126, 234, 0.3)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = 'translateY(0)';
-                e.target.style.boxShadow = '0 8px 25px rgba(102, 126, 234, 0.2)';
-              }}>
-                Load More Properties
-              </button>
-            </div>
-          )}
+            {/* Load More */}
+            {filteredProperties.length > 0 && (
+              <div className="text-center mt-5">
+                <Button variant="primary" size="lg">
+                  <i className="fas fa-plus me-2"></i>Load More Properties
+                </Button>
+              </div>
+            )}
+          </Container>
         </div>
       </div>
-
-      <style>{`
-        @media (max-width: 768px) {
-          .main-content {
-            margin-left: 0 !important;
-          }
-          
-          .sidebar {
-            position: relative !important;
-            width: 100% !important;
-            height: auto !important;
-          }
-        }
-      `}</style>
     </>
   );
 };
