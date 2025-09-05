@@ -8,13 +8,13 @@ const Home = () => {
 
   return (
     <>
-      {/* PROFESSIONAL HERO SECTION - CONTENT MOVED UP */}
+      {/* PERFECT HERO SECTION - FINAL VERSION */}
       <section style={{
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         minHeight: '85vh',
         display: 'flex',
         alignItems: 'center',
-        paddingTop: '50px',
+        paddingTop: '60px',
         position: 'relative',
         overflow: 'hidden'
       }}>
@@ -33,9 +33,9 @@ const Home = () => {
 
         <Container>
           <Row className="align-items-center" style={{ minHeight: '70vh' }}>
-            {/* LEFT CONTENT - MOVED UP FOR PROFESSIONAL LOOK */}
+            {/* LEFT CONTENT - PERFECTLY POSITIONED */}
             <Col lg={6} md={6} className="mb-4 mb-lg-0">
-              <div style={{ maxWidth: '100%', paddingLeft: '1rem', paddingTop: '1rem' }}>
+              <div style={{ maxWidth: '100%', paddingLeft: '0.5rem' }}>
                 {/* Professional Badge */}
                 <div style={{
                   display: 'inline-block',
@@ -56,7 +56,7 @@ const Home = () => {
                   </span>
                 </div>
                 
-                {/* Professional Typography */}
+                {/* Perfect Typography */}
                 <h1 style={{
                   fontSize: '4rem',
                   fontWeight: 900,
@@ -64,7 +64,7 @@ const Home = () => {
                   marginBottom: '24px',
                   letterSpacing: '-0.02em',
                   color: 'white',
-                  maxWidth: '85%'
+                  maxWidth: '90%'
                 }}>
                   Rent Anything,
                   <br />
@@ -78,19 +78,19 @@ const Home = () => {
                 </h1>
                 
                 <p style={{
-                  fontSize: '1.1rem',
+                  fontSize: '1.15rem',
                   color: 'rgba(255, 255, 255, 0.9)',
                   lineHeight: '1.6',
                   marginBottom: '32px',
-                  maxWidth: '80%'
+                  maxWidth: '85%'
                 }}>
                   From properties to vehicles, venues to parking spaces - SpaceLink connects you with 
                   <strong style={{ color: 'white' }}> exceptional rentals worldwide</strong>. 
                   Professional service, trusted transactions.
                 </p>
                 
-                {/* Professional CTA Button */}
-                <div style={{ marginBottom: '48px' }}>
+                {/* Perfect CTA Button */}
+                <div style={{ marginBottom: '50px' }}>
                   <Link 
                     to="/find-property" 
                     style={{
@@ -121,14 +121,14 @@ const Home = () => {
                   </Link>
                 </div>
                 
-                {/* Professional Stats - PERFECT POSITIONING */}
+                {/* Perfect Stats - FINAL POSITIONING */}
                 <div style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(3, 1fr)',
-                  gap: '28px',
+                  gap: '30px',
                   paddingTop: '32px',
                   borderTop: '1px solid rgba(255, 255, 255, 0.2)',
-                  maxWidth: '350px'
+                  maxWidth: '380px'
                 }}>
                   {[
                     { number: '10K+', label: 'Items Listed' },
@@ -156,14 +156,14 @@ const Home = () => {
               </div>
             </Col>
             
-            {/* RIGHT IMAGE - PROFESSIONAL SIZING */}
+            {/* RIGHT IMAGE - PERFECT SIZING */}
             <Col lg={6} md={6}>
               <div style={{
                 position: 'relative',
                 maxWidth: '100%',
                 margin: '0 auto'
               }}>
-                {/* PROFESSIONAL IMAGE */}
+                {/* PERFECT IMAGE */}
                 <div style={{
                   position: 'relative',
                   borderRadius: '20px',
@@ -172,10 +172,10 @@ const Home = () => {
                 }}>
                   <img 
                     src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
-                    alt="Professional rental platform - modern properties and spaces" 
+                    alt="Professional rental platform workspace" 
                     style={{
                       width: '100%',
-                      height: '400px',
+                      height: '420px',
                       objectFit: 'cover',
                       display: 'block'
                     }}
@@ -407,7 +407,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* HOW IT WORKS SECTION - FIXED MISSING CONTENT */}
+      {/* HOW IT WORKS SECTION - PERFECT WITH ALL CONTENT */}
       <section style={{
         padding: '60px 0',
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -542,13 +542,13 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* FEATURED PROPERTIES - PERFECT SIZE */}
+      {/* PERFECT FEATURED PROPERTIES - FINAL VERSION */}
       <section style={{
-        padding: '60px 0',
+        padding: '70px 0',
         background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)'
       }}>
         <Container>
-          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
             <div style={{
               display: 'inline-block',
               background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -579,7 +579,7 @@ const Home = () => {
             </p>
           </div>
           
-          <Row>
+          <Row className="justify-content-center">
             {[
               {
                 image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
@@ -600,7 +600,7 @@ const Home = () => {
                 gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
               }
             ].map((property, index) => (
-              <Col lg={6} className="mb-4" key={index}>
+              <Col lg={5} md={6} className="mb-4" key={index} style={{ maxWidth: '450px' }}>
                 <div style={{
                   background: 'white',
                   borderRadius: '20px',
@@ -608,17 +608,17 @@ const Home = () => {
                   boxShadow: '0 8px 25px rgba(0, 0, 0, 0.08)',
                   border: '1px solid #f1f5f9',
                   transition: 'all 0.3s ease',
-                  height: '400px'
+                  height: '440px'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.transform = 'translateY(-6px)';
                   e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.12)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.08)';
                 }}>
-                  <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
+                  <div style={{ position: 'relative', height: '240px', overflow: 'hidden' }}>
                     <img 
                       src={property.image}
                       alt={property.title}
@@ -630,56 +630,56 @@ const Home = () => {
                     />
                     <div style={{
                       position: 'absolute',
-                      top: '12px',
-                      left: '12px',
+                      top: '16px',
+                      left: '16px',
                       background: property.gradient,
                       color: 'white',
-                      padding: '4px 10px',
-                      borderRadius: '12px',
-                      fontSize: '0.7rem',
+                      padding: '6px 14px',
+                      borderRadius: '14px',
+                      fontSize: '0.75rem',
                       fontWeight: 700,
-                      boxShadow: '0 3px 8px rgba(0, 0, 0, 0.2)'
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
                     }}>
                       {property.type}
                     </div>
                   </div>
                   
-                  <div style={{ padding: '24px' }}>
+                  <div style={{ padding: '26px' }}>
                     <div style={{
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '4px',
+                      gap: '6px',
                       color: '#64748b',
-                      fontSize: '0.8rem',
-                      marginBottom: '8px'
+                      fontSize: '0.85rem',
+                      marginBottom: '10px'
                     }}>
                       <span>📍</span>
                       {property.location}
                     </div>
                     
                     <h3 style={{
-                      fontSize: '1.3rem',
+                      fontSize: '1.4rem',
                       fontWeight: 800,
                       color: '#1e293b',
-                      marginBottom: '8px'
+                      marginBottom: '10px'
                     }}>{property.title}</h3>
                     
                     <p style={{
                       color: '#64748b',
-                      fontSize: '0.85rem',
-                      lineHeight: '1.4',
-                      marginBottom: '12px'
-                    }}>Spacious luxury {property.title.toLowerCase()} with premium amenities and modern design</p>
+                      fontSize: '0.9rem',
+                      lineHeight: '1.5',
+                      marginBottom: '16px'
+                    }}>Spacious luxury {property.title.toLowerCase()} with premium amenities and modern design perfect for families</p>
                     
                     <div style={{
                       display: 'flex',
-                      gap: '12px',
-                      marginBottom: '16px',
-                      fontSize: '0.75rem',
+                      gap: '16px',
+                      marginBottom: '20px',
+                      fontSize: '0.8rem',
                       color: '#64748b'
                     }}>
                       {property.features.map((feature, idx) => (
-                        <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+                        <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                           <span>{idx === 0 ? '🛏️' : '📐'}</span>
                           {feature}
                         </div>
@@ -692,19 +692,19 @@ const Home = () => {
                       alignItems: 'center'
                     }}>
                       <div style={{
-                        fontSize: '1.4rem',
+                        fontSize: '1.5rem',
                         fontWeight: 900,
                         color: '#10b981'
                       }}>{property.price}</div>
                       
-                      <div style={{ display: 'flex', gap: '6px' }}>
+                      <div style={{ display: 'flex', gap: '8px' }}>
                         <button style={{
                           background: 'transparent',
-                          border: '1px solid #e5e7eb',
+                          border: '1.5px solid #e5e7eb',
                           color: '#64748b',
-                          padding: '6px 12px',
+                          padding: '8px 14px',
                           borderRadius: '8px',
-                          fontSize: '0.75rem',
+                          fontSize: '0.8rem',
                           fontWeight: 600,
                           cursor: 'pointer',
                           transition: 'all 0.2s ease'
@@ -722,21 +722,21 @@ const Home = () => {
                           background: property.gradient,
                           border: 'none',
                           color: 'white',
-                          padding: '6px 12px',
+                          padding: '8px 14px',
                           borderRadius: '8px',
-                          fontSize: '0.75rem',
+                          fontSize: '0.8rem',
                           fontWeight: 700,
                           cursor: 'pointer',
-                          boxShadow: '0 3px 8px rgba(0, 0, 0, 0.15)',
+                          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
                           transition: 'all 0.2s ease'
                         }}
                         onMouseEnter={(e) => {
                           e.target.style.transform = 'translateY(-1px)';
-                          e.target.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
+                          e.target.style.boxShadow = '0 6px 16px rgba(0, 0, 0, 0.2)';
                         }}
                         onMouseLeave={(e) => {
                           e.target.style.transform = 'translateY(0)';
-                          e.target.style.boxShadow = '0 3px 8px rgba(0, 0, 0, 0.15)';
+                          e.target.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
                         }}>Book Now</button>
                       </div>
                     </div>
