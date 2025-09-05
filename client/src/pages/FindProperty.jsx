@@ -302,28 +302,41 @@ const FindProperty = () => {
 
   return (
     <>
-      {/* CLEAN LIGHT HERO - MATCHING HOME THEME */}
+      {/* BEAUTIFUL PROFESSIONAL HERO SECTION */}
       <section 
-        className="py-5"
+        className="py-5 text-white"
         style={{
-          background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
-          minHeight: '280px',
+          background: 'linear-gradient(135deg, #8b5cf6 0%, #a855f7 50%, #c084fc 100%)',
+          minHeight: '300px',
           display: 'flex',
-          alignItems: 'center'
+          alignItems: 'center',
+          position: 'relative'
         }}
       >
-        <Container>
+        {/* Subtle pattern overlay */}
+        <div 
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='9' cy='9' r='9'/%3E%3Ccircle cx='51' cy='51' r='9'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            opacity: 0.6
+          }}
+        />
+        <Container className="position-relative">
           <div className="text-center">
             <h1 className="display-4 fw-bold mb-4" style={{ 
-              color: '#1e293b',
-              letterSpacing: '-0.025em'
+              letterSpacing: '-0.025em',
+              textShadow: '0 2px 4px rgba(0,0,0,0.1)'
             }}>
               Find Your Perfect Property
             </h1>
-            <p className="fs-5 mb-0" style={{ 
-              color: '#64748b',
+            <p className="fs-5 mb-0 opacity-90" style={{ 
               maxWidth: '600px', 
-              margin: '0 auto'
+              margin: '0 auto',
+              lineHeight: 1.6 
             }}>
               Discover verified properties from our premium collection across India
             </p>
@@ -331,7 +344,7 @@ const FindProperty = () => {
         </Container>
       </section>
 
-      {/* ENTERPRISE CLEAN LAYOUT */}
+      {/* ENTERPRISE LAYOUT */}
       <div 
         style={{ 
           display: 'flex',
@@ -340,12 +353,12 @@ const FindProperty = () => {
         }}
       >
         
-        {/* MINIMALIST SIDEBAR - NO SQUARE ICON */}
+        {/* PROFESSIONAL SIDEBAR */}
         <div 
           style={{
             width: '320px',
             minHeight: '100vh',
-            backgroundColor: '#fafbfc',
+            backgroundColor: '#f8fafc',
             position: 'sticky',
             top: 0,
             overflowY: 'auto',
@@ -353,7 +366,7 @@ const FindProperty = () => {
           }}
         >
           
-          {/* Clean Header - NO ICON */}
+          {/* Clean Header */}
           <div className="p-4 border-bottom bg-white" style={{ borderColor: '#e2e8f0' }}>
             <div>
               <h5 className="mb-2 fw-bold" style={{ color: '#1e293b' }}>Filters</h5>
@@ -580,7 +593,7 @@ const FindProperty = () => {
               </div>
             </div>
 
-            {/* Clean Property Cards */}
+            {/* Property Cards - NO BLUE COLORS */}
             {filteredProperties.length === 0 ? (
               <Card className="border-0 shadow-sm text-center p-5">
                 <Card.Body>
@@ -636,7 +649,7 @@ const FindProperty = () => {
                           }}
                         />
                         
-                        {/* Clean Status Badges */}
+                        {/* NO BLUE BADGES - ONLY NEUTRAL + PURPLE */}
                         <div className="position-absolute top-0 start-0 p-3">
                           <Badge 
                             className="me-2 fw-semibold"
@@ -656,7 +669,7 @@ const FindProperty = () => {
                               style={{ 
                                 fontSize: '0.8rem',
                                 padding: '6px 12px',
-                                backgroundColor: '#8b5cf6',
+                                backgroundColor: '#8b5cf6', // PURPLE INSTEAD OF BLUE
                                 color: 'white',
                                 borderRadius: '6px'
                               }}
@@ -666,14 +679,14 @@ const FindProperty = () => {
                           )}
                         </div>
                         
-                        {/* Property Type Badge */}
+                        {/* Property Type Badge - NEUTRAL GRAY */}
                         <div className="position-absolute top-0 end-0 p-3">
                           <Badge 
                             className="fw-semibold"
                             style={{ 
                               fontSize: '0.8rem',
                               padding: '6px 12px',
-                              backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                              backgroundColor: '#6b7280', // NEUTRAL GRAY INSTEAD OF BLUE
                               color: 'white',
                               borderRadius: '6px'
                             }}
@@ -698,7 +711,7 @@ const FindProperty = () => {
                           {property.title}
                         </Card.Title>
                         
-                        {/* Property Details */}
+                        {/* Property Details - NO BLUE */}
                         <div className="mb-4 flex-grow-1">
                           {renderPropertyDetails(property)}
                         </div>
@@ -712,7 +725,7 @@ const FindProperty = () => {
                             <small className="text-muted fw-medium">per {property.priceType}</small>
                           </div>
                           
-                          {/* Clean Action Buttons */}
+                          {/* Action Buttons */}
                           <div className="d-grid gap-3 d-md-flex">
                             <Button 
                               variant="outline-secondary" 
@@ -733,7 +746,7 @@ const FindProperty = () => {
                               style={{ 
                                 fontSize: '0.9rem',
                                 padding: '12px 20px',
-                                backgroundColor: '#8b5cf6',
+                                backgroundColor: '#8b5cf6', // PURPLE PRIMARY BUTTON
                                 borderColor: '#8b5cf6',
                                 color: 'white'
                               }}
@@ -752,7 +765,7 @@ const FindProperty = () => {
         </div>
       </div>
 
-      {/* Clean Styles */}
+      {/* Professional Styles */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
         
