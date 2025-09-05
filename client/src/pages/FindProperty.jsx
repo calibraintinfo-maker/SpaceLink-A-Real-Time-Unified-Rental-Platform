@@ -247,6 +247,10 @@ const FindProperty = () => {
     return details;
   };
 
+  const handleImageError = (e) => {
+    e.target.src = 'https://via.placeholder.com/400x240/f3f4f6/9ca3af?text=Property+Image';
+  };
+
   return (
     <>
       {/* PURPLE HERO */}
@@ -482,7 +486,7 @@ const FindProperty = () => {
               </div>
             </div>
 
-            {/* PROPERTY CARDS - CUSTOM BADGES, NO BOOTSTRAP COLORS */}
+            {/* PROPERTY CARDS - FIXED BUTTONS & IMAGES */}
             {filteredProperties.length === 0 ? (
               <Card className="border-0 shadow-sm text-center p-5">
                 <Card.Body>
@@ -523,12 +527,11 @@ const FindProperty = () => {
                       }}
                     >
                       <div className="position-relative">
-                        <Card.Img 
-                          variant="top" 
+                        <img
+                          className="card-img-top"
                           src={property.image}
-                          onError={(e) => {
-                            e.target.src = 'https://via.placeholder.com/400x240/f3f4f6/9ca3af?text=No+Image+Available';
-                          }}
+                          alt={property.title}
+                          onError={handleImageError}
                           style={{ 
                             height: viewMode === 'grid' ? '240px' : '200px', 
                             objectFit: 'cover',
@@ -585,20 +588,20 @@ const FindProperty = () => {
                             <small className="text-muted fw-medium">per {property.priceType}</small>
                           </div>
                           
-                          {/* Action Buttons */}
+                          {/* FIXED ACTION BUTTONS - VISIBLE TEXT */}
                           <div className="d-grid gap-3 d-md-flex">
-                            <Button 
-                              className="flex-fill fw-semibold custom-outline-btn"
-                              size="lg"
+                            <button 
+                              className="btn flex-fill fw-semibold custom-outline-btn"
+                              style={{ fontSize: '0.9rem', padding: '12px 20px' }}
                             >
                               View Details
-                            </Button>
-                            <Button 
-                              className="flex-fill fw-semibold custom-primary-btn"
-                              size="lg"
+                            </button>
+                            <button 
+                              className="btn flex-fill fw-semibold custom-primary-btn"
+                              style={{ fontSize: '0.9rem', padding: '12px 20px' }}
                             >
                               Book Now
-                            </Button>
+                            </button>
                           </div>
                         </div>
                       </Card.Body>
@@ -611,7 +614,7 @@ const FindProperty = () => {
         </div>
       </div>
 
-      {/* CUSTOM STYLES - OVERRIDE ALL BOOTSTRAP BLUES */}
+      {/* FIXED STYLES - VISIBLE BUTTON TEXT + WORKING IMAGES */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
         
@@ -738,36 +741,35 @@ const FindProperty = () => {
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
         
-        /* Custom buttons */
+        /* FIXED BUTTONS - VISIBLE TEXT */
         .custom-primary-btn {
           background-color: #7c3aed !important;
-          border-color: #7c3aed !important;
+          border: 1px solid #7c3aed !important;
           color: white !important;
-          font-size: 0.9rem !important;
-          padding: 12px 20px !important;
           border-radius: 12px !important;
-          border: none !important;
+          transition: all 0.2s ease !important;
         }
         
         .custom-primary-btn:hover {
           background-color: #6d28d9 !important;
           border-color: #6d28d9 !important;
           color: white !important;
+          transform: translateY(-1px) !important;
         }
         
         .custom-outline-btn {
-          background-color: #ffffff !important;
+          background-color: transparent !important;
           border: 1.5px solid #d1d5db !important;
           color: #6b7280 !important;
-          font-size: 0.9rem !important;
-          padding: 12px 20px !important;
           border-radius: 12px !important;
+          transition: all 0.2s ease !important;
         }
         
         .custom-outline-btn:hover {
           background-color: #7c3aed !important;
           border-color: #7c3aed !important;
           color: white !important;
+          transform: translateY(-1px) !important;
         }
         
         .custom-clear-btn {
@@ -822,6 +824,12 @@ const FindProperty = () => {
           border-radius: 8px;
           background-color: #f8fafc;
           border: 1px solid #e5e7eb;
+        }
+        
+        /* Image fallback */
+        .card-img-top {
+          object-fit: cover;
+          background-color: #f3f4f6;
         }
         
         /* Override any remaining Bootstrap blues */
