@@ -34,7 +34,7 @@ const FindProperty = () => {
     fetchProperties();
   }, []);
 
-  // ✅ FIXED: Handles ALL possible API response structures
+  // ✅ ROBUST: Handles all API response structures
   const fetchProperties = async () => {
     try {
       setLoading(true);
@@ -43,28 +43,20 @@ const FindProperty = () => {
       console.log('🔍 Fetching properties from API...');
       const response = await api.properties.getAll();
       
-      console.log('📡 Full API Response:', response);
+      console.log('📡 API Response:', response);
       console.log('📊 Response Data:', response.data);
       
-      // ✅ ROBUST: Handle all possible nested structures
+      // Handle different response structures
       let propertiesArray = [];
       
       if (Array.isArray(response)) {
-        // Direct array response
         propertiesArray = response;
-        console.log('✅ Direct array response');
       } else if (Array.isArray(response?.data)) {
-        // response.data is array
         propertiesArray = response.data;
-        console.log('✅ Array in response.data');
       } else if (Array.isArray(response?.data?.properties)) {
-        // response.data.properties is array
         propertiesArray = response.data.properties;
-        console.log('✅ Array in response.data.properties');
       } else if (Array.isArray(response?.data?.data)) {
-        // response.data.data is array
         propertiesArray = response.data.data;
-        console.log('✅ Array in response.data.data');
       } else if (response?.data && typeof response.data === 'object') {
         // Look for any array property in the response.data object
         const dataObj = response.data;
@@ -86,7 +78,6 @@ const FindProperty = () => {
         console.log(`✅ Successfully loaded ${propertiesArray.length} properties`);
       } else {
         console.error('❌ No valid properties array found in response');
-        console.error('❌ Response structure:', JSON.stringify(response, null, 2));
         setProperties([]);
         setFilteredProperties([]);
         setError('No properties found in server response');
@@ -214,25 +205,33 @@ const FindProperty = () => {
     if (property.subtype && residentialTypes.includes(property.subtype)) {
       if (property.bedrooms > 0) {
         details.push(
-          <span key="bedrooms" className="badge bg-light text-dark me-2 mb-2">
+          <Badge key="bedrooms" bg="light" text="dark" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
             🛏 {property.bedrooms} BHK
-          </span>
+          </Badge>
         );
       }
       if (property.bathrooms > 0) {
         details.push(
-          <span key="bathrooms" className="badge bg-light text-dark me-2 mb-2">
+          <Badge key="bathrooms" bg="light" text="dark" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
             🚿 {property.bathrooms} Bath
-          </span>
+          </Badge>
         );
       }
     }
 
     if (property.size) {
       details.push(
-        <span key="area" className="badge bg-light text-dark me-2 mb-2">
+        <Badge key="area" bg="light" text="dark" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
           📐 {property.size}
-        </span>
+        </Badge>
+      );
+    }
+
+    if (property.capacity) {
+      details.push(
+        <Badge key="capacity" bg="info" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
+          👥 {property.capacity}
+        </Badge>
       );
     }
 
@@ -311,60 +310,149 @@ const FindProperty = () => {
 
   return (
     <>
-      {/* Purple Hero Section */}
+      {/* ✅ IMPROVED: Purple Hero Section */}
       <section 
         className="py-5 text-white"
         style={{
           background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%)',
-          minHeight: '300px',
+          minHeight: '320px',
           display: 'flex',
-          alignItems: 'center'
+          alignItems: 'center',
+          position: 'relative',
+          overflow: 'hidden'
         }}
       >
-        <Container className="text-center">
-          <h1 className="display-4 fw-bold mb-4">Find Your Perfect Property</h1>
-          <p className="fs-5 opacity-90">Discover verified properties from our premium collection across India</p>
+        {/* Floating elements */}
+        <div style={{
+          position: 'absolute',
+          top: '10%',
+          right: '5%',
+          width: '200px',
+          height: '200px',
+          background: 'rgba(255, 255, 255, 0.1)',
+          borderRadius: '50%',
+          filter: 'blur(40px)'
+        }}></div>
+        <div style={{
+          position: 'absolute',
+          bottom: '10%',
+          left: '5%',
+          width: '150px',
+          height: '150px',
+          background: 'rgba(255, 255, 255, 0.08)',
+          borderRadius: '50%',
+          filter: 'blur(30px)'
+        }}></div>
+        
+        <Container className="position-relative">
+          <div className="text-center">
+            <div style={{
+              display: 'inline-block',
+              background: 'rgba(255, 255, 255, 0.2)',
+              border: '1px solid rgba(255, 255, 255, 0.3)',
+              borderRadius: '25px',
+              padding: '8px 20px',
+              marginBottom: '20px'
+            }}>
+              <span style={{
+                fontSize: '0.85rem',
+                fontWeight: 700,
+                letterSpacing: '0.5px',
+                textTransform: 'uppercase'
+              }}>
+                ✨ Premium Properties Collection
+              </span>
+            </div>
+            
+            <h1 className="display-4 fw-bold mb-4" style={{ fontWeight: 900 }}>
+              Find Your Perfect Property
+            </h1>
+            <p className="fs-5 mb-0 opacity-90 mx-auto" style={{ maxWidth: '600px' }}>
+              Discover verified properties from our premium collection across India. 
+              From luxury apartments to commercial spaces.
+            </p>
+          </div>
         </Container>
       </section>
 
       {/* Main Layout */}
       <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#ffffff' }}>
         
-        {/* Sidebar */}
+        {/* ✅ ENHANCED: Premium Sidebar */}
         <div style={{
-          width: '320px',
+          width: '380px',
           minHeight: '100vh',
-          backgroundColor: '#f8fafc',
+          background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)',
           position: 'sticky',
           top: 0,
           overflowY: 'auto',
-          borderRight: '1px solid #e2e8f0'
+          borderRight: '1px solid #e2e8f0',
+          boxShadow: '4px 0 12px rgba(0, 0, 0, 0.05)'
         }}>
           
-          <div className="p-4 border-bottom bg-white">
-            <h5 className="mb-2 fw-bold" style={{ color: '#1e293b' }}>Filters</h5>
-            <small className="text-muted">Refine your search</small>
+          {/* Sidebar Header */}
+          <div className="p-4 border-bottom" style={{
+            background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
+            color: 'white'
+          }}>
+            <div className="d-flex align-items-center justify-content-between">
+              <div>
+                <h5 className="mb-1 fw-bold">🎯 Smart Filters</h5>
+                <small className="opacity-90">Refine your perfect match</small>
+              </div>
+              <div style={{
+                background: 'rgba(255, 255, 255, 0.2)',
+                borderRadius: '20px',
+                padding: '8px 12px',
+                fontSize: '0.8rem',
+                fontWeight: 600
+              }}>
+                {filteredProperties.length} found
+              </div>
+            </div>
           </div>
 
           <div className="p-4">
             
-            {/* Search Input */}
+            {/* ✅ ENHANCED: Search Input */}
             <div className="mb-4">
-              <Form.Label className="fw-semibold mb-3">Search Properties</Form.Label>
+              <Form.Label className="fw-semibold mb-3 d-flex align-items-center">
+                <span className="me-2">🔍</span>
+                Search Properties
+              </Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Type to search..."
+                placeholder="Type location, property type..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                style={{
+                  borderRadius: '12px',
+                  border: '2px solid #e2e8f0',
+                  padding: '12px 16px',
+                  fontSize: '0.95rem'
+                }}
               />
+              {searchQuery && (
+                <small className="text-muted mt-1 d-block">
+                  Searching for "{searchQuery}"
+                </small>
+              )}
             </div>
 
-            {/* Location Filter */}
+            {/* ✅ ENHANCED: Location Filter */}
             <div className="mb-4">
-              <Form.Label className="fw-semibold mb-3">Location</Form.Label>
+              <Form.Label className="fw-semibold mb-3 d-flex align-items-center">
+                <span className="me-2">📍</span>
+                Location
+              </Form.Label>
               <Form.Select
                 value={filters.location}
                 onChange={(e) => handleFilterChange('location', e.target.value)}
+                style={{
+                  borderRadius: '12px',
+                  border: '2px solid #e2e8f0',
+                  padding: '12px 16px'
+                }}
               >
                 {indianLocations.map((location, index) => (
                   <option key={index} value={location === "All Locations" ? "" : location}>
@@ -374,12 +462,20 @@ const FindProperty = () => {
               </Form.Select>
             </div>
 
-            {/* Property Type Filter */}
+            {/* ✅ ENHANCED: Property Type Filter */}
             <div className="mb-4">
-              <Form.Label className="fw-semibold mb-3">Property Type</Form.Label>
+              <Form.Label className="fw-semibold mb-3 d-flex align-items-center">
+                <span className="me-2">🏠</span>
+                Property Type
+              </Form.Label>
               <Form.Select
                 value={filters.propertyType}
                 onChange={(e) => handleFilterChange('propertyType', e.target.value)}
+                style={{
+                  borderRadius: '12px',
+                  border: '2px solid #e2e8f0',
+                  padding: '12px 16px'
+                }}
               >
                 {propertyTypes.map((type, index) => (
                   <option key={index} value={type === "All Categories" ? "" : type}>
@@ -389,28 +485,45 @@ const FindProperty = () => {
               </Form.Select>
             </div>
 
-            {/* Price Range Filter */}
+            {/* ✅ ENHANCED: Price Range Filter */}
             <div className="mb-4">
-              <Form.Label className="fw-semibold mb-3">Price Range</Form.Label>
+              <Form.Label className="fw-semibold mb-3 d-flex align-items-center">
+                <span className="me-2">💰</span>
+                Price Range
+              </Form.Label>
               <Form.Select
                 value={filters.priceRange}
                 onChange={(e) => handleFilterChange('priceRange', e.target.value)}
+                style={{
+                  borderRadius: '12px',
+                  border: '2px solid #e2e8f0',
+                  padding: '12px 16px'
+                }}
               >
                 <option value="">All Prices</option>
                 <option value="0-2000">₹0 - ₹2,000</option>
                 <option value="2000-5000">₹2,000 - ₹5,000</option>
                 <option value="5000-10000">₹5,000 - ₹10,000</option>
-                <option value="10000-999999">₹10,000+</option>
+                <option value="10000-25000">₹10,000 - ₹25,000</option>
+                <option value="25000-999999">₹25,000+</option>
               </Form.Select>
             </div>
 
             {/* Conditional Bedrooms Filter */}
             {shouldShowBedroomFilter() && (
               <div className="mb-4">
-                <Form.Label className="fw-semibold mb-3">Bedrooms</Form.Label>
+                <Form.Label className="fw-semibold mb-3 d-flex align-items-center">
+                  <span className="me-2">🛏️</span>
+                  Bedrooms
+                </Form.Label>
                 <Form.Select
                   value={filters.bedrooms}
                   onChange={(e) => handleFilterChange('bedrooms', e.target.value)}
+                  style={{
+                    borderRadius: '12px',
+                    border: '2px solid #e2e8f0',
+                    padding: '12px 16px'
+                  }}
                 >
                   <option value="">Any Bedrooms</option>
                   <option value="1">1+ BHK</option>
@@ -421,65 +534,141 @@ const FindProperty = () => {
               </div>
             )}
 
+            {/* ✅ ENHANCED: Clear Filters Button */}
             <Button 
               variant="outline-secondary"
-              className="w-100 mb-4"
+              className="w-100 mb-4 fw-semibold"
               onClick={clearFilters}
+              style={{
+                borderRadius: '12px',
+                padding: '12px',
+                borderWidth: '2px'
+              }}
             >
               ✕ Clear All Filters
             </Button>
 
-            <div className="p-3 bg-light rounded">
-              <div className="d-flex justify-content-between align-items-center">
-                <span className="text-muted fw-semibold">Active Filters</span>
-                <Badge bg="primary">
+            {/* ✅ ENHANCED: Active Filters Summary */}
+            <div style={{
+              background: 'linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%)',
+              padding: '20px',
+              borderRadius: '16px',
+              border: '1px solid #cbd5e1'
+            }}>
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <span className="fw-bold text-dark">Active Filters</span>
+                <Badge 
+                  bg="primary" 
+                  style={{ 
+                    background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
+                    fontSize: '0.8rem',
+                    padding: '6px 12px'
+                  }}
+                >
                   {Object.values(filters).filter(f => f).length + (searchQuery ? 1 : 0)}
                 </Badge>
               </div>
+              
+              <div className="d-flex flex-wrap gap-2">
+                {searchQuery && (
+                  <Badge bg="info" className="rounded-pill">
+                    Search: {searchQuery.substring(0, 15)}...
+                  </Badge>
+                )}
+                {filters.location && (
+                  <Badge bg="success" className="rounded-pill">
+                    📍 {filters.location}
+                  </Badge>
+                )}
+                {filters.propertyType && (
+                  <Badge bg="warning" className="rounded-pill">
+                    🏠 {filters.propertyType}
+                  </Badge>
+                )}
+                {filters.priceRange && (
+                  <Badge bg="danger" className="rounded-pill">
+                    💰 ₹{filters.priceRange}
+                  </Badge>
+                )}
+                {filters.bedrooms && (
+                  <Badge bg="secondary" className="rounded-pill">
+                    🛏️ {filters.bedrooms}+ BHK
+                  </Badge>
+                )}
+              </div>
+              
+              {Object.values(filters).filter(f => f).length === 0 && !searchQuery && (
+                <p className="text-muted mb-0 small">No active filters</p>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Main Content Area */}
-        <div style={{ flex: 1 }}>
+        {/* ✅ ENHANCED: Main Content Area */}
+        <div style={{ flex: 1, backgroundColor: '#ffffff' }}>
           <Container fluid className="py-5 px-5">
             
-            {/* Results Header */}
+            {/* ✅ ENHANCED: Results Header */}
             <div className="d-flex justify-content-between align-items-center mb-5">
               <div>
-                <h2 className="fw-bold mb-3" style={{ color: '#1e293b' }}>
+                <h2 className="fw-bold mb-2" style={{ color: '#1e293b', fontSize: '2.2rem' }}>
                   {filteredProperties.length} Properties Found
                 </h2>
-                <p className="text-muted">Browse our premium collection</p>
+                <p className="text-muted fs-6 mb-0">
+                  Browse our premium collection • Updated {new Date().toLocaleDateString()}
+                </p>
               </div>
               
-              {/* View Toggle */}
-              <div className="btn-group">
+              {/* ✅ ENHANCED: View Toggle Buttons */}
+              <div className="btn-group shadow-sm" role="group">
                 <Button 
                   variant={viewMode === 'grid' ? 'primary' : 'outline-secondary'}
                   onClick={() => setViewMode('grid')}
+                  style={{
+                    borderRadius: '12px 0 0 12px',
+                    fontWeight: 600,
+                    padding: '12px 20px'
+                  }}
                 >
-                  ⊞ Grid
+                  ⊞ Grid View
                 </Button>
+                
                 <Button 
                   variant={viewMode === 'list' ? 'primary' : 'outline-secondary'}
                   onClick={() => setViewMode('list')}
+                  style={{
+                    borderRadius: '0 12px 12px 0',
+                    fontWeight: 600,
+                    padding: '12px 20px'
+                  }}
                 >
-                  ☰ List
+                  ☰ List View
                 </Button>
               </div>
             </div>
 
-            {/* Properties Grid/List */}
+            {/* ✅ ENHANCED: Properties Grid/List */}
             {filteredProperties.length === 0 ? (
-              <Card className="text-center p-5">
+              <Card className="border-0 shadow-sm text-center p-5" style={{ borderRadius: '20px' }}>
                 <Card.Body>
-                  <div className="mb-4" style={{ fontSize: '5rem' }}>🔍</div>
-                  <h3 className="fw-bold mb-4">No Properties Found</h3>
-                  <p className="text-muted mb-4">
-                    We couldn't find any properties matching your criteria. Try adjusting your filters.
+                  <div className="mb-4 text-muted" style={{ fontSize: '5rem' }}>
+                    🔍
+                  </div>
+                  <h3 className="fw-bold mb-4" style={{ color: '#1e293b' }}>No Properties Found</h3>
+                  <p className="text-muted fs-6 mb-4" style={{ maxWidth: '500px', margin: '0 auto' }}>
+                    We couldn't find any properties matching your criteria. Try adjusting your filters or search terms.
                   </p>
-                  <Button variant="primary" size="lg" onClick={clearFilters}>
+                  <Button 
+                    style={{
+                      background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
+                      border: 'none',
+                      fontWeight: 600,
+                      borderRadius: '12px',
+                      padding: '12px 30px'
+                    }}
+                    size="lg"
+                    onClick={clearFilters}
+                  >
                     Clear All Filters
                   </Button>
                 </Card.Body>
@@ -491,22 +680,25 @@ const FindProperty = () => {
                   
                   return (
                     <Col key={property._id}>
+                      {/* ✅ ENHANCED: Premium Property Card */}
                       <Card 
-                        className="h-100 shadow-sm"
+                        className="h-100 border-0 shadow-sm"
                         style={{ 
-                          transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-                          cursor: 'pointer'
+                          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                          cursor: 'pointer',
+                          borderRadius: '20px',
+                          overflow: 'hidden'
                         }}
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.transform = 'translateY(-4px)';
-                          e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
+                          e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
+                          e.currentTarget.style.boxShadow = '0 20px 40px rgba(124, 58, 237, 0.15)';
                         }}
                         onMouseLeave={(e) => {
-                          e.currentTarget.style.transform = 'translateY(0)';
-                          e.currentTarget.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+                          e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                          e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.08)';
                         }}
                       >
-                        {/* Property Image */}
+                        {/* ✅ ENHANCED: Property Image */}
                         <div className="position-relative">
                           <img
                             className="card-img-top"
@@ -514,73 +706,131 @@ const FindProperty = () => {
                               (property.images && Array.isArray(property.images) && property.images[0]) || 
                               property.image
                             )}
-                            alt={property.title || 'Property'}
+                            alt={property.title || 'Property Image'}
                             onError={handleImageError}
                             style={{ 
-                              height: '240px', 
+                              height: viewMode === 'grid' ? '280px' : '240px', 
                               objectFit: 'cover'
                             }}
                           />
                           
-                          {/* Badges */}
+                          {/* Enhanced badges */}
                           <div className="position-absolute top-0 start-0 p-3">
-                            <Badge bg="success" className="me-2">For Rent</Badge>
-                            <Badge bg="primary">✓ Verified</Badge>
+                            <Badge 
+                              bg="success" 
+                              className="me-2 fw-semibold shadow-sm" 
+                              style={{ borderRadius: '20px', padding: '8px 16px' }}
+                            >
+                              ✓ Available
+                            </Badge>
+                            <Badge 
+                              bg="primary" 
+                              className="fw-semibold shadow-sm" 
+                              style={{ borderRadius: '20px', padding: '8px 16px' }}
+                            >
+                              🏆 Verified
+                            </Badge>
                           </div>
                           
                           <div className="position-absolute top-0 end-0 p-3">
-                            <Badge bg="secondary">
-                              {property.subtype || property.category || 'Property'}
+                            <Badge 
+                              bg="dark" 
+                              className="fw-semibold shadow-sm"
+                              style={{ 
+                                borderRadius: '20px', 
+                                padding: '8px 16px',
+                                background: 'rgba(0, 0, 0, 0.7)',
+                                backdropFilter: 'blur(10px)'
+                              }}
+                            >
+                              {getCategoryIcon(property.category)} {property.subtype || property.category || 'Property'}
                             </Badge>
+                          </div>
+
+                          {/* Price overlay */}
+                          <div className="position-absolute bottom-0 start-0 end-0 p-3">
+                            <div style={{
+                              background: 'linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.8) 100%)',
+                              borderRadius: '16px',
+                              padding: '20px 16px 16px 16px',
+                              margin: '-20px -16px -16px -16px'
+                            }}>
+                              <div className="h4 fw-bold text-white mb-1">
+                                {formatPrice(property.price, getSafeRentType(property))}
+                              </div>
+                              <small className="text-light opacity-75">
+                                Available for {getSafeRentTypes(property).join(', ')} rental
+                              </small>
+                            </div>
                           </div>
                         </div>
                         
-                        {/* Property Details */}
-                        <Card.Body className="d-flex flex-column">
+                        {/* ✅ ENHANCED: Property Details */}
+                        <Card.Body className="d-flex flex-column p-4">
                           {/* Location */}
                           <div className="d-flex align-items-center text-muted mb-3">
-                            <span className="me-2">📍</span>
-                            <span>
+                            <span className="me-2" style={{ 
+                              color: '#7c3aed', 
+                              fontSize: '1.1rem',
+                              filter: 'drop-shadow(0 2px 4px rgba(124, 58, 237, 0.2))'
+                            }}>📍</span>
+                            <span className="fw-medium">
                               {property.address?.city || 'City'}, {property.address?.state || 'State'}
                             </span>
                           </div>
                           
-                          {/* Title */}
-                          <Card.Title className="fw-bold mb-3">
+                          {/* Property Title */}
+                          <Card.Title className="h4 fw-bold mb-3" style={{ 
+                            lineHeight: '1.3',
+                            color: '#1e293b',
+                            fontSize: '1.4rem'
+                          }}>
                             {property.title || 'Property Title'}
                           </Card.Title>
                           
-                          {/* Features */}
+                          {/* Property Features */}
                           <div className="mb-4 flex-grow-1">
-                            {renderPropertyDetails(property)}
+                            <div className="d-flex flex-wrap gap-2">
+                              {renderPropertyDetails(property)}
+                            </div>
                           </div>
                           
-                          {/* Price and Buttons */}
+                          {/* Action Buttons */}
                           <div className="mt-auto">
-                            <div className="mb-3">
-                              <div className="h4 fw-bold text-success">
-                                {formatPrice(property.price, getSafeRentType(property))}
-                              </div>
-                              <small className="text-muted">
-                                Available for {getSafeRentTypes(property).join(', ')} rental
-                              </small>
-                            </div>
-                            
-                            {/* Action Buttons */}
                             <div className="d-grid gap-2 d-md-flex">
                               <Button
                                 variant="outline-primary"
-                                className="flex-fill"
-                                onClick={() => handleViewDetails(property._id)}
+                                className="flex-fill fw-semibold"
+                                style={{
+                                  borderRadius: '12px',
+                                  padding: '12px 20px',
+                                  borderWidth: '2px',
+                                  transition: 'all 0.3s ease'
+                                }}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  handleViewDetails(property._id);
+                                }}
                               >
-                                View Details
+                                👁️ View Details
                               </Button>
                               <Button
-                                variant="primary"
-                                className="flex-fill"
-                                onClick={() => handleBookNow(property._id)}
+                                className="flex-fill fw-semibold"
+                                style={{ 
+                                  background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
+                                  border: 'none',
+                                  borderRadius: '12px',
+                                  padding: '12px 20px',
+                                  transition: 'all 0.3s ease'
+                                }}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  handleBookNow(property._id);
+                                }}
                               >
-                                Book Now
+                                📅 Book Now
                               </Button>
                             </div>
                           </div>
