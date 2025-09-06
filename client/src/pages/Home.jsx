@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 
 const Home = () => {
   const { isAuthenticated } = useAuth();
-
+  
   return (
     <>
       {/* HERO SECTION - CONTENT MOVED LEFT, BACKGROUND INCREASED */}
@@ -30,7 +30,6 @@ const Home = () => {
           filter: 'blur(50px)',
           animation: 'float 10s ease-in-out infinite'
         }}></div>
-
         <Container>
           <Row className="align-items-center">
             {/* LEFT CONTENT - MOVED MORE TO LEFT */}
@@ -241,7 +240,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* CATEGORIES SECTION - SLIGHTLY INCREASED SIZE */}
+      {/* CATEGORIES SECTION - FIXED CARD HEIGHTS */}
       <section style={{
         padding: '70px 0', // Increased from 50px to 70px
         background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)',
@@ -267,7 +266,6 @@ const Home = () => {
           borderRadius: '50%',
           filter: 'blur(40px)'
         }}></div>
-
         <Container>
           <div style={{ textAlign: 'center', marginBottom: '50px' }}>
             <div style={{
@@ -343,7 +341,7 @@ const Home = () => {
                   border: '1px solid #f1f5f9',
                   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                   cursor: 'pointer',
-                  minHeight: '300px', // Increased height
+                  height: '320px', // ✅ FIXED HEIGHT FOR ALL CARDS
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
@@ -394,7 +392,10 @@ const Home = () => {
                       color: '#64748b',
                       fontSize: '0.95rem',
                       lineHeight: '1.5',
-                      marginBottom: '0'
+                      marginBottom: '0',
+                      minHeight: '60px', // ✅ MINIMUM HEIGHT TO ACCOMMODATE TEXT
+                      display: 'flex',
+                      alignItems: 'center'
                     }}>{category.desc}</p>
                   </div>
                   
@@ -745,54 +746,75 @@ const Home = () => {
                         gap: '12px', // Increased gap
                         justifyContent: 'space-between' // Better distribution
                       }}>
-                        <button style={{
-                          background: 'transparent',
-                          border: '2px solid #e5e7eb',
-                          color: '#64748b',
-                          padding: '12px 20px', // Increased padding
-                          borderRadius: '8px',
-                          fontSize: '0.85rem', // Increased font size
-                          fontWeight: 600,
-                          cursor: 'pointer',
-                          transition: 'all 0.3s ease',
-                          whiteSpace: 'nowrap',
-                          flex: '1', // Equal width
-                          maxWidth: '130px'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.target.style.borderColor = '#667eea';
-                          e.target.style.color = '#667eea';
-                          e.target.style.transform = 'translateY(-1px)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.target.style.borderColor = '#e5e7eb';
-                          e.target.style.color = '#64748b';
-                          e.target.style.transform = 'translateY(0)';
-                        }}>View Details</button>
+                        {/* ✅ FIXED VIEW DETAILS BUTTON */}
+                        <Link 
+                          to="/find-property"
+                          style={{
+                            background: 'transparent',
+                            border: '2px solid #e5e7eb',
+                            color: '#64748b',
+                            padding: '12px 20px', // Increased padding
+                            borderRadius: '8px',
+                            fontSize: '0.85rem', // Increased font size
+                            fontWeight: 600,
+                            cursor: 'pointer',
+                            transition: 'all 0.3s ease',
+                            whiteSpace: 'nowrap',
+                            flex: '1', // Equal width
+                            maxWidth: '130px',
+                            textDecoration: 'none',
+                            textAlign: 'center',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.target.style.borderColor = '#667eea';
+                            e.target.style.color = '#667eea';
+                            e.target.style.transform = 'translateY(-1px)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.target.style.borderColor = '#e5e7eb';
+                            e.target.style.color = '#64748b';
+                            e.target.style.transform = 'translateY(0)';
+                          }}
+                        >
+                          View Details
+                        </Link>
                         
-                        <button style={{
-                          background: property.gradient,
-                          border: 'none',
-                          color: 'white',
-                          padding: '12px 20px', // Increased padding
-                          borderRadius: '8px',
-                          fontSize: '0.85rem', // Increased font size
-                          fontWeight: 700,
-                          cursor: 'pointer',
-                          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                          transition: 'all 0.3s ease',
-                          whiteSpace: 'nowrap',
-                          flex: '1', // Equal width
-                          maxWidth: '130px'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.target.style.transform = 'translateY(-1px)';
-                          e.target.style.boxShadow = '0 6px 16px rgba(0, 0, 0, 0.2)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.target.style.transform = 'translateY(0)';
-                          e.target.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
-                        }}>Book Now</button>
+                        <Link 
+                          to="/find-property"
+                          style={{
+                            background: property.gradient,
+                            border: 'none',
+                            color: 'white',
+                            padding: '12px 20px', // Increased padding
+                            borderRadius: '8px',
+                            fontSize: '0.85rem', // Increased font size
+                            fontWeight: 700,
+                            cursor: 'pointer',
+                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                            transition: 'all 0.3s ease',
+                            whiteSpace: 'nowrap',
+                            flex: '1', // Equal width
+                            maxWidth: '130px',
+                            textDecoration: 'none',
+                            textAlign: 'center',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.target.style.transform = 'translateY(-1px)';
+                            e.target.style.boxShadow = '0 6px 16px rgba(0, 0, 0, 0.2)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.target.style.transform = 'translateY(0)';
+                            e.target.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+                          }}
+                        >
+                          Book Now
+                        </Link>
                       </div>
                     </div>
                   </div>
