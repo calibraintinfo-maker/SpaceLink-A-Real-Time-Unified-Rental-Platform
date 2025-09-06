@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Badge, Button, Form } from 'react-bootstrap';
+import { Container, Row, Col, Card, Badge, Button, Form, Spinner, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { api, handleApiError, formatPrice, getImageUrl } from '../utils/api';
 
 const FindProperty = () => {
   const navigate = useNavigate();
   const [properties, setProperties] = useState([]);
   const [filteredProperties, setFilteredProperties] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [filters, setFilters] = useState({
     location: '',
     propertyType: '',
@@ -22,140 +25,58 @@ const FindProperty = () => {
   ];
 
   const propertyTypes = [
-    "All Categories", "Properties", "Event Venues", "Turf", "Parking",
-    "Villa", "Apartment", "House", "Studio", "Commercial", "Office Space", 
-    "Shop", "Land", "Agricultural Land", "Residential Plot"
+    "All Categories", "Property Rentals", "Commercial", "Event", "Parking", "Land"
   ];
 
   const residentialTypes = ["Villa", "Apartment", "House", "Studio"];
 
-  const sampleProperties = [
-    {
-      id: 1,
-      image: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      title: 'Modern Studio Apartment',
-      location: 'Bangalore, Karnataka',
-      price: 1800,
-      priceType: 'month',
-      type: 'Studio',
-      category: 'Properties',
-      bedrooms: 1,
-      bathrooms: 1,
-      area: 600,
-      status: 'For Rent',
-      isResidential: true,
-      verified: true
-    },
-    {
-      id: 2,
-      image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      title: 'Premium Office Space',
-      location: 'Mumbai, Maharashtra',
-      price: 5000,
-      priceType: 'month',
-      type: 'Commercial',
-      category: 'Properties',
-      bedrooms: 0,
-      bathrooms: 3,
-      area: 3000,
-      status: 'For Rent',
-      isResidential: false,
-      verified: true
-    },
-    {
-      id: 3,
-      image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      title: 'Family Villa',
-      location: 'Pune, Maharashtra',
-      price: 3200,
-      priceType: 'month',
-      type: 'House',
-      category: 'Properties',
-      bedrooms: 3,
-      bathrooms: 2,
-      area: 1500,
-      status: 'For Rent',
-      isResidential: true,
-      verified: true
-    },
-    {
-      id: 4,
-      image: 'https://images.unsplash.com/photo-1519167758481-83f29c8d8d36?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      title: 'Grand Wedding Venue',
-      location: 'Chennai, Tamil Nadu',
-      price: 15000,
-      priceType: 'day',
-      type: 'Event Venues',
-      category: 'Event Venues',
-      bedrooms: 0,
-      bathrooms: 0,
-      area: 5000,
-      status: 'For Rent',
-      isResidential: false,
-      verified: true,
-      capacity: '500 guests'
-    },
-    {
-      id: 5,
-      image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      title: 'Professional Football Turf',
-      location: 'Delhi, India',
-      price: 2500,
-      priceType: 'hour',
-      type: 'Turf',
-      category: 'Turf',
-      bedrooms: 0,
-      bathrooms: 0,
-      area: 8000,
-      status: 'For Rent',
-      isResidential: false,
-      verified: true,
-      surface: 'Artificial Grass'
-    },
-    {
-      id: 6,
-      image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      title: 'Secure Parking Bay',
-      location: 'Gurgaon, Haryana',
-      price: 1500,
-      priceType: 'month',
-      type: 'Parking',
-      category: 'Parking',
-      bedrooms: 0,
-      bathrooms: 0,
-      area: 200,
-      status: 'For Rent',
-      isResidential: false,
-      verified: true,
-      security: '24/7 CCTV'
-    }
-  ];
-
+  // REAL-TIME API DATA FETCHING
   useEffect(() => {
-    setProperties(sampleProperties);
-    setFilteredProperties(sampleProperties);
+    fetchProperties();
   }, []);
 
+  const fetchProperties = async () => {
+    try {
+      setLoading(true);
+      setError('');
+      
+      // Fetch real-time data from your API
+      const response = await api.properties.getAll();
+      setProperties(response.data);
+      setFilteredProperties(response.data);
+      
+    } catch (error) {
+      console.error('Error fetching properties:', error);
+      setError(handleApiError(error));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // REAL-TIME FILTERING
   useEffect(() => {
     let filtered = properties;
 
     if (searchQuery) {
       filtered = filtered.filter(property =>
         property.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        property.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        property.type.toLowerCase().includes(searchQuery.toLowerCase())
+        property.address.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        property.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (property.subtype && property.subtype.toLowerCase().includes(searchQuery.toLowerCase()))
       );
     }
 
     if (filters.location) {
       filtered = filtered.filter(property =>
-        property.location.toLowerCase().includes(filters.location.toLowerCase())
+        property.address.city.toLowerCase().includes(filters.location.toLowerCase()) ||
+        property.address.state.toLowerCase().includes(filters.location.toLowerCase())
       );
     }
 
     if (filters.propertyType) {
       filtered = filtered.filter(property =>
-        property.type === filters.propertyType || property.category === filters.propertyType
+        property.category === filters.propertyType ||
+        property.subtype === filters.propertyType
       );
     }
 
@@ -168,7 +89,8 @@ const FindProperty = () => {
 
     if (filters.bedrooms) {
       filtered = filtered.filter(property =>
-        property.isResidential && property.bedrooms >= parseInt(filters.bedrooms)
+        property.subtype && residentialTypes.includes(property.subtype) &&
+        property.bedrooms >= parseInt(filters.bedrooms)
       );
     }
 
@@ -182,61 +104,78 @@ const FindProperty = () => {
   const clearFilters = () => {
     setFilters({ location: '', propertyType: '', priceRange: '', bedrooms: '' });
     setSearchQuery('');
+    setFilteredProperties(properties);
   };
 
   const shouldShowBedroomFilter = () => {
     if (!filters.propertyType) return false;
-    return residentialTypes.includes(filters.propertyType) || filters.propertyType === 'Properties';
+    return residentialTypes.includes(filters.propertyType) || filters.propertyType === 'Property Rentals';
   };
 
-  // NAVIGATION FUNCTIONS - MATCHING YOUR ROUTES
+  // NAVIGATION FUNCTIONS - REAL PROPERTY IDS
   const handleViewDetails = (propertyId) => {
     console.log('Navigating to property details:', propertyId);
-    navigate(`/property/${propertyId}`); // Matches your route: /property/:id
+    navigate(`/property/${propertyId}`); // Uses real _id from database
   };
 
   const handleBookNow = (propertyId) => {
     console.log('Navigating to book property:', propertyId);
-    navigate(`/book/${propertyId}`); // Matches your route: /book/:propertyId
+    navigate(`/book/${propertyId}`); // Uses real _id from database
   };
 
   const handleImageError = (e) => {
     e.target.src = 'https://via.placeholder.com/400x240/e2e8f0/64748b?text=Property+Image';
   };
 
+  const getCategoryIcon = (category) => {
+    const icons = {
+      'Property Rentals': '🏠',
+      'Commercial': '🏢',
+      'Land': '🌾',
+      'Parking': '🚗',
+      'Event': '🎉'
+    };
+    return icons[category] || '🏠';
+  };
+
   const renderPropertyDetails = (property) => {
     const details = [];
 
-    if (property.isResidential && property.bedrooms > 0) {
-      details.push(
-        <span key="bedrooms" className="custom-badge me-2 mb-2">
-          🛏 {property.bedrooms} BHK
-        </span>
-      );
+    // Handle residential properties
+    if (property.subtype && residentialTypes.includes(property.subtype)) {
+      if (property.bedrooms > 0) {
+        details.push(
+          <span key="bedrooms" className="custom-badge me-2 mb-2">
+            🛏 {property.bedrooms} BHK
+          </span>
+        );
+      }
+      if (property.bathrooms > 0) {
+        details.push(
+          <span key="bathrooms" className="custom-badge me-2 mb-2">
+            🚿 {property.bathrooms} Bath
+          </span>
+        );
+      }
     }
 
-    if (property.isResidential && property.bathrooms > 0) {
-      details.push(
-        <span key="bathrooms" className="custom-badge me-2 mb-2">
-          🚿 {property.bathrooms} Bath
-        </span>
-      );
-    }
-
-    if (!property.isResidential && property.bathrooms > 0) {
+    // Handle commercial properties
+    if (property.category === 'Commercial' && property.washrooms > 0) {
       details.push(
         <span key="washrooms" className="custom-badge me-2 mb-2">
-          🚻 {property.bathrooms} Washrooms
+          🚻 {property.washrooms} Washrooms
         </span>
       );
     }
 
+    // Size/Area
     details.push(
       <span key="area" className="custom-badge me-2 mb-2">
-        📐 {property.area.toLocaleString()} sq ft
+        📐 {property.size}
       </span>
     );
 
+    // Special features for different property types
     if (property.capacity) {
       details.push(
         <span key="capacity" className="custom-badge-purple me-2 mb-2">
@@ -245,24 +184,90 @@ const FindProperty = () => {
       );
     }
 
-    if (property.surface) {
+    if (property.features && property.features.includes('Artificial Grass')) {
       details.push(
         <span key="surface" className="custom-badge-green me-2 mb-2">
-          ⚽ {property.surface}
+          ⚽ Artificial Grass
         </span>
       );
     }
 
-    if (property.security) {
+    if (property.features && property.features.includes('24/7 Security')) {
       details.push(
         <span key="security" className="custom-badge-orange me-2 mb-2">
-          🔒 {property.security}
+          🔒 24/7 Security
         </span>
       );
     }
 
     return details;
   };
+
+  // LOADING STATE
+  if (loading) {
+    return (
+      <div style={{ minHeight: '100vh', backgroundColor: '#ffffff' }}>
+        {/* PURPLE HERO */}
+        <section 
+          className="py-5 text-white"
+          style={{
+            background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%)',
+            minHeight: '300px',
+            display: 'flex',
+            alignItems: 'center'
+          }}
+        >
+          <Container className="text-center">
+            <h1 className="display-4 fw-bold mb-4">Find Your Perfect Property</h1>
+            <p className="fs-5 opacity-90">Discover verified properties from our premium collection across India</p>
+          </Container>
+        </section>
+
+        {/* Loading Content */}
+        <Container className="py-5 text-center">
+          <Spinner animation="border" style={{ color: '#7c3aed' }} />
+          <p className="mt-3 fs-5 fw-semibold">Loading properties...</p>
+        </Container>
+      </div>
+    );
+  }
+
+  // ERROR STATE
+  if (error) {
+    return (
+      <div style={{ minHeight: '100vh', backgroundColor: '#ffffff' }}>
+        {/* PURPLE HERO */}
+        <section 
+          className="py-5 text-white"
+          style={{
+            background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%)',
+            minHeight: '300px',
+            display: 'flex',
+            alignItems: 'center'
+          }}
+        >
+          <Container className="text-center">
+            <h1 className="display-4 fw-bold mb-4">Find Your Perfect Property</h1>
+            <p className="fs-5 opacity-90">Discover verified properties from our premium collection across India</p>
+          </Container>
+        </section>
+
+        {/* Error Content */}
+        <Container className="py-5">
+          <Alert variant="danger" className="text-center">
+            <Alert.Heading>⚠️ Error Loading Properties</Alert.Heading>
+            <p>{error}</p>
+            <Button 
+              onClick={fetchProperties}
+              style={{ backgroundColor: '#7c3aed', borderColor: '#7c3aed' }}
+            >
+              Try Again
+            </Button>
+          </Alert>
+        </Container>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -509,7 +514,7 @@ const FindProperty = () => {
               </div>
             </div>
 
-            {/* PROPERTY CARDS SECTION */}
+            {/* PROPERTY CARDS SECTION - REAL DATA */}
             {filteredProperties.length === 0 ? (
               <Card className="border-0 shadow-sm text-center p-5">
                 <Card.Body>
@@ -532,7 +537,7 @@ const FindProperty = () => {
             ) : (
               <Row className={viewMode === 'grid' ? 'row-cols-1 row-cols-md-2 row-cols-xl-3 g-4' : 'g-4'}>
                 {filteredProperties.map((property) => (
-                  <Col key={property.id}>
+                  <Col key={property._id}>
                     <Card 
                       className="h-100 border-0 shadow-sm"
                       style={{ 
@@ -553,7 +558,7 @@ const FindProperty = () => {
                       <div className="position-relative">
                         <img
                           className="card-img-top"
-                          src={property.image}
+                          src={getImageUrl(property.images?.[0] || property.image)}
                           alt={property.title}
                           onError={handleImageError}
                           style={{ 
@@ -563,22 +568,20 @@ const FindProperty = () => {
                           }}
                         />
                         
-                        {/* Status and Verified Badges */}
+                        {/* CUSTOM BADGES - NO BLUE */}
                         <div className="position-absolute top-0 start-0 p-3">
                           <span className="status-badge-green me-2">
-                            {property.status}
+                            For Rent
                           </span>
-                          {property.verified && (
-                            <span className="status-badge-purple">
-                              ✓ Verified
-                            </span>
-                          )}
+                          <span className="status-badge-purple">
+                            ✓ Verified
+                          </span>
                         </div>
                         
-                        {/* Property Type Badge */}
+                        {/* PROPERTY TYPE BADGE - GRAY ONLY */}
                         <div className="position-absolute top-0 end-0 p-3">
                           <span className="status-badge-gray">
-                            {property.type}
+                            {property.subtype || property.category}
                           </span>
                         </div>
                       </div>
@@ -588,7 +591,9 @@ const FindProperty = () => {
                         {/* Location */}
                         <div className="d-flex align-items-center text-muted mb-3">
                           <span className="me-2" style={{ color: '#7c3aed' }}>📍</span>
-                          <span className="fw-medium">{property.location}</span>
+                          <span className="fw-medium">
+                            {property.address.city}, {property.address.state}
+                          </span>
                         </div>
                         
                         {/* Property Title */}
@@ -608,9 +613,11 @@ const FindProperty = () => {
                         <div className="mt-auto">
                           <div className="mb-4">
                             <div className="h3 fw-bold text-success mb-1">
-                              ₹{property.price.toLocaleString()}
+                              {formatPrice(property.price, property.rentType[0])}
                             </div>
-                            <small className="text-muted fw-medium">per {property.priceType}</small>
+                            <small className="text-muted fw-medium">
+                              Available for {property.rentType.join(', ')} rental
+                            </small>
                           </div>
                           
                           {/* Navigation Buttons */}
@@ -622,7 +629,7 @@ const FindProperty = () => {
                               onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                handleViewDetails(property.id);
+                                handleViewDetails(property._id); // Real database ID
                               }}
                             >
                               View Details
@@ -634,7 +641,7 @@ const FindProperty = () => {
                               onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                handleBookNow(property.id);
+                                handleBookNow(property._id); // Real database ID
                               }}
                             >
                               Book Now
