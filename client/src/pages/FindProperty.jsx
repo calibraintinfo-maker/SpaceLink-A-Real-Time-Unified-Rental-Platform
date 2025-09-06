@@ -309,7 +309,7 @@ const FindProperty = () => {
 
   return (
     <>
-      {/* ✅ FIXED: Hero Section with Better Text Contrast */}
+      {/* Hero Section */}
       <section 
         className="py-5 text-white"
         style={{
@@ -359,7 +359,7 @@ const FindProperty = () => {
                 fontWeight: 700,
                 letterSpacing: '0.5px',
                 textTransform: 'uppercase',
-                color: 'white' // ✅ FIXED: Ensure white text
+                color: 'white'
               }}>
                 ✨ {filteredProperties.length} Premium Properties Available
               </span>
@@ -372,21 +372,20 @@ const FindProperty = () => {
               letterSpacing: '-0.025em',
               lineHeight: 1.1,
               marginBottom: '24px',
-              color: 'white' // ✅ FIXED: Ensure white text
+              color: 'white'
             }}>
               Find Your Perfect Property
             </h1>
             
-            {/* ✅ FIXED: Much better contrast for description text */}
             <p style={{
               fontSize: '1.25rem',
               fontWeight: 400,
-              color: 'rgba(255, 255, 255, 0.95)', // ✅ FIXED: Nearly white with slight transparency
+              color: 'rgba(255, 255, 255, 0.95)',
               maxWidth: '600px',
               margin: '0 auto',
               lineHeight: 1.6,
               fontFamily: "'Inter', system-ui, sans-serif",
-              textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' // ✅ ADDED: Subtle text shadow for better readability
+              textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
             }}>
               Discover verified properties from our premium collection across India. 
               From luxury apartments to sports turfs and commercial spaces.
@@ -398,7 +397,7 @@ const FindProperty = () => {
       {/* Main Layout */}
       <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#ffffff' }}>
         
-        {/* ENHANCED SIDEBAR */}
+        {/* SIDEBAR */}
         <div style={{
           width: '400px',
           minHeight: '100vh',
@@ -410,7 +409,7 @@ const FindProperty = () => {
           boxShadow: '4px 0 20px rgba(0, 0, 0, 0.08)'
         }}>
           
-          {/* Dashboard Header */}
+          {/* ✅ FIXED: Dashboard Header with WHITE subtitle text */}
           <div className="p-4 border-bottom" style={{
             background: 'linear-gradient(135deg, #6b46c1 0%, #805ad5 100%)',
             color: 'white'
@@ -421,18 +420,21 @@ const FindProperty = () => {
                   marginBottom: '4px',
                   fontWeight: 800,
                   fontSize: '1.3rem',
-                  fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
+                  fontFamily: "'Inter', system-ui, sans-serif",
                   letterSpacing: '-0.01em'
                 }} className="d-flex align-items-center">
                   <span className="me-2">🎯</span>
                   Smart Property Filters
                 </h5>
+                {/* ✅ FIXED: WHITE text for visibility on purple background */}
                 <small style={{
-                  opacity: 0.9,
+                  color: 'white', // ✅ FIXED: Explicitly white instead of rgba opacity
                   fontSize: '0.9rem',
                   fontWeight: 500,
                   fontFamily: "'Inter', system-ui, sans-serif"
-                }}>Find your perfect match</small>
+                }}>
+                  Find your perfect match
+                </small>
               </div>
               <div style={{
                 background: 'rgba(255, 255, 255, 0.2)',
@@ -441,7 +443,7 @@ const FindProperty = () => {
                 fontSize: '0.85rem',
                 fontWeight: 700,
                 border: '1px solid rgba(255, 255, 255, 0.3)',
-                fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif"
+                fontFamily: "'Inter', system-ui, sans-serif"
               }}>
                 {filteredProperties.length} found
               </div>
@@ -457,7 +459,7 @@ const FindProperty = () => {
                 marginBottom: '12px',
                 fontSize: '1.05rem',
                 color: '#1f2937',
-                fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
+                fontFamily: "'Inter', system-ui, sans-serif",
                 display: 'flex',
                 alignItems: 'center'
               }}>
@@ -503,7 +505,7 @@ const FindProperty = () => {
                 marginBottom: '12px',
                 fontSize: '1.05rem',
                 color: '#1f2937',
-                fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
+                fontFamily: "'Inter', system-ui, sans-serif",
                 display: 'flex',
                 alignItems: 'center'
               }}>
@@ -545,7 +547,7 @@ const FindProperty = () => {
                 marginBottom: '12px',
                 fontSize: '1.05rem',
                 color: '#1f2937',
-                fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
+                fontFamily: "'Inter', system-ui, sans-serif",
                 display: 'flex',
                 alignItems: 'center'
               }}>
@@ -603,7 +605,7 @@ const FindProperty = () => {
                 marginBottom: '12px',
                 fontSize: '1.05rem',
                 color: '#1f2937',
-                fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
+                fontFamily: "'Inter', system-ui, sans-serif",
                 display: 'flex',
                 alignItems: 'center'
               }}>
@@ -649,7 +651,7 @@ const FindProperty = () => {
                   marginBottom: '12px',
                   fontSize: '1.05rem',
                   color: '#1f2937',
-                  fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
+                  fontFamily: "'Inter', system-ui, sans-serif",
                   display: 'flex',
                   alignItems: 'center'
                 }}>
@@ -699,7 +701,7 @@ const FindProperty = () => {
                 transition: 'all 0.3s ease',
                 fontWeight: 600,
                 fontSize: '0.95rem',
-                fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif"
+                fontFamily: "'Inter', system-ui, sans-serif"
               }}
             >
               <span className="me-2">✕</span>
@@ -719,7 +721,7 @@ const FindProperty = () => {
                   fontWeight: 700,
                   color: '#1f2937',
                   fontSize: '1rem',
-                  fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
+                  fontFamily: "'Inter', system-ui, sans-serif",
                   display: 'flex',
                   alignItems: 'center'
                 }}>
@@ -735,7 +737,7 @@ const FindProperty = () => {
                   borderRadius: '20px',
                   minWidth: '30px',
                   textAlign: 'center',
-                  fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif"
+                  fontFamily: "'Inter', system-ui, sans-serif"
                 }}>
                   {getActiveFiltersCount()}
                 </div>
@@ -836,7 +838,7 @@ const FindProperty = () => {
                   marginBottom: '8px',
                   color: '#111827',
                   fontSize: '2.5rem',
-                  fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
+                  fontFamily: "'Inter', system-ui, sans-serif",
                   letterSpacing: '-0.02em'
                 }}>
                   {filteredProperties.length} Properties Found
@@ -866,7 +868,7 @@ const FindProperty = () => {
                     color: viewMode === 'grid' ? 'white' : '#4b5563',
                     borderRadius: '12px 0 0 12px',
                     transition: 'all 0.3s ease',
-                    fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
+                    fontFamily: "'Inter', system-ui, sans-serif",
                     textTransform: 'uppercase',
                     letterSpacing: '0.025em'
                   }}
@@ -898,7 +900,7 @@ const FindProperty = () => {
                     color: viewMode === 'list' ? 'white' : '#4b5563',
                     borderRadius: '0 12px 12px 0',
                     transition: 'all 0.3s ease',
-                    fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
+                    fontFamily: "'Inter', system-ui, sans-serif",
                     textTransform: 'uppercase',
                     letterSpacing: '0.025em'
                   }}
@@ -936,7 +938,7 @@ const FindProperty = () => {
                   marginBottom: '16px',
                   color: '#111827',
                   fontSize: '1.8rem',
-                  fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif"
+                  fontFamily: "'Inter', system-ui, sans-serif"
                 }}>
                   {searchQuery ? 'No Search Results' : getActiveFiltersCount() > 0 ? 'No Matching Properties' : 'No Properties Available'}
                 </h3>
@@ -960,7 +962,7 @@ const FindProperty = () => {
                     fontWeight: 700,
                     borderRadius: '12px',
                     padding: '12px 30px',
-                    fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
+                    fontFamily: "'Inter', system-ui, sans-serif",
                     textTransform: 'uppercase',
                     letterSpacing: '0.025em'
                   }}
@@ -978,7 +980,7 @@ const FindProperty = () => {
                   return (
                     <Col key={property._id} className={viewMode === 'list' ? 'col-12' : ''}>
                       {viewMode === 'list' ? (
-                        /* ✅ PROFESSIONAL LIST VIEW WITH IMPROVED TYPOGRAPHY */
+                        /* ✅ PROFESSIONAL LIST VIEW */
                         <Card 
                           className="border-0 shadow-sm"
                           style={{ 
@@ -1047,7 +1049,6 @@ const FindProperty = () => {
                             
                             <Col md={8}>
                               <Card.Body className="p-4" style={{ minHeight: '240px', display: 'flex', flexDirection: 'column' }}>
-                                {/* ✅ IMPROVED: Location styling */}
                                 <div className="d-flex align-items-center mb-3">
                                   <span className="me-2" style={{ color: '#7c3aed', fontSize: '1.1rem' }}>📍</span>
                                   <span style={{ 
@@ -1062,9 +1063,9 @@ const FindProperty = () => {
                                   </span>
                                 </div>
                                 
-                                {/* ✅ IMPROVED: Title typography */}
+                                {/* ✅ PROFESSIONAL: Enhanced card title */}
                                 <Card.Title style={{ 
-                                  color: '#0f172a',
+                                  color: '#111827', // ✅ PROFESSIONAL: Darker for better contrast
                                   fontSize: '1.5rem',
                                   lineHeight: '1.3',
                                   fontWeight: 800,
@@ -1075,12 +1076,12 @@ const FindProperty = () => {
                                   {property.title || 'Property Title'}
                                 </Card.Title>
                                 
-                                {/* ✅ IMPROVED: Description typography */}
+                                {/* ✅ PROFESSIONAL: Enhanced description */}
                                 <p className="mb-3" style={{ 
                                   fontSize: '0.95rem',
                                   lineHeight: '1.6',
                                   flexGrow: 1,
-                                  color: '#475569',
+                                  color: '#374151', // ✅ PROFESSIONAL: Better contrast
                                   fontFamily: "'Inter', system-ui, sans-serif",
                                   fontWeight: 400
                                 }}>
@@ -1098,7 +1099,6 @@ const FindProperty = () => {
                                 
                                 <div className="d-flex justify-content-between align-items-center mt-auto">
                                   <div>
-                                    {/* ✅ IMPROVED: Price typography */}
                                     <div style={{ 
                                       fontSize: '1.6rem',
                                       fontWeight: 800,
@@ -1121,7 +1121,6 @@ const FindProperty = () => {
                                     </small>
                                   </div>
                                   
-                                  {/* ✅ IMPROVED: Button typography */}
                                   <div className="d-flex gap-3">
                                     <Button
                                       variant="outline-primary"
@@ -1178,35 +1177,31 @@ const FindProperty = () => {
         </div>
       </div>
 
-      {/* ✅ PROFESSIONAL CSS FOR TYPOGRAPHY */}
+      {/* CSS */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
-        /* Float animation */
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
           50% { transform: translateY(-20px) rotate(5deg); }
         }
         
-        /* Professional Button Focus States */
         .btn-group .btn:focus {
           box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.3) !important;
         }
         
-        /* Enhanced Form Controls */
         .form-control:focus, .form-select:focus {
           border-color: #7c3aed !important;
           box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1) !important;
         }
         
-        /* ✅ PROFESSIONAL GLOBAL TYPOGRAPHY */
         * {
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
         
         body {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
           font-weight: 400;
           line-height: 1.6;
           color: #1f2937;
@@ -1222,66 +1217,29 @@ const FindProperty = () => {
           color: #0f172a;
         }
         
-        p, .text-muted {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-          line-height: 1.6;
-          color: #475569;
-          font-weight: 400;
-        }
-        
-        .btn {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-          font-weight: 700;
-          letter-spacing: 0.025em;
-          transition: all 0.3s ease;
-          border-radius: 12px;
-        }
-        
-        /* ✅ IMPROVED CARD TYPOGRAPHY */
         .card-title {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-          font-weight: 800;
-          color: #0f172a;
-          letter-spacing: -0.02em;
-          line-height: 1.3;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+          font-weight: 800 !important;
+          color: #111827 !important; 
+          letter-spacing: -0.02em !important;
+          line-height: 1.3 !important;
         }
         
         .card-text {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-          color: #475569;
-          font-weight: 400;
-          line-height: 1.6;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+          color: #374151 !important;
+          font-weight: 400 !important;
+          line-height: 1.6 !important;
         }
         
-        /* Badge Improvements */
-        .badge {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-          font-weight: 600;
-          letter-spacing: 0.025em;
+        .btn {
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+          font-weight: 700 !important;
+          letter-spacing: 0.025em !important;
+          transition: all 0.3s ease !important;
+          border-radius: 12px !important;
         }
         
-        /* Form Label Improvements */
-        .form-label {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-          font-weight: 700;
-          color: #1f2937;
-          margin-bottom: 8px;
-        }
-        
-        /* Input Improvements */
-        .form-control, .form-select {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-          font-weight: 400;
-          color: #1f2937;
-        }
-        
-        /* Small text improvements */
-        small, .small {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-          color: #64748b;
-        }
-        
-        /* ✅ RESPONSIVE TYPOGRAPHY */
         @media (max-width: 768px) {
           .btn-group {
             flex-direction: column !important;
@@ -1299,14 +1257,6 @@ const FindProperty = () => {
           
           h2 {
             font-size: 2rem !important;
-          }
-          
-          .card-title {
-            font-size: 1.25rem !important;
-          }
-          
-          p {
-            font-size: 0.9rem !important;
           }
         }
       `}</style>
