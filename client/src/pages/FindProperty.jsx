@@ -399,7 +399,7 @@ const FindProperty = () => {
       {/* Main Layout */}
       <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#ffffff' }}>
         
-        {/* ✅ PREMIUM ENHANCED DASHBOARD */}
+        {/* ✅ FIXED: DIFFERENT COLOR FOR SMART PROPERTY FILTERS */}
         <div style={{
           width: '400px',
           minHeight: '100vh',
@@ -411,9 +411,9 @@ const FindProperty = () => {
           boxShadow: '4px 0 20px rgba(0, 0, 0, 0.08)'
         }}>
           
-          {/* ✅ ENHANCED: Dashboard Header */}
+          {/* ✅ FIXED: Dashboard Header with Different Gradient */}
           <div className="p-4 border-bottom" style={{
-            background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
+            background: 'linear-gradient(135deg, #6b46c1 0%, #805ad5 100%)', // ✅ CHANGED TO DIFFERENT PURPLE
             color: 'white'
           }}>
             <div className="d-flex align-items-center justify-content-between">
@@ -840,14 +840,16 @@ const FindProperty = () => {
                   return (
                     <Col key={property._id} className={viewMode === 'list' ? 'col-12' : ''}>
                       {viewMode === 'list' ? (
-                        /* ✅ ENHANCED: Larger List View Design */
+                        /* ✅ ENHANCED: Improved List View Design with Better Contrast */}
                         <Card 
                           className="border-0 shadow-sm"
                           style={{ 
-                            borderRadius: '16px',
+                            borderRadius: '20px',
                             transition: 'all 0.3s ease',
                             cursor: 'pointer',
-                            minHeight: '200px'
+                            minHeight: '220px',
+                            backgroundColor: '#ffffff', // ✅ FIXED: Better contrast
+                            border: '1px solid #e5e7eb'
                           }}
                           onMouseEnter={(e) => {
                             e.currentTarget.style.transform = 'translateY(-4px)';
@@ -861,7 +863,7 @@ const FindProperty = () => {
                           <Row className="g-0 align-items-center">
                             {/* Property Image - List View */}
                             <Col md={4}>
-                              <div style={{ position: 'relative', height: '200px', overflow: 'hidden' }}>
+                              <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
                                 <img
                                   src={getImageUrl(
                                     (property.images && Array.isArray(property.images) && property.images[0]) || 
@@ -873,18 +875,18 @@ const FindProperty = () => {
                                     width: '100%',
                                     height: '100%',
                                     objectFit: 'cover',
-                                    borderRadius: '16px 0 0 16px'
+                                    borderRadius: '20px 0 0 20px'
                                   }}
                                 />
                                 
                                 {/* Badges - List View */}
                                 <div className="position-absolute top-0 start-0 p-3">
                                   <Badge bg="success" className="me-2 fw-semibold shadow-sm" 
-                                         style={{ borderRadius: '20px', padding: '6px 12px', fontSize: '0.8rem' }}>
+                                         style={{ borderRadius: '20px', padding: '8px 14px', fontSize: '0.85rem' }}>
                                     ✓ Available
                                   </Badge>
                                   <Badge bg="primary" className="fw-semibold shadow-sm" 
-                                         style={{ borderRadius: '20px', padding: '6px 12px', fontSize: '0.8rem' }}>
+                                         style={{ borderRadius: '20px', padding: '8px 14px', fontSize: '0.85rem' }}>
                                     🏆 Verified
                                   </Badge>
                                 </div>
@@ -893,29 +895,30 @@ const FindProperty = () => {
                             
                             {/* Property Details - List View */}
                             <Col md={8}>
-                              <Card.Body className="p-4" style={{ minHeight: '200px', display: 'flex', flexDirection: 'column' }}>
+                              <Card.Body className="p-4" style={{ minHeight: '220px', display: 'flex', flexDirection: 'column' }}>
                                 {/* Location - List View */}
-                                <div className="d-flex align-items-center text-muted mb-3">
-                                  <span className="me-2" style={{ color: '#7c3aed', fontSize: '1.2rem' }}>📍</span>
-                                  <span className="fw-medium" style={{ fontSize: '1rem' }}>
+                                <div className="d-flex align-items-center mb-3" style={{ color: '#6b7280' }}>
+                                  <span className="me-2" style={{ color: '#7c3aed', fontSize: '1.3rem' }}>📍</span>
+                                  <span className="fw-medium" style={{ fontSize: '1.1rem', color: '#374151' }}> {/* ✅ FIXED: Better text contrast */}
                                     {property.address?.city || 'City'}, {property.address?.state || 'State'}
                                   </span>
                                 </div>
                                 
                                 {/* Title - List View */}
                                 <Card.Title className="h3 fw-bold mb-3" style={{ 
-                                  color: '#1e293b',
-                                  fontSize: '1.6rem',
+                                  color: '#1f2937', // ✅ FIXED: Darker text for better readability
+                                  fontSize: '1.8rem',
                                   lineHeight: '1.3'
                                 }}>
                                   {property.title || 'Property Title'}
                                 </Card.Title>
                                 
                                 {/* Description - List View */}
-                                <p className="text-muted mb-3" style={{ 
-                                  fontSize: '1rem',
+                                <p className="mb-3" style={{ 
+                                  fontSize: '1.1rem',
                                   lineHeight: '1.6',
-                                  flexGrow: 1
+                                  flexGrow: 1,
+                                  color: '#4b5563' // ✅ FIXED: Better text contrast
                                 }}>
                                   {property.description ? 
                                     property.description.substring(0, 150) + '...' : 
@@ -933,15 +936,15 @@ const FindProperty = () => {
                                 {/* Price and Buttons - List View */}
                                 <div className="d-flex justify-content-between align-items-center mt-auto">
                                   <div>
-                                    <div className="h3 fw-bold text-success mb-1" style={{ fontSize: '1.8rem' }}>
+                                    <div className="h3 fw-bold text-success mb-1" style={{ fontSize: '1.9rem' }}>
                                       {formatPrice(property.price, getSafeRentType(property))}
                                     </div>
-                                    <small className="text-muted fw-medium">
+                                    <small className="fw-medium" style={{ color: '#6b7280' }}>
                                       Available for {getSafeRentTypes(property).join(', ')} rental
                                     </small>
                                   </div>
                                   
-                                  {/* Action Buttons - List View */}
+                                  {/* ✅ FIXED: Action Buttons - Removed Eye Icon */}
                                   <div className="d-flex gap-3">
                                     <Button
                                       variant="outline-primary"
@@ -950,11 +953,13 @@ const FindProperty = () => {
                                         padding: '12px 20px',
                                         borderWidth: '2px',
                                         fontWeight: 600,
-                                        fontSize: '0.9rem'
+                                        fontSize: '0.95rem',
+                                        borderColor: '#7c3aed',
+                                        color: '#7c3aed'
                                       }}
                                       onClick={() => handleViewDetails(property._id)}
                                     >
-                                      👁️ View Details
+                                      View Details {/* ✅ REMOVED EYE ICON */}
                                     </Button>
                                     <Button
                                       style={{ 
@@ -963,7 +968,7 @@ const FindProperty = () => {
                                         borderRadius: '12px',
                                         padding: '12px 20px',
                                         fontWeight: 600,
-                                        fontSize: '0.9rem'
+                                        fontSize: '0.95rem'
                                       }}
                                       onClick={() => handleBookNow(property._id)}
                                     >
