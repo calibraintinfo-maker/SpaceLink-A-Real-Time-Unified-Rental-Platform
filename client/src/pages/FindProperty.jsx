@@ -19,7 +19,6 @@ const FindProperty = () => {
   });
   const [viewMode, setViewMode] = useState('grid');
 
-  // ✅ ENHANCED: Complete location list
   const indianLocations = [
     "All Locations", "Mumbai", "Delhi", "Bangalore", "Chennai", "Kolkata", 
     "Hyderabad", "Pune", "Ahmedabad", "Jaipur", "Surat", "Lucknow", "Kanpur", 
@@ -310,7 +309,7 @@ const FindProperty = () => {
 
   return (
     <>
-      {/* Hero Section */}
+      {/* ✅ FIXED: Hero Section with Better Text Contrast */}
       <section 
         className="py-5 text-white"
         style={{
@@ -360,7 +359,7 @@ const FindProperty = () => {
                 fontWeight: 700,
                 letterSpacing: '0.5px',
                 textTransform: 'uppercase',
-                fontFamily: "'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif"
+                color: 'white' // ✅ FIXED: Ensure white text
               }}>
                 ✨ {filteredProperties.length} Premium Properties Available
               </span>
@@ -369,21 +368,25 @@ const FindProperty = () => {
             <h1 style={{
               fontSize: '3.5rem',
               fontWeight: 900,
-              fontFamily: "'Plus Jakarta Sans', 'Inter', system-ui, sans-serif",
+              fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
               letterSpacing: '-0.025em',
               lineHeight: 1.1,
-              marginBottom: '24px'
+              marginBottom: '24px',
+              color: 'white' // ✅ FIXED: Ensure white text
             }}>
               Find Your Perfect Property
             </h1>
+            
+            {/* ✅ FIXED: Much better contrast for description text */}
             <p style={{
               fontSize: '1.25rem',
               fontWeight: 400,
-              opacity: 0.9,
+              color: 'rgba(255, 255, 255, 0.95)', // ✅ FIXED: Nearly white with slight transparency
               maxWidth: '600px',
               margin: '0 auto',
               lineHeight: 1.6,
-              fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif"
+              fontFamily: "'Inter', system-ui, sans-serif",
+              textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' // ✅ ADDED: Subtle text shadow for better readability
             }}>
               Discover verified properties from our premium collection across India. 
               From luxury apartments to sports turfs and commercial spaces.
@@ -418,7 +421,7 @@ const FindProperty = () => {
                   marginBottom: '4px',
                   fontWeight: 800,
                   fontSize: '1.3rem',
-                  fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
+                  fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
                   letterSpacing: '-0.01em'
                 }} className="d-flex align-items-center">
                   <span className="me-2">🎯</span>
@@ -438,7 +441,7 @@ const FindProperty = () => {
                 fontSize: '0.85rem',
                 fontWeight: 700,
                 border: '1px solid rgba(255, 255, 255, 0.3)',
-                fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif"
+                fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif"
               }}>
                 {filteredProperties.length} found
               </div>
@@ -454,7 +457,7 @@ const FindProperty = () => {
                 marginBottom: '12px',
                 fontSize: '1.05rem',
                 color: '#1f2937',
-                fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
+                fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
                 display: 'flex',
                 alignItems: 'center'
               }}>
@@ -500,7 +503,7 @@ const FindProperty = () => {
                 marginBottom: '12px',
                 fontSize: '1.05rem',
                 color: '#1f2937',
-                fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
+                fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
                 display: 'flex',
                 alignItems: 'center'
               }}>
@@ -542,7 +545,7 @@ const FindProperty = () => {
                 marginBottom: '12px',
                 fontSize: '1.05rem',
                 color: '#1f2937',
-                fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
+                fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
                 display: 'flex',
                 alignItems: 'center'
               }}>
@@ -600,7 +603,7 @@ const FindProperty = () => {
                 marginBottom: '12px',
                 fontSize: '1.05rem',
                 color: '#1f2937',
-                fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
+                fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
                 display: 'flex',
                 alignItems: 'center'
               }}>
@@ -646,7 +649,7 @@ const FindProperty = () => {
                   marginBottom: '12px',
                   fontSize: '1.05rem',
                   color: '#1f2937',
-                  fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
+                  fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
                   display: 'flex',
                   alignItems: 'center'
                 }}>
@@ -696,7 +699,7 @@ const FindProperty = () => {
                 transition: 'all 0.3s ease',
                 fontWeight: 600,
                 fontSize: '0.95rem',
-                fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif"
+                fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif"
               }}
             >
               <span className="me-2">✕</span>
@@ -716,7 +719,7 @@ const FindProperty = () => {
                   fontWeight: 700,
                   color: '#1f2937',
                   fontSize: '1rem',
-                  fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
+                  fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
                   display: 'flex',
                   alignItems: 'center'
                 }}>
@@ -732,7 +735,7 @@ const FindProperty = () => {
                   borderRadius: '20px',
                   minWidth: '30px',
                   textAlign: 'center',
-                  fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif"
+                  fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif"
                 }}>
                   {getActiveFiltersCount()}
                 </div>
@@ -833,7 +836,7 @@ const FindProperty = () => {
                   marginBottom: '8px',
                   color: '#111827',
                   fontSize: '2.5rem',
-                  fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
+                  fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
                   letterSpacing: '-0.02em'
                 }}>
                   {filteredProperties.length} Properties Found
@@ -863,7 +866,7 @@ const FindProperty = () => {
                     color: viewMode === 'grid' ? 'white' : '#4b5563',
                     borderRadius: '12px 0 0 12px',
                     transition: 'all 0.3s ease',
-                    fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
+                    fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
                     textTransform: 'uppercase',
                     letterSpacing: '0.025em'
                   }}
@@ -880,7 +883,7 @@ const FindProperty = () => {
                     }
                   }}
                 >
-                  ⊞ Grid View
+                  ⊞ GRID VIEW
                 </Button>
                 
                 <Button 
@@ -895,7 +898,7 @@ const FindProperty = () => {
                     color: viewMode === 'list' ? 'white' : '#4b5563',
                     borderRadius: '0 12px 12px 0',
                     transition: 'all 0.3s ease',
-                    fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
+                    fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
                     textTransform: 'uppercase',
                     letterSpacing: '0.025em'
                   }}
@@ -912,7 +915,7 @@ const FindProperty = () => {
                     }
                   }}
                 >
-                  ☰ List View
+                  ☰ LIST VIEW
                 </Button>
               </div>
             </div>
@@ -933,7 +936,7 @@ const FindProperty = () => {
                   marginBottom: '16px',
                   color: '#111827',
                   fontSize: '1.8rem',
-                  fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif"
+                  fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif"
                 }}>
                   {searchQuery ? 'No Search Results' : getActiveFiltersCount() > 0 ? 'No Matching Properties' : 'No Properties Available'}
                 </h3>
@@ -957,7 +960,7 @@ const FindProperty = () => {
                     fontWeight: 700,
                     borderRadius: '12px',
                     padding: '12px 30px',
-                    fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
+                    fontFamily: "'Inter', 'Plus Jakarta Sans', system-ui, sans-serif",
                     textTransform: 'uppercase',
                     letterSpacing: '0.025em'
                   }}
@@ -975,7 +978,7 @@ const FindProperty = () => {
                   return (
                     <Col key={property._id} className={viewMode === 'list' ? 'col-12' : ''}>
                       {viewMode === 'list' ? (
-                        /* ENHANCED LIST VIEW WITH PROFESSIONAL TEXT DESIGN */
+                        /* ✅ PROFESSIONAL LIST VIEW WITH IMPROVED TYPOGRAPHY */
                         <Card 
                           className="border-0 shadow-sm"
                           style={{ 
@@ -1018,9 +1021,11 @@ const FindProperty = () => {
                                          style={{ 
                                            borderRadius: '20px', 
                                            padding: '8px 14px', 
-                                           fontSize: '0.8rem',
-                                           fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
-                                           fontWeight: 700
+                                           fontSize: '0.75rem',
+                                           fontFamily: "'Inter', system-ui, sans-serif",
+                                           fontWeight: 600,
+                                           textTransform: 'uppercase',
+                                           letterSpacing: '0.025em'
                                          }}>
                                     ✓ Available
                                   </Badge>
@@ -1028,9 +1033,11 @@ const FindProperty = () => {
                                          style={{ 
                                            borderRadius: '20px', 
                                            padding: '8px 14px', 
-                                           fontSize: '0.8rem',
-                                           fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
-                                           fontWeight: 700
+                                           fontSize: '0.75rem',
+                                           fontFamily: "'Inter', system-ui, sans-serif",
+                                           fontWeight: 600,
+                                           textTransform: 'uppercase',
+                                           letterSpacing: '0.025em'
                                          }}>
                                     🏆 Verified
                                   </Badge>
@@ -1040,40 +1047,45 @@ const FindProperty = () => {
                             
                             <Col md={8}>
                               <Card.Body className="p-4" style={{ minHeight: '240px', display: 'flex', flexDirection: 'column' }}>
+                                {/* ✅ IMPROVED: Location styling */}
                                 <div className="d-flex align-items-center mb-3">
-                                  <span className="me-2" style={{ color: '#7c3aed', fontSize: '1.3rem' }}>📍</span>
+                                  <span className="me-2" style={{ color: '#7c3aed', fontSize: '1.1rem' }}>📍</span>
                                   <span style={{ 
-                                    fontSize: '1rem', 
-                                    color: '#6b7280',
+                                    fontSize: '0.9rem', 
+                                    color: '#64748b',
                                     fontFamily: "'Inter', system-ui, sans-serif",
-                                    fontWeight: 500
+                                    fontWeight: 500,
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '0.5px'
                                   }}>
                                     {property.address?.city || 'City'}, {property.address?.state || 'State'}
                                   </span>
                                 </div>
                                 
+                                {/* ✅ IMPROVED: Title typography */}
                                 <Card.Title style={{ 
-                                  color: '#111827',
-                                  fontSize: '1.75rem',
+                                  color: '#0f172a',
+                                  fontSize: '1.5rem',
                                   lineHeight: '1.3',
                                   fontWeight: 800,
                                   marginBottom: '12px',
-                                  fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
-                                  letterSpacing: '-0.02em'
+                                  fontFamily: "'Inter', system-ui, sans-serif",
+                                  letterSpacing: '-0.015em'
                                 }}>
                                   {property.title || 'Property Title'}
                                 </Card.Title>
                                 
+                                {/* ✅ IMPROVED: Description typography */}
                                 <p className="mb-3" style={{ 
-                                  fontSize: '1rem',
+                                  fontSize: '0.95rem',
                                   lineHeight: '1.6',
                                   flexGrow: 1,
-                                  color: '#4b5563',
+                                  color: '#475569',
                                   fontFamily: "'Inter', system-ui, sans-serif",
                                   fontWeight: 400
                                 }}>
                                   {property.description ? 
-                                    property.description.substring(0, 150) + '...' : 
+                                    property.description.substring(0, 140) + '...' : 
                                     'Premium property with modern amenities and excellent location.'
                                   }
                                 </p>
@@ -1086,25 +1098,30 @@ const FindProperty = () => {
                                 
                                 <div className="d-flex justify-content-between align-items-center mt-auto">
                                   <div>
+                                    {/* ✅ IMPROVED: Price typography */}
                                     <div style={{ 
-                                      fontSize: '1.8rem',
+                                      fontSize: '1.6rem',
                                       fontWeight: 800,
                                       color: '#059669',
                                       marginBottom: '4px',
-                                      fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif"
+                                      fontFamily: "'Inter', system-ui, sans-serif",
+                                      letterSpacing: '-0.01em'
                                     }}>
                                       {formatPrice(property.price, getSafeRentType(property))}
                                     </div>
                                     <small style={{ 
-                                      color: '#6b7280',
-                                      fontSize: '0.85rem',
+                                      color: '#64748b',
+                                      fontSize: '0.8rem',
                                       fontFamily: "'Inter', system-ui, sans-serif",
-                                      fontWeight: 500
+                                      fontWeight: 500,
+                                      textTransform: 'uppercase',
+                                      letterSpacing: '0.5px'
                                     }}>
                                       Available for {getSafeRentTypes(property).join(', ')} rental
                                     </small>
                                   </div>
                                   
+                                  {/* ✅ IMPROVED: Button typography */}
                                   <div className="d-flex gap-3">
                                     <Button
                                       variant="outline-primary"
@@ -1113,12 +1130,12 @@ const FindProperty = () => {
                                         padding: '12px 20px',
                                         borderWidth: '2px',
                                         fontWeight: 700,
-                                        fontSize: '0.9rem',
+                                        fontSize: '0.8rem',
                                         borderColor: '#7c3aed',
                                         color: '#7c3aed',
-                                        fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
+                                        fontFamily: "'Inter', system-ui, sans-serif",
                                         textTransform: 'uppercase',
-                                        letterSpacing: '0.025em'
+                                        letterSpacing: '0.05em'
                                       }}
                                       onClick={() => handleViewDetails(property._id)}
                                     >
@@ -1131,10 +1148,10 @@ const FindProperty = () => {
                                         borderRadius: '12px',
                                         padding: '12px 20px',
                                         fontWeight: 700,
-                                        fontSize: '0.9rem',
-                                        fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
+                                        fontSize: '0.8rem',
+                                        fontFamily: "'Inter', system-ui, sans-serif",
                                         textTransform: 'uppercase',
-                                        letterSpacing: '0.025em'
+                                        letterSpacing: '0.05em'
                                       }}
                                       onClick={() => handleBookNow(property._id)}
                                     >
@@ -1161,9 +1178,9 @@ const FindProperty = () => {
         </div>
       </div>
 
-      {/* PROFESSIONAL CSS FOR TEXT DESIGN */}
+      {/* ✅ PROFESSIONAL CSS FOR TYPOGRAPHY */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
         /* Float animation */
         @keyframes float {
@@ -1182,46 +1199,70 @@ const FindProperty = () => {
           box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1) !important;
         }
         
-        /* Global Typography Improvements */
+        /* ✅ PROFESSIONAL GLOBAL TYPOGRAPHY */
+        * {
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+        
         body {
-          font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
           font-weight: 400;
           line-height: 1.6;
           color: #1f2937;
-          letter-spacing: 0.01em;
+          letter-spacing: 0.005em;
         }
         
         h1, h2, h3, h4, h5, h6 {
-          font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
           font-weight: 800;
           line-height: 1.2;
-          letter-spacing: -0.02em;
+          letter-spacing: -0.025em;
           margin-bottom: 0.5em;
+          color: #0f172a;
         }
         
         p, .text-muted {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
           line-height: 1.6;
-          color: #4b5563;
+          color: #475569;
+          font-weight: 400;
         }
         
         .btn {
-          font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
           font-weight: 700;
           letter-spacing: 0.025em;
           transition: all 0.3s ease;
+          border-radius: 12px;
+        }
+        
+        /* ✅ IMPROVED CARD TYPOGRAPHY */
+        .card-title {
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          font-weight: 800;
+          color: #0f172a;
+          letter-spacing: -0.02em;
+          line-height: 1.3;
+        }
+        
+        .card-text {
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          color: #475569;
+          font-weight: 400;
+          line-height: 1.6;
         }
         
         /* Badge Improvements */
         .badge {
-          font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
           font-weight: 600;
           letter-spacing: 0.025em;
         }
         
         /* Form Label Improvements */
         .form-label {
-          font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
           font-weight: 700;
           color: #1f2937;
           margin-bottom: 8px;
@@ -1229,20 +1270,18 @@ const FindProperty = () => {
         
         /* Input Improvements */
         .form-control, .form-select {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
           font-weight: 400;
           color: #1f2937;
         }
         
-        /* Card Title Improvements */
-        .card-title {
-          font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-          font-weight: 800;
-          color: #111827;
-          letter-spacing: -0.02em;
+        /* Small text improvements */
+        small, .small {
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          color: #64748b;
         }
         
-        /* Responsive Design */
+        /* ✅ RESPONSIVE TYPOGRAPHY */
         @media (max-width: 768px) {
           .btn-group {
             flex-direction: column !important;
@@ -1260,6 +1299,14 @@ const FindProperty = () => {
           
           h2 {
             font-size: 2rem !important;
+          }
+          
+          .card-title {
+            font-size: 1.25rem !important;
+          }
+          
+          p {
+            font-size: 0.9rem !important;
           }
         }
       `}</style>
