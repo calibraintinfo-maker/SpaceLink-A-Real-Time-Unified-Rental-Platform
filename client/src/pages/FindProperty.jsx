@@ -30,7 +30,7 @@ const FindProperty = () => {
 
   const residentialTypes = ["Villa", "Apartment", "House", "Studio"];
 
-  // REAL-TIME API DATA FETCHING
+  // ENHANCED REAL-TIME API DATA FETCHING
   useEffect(() => {
     fetchProperties();
   }, []);
@@ -40,10 +40,19 @@ const FindProperty = () => {
       setLoading(true);
       setError('');
       
-      // Fetch real-time data from your API
+      // Fetch real-time data from API with enhanced error handling
       const response = await api.properties.getAll();
-      setProperties(response.data);
-      setFilteredProperties(response.data);
+      
+      // Handle different response structures
+      const propertiesData = response?.data || response || [];
+      
+      console.log('Properties fetched:', propertiesData); // Debug log
+      
+      // Ensure we have an array
+      const propertiesArray = Array.isArray(propertiesData) ? propertiesData : [];
+      
+      setProperties(propertiesArray);
+      setFilteredProperties(propertiesArray);
       
     } catch (error) {
       console.error('Error fetching properties:', error);
@@ -53,43 +62,70 @@ const FindProperty = () => {
     }
   };
 
-  // REAL-TIME FILTERING
+  // ENHANCED REAL-TIME FILTERING WITH SAFE ARRAY OPERATIONS
   useEffect(() => {
+    if (!Array.isArray(properties)) {
+      setFilteredProperties([]);
+      return;
+    }
+
     let filtered = properties;
 
+    // Search query filter
     if (searchQuery) {
-      filtered = filtered.filter(property =>
-        property.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        property.address.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        property.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (property.subtype && property.subtype.toLowerCase().includes(searchQuery.toLowerCase()))
-      );
+      filtered = filtered.filter(property => {
+        if (!property) return false;
+        
+        const searchFields = [
+          property.title,
+          property.address?.city,
+          property.address?.state,
+          property.category,
+          property.subtype
+        ].filter(Boolean); // Remove null/undefined values
+        
+        return searchFields.some(field => 
+          field.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+      });
     }
 
+    // Location filter
     if (filters.location) {
-      filtered = filtered.filter(property =>
-        property.address.city.toLowerCase().includes(filters.location.toLowerCase()) ||
-        property.address.state.toLowerCase().includes(filters.location.toLowerCase())
-      );
+      filtered = filtered.filter(property => {
+        if (!property?.address) return false;
+        
+        const locationFields = [
+          property.address.city,
+          property.address.state
+        ].filter(Boolean);
+        
+        return locationFields.some(field =>
+          field.toLowerCase().includes(filters.location.toLowerCase())
+        );
+      });
     }
 
+    // Property type filter
     if (filters.propertyType) {
-      filtered = filtered.filter(property =>
-        property.category === filters.propertyType ||
-        property.subtype === filters.propertyType
+      filtered = filtered.filter(property => 
+        property?.category === filters.propertyType ||
+        property?.subtype === filters.propertyType
       );
     }
 
+    // Price range filter
     if (filters.priceRange) {
       const [min, max] = filters.priceRange.split('-').map(Number);
-      filtered = filtered.filter(property =>
-        property.price >= min && property.price <= max
+      filtered = filtered.filter(property => 
+        property?.price && property.price >= min && property.price <= max
       );
     }
 
+    // Bedrooms filter
     if (filters.bedrooms) {
       filtered = filtered.filter(property =>
-        property.subtype && residentialTypes.includes(property.subtype) &&
+        property?.subtype && residentialTypes.includes(property.subtype) &&
         property.bedrooms >= parseInt(filters.bedrooms)
       );
     }
@@ -104,7 +140,6 @@ const FindProperty = () => {
   const clearFilters = () => {
     setFilters({ location: '', propertyType: '', priceRange: '', bedrooms: '' });
     setSearchQuery('');
-    setFilteredProperties(properties);
   };
 
   const shouldShowBedroomFilter = () => {
@@ -115,15 +150,15 @@ const FindProperty = () => {
   // NAVIGATION FUNCTIONS - REAL PROPERTY IDS
   const handleViewDetails = (propertyId) => {
     console.log('Navigating to property details:', propertyId);
-    navigate(`/property/${propertyId}`); // Uses real _id from database
+    navigate(`/property/${propertyId}`);
   };
 
   const handleBookNow = (propertyId) => {
     console.log('Navigating to book property:', propertyId);
-    navigate(`/book/${propertyId}`); // Uses real _id from database
+    navigate(`/book/${propertyId}`);
   };
 
-  const handleImageError = (e) => {
+  const handleImageError = (e) => {    
     e.target.src = 'https://via.placeholder.com/400x240/e2e8f0/64748b?text=Property+Image';
   };
 
@@ -139,9 +174,11 @@ const FindProperty = () => {
   };
 
   const renderPropertyDetails = (property) => {
+    if (!property) return [];
+    
     const details = [];
 
-    // Handle residential properties
+    // Handle residential properties safely
     if (property.subtype && residentialTypes.includes(property.subtype)) {
       if (property.bedrooms > 0) {
         details.push(
@@ -168,12 +205,14 @@ const FindProperty = () => {
       );
     }
 
-    // Size/Area
-    details.push(
-      <span key="area" className="custom-badge me-2 mb-2">
-        📐 {property.size}
-      </span>
-    );
+    // Size/Area - always show if available
+    if (property.size) {
+      details.push(
+        <span key="area" className="custom-badge me-2 mb-2">
+          📐 {property.size}
+        </span>
+      );
+    }
 
     // Special features for different property types
     if (property.capacity) {
@@ -184,23 +223,37 @@ const FindProperty = () => {
       );
     }
 
-    if (property.features && property.features.includes('Artificial Grass')) {
-      details.push(
-        <span key="surface" className="custom-badge-green me-2 mb-2">
-          ⚽ Artificial Grass
-        </span>
-      );
-    }
+    if (property.features && Array.isArray(property.features)) {
+      if (property.features.includes('Artificial Grass')) {
+        details.push(
+          <span key="surface" className="custom-badge-green me-2 mb-2">
+            ⚽ Artificial Grass
+          </span>
+        );
+      }
 
-    if (property.features && property.features.includes('24/7 Security')) {
-      details.push(
-        <span key="security" className="custom-badge-orange me-2 mb-2">
-          🔒 24/7 Security
-        </span>
-      );
+      if (property.features.includes('24/7 Security')) {
+        details.push(
+          <span key="security" className="custom-badge-orange me-2 mb-2">
+            🔒 24/7 Security
+          </span>
+        );
+      }
     }
 
     return details;
+  };
+
+  // Get safe rent type for display
+  const getSafeRentType = (property) => {
+    if (!property?.rentType) return 'rental';
+    return Array.isArray(property.rentType) ? property.rentType[0] : property.rentType;
+  };
+
+  // Get safe rent types array for display
+  const getSafeRentTypes = (property) => {
+    if (!property?.rentType) return ['rental'];
+    return Array.isArray(property.rentType) ? property.rentType : [property.rentType];
   };
 
   // LOADING STATE
@@ -514,7 +567,7 @@ const FindProperty = () => {
               </div>
             </div>
 
-            {/* PROPERTY CARDS SECTION - REAL DATA */}
+            {/* PROPERTY CARDS SECTION - ENHANCED REAL DATA */}
             {filteredProperties.length === 0 ? (
               <Card className="border-0 shadow-sm text-center p-5">
                 <Card.Body>
@@ -536,122 +589,129 @@ const FindProperty = () => {
               </Card>
             ) : (
               <Row className={viewMode === 'grid' ? 'row-cols-1 row-cols-md-2 row-cols-xl-3 g-4' : 'g-4'}>
-                {filteredProperties.map((property) => (
-                  <Col key={property._id}>
-                    <Card 
-                      className="h-100 border-0 shadow-sm"
-                      style={{ 
-                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                        cursor: 'pointer',
-                        borderRadius: '12px'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-4px)';
-                        e.currentTarget.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.15)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.12)';
-                      }}
-                    >
-                      {/* Property Image */}
-                      <div className="position-relative">
-                        <img
-                          className="card-img-top"
-                          src={getImageUrl(property.images?.[0] || property.image)}
-                          alt={property.title}
-                          onError={handleImageError}
-                          style={{ 
-                            height: viewMode === 'grid' ? '240px' : '200px', 
-                            objectFit: 'cover',
-                            borderRadius: '12px 12px 0 0'
-                          }}
-                        />
-                        
-                        {/* CUSTOM BADGES - NO BLUE */}
-                        <div className="position-absolute top-0 start-0 p-3">
-                          <span className="status-badge-green me-2">
-                            For Rent
-                          </span>
-                          <span className="status-badge-purple">
-                            ✓ Verified
-                          </span>
-                        </div>
-                        
-                        {/* PROPERTY TYPE BADGE - GRAY ONLY */}
-                        <div className="position-absolute top-0 end-0 p-3">
-                          <span className="status-badge-gray">
-                            {property.subtype || property.category}
-                          </span>
-                        </div>
-                      </div>
-                      
-                      {/* Property Details */}
-                      <Card.Body className="d-flex flex-column p-4">
-                        {/* Location */}
-                        <div className="d-flex align-items-center text-muted mb-3">
-                          <span className="me-2" style={{ color: '#7c3aed' }}>📍</span>
-                          <span className="fw-medium">
-                            {property.address.city}, {property.address.state}
-                          </span>
-                        </div>
-                        
-                        {/* Property Title */}
-                        <Card.Title className="h4 fw-bold mb-4" style={{ 
-                          lineHeight: '1.4',
-                          color: '#1e293b'
-                        }}>
-                          {property.title}
-                        </Card.Title>
-                        
-                        {/* Property Features */}
-                        <div className="mb-4 flex-grow-1">
-                          {renderPropertyDetails(property)}
-                        </div>
-                        
-                        {/* Price and Action Buttons */}
-                        <div className="mt-auto">
-                          <div className="mb-4">
-                            <div className="h3 fw-bold text-success mb-1">
-                              {formatPrice(property.price, property.rentType[0])}
-                            </div>
-                            <small className="text-muted fw-medium">
-                              Available for {property.rentType.join(', ')} rental
-                            </small>
+                {filteredProperties.map((property) => {
+                  if (!property || !property._id) return null; // Skip invalid properties
+                  
+                  return (
+                    <Col key={property._id}>
+                      <Card 
+                        className="h-100 border-0 shadow-sm"
+                        style={{ 
+                          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                          cursor: 'pointer',
+                          borderRadius: '12px'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'translateY(-4px)';
+                          e.currentTarget.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.15)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'translateY(0)';
+                          e.currentTarget.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.12)';
+                        }}
+                      >
+                        {/* Property Image */}
+                        <div className="position-relative">
+                          <img
+                            className="card-img-top"
+                            src={getImageUrl(
+                              (property.images && Array.isArray(property.images) && property.images[0]) || 
+                              property.image
+                            )}
+                            alt={property.title || 'Property Image'}
+                            onError={handleImageError}
+                            style={{ 
+                              height: viewMode === 'grid' ? '240px' : '200px', 
+                              objectFit: 'cover',
+                              borderRadius: '12px 12px 0 0'
+                            }}
+                          />
+                          
+                          {/* CUSTOM BADGES - NO BLUE */}
+                          <div className="position-absolute top-0 start-0 p-3">
+                            <span className="status-badge-green me-2">
+                              For Rent
+                            </span>
+                            <span className="status-badge-purple">
+                              ✓ Verified
+                            </span>
                           </div>
                           
-                          {/* Navigation Buttons */}
-                          <div className="d-grid gap-3 d-md-flex">
-                            <button 
-                              type="button"
-                              className="btn flex-fill fw-semibold custom-outline-btn"
-                              style={{ fontSize: '0.9rem', padding: '12px 20px' }}
-                              onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                handleViewDetails(property._id); // Real database ID
-                              }}
-                            >
-                              View Details
-                            </button>
-                            <button 
-                              type="button"
-                              className="btn flex-fill fw-semibold custom-primary-btn"
-                              style={{ fontSize: '0.9rem', padding: '12px 20px' }}
-                              onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                handleBookNow(property._id); // Real database ID
-                              }}
-                            >
-                              Book Now
-                            </button>
+                          {/* PROPERTY TYPE BADGE - GRAY ONLY */}
+                          <div className="position-absolute top-0 end-0 p-3">
+                            <span className="status-badge-gray">
+                              {property.subtype || property.category || 'Property'}
+                            </span>
                           </div>
                         </div>
-                      </Card.Body>
-                    </Card>
-                  </Col>
-                ))}
+                        
+                        {/* Property Details */}
+                        <Card.Body className="d-flex flex-column p-4">
+                          {/* Location */}
+                          <div className="d-flex align-items-center text-muted mb-3">
+                            <span className="me-2" style={{ color: '#7c3aed' }}>📍</span>
+                            <span className="fw-medium">
+                              {property.address?.city || 'City'}, {property.address?.state || 'State'}
+                            </span>
+                          </div>
+                          
+                          {/* Property Title */}
+                          <Card.Title className="h4 fw-bold mb-4" style={{ 
+                            lineHeight: '1.4',
+                            color: '#1e293b'
+                          }}>
+                            {property.title || 'Property Title'}
+                          </Card.Title>
+                          
+                          {/* Property Features */}
+                          <div className="mb-4 flex-grow-1">
+                            {renderPropertyDetails(property)}
+                          </div>
+                          
+                          {/* Price and Action Buttons */}
+                          <div className="mt-auto">
+                            <div className="mb-4">
+                              <div className="h3 fw-bold text-success mb-1">
+                                {formatPrice(property.price, getSafeRentType(property))}
+                              </div>
+                              <small className="text-muted fw-medium">
+                                Available for {getSafeRentTypes(property).join(', ')} rental
+                              </small>
+                            </div>
+                            
+                            {/* Navigation Buttons */}
+                            <div className="d-grid gap-3 d-md-flex">
+                              <button 
+                                type="button"
+                                className="btn flex-fill fw-semibold custom-outline-btn"
+                                style={{ fontSize: '0.9rem', padding: '12px 20px' }}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  handleViewDetails(property._id);
+                                }}
+                              >
+                                View Details
+                              </button>
+                              <button 
+                                type="button"
+                                className="btn flex-fill fw-semibold custom-primary-btn"
+                                style={{ fontSize: '0.9rem', padding: '12px 20px' }}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  handleBookNow(property._id);
+                                }}
+                              >
+                                Book Now
+                              </button>
+                            </div>
+                          </div>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  );
+                })}
               </Row>
             )}
           </Container>
