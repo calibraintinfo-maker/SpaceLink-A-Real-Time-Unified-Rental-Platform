@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Badge, Button, Form, Spinner, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Form, Spinner, Alert, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { api, handleApiError, formatPrice, getImageUrl } from '../utils/api';
+import { api, handleApiError } from '../utils/api';
+import PropertyCard from '../components/PropertyCard';
 
 const FindProperty = () => {
   const navigate = useNavigate();
@@ -18,35 +19,46 @@ const FindProperty = () => {
   });
   const [viewMode, setViewMode] = useState('grid');
 
+  // ✅ ENHANCED: Complete location list
   const indianLocations = [
     "All Locations", "Mumbai", "Delhi", "Bangalore", "Chennai", "Kolkata", 
     "Hyderabad", "Pune", "Ahmedabad", "Jaipur", "Surat", "Lucknow", "Kanpur", 
-    "Nagpur", "Indore", "Thane", "Bhopal", "Visakhapatnam", "Patna", "Vadodara"
+    "Nagpur", "Indore", "Thane", "Bhopal", "Visakhapatnam", "Patna", "Vadodara",
+    "Coimbatore", "Kochi", "Madurai", "Nashik", "Faridabad", "Ghaziabad",
+    "Rajkot", "Meerut", "Kalyan", "Vasai", "Varanasi", "Dhanbad", "Jodhpur",
+    "Amritsar", "Raipur", "Allahabad", "Jabalpur", "Gwalior", "Vijayawada"
   ];
 
+  // ✅ FIXED: Added Turf + complete property types
   const propertyTypes = [
-    "All Categories", "Property Rentals", "Commercial", "Event", "Parking", "Land"
+    "All Categories", 
+    "Property Rentals", 
+    "Commercial", 
+    "Event", 
+    "Parking", 
+    "Land",
+    "Turf" // ✅ ADDED TURF
   ];
 
-  const residentialTypes = ["Villa", "Apartment", "House", "Studio"];
+  const residentialTypes = ["Villa", "Apartment", "House", "Studio", "Flat"];
+  const commercialTypes = ["Office", "Shop", "Warehouse", "Showroom"];
+  const eventTypes = ["Banquet Hall", "Garden", "Meeting Room", "Conference Hall"];
+  const turfTypes = ["Football Turf", "Cricket Ground", "Multi-Sport", "Tennis Court"]; // ✅ TURF TYPES
 
   useEffect(() => {
     fetchProperties();
   }, []);
 
-  // ✅ ROBUST: Handles all API response structures
+  // ✅ ROBUST: API fetching with all edge cases
   const fetchProperties = async () => {
     try {
       setLoading(true);
       setError('');
       
-      console.log('🔍 Fetching properties from API...');
+      console.log('🔍 Fetching properties...');
       const response = await api.properties.getAll();
       
-      console.log('📡 API Response:', response);
-      console.log('📊 Response Data:', response.data);
-      
-      // Handle different response structures
+      // Handle multiple response structures
       let propertiesArray = [];
       
       if (Array.isArray(response)) {
@@ -55,44 +67,30 @@ const FindProperty = () => {
         propertiesArray = response.data;
       } else if (Array.isArray(response?.data?.properties)) {
         propertiesArray = response.data.properties;
-      } else if (Array.isArray(response?.data?.data)) {
-        propertiesArray = response.data.data;
       } else if (response?.data && typeof response.data === 'object') {
-        // Look for any array property in the response.data object
+        // Search for any array in the response
         const dataObj = response.data;
         for (const key in dataObj) {
           if (Array.isArray(dataObj[key])) {
             propertiesArray = dataObj[key];
-            console.log(`✅ Array found in response.data.${key}`);
             break;
           }
         }
       }
       
-      console.log('🏠 Final Properties Array:', propertiesArray);
-      console.log('📏 Array Length:', propertiesArray.length);
-      
-      if (Array.isArray(propertiesArray) && propertiesArray.length >= 0) {
-        setProperties(propertiesArray);
-        setFilteredProperties(propertiesArray);
-        console.log(`✅ Successfully loaded ${propertiesArray.length} properties`);
-      } else {
-        console.error('❌ No valid properties array found in response');
-        setProperties([]);
-        setFilteredProperties([]);
-        setError('No properties found in server response');
-      }
+      console.log(`✅ Loaded ${propertiesArray.length} properties`);
+      setProperties(propertiesArray);
+      setFilteredProperties(propertiesArray);
       
     } catch (error) {
       console.error('❌ API Error:', error);
-      console.error('❌ Error Details:', error.response?.data || error.message);
       setError(handleApiError(error));
     } finally {
       setLoading(false);
     }
   };
 
-  // Real-time filtering
+  // ✅ ENHANCED: Smart filtering with edge cases
   useEffect(() => {
     if (!Array.isArray(properties)) {
       setFilteredProperties([]);
@@ -101,14 +99,17 @@ const FindProperty = () => {
 
     let filtered = properties;
 
-    if (searchQuery) {
+    // Search filter
+    if (searchQuery.trim()) {
       filtered = filtered.filter(property => {
         if (!property) return false;
         
         const searchFields = [
           property.title,
+          property.description,
           property.address?.city,
           property.address?.state,
+          property.address?.street,
           property.category,
           property.subtype
         ].filter(Boolean);
@@ -119,13 +120,15 @@ const FindProperty = () => {
       });
     }
 
-    if (filters.location) {
+    // Location filter
+    if (filters.location && filters.location !== "All Locations") {
       filtered = filtered.filter(property => {
         if (!property?.address) return false;
         
         const locationFields = [
           property.address.city,
-          property.address.state
+          property.address.state,
+          property.address.street
         ].filter(Boolean);
         
         return locationFields.some(field =>
@@ -134,25 +137,39 @@ const FindProperty = () => {
       });
     }
 
-    if (filters.propertyType) {
-      filtered = filtered.filter(property => 
-        property?.category === filters.propertyType ||
-        property?.subtype === filters.propertyType
-      );
+    // Property type filter
+    if (filters.propertyType && filters.propertyType !== "All Categories") {
+      filtered = filtered.filter(property => {
+        if (!property) return false;
+        
+        // Match category or subtype
+        return property.category === filters.propertyType ||
+               property.subtype === filters.propertyType;
+      });
     }
 
+    // Price range filter
     if (filters.priceRange) {
       const [min, max] = filters.priceRange.split('-').map(Number);
-      filtered = filtered.filter(property => 
-        property?.price && property.price >= min && property.price <= max
-      );
+      filtered = filtered.filter(property => {
+        if (!property?.price) return false;
+        const price = Number(property.price);
+        return price >= min && (max ? price <= max : true);
+      });
     }
 
+    // Bedrooms filter (only for residential)
     if (filters.bedrooms) {
-      filtered = filtered.filter(property =>
-        property?.subtype && residentialTypes.includes(property.subtype) &&
-        property.bedrooms >= parseInt(filters.bedrooms)
-      );
+      const minBedrooms = parseInt(filters.bedrooms);
+      filtered = filtered.filter(property => {
+        if (!property?.subtype) return false;
+        
+        // Only apply to residential properties
+        if (residentialTypes.includes(property.subtype)) {
+          return property.bedrooms >= minBedrooms;
+        }
+        return true; // Don't filter non-residential
+      });
     }
 
     setFilteredProperties(filtered);
@@ -167,23 +184,16 @@ const FindProperty = () => {
     setSearchQuery('');
   };
 
+  // ✅ ENHANCED: Smart bedroom filter visibility
   const shouldShowBedroomFilter = () => {
-    if (!filters.propertyType) return false;
-    return residentialTypes.includes(filters.propertyType) || filters.propertyType === 'Property Rentals';
+    if (!filters.propertyType || filters.propertyType === "All Categories") return false;
+    return filters.propertyType === 'Property Rentals' || 
+           residentialTypes.includes(filters.propertyType);
   };
 
-  const handleViewDetails = (propertyId) => {
-    console.log('🔍 Navigating to property:', propertyId);
-    navigate(`/property/${propertyId}`);
-  };
-
-  const handleBookNow = (propertyId) => {
-    console.log('📅 Navigating to booking:', propertyId);
-    navigate(`/book/${propertyId}`);
-  };
-
-  const handleImageError = (e) => {
-    e.target.src = 'https://via.placeholder.com/400x240/e2e8f0/64748b?text=Property+Image';
+  const getActiveFiltersCount = () => {
+    const filterCount = Object.values(filters).filter(f => f && f !== "All Categories").length;
+    return filterCount + (searchQuery.trim() ? 1 : 0);
   };
 
   const getCategoryIcon = (category) => {
@@ -192,60 +202,10 @@ const FindProperty = () => {
       'Commercial': '🏢',
       'Land': '🌾',
       'Parking': '🚗',
-      'Event': '🎉'
+      'Event': '🎉',
+      'Turf': '⚽' // ✅ TURF ICON
     };
-    return icons[category] || '🏠';
-  };
-
-  const renderPropertyDetails = (property) => {
-    if (!property) return [];
-    
-    const details = [];
-
-    if (property.subtype && residentialTypes.includes(property.subtype)) {
-      if (property.bedrooms > 0) {
-        details.push(
-          <Badge key="bedrooms" bg="light" text="dark" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
-            🛏 {property.bedrooms} BHK
-          </Badge>
-        );
-      }
-      if (property.bathrooms > 0) {
-        details.push(
-          <Badge key="bathrooms" bg="light" text="dark" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
-            🚿 {property.bathrooms} Bath
-          </Badge>
-        );
-      }
-    }
-
-    if (property.size) {
-      details.push(
-        <Badge key="area" bg="light" text="dark" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
-          📐 {property.size}
-        </Badge>
-      );
-    }
-
-    if (property.capacity) {
-      details.push(
-        <Badge key="capacity" bg="info" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
-          👥 {property.capacity}
-        </Badge>
-      );
-    }
-
-    return details;
-  };
-
-  const getSafeRentType = (property) => {
-    if (!property?.rentType) return 'rental';
-    return Array.isArray(property.rentType) ? property.rentType[0] : property.rentType;
-  };
-
-  const getSafeRentTypes = (property) => {
-    if (!property?.rentType) return ['rental'];
-    return Array.isArray(property.rentType) ? property.rentType : [property.rentType];
+    return icons[category] || '🏷️';
   };
 
   // Loading state
@@ -296,10 +256,7 @@ const FindProperty = () => {
           <Alert variant="danger" className="text-center">
             <Alert.Heading>⚠️ Error Loading Properties</Alert.Heading>
             <p>{error}</p>
-            <Button 
-              onClick={fetchProperties}
-              style={{ backgroundColor: '#7c3aed', borderColor: '#7c3aed' }}
-            >
+            <Button onClick={fetchProperties} style={{ backgroundColor: '#7c3aed', borderColor: '#7c3aed' }}>
               Try Again
             </Button>
           </Alert>
@@ -310,7 +267,7 @@ const FindProperty = () => {
 
   return (
     <>
-      {/* ✅ IMPROVED: Purple Hero Section */}
+      {/* ✅ ENHANCED: Hero Section */}
       <section 
         className="py-5 text-white"
         style={{
@@ -322,7 +279,7 @@ const FindProperty = () => {
           overflow: 'hidden'
         }}
       >
-        {/* Floating elements */}
+        {/* Animated background elements */}
         <div style={{
           position: 'absolute',
           top: '10%',
@@ -331,7 +288,8 @@ const FindProperty = () => {
           height: '200px',
           background: 'rgba(255, 255, 255, 0.1)',
           borderRadius: '50%',
-          filter: 'blur(40px)'
+          filter: 'blur(40px)',
+          animation: 'float 8s ease-in-out infinite'
         }}></div>
         <div style={{
           position: 'absolute',
@@ -341,7 +299,8 @@ const FindProperty = () => {
           height: '150px',
           background: 'rgba(255, 255, 255, 0.08)',
           borderRadius: '50%',
-          filter: 'blur(30px)'
+          filter: 'blur(30px)',
+          animation: 'float 6s ease-in-out infinite reverse'
         }}></div>
         
         <Container className="position-relative">
@@ -360,7 +319,7 @@ const FindProperty = () => {
                 letterSpacing: '0.5px',
                 textTransform: 'uppercase'
               }}>
-                ✨ Premium Properties Collection
+                ✨ {filteredProperties.length} Premium Properties Available
               </span>
             </div>
             
@@ -369,7 +328,7 @@ const FindProperty = () => {
             </h1>
             <p className="fs-5 mb-0 opacity-90 mx-auto" style={{ maxWidth: '600px' }}>
               Discover verified properties from our premium collection across India. 
-              From luxury apartments to commercial spaces.
+              From luxury apartments to sports turfs and commercial spaces.
             </p>
           </div>
         </Container>
@@ -378,34 +337,38 @@ const FindProperty = () => {
       {/* Main Layout */}
       <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#ffffff' }}>
         
-        {/* ✅ ENHANCED: Premium Sidebar */}
+        {/* ✅ PREMIUM ENHANCED DASHBOARD */}
         <div style={{
-          width: '380px',
+          width: '400px',
           minHeight: '100vh',
           background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)',
           position: 'sticky',
           top: 0,
           overflowY: 'auto',
           borderRight: '1px solid #e2e8f0',
-          boxShadow: '4px 0 12px rgba(0, 0, 0, 0.05)'
+          boxShadow: '4px 0 20px rgba(0, 0, 0, 0.08)'
         }}>
           
-          {/* Sidebar Header */}
+          {/* ✅ ENHANCED: Dashboard Header */}
           <div className="p-4 border-bottom" style={{
             background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
             color: 'white'
           }}>
             <div className="d-flex align-items-center justify-content-between">
               <div>
-                <h5 className="mb-1 fw-bold">🎯 Smart Filters</h5>
-                <small className="opacity-90">Refine your perfect match</small>
+                <h5 className="mb-1 fw-bold d-flex align-items-center">
+                  <span className="me-2">🎯</span>
+                  Smart Property Filters
+                </h5>
+                <small className="opacity-90">Find your perfect match</small>
               </div>
               <div style={{
                 background: 'rgba(255, 255, 255, 0.2)',
                 borderRadius: '20px',
                 padding: '8px 12px',
                 fontSize: '0.8rem',
-                fontWeight: 600
+                fontWeight: 600,
+                border: '1px solid rgba(255, 255, 255, 0.3)'
               }}>
                 {filteredProperties.length} found
               </div>
@@ -417,24 +380,33 @@ const FindProperty = () => {
             {/* ✅ ENHANCED: Search Input */}
             <div className="mb-4">
               <Form.Label className="fw-semibold mb-3 d-flex align-items-center">
-                <span className="me-2">🔍</span>
+                <span className="me-2" style={{ fontSize: '1.1rem' }}>🔍</span>
                 Search Properties
               </Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Type location, property type..."
+                placeholder="Search by location, type, or keywords..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 style={{
                   borderRadius: '12px',
                   border: '2px solid #e2e8f0',
-                  padding: '12px 16px',
-                  fontSize: '0.95rem'
+                  padding: '14px 16px',
+                  fontSize: '0.95rem',
+                  transition: 'all 0.3s ease'
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = '#7c3aed';
+                  e.target.style.boxShadow = '0 0 0 3px rgba(124, 58, 237, 0.1)';
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = '#e2e8f0';
+                  e.target.style.boxShadow = 'none';
                 }}
               />
               {searchQuery && (
-                <small className="text-muted mt-1 d-block">
-                  Searching for "{searchQuery}"
+                <small className="text-muted mt-2 d-block">
+                  <span className="fw-semibold">{filteredProperties.length} results</span> for "{searchQuery}"
                 </small>
               )}
             </div>
@@ -442,8 +414,11 @@ const FindProperty = () => {
             {/* ✅ ENHANCED: Location Filter */}
             <div className="mb-4">
               <Form.Label className="fw-semibold mb-3 d-flex align-items-center">
-                <span className="me-2">📍</span>
+                <span className="me-2" style={{ fontSize: '1.1rem' }}>📍</span>
                 Location
+                <span className="ms-auto text-muted fw-normal" style={{ fontSize: '0.8rem' }}>
+                  {indianLocations.length - 1} cities
+                </span>
               </Form.Label>
               <Form.Select
                 value={filters.location}
@@ -451,7 +426,9 @@ const FindProperty = () => {
                 style={{
                   borderRadius: '12px',
                   border: '2px solid #e2e8f0',
-                  padding: '12px 16px'
+                  padding: '12px 16px',
+                  fontSize: '0.95rem',
+                  background: 'white'
                 }}
               >
                 {indianLocations.map((location, index) => (
@@ -462,11 +439,14 @@ const FindProperty = () => {
               </Form.Select>
             </div>
 
-            {/* ✅ ENHANCED: Property Type Filter */}
+            {/* ✅ ENHANCED: Property Type Filter with Icons */}
             <div className="mb-4">
               <Form.Label className="fw-semibold mb-3 d-flex align-items-center">
-                <span className="me-2">🏠</span>
+                <span className="me-2" style={{ fontSize: '1.1rem' }}>🏠</span>
                 Property Type
+                <span className="ms-auto text-muted fw-normal" style={{ fontSize: '0.8rem' }}>
+                  {propertyTypes.length - 1} categories
+                </span>
               </Form.Label>
               <Form.Select
                 value={filters.propertyType}
@@ -474,22 +454,41 @@ const FindProperty = () => {
                 style={{
                   borderRadius: '12px',
                   border: '2px solid #e2e8f0',
-                  padding: '12px 16px'
+                  padding: '12px 16px',
+                  fontSize: '0.95rem',
+                  background: 'white'
                 }}
               >
                 {propertyTypes.map((type, index) => (
                   <option key={index} value={type === "All Categories" ? "" : type}>
-                    {type}
+                    {getCategoryIcon(type)} {type}
                   </option>
                 ))}
               </Form.Select>
+              
+              {/* Show subcategory info */}
+              {filters.propertyType && filters.propertyType !== "All Categories" && (
+                <div className="mt-2 p-2 bg-light rounded" style={{ fontSize: '0.8rem' }}>
+                  <span className="text-muted">
+                    {filters.propertyType === 'Property Rentals' && 'Includes: Villa, Apartment, House, Studio, Flat'}
+                    {filters.propertyType === 'Commercial' && 'Includes: Office, Shop, Warehouse, Showroom'}
+                    {filters.propertyType === 'Event' && 'Includes: Banquet Hall, Garden, Meeting Room'}
+                    {filters.propertyType === 'Turf' && 'Includes: Football Turf, Cricket Ground, Multi-Sport, Tennis Court'}
+                    {filters.propertyType === 'Parking' && 'Includes: Car Parking, Bike Parking, Garage'}
+                    {filters.propertyType === 'Land' && 'Includes: Agricultural, Commercial Plot, Residential Plot'}
+                  </span>
+                </div>
+              )}
             </div>
 
             {/* ✅ ENHANCED: Price Range Filter */}
             <div className="mb-4">
               <Form.Label className="fw-semibold mb-3 d-flex align-items-center">
-                <span className="me-2">💰</span>
+                <span className="me-2" style={{ fontSize: '1.1rem' }}>💰</span>
                 Price Range
+                <span className="ms-auto text-muted fw-normal" style={{ fontSize: '0.8rem' }}>
+                  per month
+                </span>
               </Form.Label>
               <Form.Select
                 value={filters.priceRange}
@@ -497,24 +496,31 @@ const FindProperty = () => {
                 style={{
                   borderRadius: '12px',
                   border: '2px solid #e2e8f0',
-                  padding: '12px 16px'
+                  padding: '12px 16px',
+                  fontSize: '0.95rem',
+                  background: 'white'
                 }}
               >
                 <option value="">All Prices</option>
-                <option value="0-2000">₹0 - ₹2,000</option>
-                <option value="2000-5000">₹2,000 - ₹5,000</option>
+                <option value="0-1000">₹0 - ₹1,000</option>
+                <option value="1000-2500">₹1,000 - ₹2,500</option>
+                <option value="2500-5000">₹2,500 - ₹5,000</option>
                 <option value="5000-10000">₹5,000 - ₹10,000</option>
                 <option value="10000-25000">₹10,000 - ₹25,000</option>
-                <option value="25000-999999">₹25,000+</option>
+                <option value="25000-50000">₹25,000 - ₹50,000</option>
+                <option value="50000-999999">₹50,000+</option>
               </Form.Select>
             </div>
 
-            {/* Conditional Bedrooms Filter */}
+            {/* ✅ ENHANCED: Conditional Bedrooms Filter */}
             {shouldShowBedroomFilter() && (
               <div className="mb-4">
                 <Form.Label className="fw-semibold mb-3 d-flex align-items-center">
-                  <span className="me-2">🛏️</span>
+                  <span className="me-2" style={{ fontSize: '1.1rem' }}>🛏️</span>
                   Bedrooms
+                  <span className="ms-auto text-muted fw-normal" style={{ fontSize: '0.8rem' }}>
+                    residential only
+                  </span>
                 </Form.Label>
                 <Form.Select
                   value={filters.bedrooms}
@@ -522,7 +528,9 @@ const FindProperty = () => {
                   style={{
                     borderRadius: '12px',
                     border: '2px solid #e2e8f0',
-                    padding: '12px 16px'
+                    padding: '12px 16px',
+                    fontSize: '0.95rem',
+                    background: 'white'
                   }}
                 >
                   <option value="">Any Bedrooms</option>
@@ -530,6 +538,7 @@ const FindProperty = () => {
                   <option value="2">2+ BHK</option>
                   <option value="3">3+ BHK</option>
                   <option value="4">4+ BHK</option>
+                  <option value="5">5+ BHK</option>
                 </Form.Select>
               </div>
             )}
@@ -539,13 +548,17 @@ const FindProperty = () => {
               variant="outline-secondary"
               className="w-100 mb-4 fw-semibold"
               onClick={clearFilters}
+              disabled={getActiveFiltersCount() === 0}
               style={{
                 borderRadius: '12px',
                 padding: '12px',
-                borderWidth: '2px'
+                borderWidth: '2px',
+                transition: 'all 0.3s ease'
               }}
             >
-              ✕ Clear All Filters
+              <span className="me-2">✕</span>
+              Clear All Filters
+              {getActiveFiltersCount() > 0 && ` (${getActiveFiltersCount()})`}
             </Button>
 
             {/* ✅ ENHANCED: Active Filters Summary */}
@@ -556,49 +569,92 @@ const FindProperty = () => {
               border: '1px solid #cbd5e1'
             }}>
               <div className="d-flex justify-content-between align-items-center mb-3">
-                <span className="fw-bold text-dark">Active Filters</span>
-                <Badge 
-                  bg="primary" 
-                  style={{ 
-                    background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-                    fontSize: '0.8rem',
-                    padding: '6px 12px'
-                  }}
-                >
-                  {Object.values(filters).filter(f => f).length + (searchQuery ? 1 : 0)}
-                </Badge>
+                <span className="fw-bold text-dark d-flex align-items-center">
+                  <span className="me-2">⚡</span>
+                  Active Filters
+                </span>
+                <div style={{
+                  background: getActiveFiltersCount() > 0 ? 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)' : '#6b7280',
+                  color: 'white',
+                  fontSize: '0.8rem',
+                  fontWeight: 600,
+                  padding: '6px 12px',
+                  borderRadius: '20px',
+                  minWidth: '30px',
+                  textAlign: 'center'
+                }}>
+                  {getActiveFiltersCount()}
+                </div>
               </div>
               
               <div className="d-flex flex-wrap gap-2">
                 {searchQuery && (
-                  <Badge bg="info" className="rounded-pill">
-                    Search: {searchQuery.substring(0, 15)}...
-                  </Badge>
+                  <div style={{
+                    background: '#3b82f6',
+                    color: 'white',
+                    padding: '4px 10px',
+                    borderRadius: '20px',
+                    fontSize: '0.8rem',
+                    fontWeight: 500
+                  }}>
+                    🔍 "{searchQuery.substring(0, 15)}{searchQuery.length > 15 ? '...' : ''}"
+                  </div>
                 )}
                 {filters.location && (
-                  <Badge bg="success" className="rounded-pill">
+                  <div style={{
+                    background: '#10b981',
+                    color: 'white',
+                    padding: '4px 10px',
+                    borderRadius: '20px',
+                    fontSize: '0.8rem',
+                    fontWeight: 500
+                  }}>
                     📍 {filters.location}
-                  </Badge>
+                  </div>
                 )}
                 {filters.propertyType && (
-                  <Badge bg="warning" className="rounded-pill">
-                    🏠 {filters.propertyType}
-                  </Badge>
+                  <div style={{
+                    background: '#f59e0b',
+                    color: 'white',
+                    padding: '4px 10px',
+                    borderRadius: '20px',
+                    fontSize: '0.8rem',
+                    fontWeight: 500
+                  }}>
+                    {getCategoryIcon(filters.propertyType)} {filters.propertyType}
+                  </div>
                 )}
                 {filters.priceRange && (
-                  <Badge bg="danger" className="rounded-pill">
-                    💰 ₹{filters.priceRange}
-                  </Badge>
+                  <div style={{
+                    background: '#ef4444',
+                    color: 'white',
+                    padding: '4px 10px',
+                    borderRadius: '20px',
+                    fontSize: '0.8rem',
+                    fontWeight: 500
+                  }}>
+                    💰 ₹{filters.priceRange.replace('-', ' - ')}
+                  </div>
                 )}
                 {filters.bedrooms && (
-                  <Badge bg="secondary" className="rounded-pill">
+                  <div style={{
+                    background: '#8b5cf6',
+                    color: 'white',
+                    padding: '4px 10px',
+                    borderRadius: '20px',
+                    fontSize: '0.8rem',
+                    fontWeight: 500
+                  }}>
                     🛏️ {filters.bedrooms}+ BHK
-                  </Badge>
+                  </div>
                 )}
               </div>
               
-              {Object.values(filters).filter(f => f).length === 0 && !searchQuery && (
-                <p className="text-muted mb-0 small">No active filters</p>
+              {getActiveFiltersCount() === 0 && (
+                <div className="text-center">
+                  <p className="text-muted mb-0 small">No active filters</p>
+                  <small className="text-muted">Use filters above to refine your search</small>
+                </div>
               )}
             </div>
           </div>
@@ -615,11 +671,11 @@ const FindProperty = () => {
                   {filteredProperties.length} Properties Found
                 </h2>
                 <p className="text-muted fs-6 mb-0">
-                  Browse our premium collection • Updated {new Date().toLocaleDateString()}
+                  Browse our premium collection • Updated {new Date().toLocaleDateString()} • All verified listings
                 </p>
               </div>
               
-              {/* ✅ ENHANCED: View Toggle Buttons */}
+              {/* ✅ ENHANCED: View Toggle */}
               <div className="btn-group shadow-sm" role="group">
                 <Button 
                   variant={viewMode === 'grid' ? 'primary' : 'outline-secondary'}
@@ -627,7 +683,9 @@ const FindProperty = () => {
                   style={{
                     borderRadius: '12px 0 0 12px',
                     fontWeight: 600,
-                    padding: '12px 20px'
+                    padding: '12px 20px',
+                    backgroundColor: viewMode === 'grid' ? '#7c3aed' : 'transparent',
+                    borderColor: '#7c3aed'
                   }}
                 >
                   ⊞ Grid View
@@ -639,7 +697,9 @@ const FindProperty = () => {
                   style={{
                     borderRadius: '0 12px 12px 0',
                     fontWeight: 600,
-                    padding: '12px 20px'
+                    padding: '12px 20px',
+                    backgroundColor: viewMode === 'list' ? '#7c3aed' : 'transparent',
+                    borderColor: '#7c3aed'
                   }}
                 >
                   ☰ List View
@@ -647,32 +707,39 @@ const FindProperty = () => {
               </div>
             </div>
 
-            {/* ✅ ENHANCED: Properties Grid/List */}
+            {/* ✅ ENHANCED: Properties Grid using PropertyCard */}
             {filteredProperties.length === 0 ? (
-              <Card className="border-0 shadow-sm text-center p-5" style={{ borderRadius: '20px' }}>
-                <Card.Body>
-                  <div className="mb-4 text-muted" style={{ fontSize: '5rem' }}>
-                    🔍
-                  </div>
-                  <h3 className="fw-bold mb-4" style={{ color: '#1e293b' }}>No Properties Found</h3>
-                  <p className="text-muted fs-6 mb-4" style={{ maxWidth: '500px', margin: '0 auto' }}>
-                    We couldn't find any properties matching your criteria. Try adjusting your filters or search terms.
-                  </p>
-                  <Button 
-                    style={{
-                      background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-                      border: 'none',
-                      fontWeight: 600,
-                      borderRadius: '12px',
-                      padding: '12px 30px'
-                    }}
-                    size="lg"
-                    onClick={clearFilters}
-                  >
-                    Clear All Filters
-                  </Button>
-                </Card.Body>
-              </Card>
+              <div className="text-center py-5" style={{
+                background: 'linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)',
+                borderRadius: '20px',
+                border: '1px solid #e2e8f0',
+                padding: '3rem'
+              }}>
+                <div className="mb-4" style={{ fontSize: '5rem', opacity: 0.6 }}>
+                  {searchQuery ? '🔍' : getActiveFiltersCount() > 0 ? '🎯' : '🏠'}
+                </div>
+                <h3 className="fw-bold mb-4" style={{ color: '#1e293b' }}>
+                  {searchQuery ? 'No Search Results' : getActiveFiltersCount() > 0 ? 'No Matching Properties' : 'No Properties Available'}
+                </h3>
+                <p className="text-muted fs-6 mb-4" style={{ maxWidth: '500px', margin: '0 auto' }}>
+                  {searchQuery ? `We couldn't find any properties matching "${searchQuery}". Try adjusting your search terms.` :
+                   getActiveFiltersCount() > 0 ? 'No properties match your current filters. Try adjusting or clearing some filters.' :
+                   'No properties are currently available. Please check back later.'}
+                </p>
+                <Button 
+                  style={{
+                    background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
+                    border: 'none',
+                    fontWeight: 600,
+                    borderRadius: '12px',
+                    padding: '12px 30px'
+                  }}
+                  size="lg"
+                  onClick={clearFilters}
+                >
+                  {getActiveFiltersCount() > 0 ? 'Clear All Filters' : 'Refresh Properties'}
+                </Button>
+              </div>
             ) : (
               <Row className={viewMode === 'grid' ? 'row-cols-1 row-cols-md-2 row-cols-xl-3 g-4' : 'g-4'}>
                 {filteredProperties.map((property) => {
@@ -680,162 +747,10 @@ const FindProperty = () => {
                   
                   return (
                     <Col key={property._id}>
-                      {/* ✅ ENHANCED: Premium Property Card */}
-                      <Card 
-                        className="h-100 border-0 shadow-sm"
-                        style={{ 
-                          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                          cursor: 'pointer',
-                          borderRadius: '20px',
-                          overflow: 'hidden'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
-                          e.currentTarget.style.boxShadow = '0 20px 40px rgba(124, 58, 237, 0.15)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                          e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.08)';
-                        }}
-                      >
-                        {/* ✅ ENHANCED: Property Image */}
-                        <div className="position-relative">
-                          <img
-                            className="card-img-top"
-                            src={getImageUrl(
-                              (property.images && Array.isArray(property.images) && property.images[0]) || 
-                              property.image
-                            )}
-                            alt={property.title || 'Property Image'}
-                            onError={handleImageError}
-                            style={{ 
-                              height: viewMode === 'grid' ? '280px' : '240px', 
-                              objectFit: 'cover'
-                            }}
-                          />
-                          
-                          {/* Enhanced badges */}
-                          <div className="position-absolute top-0 start-0 p-3">
-                            <Badge 
-                              bg="success" 
-                              className="me-2 fw-semibold shadow-sm" 
-                              style={{ borderRadius: '20px', padding: '8px 16px' }}
-                            >
-                              ✓ Available
-                            </Badge>
-                            <Badge 
-                              bg="primary" 
-                              className="fw-semibold shadow-sm" 
-                              style={{ borderRadius: '20px', padding: '8px 16px' }}
-                            >
-                              🏆 Verified
-                            </Badge>
-                          </div>
-                          
-                          <div className="position-absolute top-0 end-0 p-3">
-                            <Badge 
-                              bg="dark" 
-                              className="fw-semibold shadow-sm"
-                              style={{ 
-                                borderRadius: '20px', 
-                                padding: '8px 16px',
-                                background: 'rgba(0, 0, 0, 0.7)',
-                                backdropFilter: 'blur(10px)'
-                              }}
-                            >
-                              {getCategoryIcon(property.category)} {property.subtype || property.category || 'Property'}
-                            </Badge>
-                          </div>
-
-                          {/* Price overlay */}
-                          <div className="position-absolute bottom-0 start-0 end-0 p-3">
-                            <div style={{
-                              background: 'linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.8) 100%)',
-                              borderRadius: '16px',
-                              padding: '20px 16px 16px 16px',
-                              margin: '-20px -16px -16px -16px'
-                            }}>
-                              <div className="h4 fw-bold text-white mb-1">
-                                {formatPrice(property.price, getSafeRentType(property))}
-                              </div>
-                              <small className="text-light opacity-75">
-                                Available for {getSafeRentTypes(property).join(', ')} rental
-                              </small>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        {/* ✅ ENHANCED: Property Details */}
-                        <Card.Body className="d-flex flex-column p-4">
-                          {/* Location */}
-                          <div className="d-flex align-items-center text-muted mb-3">
-                            <span className="me-2" style={{ 
-                              color: '#7c3aed', 
-                              fontSize: '1.1rem',
-                              filter: 'drop-shadow(0 2px 4px rgba(124, 58, 237, 0.2))'
-                            }}>📍</span>
-                            <span className="fw-medium">
-                              {property.address?.city || 'City'}, {property.address?.state || 'State'}
-                            </span>
-                          </div>
-                          
-                          {/* Property Title */}
-                          <Card.Title className="h4 fw-bold mb-3" style={{ 
-                            lineHeight: '1.3',
-                            color: '#1e293b',
-                            fontSize: '1.4rem'
-                          }}>
-                            {property.title || 'Property Title'}
-                          </Card.Title>
-                          
-                          {/* Property Features */}
-                          <div className="mb-4 flex-grow-1">
-                            <div className="d-flex flex-wrap gap-2">
-                              {renderPropertyDetails(property)}
-                            </div>
-                          </div>
-                          
-                          {/* Action Buttons */}
-                          <div className="mt-auto">
-                            <div className="d-grid gap-2 d-md-flex">
-                              <Button
-                                variant="outline-primary"
-                                className="flex-fill fw-semibold"
-                                style={{
-                                  borderRadius: '12px',
-                                  padding: '12px 20px',
-                                  borderWidth: '2px',
-                                  transition: 'all 0.3s ease'
-                                }}
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  handleViewDetails(property._id);
-                                }}
-                              >
-                                👁️ View Details
-                              </Button>
-                              <Button
-                                className="flex-fill fw-semibold"
-                                style={{ 
-                                  background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-                                  border: 'none',
-                                  borderRadius: '12px',
-                                  padding: '12px 20px',
-                                  transition: 'all 0.3s ease'
-                                }}
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  handleBookNow(property._id);
-                                }}
-                              >
-                                📅 Book Now
-                              </Button>
-                            </div>
-                          </div>
-                        </Card.Body>
-                      </Card>
+                      <PropertyCard 
+                        property={property} 
+                        showOwner={false}
+                      />
                     </Col>
                   );
                 })}
@@ -844,6 +759,31 @@ const FindProperty = () => {
           </Container>
         </div>
       </div>
+
+      {/* ✅ ENHANCED: CSS Animations */}
+      <style>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        .btn-group .btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3) !important;
+        }
+        
+        .form-control:focus, .form-select:focus {
+          border-color: #7c3aed !important;
+          box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1) !important;
+        }
+        
+        @media (max-width: 768px) {
+          .d-flex.justify-content-between {
+            flex-direction: column !important;
+            gap: 1rem !important;
+          }
+        }
+      `}</style>
     </>
   );
 };
