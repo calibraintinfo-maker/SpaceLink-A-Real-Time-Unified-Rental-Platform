@@ -16,24 +16,31 @@ const PropertyDetails = () => {
     fetchProperty();
   }, [id]);
 
+  // ✅ FIXED: Real API integration with axios
   const fetchProperty = async () => {
     try {
       setLoading(true);
       setError('');
       
-      console.log('Fetching property with ID:', id);
-      const response = await api.properties.getById(id);
-      console.log('API Response:', response);
+      console.log('🔍 Fetching property ID:', id);
       
-      if (response && response.data) {
+      // ✅ Using your existing API with axios  
+      const response = await api.properties.getById(id);
+      
+      console.log('📡 Property Response:', response);
+      console.log('📊 Property Data:', response.data);
+      
+      // ✅ Axios puts data in response.data
+      if (response.data) {
         setProperty(response.data);
-        console.log('Property loaded:', response.data);
+        console.log('✅ Property loaded successfully');
       } else {
         setProperty(null);
-        console.log('No property data found');
+        console.log('❌ No property data found');
       }
     } catch (err) {
-      console.error('Error loading property:', err);
+      console.error('❌ Property Fetch Error:', err);
+      console.error('❌ Error Response:', err.response);
       setError(handleApiError(err));
     } finally {
       setLoading(false);
@@ -76,7 +83,7 @@ const PropertyDetails = () => {
     return (
       <Container className="py-5">
         <Alert variant="danger" className="text-center">
-          <Alert.Heading>Error Loading Property</Alert.Heading>
+          <Alert.Heading>⚠️ Error Loading Property</Alert.Heading>
           <p>{error}</p>
           <Button 
             onClick={() => navigate('/find-property')} 
@@ -94,7 +101,7 @@ const PropertyDetails = () => {
     return (
       <Container className="py-5">
         <Alert variant="warning" className="text-center">
-          <Alert.Heading>Property Not Found</Alert.Heading>
+          <Alert.Heading>🏠 Property Not Found</Alert.Heading>
           <p>The property you're looking for doesn't exist or has been removed.</p>
           <Button 
             onClick={() => navigate('/find-property')} 
@@ -344,20 +351,16 @@ const PropertyDetails = () => {
                 <h6 className="mb-3">✨ Property Features</h6>
                 <ul className="list-unstyled">
                   <li className="mb-2">
-                    <i className="bi bi-check-circle text-success me-2"></i>
-                    {property.category} Space
+                    ✓ {property.category} Space
                   </li>
                   <li className="mb-2">
-                    <i className="bi bi-check-circle text-success me-2"></i>
-                    {property.size} Area
+                    ✓ {property.size} Area
                   </li>
                   <li className="mb-2">
-                    <i className="bi bi-check-circle text-success me-2"></i>
-                    {getRentTypeDisplay().replace(/,/g, '/')} Rental
+                    ✓ {getRentTypeDisplay().replace(/,/g, '/')} Rental
                   </li>
                   <li className="mb-2">
-                    <i className="bi bi-check-circle text-success me-2"></i>
-                    Direct Owner Contact
+                    ✓ Direct Owner Contact
                   </li>
                 </ul>
               </div>
