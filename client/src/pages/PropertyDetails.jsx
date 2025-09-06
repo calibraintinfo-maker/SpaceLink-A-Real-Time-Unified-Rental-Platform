@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Button, Badge, Alert, Carousel } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Badge, Alert, Carousel, Spinner } from 'react-bootstrap';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { api, handleApiError, formatPrice, getImageUrl } from '../utils/api';
 
@@ -73,7 +73,8 @@ const PropertyDetails = () => {
       'Commercial': '🏢',
       'Land': '🌾',
       'Parking': '🚗',
-      'Event': '🎉'
+      'Event': '🎉',
+      'Turf': '⚽'
     };
     return icons[category] || '🏠';
   };
