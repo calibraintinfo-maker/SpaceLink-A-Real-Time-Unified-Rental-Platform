@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Form, Spinner, Alert, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Badge, Button, Form, Spinner, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { api, handleApiError } from '../utils/api';
+import { api, handleApiError, formatPrice, getImageUrl } from '../utils/api';
 import PropertyCard from '../components/PropertyCard';
 
 const FindProperty = () => {
@@ -41,9 +41,6 @@ const FindProperty = () => {
   ];
 
   const residentialTypes = ["Villa", "Apartment", "House", "Studio", "Flat"];
-  const commercialTypes = ["Office", "Shop", "Warehouse", "Showroom"];
-  const eventTypes = ["Banquet Hall", "Garden", "Meeting Room", "Conference Hall"];
-  const turfTypes = ["Football Turf", "Cricket Ground", "Multi-Sport", "Tennis Court"]; // ✅ TURF TYPES
 
   useEffect(() => {
     fetchProperties();
@@ -206,6 +203,71 @@ const FindProperty = () => {
       'Turf': '⚽' // ✅ TURF ICON
     };
     return icons[category] || '🏷️';
+  };
+
+  const handleViewDetails = (propertyId) => {
+    console.log('🔍 Navigating to property:', propertyId);
+    navigate(`/property/${propertyId}`);
+  };
+
+  const handleBookNow = (propertyId) => {
+    console.log('📅 Navigating to booking:', propertyId);
+    navigate(`/book/${propertyId}`);
+  };
+
+  const handleImageError = (e) => {
+    e.target.src = 'https://via.placeholder.com/400x240/e2e8f0/64748b?text=Property+Image';
+  };
+
+  const renderPropertyDetails = (property) => {
+    if (!property) return [];
+    
+    const details = [];
+
+    if (property.subtype && residentialTypes.includes(property.subtype)) {
+      if (property.bedrooms > 0) {
+        details.push(
+          <Badge key="bedrooms" bg="light" text="dark" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
+            🛏 {property.bedrooms} BHK
+          </Badge>
+        );
+      }
+      if (property.bathrooms > 0) {
+        details.push(
+          <Badge key="bathrooms" bg="light" text="dark" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
+            🚿 {property.bathrooms} Bath
+          </Badge>
+        );
+      }
+    }
+
+    if (property.size) {
+      details.push(
+        <Badge key="area" bg="light" text="dark" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
+          📐 {property.size}
+        </Badge>
+      );
+    }
+
+    if (property.capacity) {
+      details.push(
+        <Badge key="capacity" bg="info" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
+          👥 {property.capacity}
+        </Badge>
+      );
+    }
+
+    return details;
+  };
+
+  const getSafeRentType = (property) => {
+    if (!property?.rentType) return 'rental';
+    return Array.isArray(property.rentType) ? property.rentType[0] : property.rentType;
+  };
+
+  const getSafeRentTypes = (property) => {
+    if (!property?.rentType) return ['rental'];
+    return Array.isArray(property.rentType) ? property.rentType : [property.rentType];
   };
 
   // Loading state
@@ -675,17 +737,32 @@ const FindProperty = () => {
                 </p>
               </div>
               
-              {/* ✅ ENHANCED: View Toggle */}
-              <div className="btn-group shadow-sm" role="group">
+              {/* ✅ FIXED: Enhanced View Toggle Buttons */}
+              <div className="btn-group shadow-sm" role="group" style={{ borderRadius: '12px', overflow: 'hidden' }}>
                 <Button 
                   variant={viewMode === 'grid' ? 'primary' : 'outline-secondary'}
                   onClick={() => setViewMode('grid')}
                   style={{
-                    borderRadius: '12px 0 0 12px',
                     fontWeight: 600,
-                    padding: '12px 20px',
-                    backgroundColor: viewMode === 'grid' ? '#7c3aed' : 'transparent',
-                    borderColor: '#7c3aed'
+                    padding: '14px 24px',
+                    fontSize: '0.95rem',
+                    backgroundColor: viewMode === 'grid' ? '#7c3aed' : 'white',
+                    borderColor: viewMode === 'grid' ? '#7c3aed' : '#d1d5db',
+                    color: viewMode === 'grid' ? 'white' : '#4b5563',
+                    borderRadius: '12px 0 0 12px',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (viewMode !== 'grid') {
+                      e.target.style.backgroundColor = '#f3f4f6';
+                      e.target.style.color = '#1f2937';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (viewMode !== 'grid') {
+                      e.target.style.backgroundColor = 'white';
+                      e.target.style.color = '#4b5563';
+                    }
                   }}
                 >
                   ⊞ Grid View
@@ -695,11 +772,26 @@ const FindProperty = () => {
                   variant={viewMode === 'list' ? 'primary' : 'outline-secondary'}
                   onClick={() => setViewMode('list')}
                   style={{
-                    borderRadius: '0 12px 12px 0',
                     fontWeight: 600,
-                    padding: '12px 20px',
-                    backgroundColor: viewMode === 'list' ? '#7c3aed' : 'transparent',
-                    borderColor: '#7c3aed'
+                    padding: '14px 24px',
+                    fontSize: '0.95rem',
+                    backgroundColor: viewMode === 'list' ? '#7c3aed' : 'white',
+                    borderColor: viewMode === 'list' ? '#7c3aed' : '#d1d5db',
+                    color: viewMode === 'list' ? 'white' : '#4b5563',
+                    borderRadius: '0 12px 12px 0',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (viewMode !== 'list') {
+                      e.target.style.backgroundColor = '#f3f4f6';
+                      e.target.style.color = '#1f2937';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (viewMode !== 'list') {
+                      e.target.style.backgroundColor = 'white';
+                      e.target.style.color = '#4b5563';
+                    }
                   }}
                 >
                   ☰ List View
@@ -707,7 +799,7 @@ const FindProperty = () => {
               </div>
             </div>
 
-            {/* ✅ ENHANCED: Properties Grid using PropertyCard */}
+            {/* ✅ ENHANCED: Properties Grid/List with Better List Design */}
             {filteredProperties.length === 0 ? (
               <div className="text-center py-5" style={{
                 background: 'linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)',
@@ -741,16 +833,155 @@ const FindProperty = () => {
                 </Button>
               </div>
             ) : (
-              <Row className={viewMode === 'grid' ? 'row-cols-1 row-cols-md-2 row-cols-xl-3 g-4' : 'g-4'}>
+              <Row className={viewMode === 'grid' ? 'row-cols-1 row-cols-md-2 row-cols-xl-3 g-4' : 'g-3'}>
                 {filteredProperties.map((property) => {
                   if (!property || !property._id) return null;
                   
                   return (
-                    <Col key={property._id}>
-                      <PropertyCard 
-                        property={property} 
-                        showOwner={false}
-                      />
+                    <Col key={property._id} className={viewMode === 'list' ? 'col-12' : ''}>
+                      {viewMode === 'list' ? (
+                        /* ✅ ENHANCED: Larger List View Design */
+                        <Card 
+                          className="border-0 shadow-sm"
+                          style={{ 
+                            borderRadius: '16px',
+                            transition: 'all 0.3s ease',
+                            cursor: 'pointer',
+                            minHeight: '200px'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.transform = 'translateY(-4px)';
+                            e.currentTarget.style.boxShadow = '0 12px 30px rgba(124, 58, 237, 0.15)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = 'translateY(0)';
+                            e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.08)';
+                          }}
+                        >
+                          <Row className="g-0 align-items-center">
+                            {/* Property Image - List View */}
+                            <Col md={4}>
+                              <div style={{ position: 'relative', height: '200px', overflow: 'hidden' }}>
+                                <img
+                                  src={getImageUrl(
+                                    (property.images && Array.isArray(property.images) && property.images[0]) || 
+                                    property.image
+                                  )}
+                                  alt={property.title || 'Property'}
+                                  onError={handleImageError}
+                                  style={{ 
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover',
+                                    borderRadius: '16px 0 0 16px'
+                                  }}
+                                />
+                                
+                                {/* Badges - List View */}
+                                <div className="position-absolute top-0 start-0 p-3">
+                                  <Badge bg="success" className="me-2 fw-semibold shadow-sm" 
+                                         style={{ borderRadius: '20px', padding: '6px 12px', fontSize: '0.8rem' }}>
+                                    ✓ Available
+                                  </Badge>
+                                  <Badge bg="primary" className="fw-semibold shadow-sm" 
+                                         style={{ borderRadius: '20px', padding: '6px 12px', fontSize: '0.8rem' }}>
+                                    🏆 Verified
+                                  </Badge>
+                                </div>
+                              </div>
+                            </Col>
+                            
+                            {/* Property Details - List View */}
+                            <Col md={8}>
+                              <Card.Body className="p-4" style={{ minHeight: '200px', display: 'flex', flexDirection: 'column' }}>
+                                {/* Location - List View */}
+                                <div className="d-flex align-items-center text-muted mb-3">
+                                  <span className="me-2" style={{ color: '#7c3aed', fontSize: '1.2rem' }}>📍</span>
+                                  <span className="fw-medium" style={{ fontSize: '1rem' }}>
+                                    {property.address?.city || 'City'}, {property.address?.state || 'State'}
+                                  </span>
+                                </div>
+                                
+                                {/* Title - List View */}
+                                <Card.Title className="h3 fw-bold mb-3" style={{ 
+                                  color: '#1e293b',
+                                  fontSize: '1.6rem',
+                                  lineHeight: '1.3'
+                                }}>
+                                  {property.title || 'Property Title'}
+                                </Card.Title>
+                                
+                                {/* Description - List View */}
+                                <p className="text-muted mb-3" style={{ 
+                                  fontSize: '1rem',
+                                  lineHeight: '1.6',
+                                  flexGrow: 1
+                                }}>
+                                  {property.description ? 
+                                    property.description.substring(0, 150) + '...' : 
+                                    'Premium property with modern amenities and excellent location.'
+                                  }
+                                </p>
+                                
+                                {/* Features - List View */}
+                                <div className="mb-3">
+                                  <div className="d-flex flex-wrap gap-2">
+                                    {renderPropertyDetails(property)}
+                                  </div>
+                                </div>
+                                
+                                {/* Price and Buttons - List View */}
+                                <div className="d-flex justify-content-between align-items-center mt-auto">
+                                  <div>
+                                    <div className="h3 fw-bold text-success mb-1" style={{ fontSize: '1.8rem' }}>
+                                      {formatPrice(property.price, getSafeRentType(property))}
+                                    </div>
+                                    <small className="text-muted fw-medium">
+                                      Available for {getSafeRentTypes(property).join(', ')} rental
+                                    </small>
+                                  </div>
+                                  
+                                  {/* Action Buttons - List View */}
+                                  <div className="d-flex gap-3">
+                                    <Button
+                                      variant="outline-primary"
+                                      style={{
+                                        borderRadius: '12px',
+                                        padding: '12px 20px',
+                                        borderWidth: '2px',
+                                        fontWeight: 600,
+                                        fontSize: '0.9rem'
+                                      }}
+                                      onClick={() => handleViewDetails(property._id)}
+                                    >
+                                      👁️ View Details
+                                    </Button>
+                                    <Button
+                                      style={{ 
+                                        background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
+                                        border: 'none',
+                                        borderRadius: '12px',
+                                        padding: '12px 20px',
+                                        fontWeight: 600,
+                                        fontSize: '0.9rem'
+                                      }}
+                                      onClick={() => handleBookNow(property._id)}
+                                    >
+                                      📅 Book Now
+                                    </Button>
+                                  </div>
+                                </div>
+                              </Card.Body>
+                            </Col>
+                          </Row>
+                        </Card>
+                      ) : (
+                        /* ✅ EXISTING: Grid View (PropertyCard component) */
+                        <PropertyCard 
+                          property={property} 
+                          showOwner={false}
+                        />
+                      )}
                     </Col>
                   );
                 })}
@@ -760,16 +991,15 @@ const FindProperty = () => {
         </div>
       </div>
 
-      {/* ✅ ENHANCED: CSS Animations */}
+      {/* ✅ ENHANCED: CSS for improved styling */}
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
           50% { transform: translateY(-20px) rotate(5deg); }
         }
         
-        .btn-group .btn:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3) !important;
+        .btn-group .btn:focus {
+          box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.3) !important;
         }
         
         .form-control:focus, .form-select:focus {
@@ -778,9 +1008,23 @@ const FindProperty = () => {
         }
         
         @media (max-width: 768px) {
-          .d-flex.justify-content-between {
+          .btn-group {
             flex-direction: column !important;
-            gap: 1rem !important;
+            width: 100% !important;
+          }
+          
+          .btn-group .btn {
+            border-radius: 8px !important;
+            margin-bottom: 4px;
+          }
+          
+          .list-view-card .row {
+            flex-direction: column !important;
+          }
+          
+          .list-view-card img {
+            border-radius: 16px 16px 0 0 !important;
+            height: 200px !important;
           }
         }
       `}</style>
