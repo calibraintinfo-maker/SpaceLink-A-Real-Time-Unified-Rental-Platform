@@ -422,6 +422,7 @@ const FindProperty = () => {
                   fontSize: '1.3rem',
                   fontFamily: "'Inter', system-ui, sans-serif",
                   letterSpacing: '-0.01em'
+                  color: 'white'
                 }} className="d-flex align-items-center">
                   <span className="me-2">🎯</span>
                   Smart Property Filters
