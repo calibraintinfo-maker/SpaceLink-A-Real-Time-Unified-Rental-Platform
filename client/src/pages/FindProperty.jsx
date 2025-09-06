@@ -37,7 +37,7 @@ const FindProperty = () => {
     "Event", 
     "Parking", 
     "Land",
-    "Turf" // ✅ ADDED TURF
+    "Turf"
   ];
 
   const residentialTypes = ["Villa", "Apartment", "House", "Studio", "Flat"];
@@ -46,7 +46,6 @@ const FindProperty = () => {
     fetchProperties();
   }, []);
 
-  // ✅ ROBUST: API fetching with all edge cases
   const fetchProperties = async () => {
     try {
       setLoading(true);
@@ -55,7 +54,6 @@ const FindProperty = () => {
       console.log('🔍 Fetching properties...');
       const response = await api.properties.getAll();
       
-      // Handle multiple response structures
       let propertiesArray = [];
       
       if (Array.isArray(response)) {
@@ -65,7 +63,6 @@ const FindProperty = () => {
       } else if (Array.isArray(response?.data?.properties)) {
         propertiesArray = response.data.properties;
       } else if (response?.data && typeof response.data === 'object') {
-        // Search for any array in the response
         const dataObj = response.data;
         for (const key in dataObj) {
           if (Array.isArray(dataObj[key])) {
@@ -87,7 +84,6 @@ const FindProperty = () => {
     }
   };
 
-  // ✅ ENHANCED: Smart filtering with edge cases
   useEffect(() => {
     if (!Array.isArray(properties)) {
       setFilteredProperties([]);
@@ -96,7 +92,6 @@ const FindProperty = () => {
 
     let filtered = properties;
 
-    // Search filter
     if (searchQuery.trim()) {
       filtered = filtered.filter(property => {
         if (!property) return false;
@@ -117,7 +112,6 @@ const FindProperty = () => {
       });
     }
 
-    // Location filter
     if (filters.location && filters.location !== "All Locations") {
       filtered = filtered.filter(property => {
         if (!property?.address) return false;
@@ -134,18 +128,14 @@ const FindProperty = () => {
       });
     }
 
-    // Property type filter
     if (filters.propertyType && filters.propertyType !== "All Categories") {
       filtered = filtered.filter(property => {
         if (!property) return false;
-        
-        // Match category or subtype
         return property.category === filters.propertyType ||
                property.subtype === filters.propertyType;
       });
     }
 
-    // Price range filter
     if (filters.priceRange) {
       const [min, max] = filters.priceRange.split('-').map(Number);
       filtered = filtered.filter(property => {
@@ -155,17 +145,15 @@ const FindProperty = () => {
       });
     }
 
-    // Bedrooms filter (only for residential)
     if (filters.bedrooms) {
       const minBedrooms = parseInt(filters.bedrooms);
       filtered = filtered.filter(property => {
         if (!property?.subtype) return false;
         
-        // Only apply to residential properties
         if (residentialTypes.includes(property.subtype)) {
           return property.bedrooms >= minBedrooms;
         }
-        return true; // Don't filter non-residential
+        return true;
       });
     }
 
@@ -181,7 +169,6 @@ const FindProperty = () => {
     setSearchQuery('');
   };
 
-  // ✅ ENHANCED: Smart bedroom filter visibility
   const shouldShowBedroomFilter = () => {
     if (!filters.propertyType || filters.propertyType === "All Categories") return false;
     return filters.propertyType === 'Property Rentals' || 
@@ -200,18 +187,16 @@ const FindProperty = () => {
       'Land': '🌾',
       'Parking': '🚗',
       'Event': '🎉',
-      'Turf': '⚽' // ✅ TURF ICON
+      'Turf': '⚽'
     };
     return icons[category] || '🏷️';
   };
 
   const handleViewDetails = (propertyId) => {
-    console.log('🔍 Navigating to property:', propertyId);
     navigate(`/property/${propertyId}`);
   };
 
   const handleBookNow = (propertyId) => {
-    console.log('📅 Navigating to booking:', propertyId);
     navigate(`/book/${propertyId}`);
   };
 
@@ -329,7 +314,7 @@ const FindProperty = () => {
 
   return (
     <>
-      {/* ✅ ENHANCED: Hero Section */}
+      {/* Hero Section */}
       <section 
         className="py-5 text-white"
         style={{
@@ -341,7 +326,6 @@ const FindProperty = () => {
           overflow: 'hidden'
         }}
       >
-        {/* Animated background elements */}
         <div style={{
           position: 'absolute',
           top: '10%',
@@ -399,7 +383,7 @@ const FindProperty = () => {
       {/* Main Layout */}
       <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#ffffff' }}>
         
-        {/* ✅ FIXED: DIFFERENT COLOR FOR SMART PROPERTY FILTERS */}
+        {/* FIXED: DIFFERENT COLOR FOR SMART PROPERTY FILTERS */}
         <div style={{
           width: '400px',
           minHeight: '100vh',
@@ -411,9 +395,9 @@ const FindProperty = () => {
           boxShadow: '4px 0 20px rgba(0, 0, 0, 0.08)'
         }}>
           
-          {/* ✅ FIXED: Dashboard Header with Different Gradient */}
+          {/* Dashboard Header with Different Gradient */}
           <div className="p-4 border-bottom" style={{
-            background: 'linear-gradient(135deg, #6b46c1 0%, #805ad5 100%)', // ✅ CHANGED TO DIFFERENT PURPLE
+            background: 'linear-gradient(135deg, #6b46c1 0%, #805ad5 100%)',
             color: 'white'
           }}>
             <div className="d-flex align-items-center justify-content-between">
@@ -439,7 +423,7 @@ const FindProperty = () => {
 
           <div className="p-4">
             
-            {/* ✅ ENHANCED: Search Input */}
+            {/* Search Input */}
             <div className="mb-4">
               <Form.Label className="fw-semibold mb-3 d-flex align-items-center">
                 <span className="me-2" style={{ fontSize: '1.1rem' }}>🔍</span>
@@ -473,7 +457,7 @@ const FindProperty = () => {
               )}
             </div>
 
-            {/* ✅ ENHANCED: Location Filter */}
+            {/* Location Filter */}
             <div className="mb-4">
               <Form.Label className="fw-semibold mb-3 d-flex align-items-center">
                 <span className="me-2" style={{ fontSize: '1.1rem' }}>📍</span>
@@ -501,7 +485,7 @@ const FindProperty = () => {
               </Form.Select>
             </div>
 
-            {/* ✅ ENHANCED: Property Type Filter with Icons */}
+            {/* Property Type Filter */}
             <div className="mb-4">
               <Form.Label className="fw-semibold mb-3 d-flex align-items-center">
                 <span className="me-2" style={{ fontSize: '1.1rem' }}>🏠</span>
@@ -528,7 +512,6 @@ const FindProperty = () => {
                 ))}
               </Form.Select>
               
-              {/* Show subcategory info */}
               {filters.propertyType && filters.propertyType !== "All Categories" && (
                 <div className="mt-2 p-2 bg-light rounded" style={{ fontSize: '0.8rem' }}>
                   <span className="text-muted">
@@ -543,7 +526,7 @@ const FindProperty = () => {
               )}
             </div>
 
-            {/* ✅ ENHANCED: Price Range Filter */}
+            {/* Price Range Filter */}
             <div className="mb-4">
               <Form.Label className="fw-semibold mb-3 d-flex align-items-center">
                 <span className="me-2" style={{ fontSize: '1.1rem' }}>💰</span>
@@ -574,7 +557,7 @@ const FindProperty = () => {
               </Form.Select>
             </div>
 
-            {/* ✅ ENHANCED: Conditional Bedrooms Filter */}
+            {/* Conditional Bedrooms Filter */}
             {shouldShowBedroomFilter() && (
               <div className="mb-4">
                 <Form.Label className="fw-semibold mb-3 d-flex align-items-center">
@@ -605,7 +588,7 @@ const FindProperty = () => {
               </div>
             )}
 
-            {/* ✅ ENHANCED: Clear Filters Button */}
+            {/* Clear Filters Button */}
             <Button 
               variant="outline-secondary"
               className="w-100 mb-4 fw-semibold"
@@ -623,7 +606,7 @@ const FindProperty = () => {
               {getActiveFiltersCount() > 0 && ` (${getActiveFiltersCount()})`}
             </Button>
 
-            {/* ✅ ENHANCED: Active Filters Summary */}
+            {/* Active Filters Summary */}
             <div style={{
               background: 'linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%)',
               padding: '20px',
@@ -722,11 +705,11 @@ const FindProperty = () => {
           </div>
         </div>
 
-        {/* ✅ ENHANCED: Main Content Area */}
+        {/* Main Content Area */}
         <div style={{ flex: 1, backgroundColor: '#ffffff' }}>
           <Container fluid className="py-5 px-5">
             
-            {/* ✅ ENHANCED: Results Header */}
+            {/* Results Header */}
             <div className="d-flex justify-content-between align-items-center mb-5">
               <div>
                 <h2 className="fw-bold mb-2" style={{ color: '#1e293b', fontSize: '2.2rem' }}>
@@ -737,7 +720,7 @@ const FindProperty = () => {
                 </p>
               </div>
               
-              {/* ✅ FIXED: Enhanced View Toggle Buttons */}
+              {/* Enhanced View Toggle Buttons */}
               <div className="btn-group shadow-sm" role="group" style={{ borderRadius: '12px', overflow: 'hidden' }}>
                 <Button 
                   variant={viewMode === 'grid' ? 'primary' : 'outline-secondary'}
@@ -799,7 +782,7 @@ const FindProperty = () => {
               </div>
             </div>
 
-            {/* ✅ ENHANCED: Properties Grid/List with Better List Design */}
+            {/* Properties Grid/List */}
             {filteredProperties.length === 0 ? (
               <div className="text-center py-5" style={{
                 background: 'linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)',
@@ -840,7 +823,7 @@ const FindProperty = () => {
                   return (
                     <Col key={property._id} className={viewMode === 'list' ? 'col-12' : ''}>
                       {viewMode === 'list' ? (
-                        /* ✅ ENHANCED: Improved List View Design with Better Contrast */}
+                        /* ✅ FIXED: Improved List View Design with Better Contrast (SYNTAX ERROR FIXED) */
                         <Card 
                           className="border-0 shadow-sm"
                           style={{ 
@@ -848,7 +831,7 @@ const FindProperty = () => {
                             transition: 'all 0.3s ease',
                             cursor: 'pointer',
                             minHeight: '220px',
-                            backgroundColor: '#ffffff', // ✅ FIXED: Better contrast
+                            backgroundColor: '#ffffff',
                             border: '1px solid #e5e7eb'
                           }}
                           onMouseEnter={(e) => {
@@ -861,7 +844,6 @@ const FindProperty = () => {
                           }}
                         >
                           <Row className="g-0 align-items-center">
-                            {/* Property Image - List View */}
                             <Col md={4}>
                               <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
                                 <img
@@ -879,7 +861,6 @@ const FindProperty = () => {
                                   }}
                                 />
                                 
-                                {/* Badges - List View */}
                                 <div className="position-absolute top-0 start-0 p-3">
                                   <Badge bg="success" className="me-2 fw-semibold shadow-sm" 
                                          style={{ borderRadius: '20px', padding: '8px 14px', fontSize: '0.85rem' }}>
@@ -893,32 +874,28 @@ const FindProperty = () => {
                               </div>
                             </Col>
                             
-                            {/* Property Details - List View */}
                             <Col md={8}>
                               <Card.Body className="p-4" style={{ minHeight: '220px', display: 'flex', flexDirection: 'column' }}>
-                                {/* Location - List View */}
                                 <div className="d-flex align-items-center mb-3" style={{ color: '#6b7280' }}>
                                   <span className="me-2" style={{ color: '#7c3aed', fontSize: '1.3rem' }}>📍</span>
-                                  <span className="fw-medium" style={{ fontSize: '1.1rem', color: '#374151' }}> {/* ✅ FIXED: Better text contrast */}
+                                  <span className="fw-medium" style={{ fontSize: '1.1rem', color: '#374151' }}>
                                     {property.address?.city || 'City'}, {property.address?.state || 'State'}
                                   </span>
                                 </div>
                                 
-                                {/* Title - List View */}
                                 <Card.Title className="h3 fw-bold mb-3" style={{ 
-                                  color: '#1f2937', // ✅ FIXED: Darker text for better readability
+                                  color: '#1f2937',
                                   fontSize: '1.8rem',
                                   lineHeight: '1.3'
                                 }}>
                                   {property.title || 'Property Title'}
                                 </Card.Title>
                                 
-                                {/* Description - List View */}
                                 <p className="mb-3" style={{ 
                                   fontSize: '1.1rem',
                                   lineHeight: '1.6',
                                   flexGrow: 1,
-                                  color: '#4b5563' // ✅ FIXED: Better text contrast
+                                  color: '#4b5563'
                                 }}>
                                   {property.description ? 
                                     property.description.substring(0, 150) + '...' : 
@@ -926,14 +903,12 @@ const FindProperty = () => {
                                   }
                                 </p>
                                 
-                                {/* Features - List View */}
                                 <div className="mb-3">
                                   <div className="d-flex flex-wrap gap-2">
                                     {renderPropertyDetails(property)}
                                   </div>
                                 </div>
                                 
-                                {/* Price and Buttons - List View */}
                                 <div className="d-flex justify-content-between align-items-center mt-auto">
                                   <div>
                                     <div className="h3 fw-bold text-success mb-1" style={{ fontSize: '1.9rem' }}>
@@ -944,7 +919,6 @@ const FindProperty = () => {
                                     </small>
                                   </div>
                                   
-                                  {/* ✅ FIXED: Action Buttons - Removed Eye Icon */}
                                   <div className="d-flex gap-3">
                                     <Button
                                       variant="outline-primary"
@@ -959,7 +933,7 @@ const FindProperty = () => {
                                       }}
                                       onClick={() => handleViewDetails(property._id)}
                                     >
-                                      View Details {/* ✅ REMOVED EYE ICON */}
+                                      View Details
                                     </Button>
                                     <Button
                                       style={{ 
@@ -981,7 +955,6 @@ const FindProperty = () => {
                           </Row>
                         </Card>
                       ) : (
-                        /* ✅ EXISTING: Grid View (PropertyCard component) */
                         <PropertyCard 
                           property={property} 
                           showOwner={false}
@@ -996,7 +969,7 @@ const FindProperty = () => {
         </div>
       </div>
 
-      {/* ✅ ENHANCED: CSS for improved styling */}
+      {/* CSS for improved styling */}
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
