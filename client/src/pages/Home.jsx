@@ -1,21 +1,80 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { api, formatPrice, getImageUrl } from '../utils/api';
 
 const Home = () => {
   const { isAuthenticated } = useAuth();
-  
+  const [featuredProperties, setFeaturedProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // ✅ FIXED: Fetch real featured properties from API
+  useEffect(() => {
+    fetchFeaturedProperties();
+  }, []);
+
+  const fetchFeaturedProperties = async () => {
+    try {
+      setLoading(true);
+      
+      // Try to get featured properties first
+      let response;
+      try {
+        response = await api.properties.getFeatured();
+      } catch (error) {
+        // Fallback to getting all properties and take first 3
+        console.log('Featured endpoint not available, using regular properties');
+        response = await api.properties.getAll();
+      }
+      
+      console.log('Featured Properties Response:', response);
+      
+      // Handle different response structures
+      let propertiesArray = [];
+      if (Array.isArray(response)) {
+        propertiesArray = response;
+      } else if (Array.isArray(response?.data)) {
+        propertiesArray = response.data;
+      } else if (response?.data && typeof response.data === 'object') {
+        // Look for any array property
+        const dataObj = response.data;
+        for (const key in dataObj) {
+          if (Array.isArray(dataObj[key])) {
+            propertiesArray = dataObj[key];
+            break;
+          }
+        }
+      }
+      
+      // Take only first 3 for featured section
+      const featured = propertiesArray.slice(0, 3);
+      setFeaturedProperties(featured);
+      console.log('Featured properties loaded:', featured);
+      
+    } catch (error) {
+      console.error('Error fetching featured properties:', error);
+      setFeaturedProperties([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getSafeRentType = (property) => {
+    if (!property?.rentType) return 'rental';
+    return Array.isArray(property.rentType) ? property.rentType[0] : property.rentType;
+  };
+
   return (
     <>
-      {/* HERO SECTION - CONTENT MOVED LEFT, BACKGROUND INCREASED */}
+      {/* HERO SECTION */}
       <section style={{
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        minHeight: '90vh', // Increased from 80vh
+        minHeight: '90vh',
         display: 'flex',
         alignItems: 'center',
         paddingTop: '60px',
-        paddingBottom: '60px', // Added bottom padding
+        paddingBottom: '60px',
         position: 'relative',
         overflow: 'hidden'
       }}>
@@ -32,12 +91,11 @@ const Home = () => {
         }}></div>
         <Container>
           <Row className="align-items-center">
-            {/* LEFT CONTENT - MOVED MORE TO LEFT */}
-            <Col lg={7} md={7} className="mb-4 mb-lg-0"> {/* Increased from lg={6} */}
+            <Col lg={7} md={7} className="mb-4 mb-lg-0">
               <div style={{ 
                 maxWidth: '100%', 
-                paddingLeft: '0rem', // Reduced left padding
-                paddingRight: '3rem' // Increased right padding
+                paddingLeft: '0rem',
+                paddingRight: '3rem'
               }}>
                 <div style={{
                   display: 'inline-block',
@@ -59,13 +117,13 @@ const Home = () => {
                 </div>
                 
                 <h1 style={{
-                  fontSize: '4rem', // Slightly increased
+                  fontSize: '4rem',
                   fontWeight: 900,
                   lineHeight: '1.1',
                   marginBottom: '24px',
                   letterSpacing: '-0.02em',
                   color: 'white',
-                  maxWidth: '95%' // Increased width
+                  maxWidth: '95%'
                 }}>
                   Rent Anything,
                   <br />
@@ -83,7 +141,7 @@ const Home = () => {
                   color: 'rgba(255, 255, 255, 0.9)',
                   lineHeight: '1.6',
                   marginBottom: '32px',
-                  maxWidth: '90%' // Increased width
+                  maxWidth: '90%'
                 }}>
                   From properties to vehicles, venues to parking spaces - SpaceLink connects you with 
                   <strong style={{ color: 'white' }}> exceptional rentals worldwide</strong>. 
@@ -96,7 +154,7 @@ const Home = () => {
                     style={{
                       background: 'rgba(255, 255, 255, 0.95)',
                       color: '#667eea',
-                      padding: '16px 32px', // Increased padding
+                      padding: '16px 32px',
                       borderRadius: '12px',
                       fontWeight: 700,
                       fontSize: '1.1rem',
@@ -121,14 +179,13 @@ const Home = () => {
                   </Link>
                 </div>
                 
-                {/* STATS - ALIGNED LEFT */}
                 <div style={{
                   display: 'flex',
-                  justifyContent: 'flex-start', // Changed from center to flex-start
-                  gap: '60px', // Increased gap
+                  justifyContent: 'flex-start',
+                  gap: '60px',
                   paddingTop: '30px',
                   borderTop: '1px solid rgba(255, 255, 255, 0.2)',
-                  textAlign: 'left', // Changed from center to left
+                  textAlign: 'left',
                   maxWidth: '500px'
                 }}>
                   {[
@@ -138,7 +195,7 @@ const Home = () => {
                   ].map((stat, index) => (
                     <div key={index}>
                       <div style={{
-                        fontSize: '2.2rem', // Increased size
+                        fontSize: '2.2rem',
                         fontWeight: 900,
                         color: 'white',
                         marginBottom: '8px',
@@ -157,13 +214,12 @@ const Home = () => {
               </div>
             </Col>
             
-            {/* RIGHT IMAGE - ADJUSTED SIZE */}
-            <Col lg={5} md={5}> {/* Reduced from lg={6} */}
+            <Col lg={5} md={5}>
               <div style={{
                 position: 'relative',
                 maxWidth: '100%',
                 margin: '0 auto',
-                paddingLeft: '0rem' // Removed left padding
+                paddingLeft: '0rem'
               }}>
                 <div style={{
                   position: 'relative',
@@ -240,9 +296,9 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* CATEGORIES SECTION - FIXED CARD HEIGHTS */}
+      {/* CATEGORIES SECTION */}
       <section style={{
-        padding: '70px 0', // Increased from 50px to 70px
+        padding: '70px 0',
         background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)',
         position: 'relative'
       }}>
@@ -283,7 +339,7 @@ const Home = () => {
               RENTAL CATEGORIES
             </div>
             <h2 style={{
-              fontSize: '2.8rem', // Slightly increased
+              fontSize: '2.8rem',
               fontWeight: 900,
               color: '#1e293b',
               marginBottom: '16px',
@@ -335,13 +391,13 @@ const Home = () => {
                 <div style={{
                   background: 'white',
                   borderRadius: '16px',
-                  padding: '32px 24px', // Increased padding
+                  padding: '32px 24px',
                   textAlign: 'center',
                   boxShadow: '0 6px 20px rgba(0, 0, 0, 0.08)',
                   border: '1px solid #f1f5f9',
                   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                   cursor: 'pointer',
-                  height: '320px', // ✅ FIXED HEIGHT FOR ALL CARDS
+                  height: '320px',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
@@ -393,7 +449,7 @@ const Home = () => {
                       fontSize: '0.95rem',
                       lineHeight: '1.5',
                       marginBottom: '0',
-                      minHeight: '60px', // ✅ MINIMUM HEIGHT TO ACCOMMODATE TEXT
+                      minHeight: '60px',
                       display: 'flex',
                       alignItems: 'center'
                     }}>{category.desc}</p>
@@ -443,7 +499,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* HOW IT WORKS - COMPACT */}
+      {/* HOW IT WORKS */}
       <section style={{
         padding: '60px 0',
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -563,13 +619,13 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* FEATURED PROPERTIES - IMPROVED SPACING, LESS CONGESTED */}
+      {/* ✅ FIXED: FEATURED PROPERTIES - REAL DATA + CORRECT ROUTING */}
       <section style={{
-        padding: '80px 0', // Increased from 50px to 80px
+        padding: '80px 0',
         background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)'
       }}>
         <Container>
-          <div style={{ textAlign: 'center', marginBottom: '60px' }}> {/* Increased margin */}
+          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
             <div style={{
               display: 'inline-block',
               background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -600,228 +656,234 @@ const Home = () => {
             </p>
           </div>
           
-          <Row className="justify-content-center">
-            {[
-              {
-                image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-                title: 'Modern Villa',
-                location: 'Namakkal, Tamil Nadu',
-                price: '₹1,234/month',
-                features: ['4 BHK', '2,500 sq ft'],
-                type: 'For Rent',
-                gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-              },
-              {
-                image: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-                title: 'Premium Land',
-                location: 'Namakkal, Tamil Nadu',
-                price: '₹1,22,345/year',
-                features: ['Agricultural', '10,000 sq ft'],
-                type: 'For Sale',
-                gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
-              },
-              {
-                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-                title: 'Luxury Apartment',
-                location: 'Chennai, Tamil Nadu',
-                price: '₹2,500/month',
-                features: ['3 BHK', '1,800 sq ft'],
-                type: 'For Rent',
-                gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
-              }
-            ].map((property, index) => (
-              <Col lg={4} md={6} className="mb-5" key={index}>
-                <div style={{
-                  background: 'white',
-                  borderRadius: '16px',
-                  overflow: 'hidden',
-                  boxShadow: '0 8px 25px rgba(0, 0, 0, 0.08)',
-                  border: '1px solid #f1f5f9',
-                  transition: 'all 0.3s ease',
-                  minHeight: '520px', // Increased height for better spacing
-                  display: 'flex',
-                  flexDirection: 'column'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-6px)';
-                  e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.12)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.08)';
-                }}>
-                  <div style={{ position: 'relative', height: '220px', overflow: 'hidden', flexShrink: 0 }}>
-                    <img 
-                      src={property.image}
-                      alt={property.title}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover'
-                      }}
-                    />
+          {loading ? (
+            <div className="text-center py-5">
+              <div className="spinner-border" role="status" style={{ color: '#7c3aed' }}>
+                <span className="visually-hidden">Loading...</span>
+              </div>
+              <p className="mt-3">Loading featured properties...</p>
+            </div>
+          ) : (
+            <Row className="justify-content-center">
+              {featuredProperties.length > 0 ? (
+                featuredProperties.map((property, index) => (
+                  <Col lg={4} md={6} className="mb-5" key={property._id || index}>
                     <div style={{
-                      position: 'absolute',
-                      top: '16px',
-                      left: '16px',
-                      background: property.gradient,
-                      color: 'white',
-                      padding: '6px 14px',
-                      borderRadius: '12px',
-                      fontSize: '0.75rem',
-                      fontWeight: 700,
-                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
+                      background: 'white',
+                      borderRadius: '16px',
+                      overflow: 'hidden',
+                      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.08)',
+                      border: '1px solid #f1f5f9',
+                      transition: 'all 0.3s ease',
+                      minHeight: '520px',
+                      display: 'flex',
+                      flexDirection: 'column'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-6px)';
+                      e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.12)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.08)';
                     }}>
-                      {property.type}
-                    </div>
-                  </div>
-                  
-                  {/* IMPROVED CONTENT SPACING */}
-                  <div style={{ 
-                    padding: '32px', // Increased padding from 20px to 32px
-                    flex: 1, 
-                    display: 'flex', 
-                    flexDirection: 'column',
-                    justifyContent: 'space-between'
-                  }}>
-                    <div>
-                      <div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '8px', // Increased gap
-                        color: '#64748b',
-                        fontSize: '0.9rem', // Increased font size
-                        marginBottom: '16px' // Increased margin
-                      }}>
-                        <span>📍</span>
-                        {property.location}
+                      <div style={{ position: 'relative', height: '220px', overflow: 'hidden', flexShrink: 0 }}>
+                        <img 
+                          src={getImageUrl(
+                            (property.images && Array.isArray(property.images) && property.images[0]) || 
+                            property.image || 
+                            'https://via.placeholder.com/400x240?text=Property+Image'
+                          )}
+                          alt={property.title || 'Property'}
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover'
+                          }}
+                          onError={(e) => {
+                            e.target.src = 'https://via.placeholder.com/400x240?text=Property+Image';
+                          }}
+                        />
+                        <div style={{
+                          position: 'absolute',
+                          top: '16px',
+                          left: '16px',
+                          background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                          color: 'white',
+                          padding: '6px 14px',
+                          borderRadius: '12px',
+                          fontSize: '0.75rem',
+                          fontWeight: 700,
+                          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
+                        }}>
+                          For Rent
+                        </div>
                       </div>
                       
-                      <h3 style={{
-                        fontSize: '1.5rem', // Increased from 1.2rem
-                        fontWeight: 800,
-                        color: '#1e293b',
-                        marginBottom: '16px' // Increased margin
-                      }}>{property.title}</h3>
-                      
-                      <p style={{
-                        color: '#64748b',
-                        fontSize: '1rem', // Increased from 0.85rem
-                        lineHeight: '1.6', // Increased line height
-                        marginBottom: '20px' // Increased margin
-                      }}>Spacious luxury {property.title.toLowerCase()} with premium amenities and modern design</p>
-                      
-                      <div style={{
-                        display: 'flex',
-                        gap: '20px', // Increased gap
-                        marginBottom: '24px', // Increased margin
-                        fontSize: '0.85rem', // Increased font size
-                        color: '#64748b'
-                      }}>
-                        {property.features.map((feature, idx) => (
-                          <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                            <span>{idx === 0 ? '🛏️' : '📐'}</span>
-                            {feature}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    
-                    {/* IMPROVED BUTTON LAYOUT - LESS CONGESTED */}
-                    <div style={{
-                      paddingTop: '20px',
-                      borderTop: '2px solid #f1f5f9'
-                    }}>
-                      {/* Price with more space */}
-                      <div style={{
-                        fontSize: '1.6rem', // Increased size
-                        fontWeight: 900,
-                        color: '#10b981',
-                        marginBottom: '20px' // Added margin for breathing room
-                      }}>{property.price}</div>
-                      
-                      {/* Button row with better spacing */}
                       <div style={{ 
+                        padding: '32px',
+                        flex: 1, 
                         display: 'flex', 
-                        gap: '12px', // Increased gap
-                        justifyContent: 'space-between' // Better distribution
+                        flexDirection: 'column',
+                        justifyContent: 'space-between'
                       }}>
-                        {/* ✅ FIXED VIEW DETAILS BUTTON */}
-                        <Link 
-                          to="/find-property"
-                          style={{
-                            background: 'transparent',
-                            border: '2px solid #e5e7eb',
+                        <div>
+                          <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
                             color: '#64748b',
-                            padding: '12px 20px', // Increased padding
-                            borderRadius: '8px',
-                            fontSize: '0.85rem', // Increased font size
-                            fontWeight: 600,
-                            cursor: 'pointer',
-                            transition: 'all 0.3s ease',
-                            whiteSpace: 'nowrap',
-                            flex: '1', // Equal width
-                            maxWidth: '130px',
-                            textDecoration: 'none',
-                            textAlign: 'center',
+                            fontSize: '0.9rem',
+                            marginBottom: '16px'
+                          }}>
+                            <span>📍</span>
+                            {property.address?.city || 'City'}, {property.address?.state || 'State'}
+                          </div>
+                          
+                          <h3 style={{
+                            fontSize: '1.5rem',
+                            fontWeight: 800,
+                            color: '#1e293b',
+                            marginBottom: '16px'
+                          }}>{property.title || 'Property Title'}</h3>
+                          
+                          <p style={{
+                            color: '#64748b',
+                            fontSize: '1rem',
+                            lineHeight: '1.6',
+                            marginBottom: '20px'
+                          }}>
+                            {property.description ? 
+                              property.description.substring(0, 100) + '...' : 
+                              'Spacious luxury property with premium amenities and modern design'
+                            }
+                          </p>
+                          
+                          <div style={{
                             display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                          }}
-                          onMouseEnter={(e) => {
-                            e.target.style.borderColor = '#667eea';
-                            e.target.style.color = '#667eea';
-                            e.target.style.transform = 'translateY(-1px)';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.target.style.borderColor = '#e5e7eb';
-                            e.target.style.color = '#64748b';
-                            e.target.style.transform = 'translateY(0)';
-                          }}
-                        >
-                          View Details
-                        </Link>
+                            gap: '20px',
+                            marginBottom: '24px',
+                            fontSize: '0.85rem',
+                            color: '#64748b'
+                          }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                              <span>🏠</span>
+                              {property.category || 'Property'}
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                              <span>📐</span>
+                              {property.size || 'N/A'}
+                            </div>
+                          </div>
+                        </div>
                         
-                        <Link 
-                          to="/find-property"
-                          style={{
-                            background: property.gradient,
-                            border: 'none',
-                            color: 'white',
-                            padding: '12px 20px', // Increased padding
-                            borderRadius: '8px',
-                            fontSize: '0.85rem', // Increased font size
-                            fontWeight: 700,
-                            cursor: 'pointer',
-                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                            transition: 'all 0.3s ease',
-                            whiteSpace: 'nowrap',
-                            flex: '1', // Equal width
-                            maxWidth: '130px',
-                            textDecoration: 'none',
-                            textAlign: 'center',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                          }}
-                          onMouseEnter={(e) => {
-                            e.target.style.transform = 'translateY(-1px)';
-                            e.target.style.boxShadow = '0 6px 16px rgba(0, 0, 0, 0.2)';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.target.style.transform = 'translateY(0)';
-                            e.target.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
-                          }}
-                        >
-                          Book Now
-                        </Link>
+                        <div style={{
+                          paddingTop: '20px',
+                          borderTop: '2px solid #f1f5f9'
+                        }}>
+                          <div style={{
+                            fontSize: '1.6rem',
+                            fontWeight: 900,
+                            color: '#10b981',
+                            marginBottom: '20px'
+                          }}>
+                            {property.price ? formatPrice(property.price, getSafeRentType(property)) : '₹N/A'}
+                          </div>
+                          
+                          <div style={{ 
+                            display: 'flex', 
+                            gap: '12px',
+                            justifyContent: 'space-between'
+                          }}>
+                            {/* ✅ FIXED: Correct routing to individual property */}
+                            <Link 
+                              to={`/property/${property._id}`}
+                              style={{
+                                background: 'transparent',
+                                border: '2px solid #e5e7eb',
+                                color: '#64748b',
+                                padding: '12px 20px',
+                                borderRadius: '8px',
+                                fontSize: '0.85rem',
+                                fontWeight: 600,
+                                cursor: 'pointer',
+                                transition: 'all 0.3s ease',
+                                whiteSpace: 'nowrap',
+                                flex: '1',
+                                maxWidth: '130px',
+                                textDecoration: 'none',
+                                textAlign: 'center',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                              }}
+                              onMouseEnter={(e) => {
+                                e.target.style.borderColor = '#667eea';
+                                e.target.style.color = '#667eea';
+                                e.target.style.transform = 'translateY(-1px)';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.target.style.borderColor = '#e5e7eb';
+                                e.target.style.color = '#64748b';
+                                e.target.style.transform = 'translateY(0)';
+                              }}
+                            >
+                              View Details
+                            </Link>
+                            
+                            <Link 
+                              to={`/book/${property._id}`}
+                              style={{
+                                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                                border: 'none',
+                                color: 'white',
+                                padding: '12px 20px',
+                                borderRadius: '8px',
+                                fontSize: '0.85rem',
+                                fontWeight: 700,
+                                cursor: 'pointer',
+                                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                                transition: 'all 0.3s ease',
+                                whiteSpace: 'nowrap',
+                                flex: '1',
+                                maxWidth: '130px',
+                                textDecoration: 'none',
+                                textAlign: 'center',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                              }}
+                              onMouseEnter={(e) => {
+                                e.target.style.transform = 'translateY(-1px)';
+                                e.target.style.boxShadow = '0 6px 16px rgba(0, 0, 0, 0.2)';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.target.style.transform = 'translateY(0)';
+                                e.target.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+                              }}
+                            >
+                              Book Now
+                            </Link>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Col>
+                ))
+              ) : (
+                <div className="text-center py-5">
+                  <p className="text-muted">No featured properties available</p>
+                  <Link 
+                    to="/find-property"
+                    className="btn btn-primary"
+                    style={{ backgroundColor: '#7c3aed', borderColor: '#7c3aed' }}
+                  >
+                    Browse All Properties
+                  </Link>
                 </div>
-              </Col>
-            ))}
-          </Row>
+              )}
+            </Row>
+          )}
         </Container>
       </section>
 
