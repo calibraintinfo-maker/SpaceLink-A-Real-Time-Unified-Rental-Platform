@@ -21,13 +21,16 @@ const PropertyDetails = () => {
       setLoading(true);
       setError('');
       
-      // Real-time API call
+      console.log('Fetching property with ID:', id);
       const response = await api.properties.getById(id);
+      console.log('API Response:', response);
       
       if (response && response.data) {
         setProperty(response.data);
+        console.log('Property loaded:', response.data);
       } else {
         setProperty(null);
+        console.log('No property data found');
       }
     } catch (err) {
       console.error('Error loading property:', err);
@@ -37,15 +40,13 @@ const PropertyDetails = () => {
     }
   };
 
-  // Safe array/string handling for rentType
   const getRentTypeDisplay = () => {
-    if (!property || !property.rentType) return '';
+    if (!property?.rentType) return '';
     return Array.isArray(property.rentType) ? property.rentType.join(', ') : property.rentType;
   };
 
-  // Get first rent type for pricing
   const getFirstRentType = () => {
-    if (!property || !property.rentType) return 'rental';
+    if (!property?.rentType) return 'rental';
     return Array.isArray(property.rentType) ? property.rentType[0] : property.rentType;
   };
 
@@ -60,7 +61,6 @@ const PropertyDetails = () => {
     return icons[category] || '🏠';
   };
 
-  // Loading state
   if (loading) {
     return (
       <Container className="py-5 text-center">
@@ -72,12 +72,11 @@ const PropertyDetails = () => {
     );
   }
 
-  // Error state
   if (error) {
     return (
       <Container className="py-5">
         <Alert variant="danger" className="text-center">
-          <Alert.Heading>⚠️ Error Loading Property</Alert.Heading>
+          <Alert.Heading>Error Loading Property</Alert.Heading>
           <p>{error}</p>
           <Button 
             onClick={() => navigate('/find-property')} 
@@ -91,12 +90,11 @@ const PropertyDetails = () => {
     );
   }
 
-  // Property not found
   if (!property) {
     return (
       <Container className="py-5">
         <Alert variant="warning" className="text-center">
-          <Alert.Heading>🏠 Property Not Found</Alert.Heading>
+          <Alert.Heading>Property Not Found</Alert.Heading>
           <p>The property you're looking for doesn't exist or has been removed.</p>
           <Button 
             onClick={() => navigate('/find-property')} 
@@ -110,398 +108,290 @@ const PropertyDetails = () => {
     );
   }
 
-  // Main render
   return (
-    <>
-      {/* Professional Styling */}
-      <style>{`
-        .property-image {
-          border-radius: 12px;
-          transition: all 0.3s ease;
-        }
-        
-        .property-badge {
-          font-weight: 600;
-          padding: 8px 16px;
-          border-radius: 20px;
-          font-size: 0.85rem;
-        }
-        
-        .owner-avatar {
-          width: 56px;
-          height: 56px;
-          border-radius: 50%;
-          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 1.5rem;
-          font-weight: 700;
-          color: white;
-          margin-right: 1rem;
-        }
-        
-        .feature-item {
-          display: flex;
-          align-items: center;
-          margin-bottom: 0.75rem;
-          color: #374151;
-          font-size: 0.95rem;
-        }
-        
-        .feature-icon {
-          color: #10b981;
-          margin-right: 0.75rem;
-          font-size: 1.1rem;
-        }
-        
-        .sticky-booking {
-          position: sticky;
-          top: 2rem;
-        }
-        
-        @media (max-width: 768px) {
-          .sticky-booking {
-            position: relative;
-            top: auto;
-          }
-        }
-      `}</style>
+    <Container className="py-4">
+      {/* Back Button */}
+      <Row>
+        <Col>
+          <Button 
+            onClick={() => navigate('/find-property')} 
+            variant="outline-secondary" 
+            className="mb-4"
+          >
+            ← Back to Properties
+          </Button>
+        </Col>
+      </Row>
 
-      <Container className="py-4">
-        {/* Back Button */}
-        <Row>
-          <Col>
-            <Button 
-              onClick={() => navigate('/find-property')} 
-              variant="outline-secondary" 
-              className="mb-4"
-              style={{ 
-                borderRadius: '8px',
-                padding: '12px 20px',
-                fontWeight: 600
-              }}
-            >
-              ← Back to Properties
-            </Button>
-          </Col>
-        </Row>
-
-        <Row>
-          {/* Main Content */}
-          <Col lg={8} className="mb-4">
-            {/* Property Images */}
-            <Card className="mb-4" style={{ border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
-              {property.images && property.images.length > 0 ? (
-                <Carousel 
-                  activeIndex={activeIndex} 
-                  onSelect={setActiveIndex}
-                  interval={null}
-                  className="property-image"
-                >
-                  {property.images.map((img, idx) => (
-                    <Carousel.Item key={idx}>
-                      <img
-                        src={getImageUrl(img)}
-                        alt={`${property.title} - Image ${idx + 1}`}
-                        className="d-block w-100 property-image"
-                        style={{ height: '400px', objectFit: 'cover' }}
-                        onError={(e) => {
-                          e.target.src = 'https://via.placeholder.com/800x400/e2e8f0/64748b?text=Property+Image';
-                        }}
-                      />
-                      <Carousel.Caption 
-                        style={{ 
-                          background: 'rgba(0,0,0,0.7)', 
-                          borderRadius: '8px',
-                          bottom: '20px',
-                          left: '20px',
-                          right: '20px',
-                          padding: '12px 16px'
-                        }}
-                      >
-                        <p className="mb-0">Image {idx + 1} of {property.images.length}</p>
-                      </Carousel.Caption>
-                    </Carousel.Item>
-                  ))}
-                </Carousel>
-              ) : property.image ? (
-                <img
-                  src={getImageUrl(property.image)}
-                  alt={property.title}
-                  className="d-block w-100 property-image"
-                  style={{ height: '400px', objectFit: 'cover' }}
-                  onError={(e) => {
-                    e.target.src = 'https://via.placeholder.com/800x400/e2e8f0/64748b?text=Property+Image';
-                  }}
-                />
-              ) : (
-                <div 
-                  style={{
-                    height: '400px',
-                    backgroundColor: '#f8fafc',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    color: '#6b7280',
-                    borderRadius: '12px'
-                  }}
-                >
-                  <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📷</div>
-                  <p>No images available</p>
-                </div>
-              )}
-            </Card>
-
-            {/* Property Details */}
-            <Card style={{ border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
-              <Card.Body className="p-4">
-                {/* Badges */}
-                <div className="mb-4">
-                  <Badge bg="primary" className="me-2 property-badge">
-                    {getCategoryIcon(property.category)} {property.category}
-                  </Badge>
-                  {property.subtype && (
-                    <Badge bg="secondary" className="me-2 property-badge">
-                      {property.subtype}
-                    </Badge>
-                  )}
-                  {Array.isArray(property.rentType) && property.rentType.map(type => (
-                    <Badge key={type} bg="success" className="me-2 property-badge">
-                      {type}
-                    </Badge>
-                  ))}
-                </div>
-
-                {/* Title */}
-                <h1 className="mb-4" style={{ color: '#1f2937', fontWeight: 800 }}>
-                  {property.title}
-                </h1>
-
-                {/* Price & Address */}
-                <div className="mb-4">
-                  <h3 className="text-success mb-2" style={{ fontWeight: 700 }}>
-                    {formatPrice(property.price, getFirstRentType())}
-                  </h3>
-                  <p className="text-muted d-flex align-items-center" style={{ fontSize: '1.1rem' }}>
-                    <span className="me-2">📍</span>
-                    {property.address && [
-                      property.address.street,
-                      property.address.city,
-                      property.address.state
-                    ].filter(Boolean).join(', ')}
-                    {property.address?.pincode && ` - ${property.address.pincode}`}
-                  </p>
-                </div>
-
-                {/* Property Info Grid */}
-                <Row className="mb-4">
-                  <Col md={6}>
-                    <div className="mb-3">
-                      <strong className="text-dark">📐 Size:</strong>
-                      <span className="ms-2">{property.size}</span>
-                    </div>
-                    <div className="mb-3">
-                      <strong className="text-dark">🏷️ Category:</strong>
-                      <span className="ms-2">{property.category}</span>
-                    </div>
-                    {property.subtype && (
-                      <div className="mb-3">
-                        <strong className="text-dark">🏠 Type:</strong>
-                        <span className="ms-2">{property.subtype}</span>
-                      </div>
-                    )}
-                  </Col>
-                  <Col md={6}>
-                    <div className="mb-3">
-                      <strong className="text-dark">📞 Contact:</strong>
-                      <span className="ms-2">{property.contact}</span>
-                    </div>
-                    <div className="mb-3">
-                      <strong className="text-dark">💰 Rent Types:</strong>
-                      <span className="ms-2">{getRentTypeDisplay()}</span>
-                    </div>
-                    <div className="mb-3">
-                      <strong className="text-dark">📅 Listed:</strong>
-                      <span className="ms-2">
-                        {new Date(property.createdAt).toLocaleDateString()}
-                      </span>
-                    </div>
-                  </Col>
-                </Row>
-
-                {/* Description */}
-                <div className="mb-4">
-                  <h5 className="mb-3" style={{ color: '#374151', fontWeight: 700 }}>
-                    📝 Description
-                  </h5>
-                  <p 
-                    className="text-muted" 
-                    style={{ 
-                      whiteSpace: 'pre-line',
-                      lineHeight: '1.6',
-                      fontSize: '1rem'
-                    }}
-                  >
-                    {property.description}
-                  </p>
-                </div>
-
-                {/* Owner Information */}
-                {property.ownerId && (
-                  <div className="border-top pt-4">
-                    <h5 className="mb-3" style={{ color: '#374151', fontWeight: 700 }}>
-                      👤 Property Owner
-                    </h5>
-                    <div className="d-flex align-items-start">
-                      <div className="owner-avatar">
-                        {property.ownerId.name?.charAt(0)?.toUpperCase() || 'O'}
-                      </div>
-                      <div>
-                        <h6 className="mb-1" style={{ fontWeight: 600 }}>
-                          {property.ownerId.name}
-                        </h6>
-                        <p className="text-muted mb-1">
-                          📧 {property.ownerId.email}
-                        </p>
-                        {property.ownerId.contact && (
-                          <p className="text-muted mb-0">
-                            📞 {property.ownerId.contact}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </Card.Body>
-            </Card>
-          </Col>
-
-          {/* Sidebar */}
-          <Col lg={4}>
-            {/* Booking Card */}
-            <Card className="sticky-booking mb-4" style={{ 
-              border: 'none', 
-              boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-              borderRadius: '12px'
-            }}>
-              <Card.Header 
+      <Row>
+        {/* Main Content */}
+        <Col lg={8} className="mb-4">
+          {/* Property Images */}
+          <Card className="mb-4">
+            {property.images && property.images.length > 0 ? (
+              <Carousel 
+                activeIndex={activeIndex} 
+                onSelect={setActiveIndex}
+                interval={null}
+              >
+                {property.images.map((img, idx) => (
+                  <Carousel.Item key={idx}>
+                    <img
+                      src={getImageUrl(img)}
+                      alt={`${property.title} - Image ${idx + 1}`}
+                      className="d-block w-100"
+                      style={{ height: '400px', objectFit: 'cover' }}
+                      onError={(e) => {
+                        e.target.src = 'https://via.placeholder.com/800x400/e2e8f0/64748b?text=Property+Image';
+                      }}
+                    />
+                    <Carousel.Caption 
+                      style={{ 
+                        background: 'rgba(0,0,0,0.7)', 
+                        borderRadius: '8px',
+                        bottom: '20px',
+                        left: '20px',
+                        right: '20px'
+                      }}
+                    >
+                      <p className="mb-0">Image {idx + 1} of {property.images.length}</p>
+                    </Carousel.Caption>
+                  </Carousel.Item>
+                ))}
+              </Carousel>
+            ) : property.image ? (
+              <img
+                src={getImageUrl(property.image)}
+                alt={property.title}
+                className="d-block w-100"
+                style={{ height: '400px', objectFit: 'cover' }}
+                onError={(e) => {
+                  e.target.src = 'https://via.placeholder.com/800x400/e2e8f0/64748b?text=Property+Image';
+                }}
+              />
+            ) : (
+              <div 
                 style={{
-                  background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-                  color: 'white',
-                  borderRadius: '12px 12px 0 0',
-                  padding: '1.5rem'
+                  height: '400px',
+                  backgroundColor: '#f8fafc',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  color: '#6b7280'
                 }}
               >
-                <h5 className="mb-0 d-flex align-items-center">
-                  <span className="me-2">📋</span>
-                  Book This Property
-                </h5>
-              </Card.Header>
-              <Card.Body className="p-4">
-                {/* Price Display */}
-                <div className="text-center mb-4">
-                  <h3 className="text-success mb-2" style={{ fontWeight: 700 }}>
-                    {formatPrice(property.price, getFirstRentType())}
-                  </h3>
-                  <p className="text-muted mb-0">
-                    Available for {getRentTypeDisplay()} rental
-                  </p>
-                </div>
+                <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📷</div>
+                <p>No images available</p>
+              </div>
+            )}
+          </Card>
 
-                {/* Book Button */}
+          {/* Property Details */}
+          <Card>
+            <Card.Body>
+              {/* Badges */}
+              <div className="mb-3">
+                <Badge bg="primary" className="me-2">
+                  {getCategoryIcon(property.category)} {property.category}
+                </Badge>
+                {property.subtype && (
+                  <Badge bg="secondary" className="me-2">
+                    {property.subtype}
+                  </Badge>
+                )}
+                {property.rentType && Array.isArray(property.rentType) && 
+                  property.rentType.map(type => (
+                    <Badge key={type} bg="info" className="me-1">
+                      {type}
+                    </Badge>
+                  ))
+                }
+              </div>
+
+              {/* Title */}
+              <h1 className="mb-3">{property.title}</h1>
+
+              {/* Price & Address */}
+              <div className="mb-4">
+                <h4 className="text-primary mb-2">
+                  {formatPrice(property.price, getFirstRentType())}
+                </h4>
+                <p className="text-muted mb-0">
+                  📍 {property.address?.street && `${property.address.street}, `}
+                  {property.address?.city}, {property.address?.state}
+                  {property.address?.pincode && ` - ${property.address.pincode}`}
+                </p>
+              </div>
+
+              {/* Property Details Grid */}
+              <Row className="mb-4">
+                <Col md={6}>
+                  <div className="d-flex align-items-center mb-2">
+                    <strong className="me-2">📐 Size:</strong>
+                    <span>{property.size}</span>
+                  </div>
+                  <div className="d-flex align-items-center mb-2">
+                    <strong className="me-2">🏷️ Category:</strong>
+                    <span>{property.category}</span>
+                  </div>
+                  {property.subtype && (
+                    <div className="d-flex align-items-center mb-2">
+                      <strong className="me-2">🏷️ Type:</strong>
+                      <span>{property.subtype}</span>
+                    </div>
+                  )}
+                </Col>
+                <Col md={6}>
+                  <div className="d-flex align-items-center mb-2">
+                    <strong className="me-2">📞 Contact:</strong>
+                    <span>{property.contact}</span>
+                  </div>
+                  <div className="d-flex align-items-center mb-2">
+                    <strong className="me-2">💰 Rent Types:</strong>
+                    <span>{getRentTypeDisplay()}</span>
+                  </div>
+                  <div className="d-flex align-items-center mb-2">
+                    <strong className="me-2">📅 Added:</strong>
+                    <span>{new Date(property.createdAt).toLocaleDateString()}</span>
+                  </div>
+                </Col>
+              </Row>
+
+              {/* Description */}
+              <div className="mb-4">
+                <h5 className="mb-3">📝 Description</h5>
+                <p className="text-muted" style={{ whiteSpace: 'pre-line' }}>
+                  {property.description}
+                </p>
+              </div>
+
+              {/* Owner Information */}
+              {property.ownerId && (
+                <div className="border-top pt-4">
+                  <h5 className="mb-3">👤 Property Owner</h5>
+                  <div className="d-flex align-items-center">
+                    <div 
+                      style={{
+                        width: '50px',
+                        height: '50px',
+                        borderRadius: '50%',
+                        background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'white',
+                        fontSize: '1.2rem',
+                        fontWeight: '700',
+                        marginRight: '1rem'
+                      }}
+                    >
+                      {property.ownerId.name?.charAt(0)?.toUpperCase() || 'O'}
+                    </div>
+                    <div>
+                      <h6 className="mb-1">{property.ownerId.name}</h6>
+                      <p className="text-muted mb-0">
+                        📧 {property.ownerId.email}
+                      </p>
+                      {property.ownerId.contact && (
+                        <p className="text-muted mb-0">
+                          📞 {property.ownerId.contact}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </Card.Body>
+          </Card>
+        </Col>
+
+        {/* Sidebar */}
+        <Col lg={4}>
+          {/* Booking Card */}
+          <Card className="sticky-top" style={{ top: '20px' }}>
+            <Card.Header className="bg-primary text-white">
+              <h5 className="mb-0">📋 Book This Property</h5>
+            </Card.Header>
+            <Card.Body>
+              <div className="text-center mb-4">
+                <h3 className="text-primary mb-2">
+                  {formatPrice(property.price, getFirstRentType())}
+                </h3>
+                <p className="text-muted mb-0">
+                  Available for {getRentTypeDisplay()} rental
+                </p>
+              </div>
+              
+              <div className="d-grid gap-3">
                 <Button 
-                  as={Link}
+                  as={Link} 
                   to={`/book/${property._id}`}
-                  variant="success"
+                  variant="primary" 
                   size="lg"
-                  className="w-100 mb-3"
-                  style={{
-                    fontWeight: 600,
-                    padding: '12px',
-                    borderRadius: '8px',
-                    backgroundColor: '#10b981',
-                    borderColor: '#10b981'
-                  }}
                 >
                   📅 Book Now
                 </Button>
-
-                <div className="text-center mb-4">
+                
+                <div className="text-center">
                   <small className="text-muted">
                     💳 Payment: On Spot Only
                   </small>
                 </div>
+              </div>
 
-                {/* Features */}
-                <div className="border-top pt-3">
-                  <h6 className="mb-3" style={{ fontWeight: 600 }}>
-                    ✨ Property Features
-                  </h6>
-                  <div className="feature-item">
-                    <span className="feature-icon">✓</span>
-                    <span>{property.category} Space</span>
-                  </div>
-                  <div className="feature-item">
-                    <span className="feature-icon">✓</span>
-                    <span>{property.size} Area</span>
-                  </div>
-                  <div className="feature-item">
-                    <span className="feature-icon">✓</span>
-                    <span>{getRentTypeDisplay().replace(/,/g, '/')} Rental</span>
-                  </div>
-                  <div className="feature-item">
-                    <span className="feature-icon">✓</span>
-                    <span>Direct Owner Contact</span>
-                  </div>
-                  <div className="feature-item">
-                    <span className="feature-icon">✓</span>
-                    <span>Verified Listing</span>
-                  </div>
-                </div>
+              <div className="mt-4 pt-3 border-top">
+                <h6 className="mb-3">✨ Property Features</h6>
+                <ul className="list-unstyled">
+                  <li className="mb-2">
+                    <i className="bi bi-check-circle text-success me-2"></i>
+                    {property.category} Space
+                  </li>
+                  <li className="mb-2">
+                    <i className="bi bi-check-circle text-success me-2"></i>
+                    {property.size} Area
+                  </li>
+                  <li className="mb-2">
+                    <i className="bi bi-check-circle text-success me-2"></i>
+                    {getRentTypeDisplay().replace(/,/g, '/')} Rental
+                  </li>
+                  <li className="mb-2">
+                    <i className="bi bi-check-circle text-success me-2"></i>
+                    Direct Owner Contact
+                  </li>
+                </ul>
+              </div>
 
-                <div className="text-center mt-4 pt-3 border-top">
-                  <small className="text-muted">
-                    ⚠️ Complete your profile before booking
-                  </small>
-                </div>
-              </Card.Body>
-            </Card>
+              <div className="mt-4 pt-3 border-top text-center">
+                <small className="text-muted">
+                  ⚠️ Complete your profile before booking
+                </small>
+              </div>
+            </Card.Body>
+          </Card>
 
-            {/* Contact Card */}
-            <Card style={{ 
-              border: 'none', 
-              boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-              borderRadius: '12px'
-            }}>
-              <Card.Header style={{ 
-                backgroundColor: '#f8fafc',
-                borderRadius: '12px 12px 0 0',
-                padding: '1rem 1.5rem'
-              }}>
-                <h6 className="mb-0" style={{ fontWeight: 600 }}>
-                  📞 Contact Information
-                </h6>
-              </Card.Header>
-              <Card.Body className="p-4">
-                <div className="mb-3">
-                  <strong className="text-dark">Property Contact:</strong>
-                  <p className="mb-0 mt-1">{property.contact}</p>
+          {/* Contact Card */}
+          <Card className="mt-4">
+            <Card.Header>
+              <h6 className="mb-0">📞 Contact Information</h6>
+            </Card.Header>
+            <Card.Body>
+              <div className="mb-3">
+                <strong>Property Contact:</strong>
+                <p className="mb-0">{property.contact}</p>
+              </div>
+              {property.ownerId && (
+                <div>
+                  <strong>Owner:</strong>
+                  <p className="mb-1">{property.ownerId.name}</p>
+                  <p className="mb-0 text-muted">{property.ownerId.email}</p>
                 </div>
-                {property.ownerId && (
-                  <div>
-                    <strong className="text-dark">Owner:</strong>
-                    <p className="mb-1 mt-1">{property.ownerId.name}</p>
-                    <p className="mb-0 text-muted">{property.ownerId.email}</p>
-                  </div>
-                )}
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    </>
+              )}
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
