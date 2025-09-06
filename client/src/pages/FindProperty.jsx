@@ -30,7 +30,7 @@ const FindProperty = () => {
 
   const residentialTypes = ["Villa", "Apartment", "House", "Studio"];
 
-  // ENHANCED REAL-TIME API DATA FETCHING
+  // ✅ FIXED: Real API data fetching with axios
   useEffect(() => {
     fetchProperties();
   }, []);
@@ -40,29 +40,40 @@ const FindProperty = () => {
       setLoading(true);
       setError('');
       
-      // Fetch real-time data from API with enhanced error handling
+      console.log('🔍 Fetching properties from API...');
+      
+      // ✅ Using your existing API with axios
       const response = await api.properties.getAll();
       
-      // Handle different response structures
-      const propertiesData = response?.data || response || [];
+      console.log('📡 API Response:', response);
+      console.log('📊 Response Data:', response.data);
       
-      console.log('Properties fetched:', propertiesData); // Debug log
+      // ✅ Axios puts data in response.data
+      const propertiesData = response.data || [];
       
-      // Ensure we have an array
-      const propertiesArray = Array.isArray(propertiesData) ? propertiesData : [];
+      console.log('🏠 Properties Array:', propertiesData);
+      console.log('📏 Array Length:', propertiesData.length);
       
-      setProperties(propertiesArray);
-      setFilteredProperties(propertiesArray);
+      if (Array.isArray(propertiesData)) {
+        setProperties(propertiesData);
+        setFilteredProperties(propertiesData);
+      } else {
+        console.error('❌ Properties data is not an array:', propertiesData);
+        setProperties([]);
+        setFilteredProperties([]);
+        setError('Invalid data format received from server');
+      }
       
     } catch (error) {
-      console.error('Error fetching properties:', error);
+      console.error('❌ Fetch Error:', error);
+      console.error('❌ Error Response:', error.response);
       setError(handleApiError(error));
     } finally {
       setLoading(false);
     }
   };
 
-  // ENHANCED REAL-TIME FILTERING WITH SAFE ARRAY OPERATIONS
+  // ✅ FIXED: Real-time filtering with safe array operations
   useEffect(() => {
     if (!Array.isArray(properties)) {
       setFilteredProperties([]);
@@ -71,7 +82,6 @@ const FindProperty = () => {
 
     let filtered = properties;
 
-    // Search query filter
     if (searchQuery) {
       filtered = filtered.filter(property => {
         if (!property) return false;
@@ -82,7 +92,7 @@ const FindProperty = () => {
           property.address?.state,
           property.category,
           property.subtype
-        ].filter(Boolean); // Remove null/undefined values
+        ].filter(Boolean);
         
         return searchFields.some(field => 
           field.toLowerCase().includes(searchQuery.toLowerCase())
@@ -90,7 +100,6 @@ const FindProperty = () => {
       });
     }
 
-    // Location filter
     if (filters.location) {
       filtered = filtered.filter(property => {
         if (!property?.address) return false;
@@ -106,7 +115,6 @@ const FindProperty = () => {
       });
     }
 
-    // Property type filter
     if (filters.propertyType) {
       filtered = filtered.filter(property => 
         property?.category === filters.propertyType ||
@@ -114,7 +122,6 @@ const FindProperty = () => {
       );
     }
 
-    // Price range filter
     if (filters.priceRange) {
       const [min, max] = filters.priceRange.split('-').map(Number);
       filtered = filtered.filter(property => 
@@ -122,7 +129,6 @@ const FindProperty = () => {
       );
     }
 
-    // Bedrooms filter
     if (filters.bedrooms) {
       filtered = filtered.filter(property =>
         property?.subtype && residentialTypes.includes(property.subtype) &&
@@ -147,18 +153,18 @@ const FindProperty = () => {
     return residentialTypes.includes(filters.propertyType) || filters.propertyType === 'Property Rentals';
   };
 
-  // NAVIGATION FUNCTIONS - REAL PROPERTY IDS
+  // ✅ FIXED: Real property navigation
   const handleViewDetails = (propertyId) => {
-    console.log('Navigating to property details:', propertyId);
+    console.log('🔍 Navigating to property:', propertyId);
     navigate(`/property/${propertyId}`);
   };
 
   const handleBookNow = (propertyId) => {
-    console.log('Navigating to book property:', propertyId);
+    console.log('📅 Navigating to booking:', propertyId);
     navigate(`/book/${propertyId}`);
   };
 
-  const handleImageError = (e) => {    
+  const handleImageError = (e) => {
     e.target.src = 'https://via.placeholder.com/400x240/e2e8f0/64748b?text=Property+Image';
   };
 
@@ -178,7 +184,6 @@ const FindProperty = () => {
     
     const details = [];
 
-    // Handle residential properties safely
     if (property.subtype && residentialTypes.includes(property.subtype)) {
       if (property.bedrooms > 0) {
         details.push(
@@ -196,7 +201,6 @@ const FindProperty = () => {
       }
     }
 
-    // Handle commercial properties
     if (property.category === 'Commercial' && property.washrooms > 0) {
       details.push(
         <span key="washrooms" className="custom-badge me-2 mb-2">
@@ -205,7 +209,6 @@ const FindProperty = () => {
       );
     }
 
-    // Size/Area - always show if available
     if (property.size) {
       details.push(
         <span key="area" className="custom-badge me-2 mb-2">
@@ -214,7 +217,6 @@ const FindProperty = () => {
       );
     }
 
-    // Special features for different property types
     if (property.capacity) {
       details.push(
         <span key="capacity" className="custom-badge-purple me-2 mb-2">
@@ -244,23 +246,20 @@ const FindProperty = () => {
     return details;
   };
 
-  // Get safe rent type for display
   const getSafeRentType = (property) => {
     if (!property?.rentType) return 'rental';
     return Array.isArray(property.rentType) ? property.rentType[0] : property.rentType;
   };
 
-  // Get safe rent types array for display
   const getSafeRentTypes = (property) => {
     if (!property?.rentType) return ['rental'];
     return Array.isArray(property.rentType) ? property.rentType : [property.rentType];
   };
 
-  // LOADING STATE
+  // Loading state
   if (loading) {
     return (
       <div style={{ minHeight: '100vh', backgroundColor: '#ffffff' }}>
-        {/* PURPLE HERO */}
         <section 
           className="py-5 text-white"
           style={{
@@ -275,8 +274,6 @@ const FindProperty = () => {
             <p className="fs-5 opacity-90">Discover verified properties from our premium collection across India</p>
           </Container>
         </section>
-
-        {/* Loading Content */}
         <Container className="py-5 text-center">
           <Spinner animation="border" style={{ color: '#7c3aed' }} />
           <p className="mt-3 fs-5 fw-semibold">Loading properties...</p>
@@ -285,11 +282,10 @@ const FindProperty = () => {
     );
   }
 
-  // ERROR STATE
+  // Error state
   if (error) {
     return (
       <div style={{ minHeight: '100vh', backgroundColor: '#ffffff' }}>
-        {/* PURPLE HERO */}
         <section 
           className="py-5 text-white"
           style={{
@@ -304,8 +300,6 @@ const FindProperty = () => {
             <p className="fs-5 opacity-90">Discover verified properties from our premium collection across India</p>
           </Container>
         </section>
-
-        {/* Error Content */}
         <Container className="py-5">
           <Alert variant="danger" className="text-center">
             <Alert.Heading>⚠️ Error Loading Properties</Alert.Heading>
@@ -324,7 +318,7 @@ const FindProperty = () => {
 
   return (
     <>
-      {/* PURPLE HERO SECTION */}
+      {/* Purple Hero Section */}
       <section 
         className="py-5 text-white"
         style={{
@@ -335,103 +329,62 @@ const FindProperty = () => {
           position: 'relative'
         }}
       >
-        <div 
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='9' cy='9' r='9'/%3E%3Ccircle cx='51' cy='51' r='9'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            opacity: 0.6
-          }}
-        />
         <Container className="position-relative">
           <div className="text-center">
-            <h1 className="display-4 fw-bold mb-4" style={{ 
-              letterSpacing: '-0.025em',
-              textShadow: '0 2px 4px rgba(0,0,0,0.1)'
-            }}>
+            <h1 className="display-4 fw-bold mb-4">
               Find Your Perfect Property
             </h1>
-            <p className="fs-5 mb-0 opacity-90" style={{ 
-              maxWidth: '600px', 
-              margin: '0 auto',
-              lineHeight: 1.6 
-            }}>
+            <p className="fs-5 mb-0 opacity-90">
               Discover verified properties from our premium collection across India
             </p>
           </div>
         </Container>
       </section>
 
-      {/* MAIN LAYOUT */}
-      <div 
-        style={{ 
-          display: 'flex',
-          minHeight: '100vh',
-          backgroundColor: '#ffffff'
-        }}
-      >
+      {/* Main Layout */}
+      <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#ffffff' }}>
         
-        {/* SIDEBAR */}
-        <div 
-          style={{
-            width: '320px',
-            minHeight: '100vh',
-            backgroundColor: '#f8fafc',
-            position: 'sticky',
-            top: 0,
-            overflowY: 'auto',
-            borderRight: '1px solid #e2e8f0'
-          }}
-        >
+        {/* Sidebar */}
+        <div style={{
+          width: '320px',
+          minHeight: '100vh',
+          backgroundColor: '#f8fafc',
+          position: 'sticky',
+          top: 0,
+          overflowY: 'auto',
+          borderRight: '1px solid #e2e8f0'
+        }}>
           
-          {/* Sidebar Header */}
-          <div className="p-4 border-bottom bg-white" style={{ borderColor: '#e2e8f0' }}>
+          <div className="p-4 border-bottom bg-white">
             <div>
               <h5 className="mb-2 fw-bold" style={{ color: '#1e293b' }}>Filters</h5>
               <small className="text-muted">Refine your search</small>
             </div>
           </div>
 
-          {/* Sidebar Content */}
           <div className="p-4">
             
-            {/* SEARCH INPUT WITH WORKING ICON */}
+            {/* Search Input */}
             <div className="mb-4">
-              <Form.Label className="fw-semibold mb-3" style={{ color: '#374151' }}>
+              <Form.Label className="fw-semibold mb-3">
                 Search Properties
               </Form.Label>
-              <div className="search-wrapper">
-                <svg 
-                  className="search-icon" 
-                  width="16" 
-                  height="16" 
-                  viewBox="0 0 16 16" 
-                  fill="currentColor"
-                >
-                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                </svg>
-                <Form.Control
-                  type="text"
-                  placeholder="Type to search..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="search-input"
-                />
-              </div>
+              <Form.Control
+                type="text"
+                placeholder="Type to search..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
             </div>
 
             {/* Location Filter */}
             <div className="mb-4">
-              <Form.Label className="fw-semibold mb-3" style={{ color: '#374151' }}>
+              <Form.Label className="fw-semibold mb-3">
                 Location
               </Form.Label>
               <Form.Select
                 value={filters.location}
                 onChange={(e) => handleFilterChange('location', e.target.value)}
-                className="custom-select"
               >
                 {indianLocations.map((location, index) => (
                   <option key={index} value={location === "All Locations" ? "" : location}>
@@ -443,13 +396,12 @@ const FindProperty = () => {
 
             {/* Property Type Filter */}
             <div className="mb-4">
-              <Form.Label className="fw-semibold mb-3" style={{ color: '#374151' }}>
+              <Form.Label className="fw-semibold mb-3">
                 Property Type
               </Form.Label>
               <Form.Select
                 value={filters.propertyType}
                 onChange={(e) => handleFilterChange('propertyType', e.target.value)}
-                className="custom-select"
               >
                 {propertyTypes.map((type, index) => (
                   <option key={index} value={type === "All Categories" ? "" : type}>
@@ -461,13 +413,12 @@ const FindProperty = () => {
 
             {/* Price Range Filter */}
             <div className="mb-4">
-              <Form.Label className="fw-semibold mb-3" style={{ color: '#374151' }}>
+              <Form.Label className="fw-semibold mb-3">
                 Price Range
               </Form.Label>
               <Form.Select
                 value={filters.priceRange}
                 onChange={(e) => handleFilterChange('priceRange', e.target.value)}
-                className="custom-select"
               >
                 <option value="">All Prices</option>
                 <option value="0-2000">₹0 - ₹2,000</option>
@@ -480,13 +431,12 @@ const FindProperty = () => {
             {/* Conditional Bedrooms Filter */}
             {shouldShowBedroomFilter() && (
               <div className="mb-4">
-                <Form.Label className="fw-semibold mb-3" style={{ color: '#374151' }}>
+                <Form.Label className="fw-semibold mb-3">
                   Bedrooms
                 </Form.Label>
                 <Form.Select
                   value={filters.bedrooms}
                   onChange={(e) => handleFilterChange('bedrooms', e.target.value)}
-                  className="custom-select"
                 >
                   <option value="">Any Bedrooms</option>
                   <option value="1">1+ BHK</option>
@@ -497,20 +447,31 @@ const FindProperty = () => {
               </div>
             )}
 
-            {/* Clear Filters Button */}
             <Button 
               variant="outline-secondary"
-              className="w-100 mb-4 fw-semibold custom-clear-btn"
+              className="w-100 mb-4 fw-semibold"
               onClick={clearFilters}
             >
               ✕ Clear All Filters
             </Button>
 
-            {/* Active Filters Counter */}
-            <div className="filter-status">
+            <div style={{
+              padding: '12px',
+              borderRadius: '8px',
+              backgroundColor: '#f8fafc',
+              border: '1px solid #e5e7eb'
+            }}>
               <div className="d-flex justify-content-between align-items-center">
                 <span className="text-muted fw-semibold">Active Filters</span>
-                <span className="custom-badge-purple">
+                <span style={{
+                  display: 'inline-block',
+                  backgroundColor: '#7c3aed',
+                  color: 'white',
+                  fontSize: '0.8rem',
+                  fontWeight: 500,
+                  padding: '6px 12px',
+                  borderRadius: '6px'
+                }}>
                   {Object.values(filters).filter(f => f).length + (searchQuery ? 1 : 0)}
                 </span>
               </div>
@@ -518,9 +479,9 @@ const FindProperty = () => {
           </div>
         </div>
 
-        {/* MAIN CONTENT AREA */}
+        {/* Main Content Area */}
         <div style={{ flex: 1, backgroundColor: '#ffffff' }}>
-          <Container fluid className="py-5 px-5" style={{ paddingBottom: '140px' }}>
+          <Container fluid className="py-5 px-5">
             
             {/* Results Header */}
             <div className="d-flex justify-content-between align-items-center mb-5">
@@ -544,7 +505,7 @@ const FindProperty = () => {
                   onChange={() => setViewMode('grid')}
                 />
                 <label 
-                  className={`btn fw-semibold custom-toggle-btn ${viewMode === 'grid' ? 'active' : ''}`}
+                  className={`btn fw-semibold ${viewMode === 'grid' ? 'btn-primary' : 'btn-outline-secondary'}`}
                   htmlFor="gridView"
                 >
                   ⊞ Grid
@@ -559,7 +520,7 @@ const FindProperty = () => {
                   onChange={() => setViewMode('list')}
                 />
                 <label 
-                  className={`btn fw-semibold custom-toggle-btn ${viewMode === 'list' ? 'active' : ''}`}
+                  className={`btn fw-semibold ${viewMode === 'list' ? 'btn-primary' : 'btn-outline-secondary'}`}
                   htmlFor="listView"
                 >
                   ☰ List
@@ -567,7 +528,7 @@ const FindProperty = () => {
               </div>
             </div>
 
-            {/* PROPERTY CARDS SECTION - ENHANCED REAL DATA */}
+            {/* Properties Grid/List */}
             {filteredProperties.length === 0 ? (
               <Card className="border-0 shadow-sm text-center p-5">
                 <Card.Body>
@@ -579,7 +540,11 @@ const FindProperty = () => {
                     We couldn't find any properties matching your criteria. Try adjusting your filters.
                   </p>
                   <Button 
-                    className="custom-primary-btn fw-semibold"
+                    style={{
+                      backgroundColor: '#7c3aed',
+                      borderColor: '#7c3aed',
+                      fontWeight: 600
+                    }}
                     size="lg"
                     onClick={clearFilters}
                   >
@@ -590,14 +555,14 @@ const FindProperty = () => {
             ) : (
               <Row className={viewMode === 'grid' ? 'row-cols-1 row-cols-md-2 row-cols-xl-3 g-4' : 'g-4'}>
                 {filteredProperties.map((property) => {
-                  if (!property || !property._id) return null; // Skip invalid properties
+                  if (!property || !property._id) return null;
                   
                   return (
                     <Col key={property._id}>
                       <Card 
                         className="h-100 border-0 shadow-sm"
                         style={{ 
-                          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                          transition: 'all 0.3s ease',
                           cursor: 'pointer',
                           borderRadius: '12px'
                         }}
@@ -627,21 +592,15 @@ const FindProperty = () => {
                             }}
                           />
                           
-                          {/* CUSTOM BADGES - NO BLUE */}
                           <div className="position-absolute top-0 start-0 p-3">
-                            <span className="status-badge-green me-2">
-                              For Rent
-                            </span>
-                            <span className="status-badge-purple">
-                              ✓ Verified
-                            </span>
+                            <Badge bg="success" className="me-2">For Rent</Badge>
+                            <Badge bg="primary">✓ Verified</Badge>
                           </div>
                           
-                          {/* PROPERTY TYPE BADGE - GRAY ONLY */}
                           <div className="position-absolute top-0 end-0 p-3">
-                            <span className="status-badge-gray">
+                            <Badge bg="secondary">
                               {property.subtype || property.category || 'Property'}
-                            </span>
+                            </Badge>
                           </div>
                         </div>
                         
@@ -681,10 +640,9 @@ const FindProperty = () => {
                             
                             {/* Navigation Buttons */}
                             <div className="d-grid gap-3 d-md-flex">
-                              <button 
-                                type="button"
-                                className="btn flex-fill fw-semibold custom-outline-btn"
-                                style={{ fontSize: '0.9rem', padding: '12px 20px' }}
+                              <Button
+                                variant="outline-primary"
+                                className="flex-fill fw-semibold"
                                 onClick={(e) => {
                                   e.preventDefault();
                                   e.stopPropagation();
@@ -692,11 +650,11 @@ const FindProperty = () => {
                                 }}
                               >
                                 View Details
-                              </button>
-                              <button 
-                                type="button"
-                                className="btn flex-fill fw-semibold custom-primary-btn"
-                                style={{ fontSize: '0.9rem', padding: '12px 20px' }}
+                              </Button>
+                              <Button
+                                variant="primary"
+                                className="flex-fill fw-semibold"
+                                style={{ backgroundColor: '#7c3aed', borderColor: '#7c3aed' }}
                                 onClick={(e) => {
                                   e.preventDefault();
                                   e.stopPropagation();
@@ -704,7 +662,7 @@ const FindProperty = () => {
                                 }}
                               >
                                 Book Now
-                              </button>
+                              </Button>
                             </div>
                           </div>
                         </Card.Body>
@@ -717,237 +675,6 @@ const FindProperty = () => {
           </Container>
         </div>
       </div>
-
-      {/* COMPLETE CUSTOM STYLES */}
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-        
-        * {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        }
-        
-        /* SEARCH INPUT WITH WORKING ICON */
-        .search-wrapper {
-          position: relative;
-        }
-        
-        .search-icon {
-          position: absolute;
-          left: 12px;
-          top: 50%;
-          transform: translateY(-50%);
-          color: #9ca3af;
-          z-index: 10;
-          pointer-events: none;
-        }
-        
-        .search-input {
-          padding-left: 40px !important;
-          border: 1.5px solid #d1d5db !important;
-          border-radius: 8px !important;
-          font-size: 0.95rem !important;
-          padding: 12px 16px 12px 40px !important;
-          background-color: #ffffff !important;
-        }
-        
-        .search-input:focus {
-          border-color: #7c3aed !important;
-          box-shadow: 0 0 0 0.2rem rgba(124, 58, 237, 0.25) !important;
-        }
-        
-        /* CUSTOM SELECT STYLES */
-        .custom-select {
-          font-size: 0.95rem !important;
-          padding: 12px 16px !important;
-          border: 1.5px solid #d1d5db !important;
-          border-radius: 8px !important;
-          background-color: #ffffff !important;
-        }
-        
-        .custom-select:focus {
-          border-color: #7c3aed !important;
-          box-shadow: 0 0 0 0.2rem rgba(124, 58, 237, 0.25) !important;
-        }
-        
-        /* CUSTOM BADGES */
-        .custom-badge {
-          display: inline-block;
-          background-color: #f3f4f6;
-          color: #4b5563;
-          font-size: 0.8rem;
-          font-weight: 500;
-          padding: 6px 12px;
-          border-radius: 6px;
-          border: 1px solid #e5e7eb;
-        }
-        
-        .custom-badge-purple {
-          display: inline-block;
-          background-color: #7c3aed;
-          color: white;
-          font-size: 0.8rem;
-          font-weight: 500;
-          padding: 6px 12px;
-          border-radius: 6px;
-        }
-        
-        .custom-badge-green {
-          display: inline-block;
-          background-color: #059669;
-          color: white;
-          font-size: 0.8rem;
-          font-weight: 500;
-          padding: 6px 12px;
-          border-radius: 6px;
-        }
-        
-        .custom-badge-orange {
-          display: inline-block;
-          background-color: #d97706;
-          color: white;
-          font-size: 0.8rem;
-          font-weight: 500;
-          padding: 6px 12px;
-          border-radius: 6px;
-        }
-        
-        /* STATUS BADGES */
-        .status-badge-green {
-          display: inline-block;
-          background-color: #059669;
-          color: white;
-          font-size: 0.8rem;
-          font-weight: 600;
-          padding: 8px 12px;
-          border-radius: 6px;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        
-        .status-badge-purple {
-          display: inline-block;
-          background-color: #7c3aed;
-          color: white;
-          font-size: 0.8rem;
-          font-weight: 600;
-          padding: 8px 12px;
-          border-radius: 6px;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        
-        .status-badge-gray {
-          display: inline-block;
-          background-color: #6b7280;
-          color: white;
-          font-size: 0.8rem;
-          font-weight: 600;
-          padding: 8px 12px;
-          border-radius: 6px;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* NAVIGATION BUTTONS */
-        .custom-primary-btn {
-          background-color: #7c3aed !important;
-          border: 1px solid #7c3aed !important;
-          color: white !important;
-          border-radius: 12px !important;
-          transition: all 0.2s ease !important;
-        }
-        
-        .custom-primary-btn:hover {
-          background-color: #6d28d9 !important;
-          border-color: #6d28d9 !important;
-          color: white !important;
-          transform: translateY(-1px) !important;
-        }
-        
-        .custom-outline-btn {
-          background-color: transparent !important;
-          border: 1.5px solid #d1d5db !important;
-          color: #6b7280 !important;
-          border-radius: 12px !important;
-          transition: all 0.2s ease !important;
-        }
-        
-        .custom-outline-btn:hover {
-          background-color: #7c3aed !important;
-          border-color: #7c3aed !important;
-          color: white !important;
-          transform: translateY(-1px) !important;
-        }
-        
-        .custom-clear-btn {
-          font-size: 0.95rem !important;
-          padding: 12px 16px !important;
-          border: 1.5px solid #d1d5db !important;
-          border-radius: 8px !important;
-          color: #6b7280 !important;
-          background-color: #ffffff !important;
-        }
-        
-        .custom-clear-btn:hover {
-          background-color: #7c3aed !important;
-          border-color: #7c3aed !important;
-          color: white !important;
-        }
-        
-        /* VIEW TOGGLE BUTTONS */
-        .custom-toggle-btn {
-          font-size: 0.9rem !important;
-          padding: 12px 24px !important;
-          border: 1.5px solid #d1d5db !important;
-          color: #6b7280 !important;
-          background-color: #ffffff !important;
-          border-radius: 0 !important;
-        }
-        
-        .custom-toggle-btn:first-child {
-          border-radius: 8px 0 0 8px !important;
-        }
-        
-        .custom-toggle-btn:last-child {
-          border-radius: 0 8px 8px 0 !important;
-          border-left: none !important;
-        }
-        
-        .custom-toggle-btn.active {
-          background-color: #7c3aed !important;
-          border-color: #7c3aed !important;
-          color: white !important;
-        }
-        
-        .custom-toggle-btn:hover {
-          background-color: #7c3aed !important;
-          border-color: #7c3aed !important;
-          color: white !important;
-        }
-        
-        /* FILTER STATUS */
-        .filter-status {
-          padding: 12px;
-          border-radius: 8px;
-          background-color: #f8fafc;
-          border: 1px solid #e5e7eb;
-        }
-        
-        /* CARD IMAGES */
-        .card-img-top {
-          object-fit: cover;
-          background-color: #f3f4f6;
-        }
-        
-        /* RESPONSIVE DESIGN */
-        @media (max-width: 768px) {
-          .main-layout {
-            flex-direction: column !important;
-          }
-          .sidebar-container { 
-            position: relative !important;
-            width: 100% !important;
-            height: auto !important;
-          }
-        }
-      `}</style>
     </>
   );
 };
