@@ -5,7 +5,7 @@ import { formatPrice, getImageUrl } from '../utils/api';
 
 const PropertyCard = ({ property, showOwner = false }) => {
   const [isHovered, setIsHovered] = useState(false);
-
+  
   // Get the first image from images array, or fallback to single image field
   const displayImage = property.images && property.images.length > 0 
     ? property.images[0] 
@@ -29,7 +29,6 @@ const PropertyCard = ({ property, showOwner = false }) => {
       transform: isHovered ? 'translateY(-8px) scale(1.02)' : 'translateY(0) scale(1)',
       position: 'relative'
     },
-
     // Image Container - Enhanced
     imageContainer: {
       position: 'relative',
@@ -37,7 +36,6 @@ const PropertyCard = ({ property, showOwner = false }) => {
       height: '220px',
       overflow: 'hidden'
     },
-
     propertyImage: {
       width: '100%',
       height: '100%',
@@ -45,7 +43,6 @@ const PropertyCard = ({ property, showOwner = false }) => {
       transition: 'transform 0.4s ease',
       transform: isHovered ? 'scale(1.1)' : 'scale(1)'
     },
-
     // Light Image Overlay
     imageOverlay: {
       position: 'absolute',
@@ -57,7 +54,6 @@ const PropertyCard = ({ property, showOwner = false }) => {
       opacity: isHovered ? 0.5 : 0.2,
       transition: 'opacity 0.3s ease'
     },
-
     // Badge Container
     badgeContainer: {
       position: 'absolute',
@@ -68,7 +64,6 @@ const PropertyCard = ({ property, showOwner = false }) => {
       flexWrap: 'wrap',
       zIndex: 10
     },
-
     // Light Theme Badges
     primaryBadge: {
       background: '#6366f1', // Solid purple
@@ -81,7 +76,6 @@ const PropertyCard = ({ property, showOwner = false }) => {
       letterSpacing: '0.5px',
       boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
     },
-
     secondaryBadge: {
       background: 'rgba(255, 255, 255, 0.95)', // Almost opaque white
       color: '#374151', // Dark gray text
@@ -92,7 +86,6 @@ const PropertyCard = ({ property, showOwner = false }) => {
       border: '1px solid rgba(0, 0, 0, 0.1)',
       boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
     },
-
     imageBadge: {
       background: '#10b981', // Solid green
       color: 'white',
@@ -105,7 +98,6 @@ const PropertyCard = ({ property, showOwner = false }) => {
       gap: '4px',
       boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
     },
-
     // Card Body - Light Theme
     cardBody: {
       background: '#ffffff', // Pure white
@@ -115,7 +107,6 @@ const PropertyCard = ({ property, showOwner = false }) => {
       flexGrow: 1,
       position: 'relative'
     },
-
     // Title Styling - Dark Text
     propertyTitle: {
       fontSize: '1.2rem',
@@ -128,7 +119,6 @@ const PropertyCard = ({ property, showOwner = false }) => {
       WebkitBoxOrient: 'vertical',
       overflow: 'hidden'
     },
-
     // Location Styling - Light Theme
     locationText: {
       color: '#64748b', // Medium gray
@@ -139,12 +129,10 @@ const PropertyCard = ({ property, showOwner = false }) => {
       gap: '6px',
       fontWeight: 500
     },
-
     locationIcon: {
       fontSize: '0.9rem',
       opacity: 0.8
     },
-
     // Description Styling - Light Theme
     descriptionText: {
       color: '#475569', // Darker gray for readability
@@ -157,7 +145,6 @@ const PropertyCard = ({ property, showOwner = false }) => {
       overflow: 'hidden',
       flexGrow: 1
     },
-
     // Price and Size Container - Light Theme
     priceContainer: {
       display: 'flex',
@@ -169,13 +156,11 @@ const PropertyCard = ({ property, showOwner = false }) => {
       borderRadius: '10px',
       border: '1px solid #e2e8f0'
     },
-
     priceBadge: {
       color: '#059669', // Green for price
       fontSize: '1.1rem',
       fontWeight: 900
     },
-
     sizeText: {
       color: '#64748b', // Medium gray
       fontSize: '0.85rem',
@@ -184,7 +169,6 @@ const PropertyCard = ({ property, showOwner = false }) => {
       alignItems: 'center',
       gap: '4px'
     },
-
     // Owner Info - Light Theme
     ownerInfo: {
       color: '#475569', // Darker gray
@@ -198,14 +182,12 @@ const PropertyCard = ({ property, showOwner = false }) => {
       alignItems: 'center',
       gap: '6px'
     },
-
     // Button Container
     buttonContainer: {
       display: 'flex',
       gap: '8px',
       marginTop: 'auto'
     },
-
     // Primary Button - Light Theme
     primaryButton: {
       flex: 1,
@@ -226,7 +208,6 @@ const PropertyCard = ({ property, showOwner = false }) => {
       justifyContent: 'center',
       boxShadow: '0 4px 12px rgba(99, 102, 241, 0.3)'
     },
-
     // Secondary Button - Light Theme
     secondaryButton: {
       flex: 1,
@@ -286,6 +267,9 @@ const PropertyCard = ({ property, showOwner = false }) => {
           src={getImageUrl(displayImage)} 
           alt={property.title}
           style={styles.propertyImage}
+          onError={(e) => {
+            e.target.src = 'https://via.placeholder.com/400x240/e2e8f0/64748b?text=Property+Image';
+          }}
         />
         <div style={styles.imageOverlay} />
         
@@ -318,7 +302,7 @@ const PropertyCard = ({ property, showOwner = false }) => {
         {/* Location */}
         <div style={styles.locationText}>
           <span style={styles.locationIcon}>📍</span>
-          <span>{property.address.city}, {property.address.state}</span>
+          <span>{property.address?.city}, {property.address?.state}</span>
         </div>
         
         {/* Description */}
@@ -329,7 +313,7 @@ const PropertyCard = ({ property, showOwner = false }) => {
         {/* Price and Size */}
         <div style={styles.priceContainer}>
           <div style={styles.priceBadge}>
-            {formatPrice(property.price, property.rentType[0])}
+            {formatPrice(property.price, Array.isArray(property.rentType) ? property.rentType[0] : property.rentType || 'monthly')}
           </div>
           <div style={styles.sizeText}>
             <span>📐</span>
