@@ -16,27 +16,37 @@ const PropertyDetails = () => {
     fetchProperty();
   }, [id]);
 
-  // ✅ FIXED: Real API integration with axios
+  // ✅ FIXED: Handles nested API response structures
   const fetchProperty = async () => {
     try {
       setLoading(true);
       setError('');
       
       console.log('🔍 Fetching property ID:', id);
-      
-      // ✅ Using your existing API with axios  
       const response = await api.properties.getById(id);
       
       console.log('📡 Property Response:', response);
       console.log('📊 Property Data:', response.data);
       
-      // ✅ Axios puts data in response.data
-      if (response.data) {
-        setProperty(response.data);
+      // ✅ ROBUST: Extract property from nested response
+      let propertyData = null;
+      
+      if (response?.data?.property) {
+        propertyData = response.data.property;
+      } else if (response?.data) {
+        propertyData = response.data;
+      } else if (response) {
+        propertyData = response;
+      }
+      
+      console.log('🏠 Final Property Data:', propertyData);
+      
+      if (propertyData && propertyData._id) {
+        setProperty(propertyData);
         console.log('✅ Property loaded successfully');
       } else {
         setProperty(null);
-        console.log('❌ No property data found');
+        console.log('❌ No valid property data found');
       }
     } catch (err) {
       console.error('❌ Property Fetch Error:', err);
@@ -71,9 +81,7 @@ const PropertyDetails = () => {
   if (loading) {
     return (
       <Container className="py-5 text-center">
-        <div className="spinner-border" role="status" style={{ color: '#7c3aed' }}>
-          <span className="visually-hidden">Loading...</span>
-        </div>
+        <Spinner animation="border" style={{ color: '#7c3aed' }} />
         <p className="mt-3">Loading property details...</p>
       </Container>
     );
@@ -88,7 +96,6 @@ const PropertyDetails = () => {
           <Button 
             onClick={() => navigate('/find-property')} 
             variant="primary"
-            style={{ backgroundColor: '#7c3aed', borderColor: '#7c3aed' }}
           >
             ← Back to Properties
           </Button>
@@ -106,7 +113,6 @@ const PropertyDetails = () => {
           <Button 
             onClick={() => navigate('/find-property')} 
             variant="primary"
-            style={{ backgroundColor: '#7c3aed', borderColor: '#7c3aed' }}
           >
             ← Back to Properties
           </Button>
@@ -149,18 +155,16 @@ const PropertyDetails = () => {
                       className="d-block w-100"
                       style={{ height: '400px', objectFit: 'cover' }}
                       onError={(e) => {
-                        e.target.src = 'https://via.placeholder.com/800x400/e2e8f0/64748b?text=Property+Image';
+                        e.target.src = 'https://via.placeholder.com/800x400?text=Property+Image';
                       }}
                     />
-                    <Carousel.Caption 
-                      style={{ 
-                        background: 'rgba(0,0,0,0.7)', 
-                        borderRadius: '8px',
-                        bottom: '20px',
-                        left: '20px',
-                        right: '20px'
-                      }}
-                    >
+                    <Carousel.Caption style={{ 
+                      background: 'rgba(0,0,0,0.7)', 
+                      borderRadius: '8px',
+                      bottom: '20px',
+                      left: '20px',
+                      right: '20px'
+                    }}>
                       <p className="mb-0">Image {idx + 1} of {property.images.length}</p>
                     </Carousel.Caption>
                   </Carousel.Item>
@@ -173,7 +177,7 @@ const PropertyDetails = () => {
                 className="d-block w-100"
                 style={{ height: '400px', objectFit: 'cover' }}
                 onError={(e) => {
-                  e.target.src = 'https://via.placeholder.com/800x400/e2e8f0/64748b?text=Property+Image';
+                  e.target.src = 'https://via.placeholder.com/800x400?text=Property+Image';
                 }}
               />
             ) : (
@@ -221,7 +225,7 @@ const PropertyDetails = () => {
 
               {/* Price & Address */}
               <div className="mb-4">
-                <h4 className="text-primary mb-2">
+                <h4 className="text-success mb-2">
                   {formatPrice(property.price, getFirstRentType())}
                 </h4>
                 <p className="text-muted mb-0">
@@ -231,7 +235,7 @@ const PropertyDetails = () => {
                 </p>
               </div>
 
-              {/* Property Details Grid */}
+              {/* Property Info Grid */}
               <Row className="mb-4">
                 <Col md={6}>
                   <div className="d-flex align-items-center mb-2">
@@ -297,13 +301,9 @@ const PropertyDetails = () => {
                     </div>
                     <div>
                       <h6 className="mb-1">{property.ownerId.name}</h6>
-                      <p className="text-muted mb-0">
-                        📧 {property.ownerId.email}
-                      </p>
+                      <p className="text-muted mb-0">📧 {property.ownerId.email}</p>
                       {property.ownerId.contact && (
-                        <p className="text-muted mb-0">
-                          📞 {property.ownerId.contact}
-                        </p>
+                        <p className="text-muted mb-0">📞 {property.ownerId.contact}</p>
                       )}
                     </div>
                   </div>
@@ -322,7 +322,7 @@ const PropertyDetails = () => {
             </Card.Header>
             <Card.Body>
               <div className="text-center mb-4">
-                <h3 className="text-primary mb-2">
+                <h3 className="text-success mb-2">
                   {formatPrice(property.price, getFirstRentType())}
                 </h3>
                 <p className="text-muted mb-0">
@@ -334,41 +334,29 @@ const PropertyDetails = () => {
                 <Button 
                   as={Link} 
                   to={`/book/${property._id}`}
-                  variant="primary" 
+                  variant="success" 
                   size="lg"
                 >
                   📅 Book Now
                 </Button>
                 
                 <div className="text-center">
-                  <small className="text-muted">
-                    💳 Payment: On Spot Only
-                  </small>
+                  <small className="text-muted">💳 Payment: On Spot Only</small>
                 </div>
               </div>
 
               <div className="mt-4 pt-3 border-top">
                 <h6 className="mb-3">✨ Property Features</h6>
                 <ul className="list-unstyled">
-                  <li className="mb-2">
-                    ✓ {property.category} Space
-                  </li>
-                  <li className="mb-2">
-                    ✓ {property.size} Area
-                  </li>
-                  <li className="mb-2">
-                    ✓ {getRentTypeDisplay().replace(/,/g, '/')} Rental
-                  </li>
-                  <li className="mb-2">
-                    ✓ Direct Owner Contact
-                  </li>
+                  <li className="mb-2">✓ {property.category} Space</li>
+                  <li className="mb-2">✓ {property.size} Area</li>
+                  <li className="mb-2">✓ {getRentTypeDisplay().replace(/,/g, '/')} Rental</li>
+                  <li className="mb-2">✓ Direct Owner Contact</li>
                 </ul>
               </div>
 
               <div className="mt-4 pt-3 border-top text-center">
-                <small className="text-muted">
-                  ⚠️ Complete your profile before booking
-                </small>
+                <small className="text-muted">⚠️ Complete your profile before booking</small>
               </div>
             </Card.Body>
           </Card>
