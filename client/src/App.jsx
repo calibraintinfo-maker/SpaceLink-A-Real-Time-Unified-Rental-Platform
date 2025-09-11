@@ -18,14 +18,14 @@ import ProtectedRoute from './components/ProtectedRoute';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-// Create a layout component that uses the hook inside the Router
+// Layout component that uses the hook inside the Router
 function AppLayout() {
   const showFooter = useFooterVisibility();
 
   return (
-    <div>
+    <div className="app-layout">
       <Navbar />
-      <div style={{ paddingTop: '80px', minHeight: 'calc(100vh - 80px)' }}>
+      <div className="main-content">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
