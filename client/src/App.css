@@ -14,6 +14,18 @@ body {
   overflow-x: hidden;
   background: #f8fafc;
 }
+
+/* ✅ CRITICAL: Fix white gap - Add these new rules */
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+}
+
 /* Fixed navbar */
 .navbar {
   position: fixed !important;
@@ -27,6 +39,7 @@ body {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1) !important;
 }
+
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   .navbar {
@@ -38,6 +51,7 @@ body {
     height: 60px !important;
   }
 }
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -52,12 +66,14 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
+
 /* Focus styles */
 *:focus-visible {
   outline: 2px solid #6366f1;
   outline-offset: 2px;
   border-radius: 4px;
 }
+
 /* Button and form styling */
 button, .btn {
   font-family: inherit;
@@ -69,6 +85,7 @@ input:focus, select:focus, textarea:focus {
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
   border-color: #6366f1;
 }
+
 /* Link styling */
 a {
   color: #6366f1;
@@ -78,6 +95,7 @@ a {
 a:hover {
   color: #4f46e5;
 }
+
 /* Bootstrap overrides */
 .btn-primary {
   background-color: #6366f1;
@@ -96,6 +114,7 @@ a:hover {
   border-color: #6366f1;
   box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
 }
+
 /* Property card styling */
 .property-card {
   background: #ffffff;
@@ -108,18 +127,27 @@ a:hover {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   transform: translateY(-8px);
 }
-/* Footer hover effects */
-footer a:hover {
-  color: #6366f1 !important;
+
+/* ✅ NEW: Footer specific styling */
+footer input::placeholder {
+  color: rgba(255, 255, 255, 0.6) !important;
 }
+
 footer input:focus {
-  border-color: #6366f1 !important;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1) !important;
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2) !important;
 }
+
+footer a:hover {
+  color: white !important;
+  text-decoration: none;
+}
+
 footer button:hover {
-  background: #4f46e5 !important;
   transform: translateY(-1px);
 }
+
 /* Utility classes */
 .text-muted {
   color: #64748b !important;
@@ -127,6 +155,7 @@ footer button:hover {
 .text-primary {
   color: #6366f1 !important;
 }
+
 /* Loading spinner */
 @keyframes spin {
   0% { transform: rotate(0deg); }
@@ -141,12 +170,14 @@ footer button:hover {
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
+
 /* Container max width */
 @media (min-width: 1200px) {
   .container {
     max-width: 1200px;
   }
 }
+
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
