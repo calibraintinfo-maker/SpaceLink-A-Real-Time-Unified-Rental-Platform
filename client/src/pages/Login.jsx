@@ -68,12 +68,12 @@ const Login = () => {
         ref={containerRef}
         className="login-container"
       >
-        {/* ✅ PROFESSIONAL: Enhanced Animated Background */}
+        {/* ✅ PROFESSIONAL: Light Theme Animated Background */}
         <div className="background-animation">
           {/* Grid pattern overlay */}
           <div className="grid-overlay"></div>
           
-          {/* Floating orbs with complex animations */}
+          {/* Floating orbs with light colors */}
           <div className="floating-orb orb-1"></div>
           <div className="floating-orb orb-2"></div>
           <div className="floating-orb orb-3"></div>
@@ -105,7 +105,7 @@ const Login = () => {
           <Row className="justify-content-center align-items-center min-vh-100">
             <Col xs={12} sm={8} md={6} lg={5} xl={4}>
               
-              {/* ✅ PROFESSIONAL: Glass Morphism Login Card */}
+              {/* ✅ PROFESSIONAL: Light Glass Morphism Login Card */}
               <Card className="login-card">
                 <Card.Body className="card-body">
                   
@@ -214,19 +214,19 @@ const Login = () => {
         </Container>
       </div>
 
-      {/* ✅ PROFESSIONAL: Enhanced Styles with Animations */}
+      {/* ✅ PROFESSIONAL: Light Theme Styles with Animations */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
         .login-container {
           min-height: 100vh;
-          background: linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #374151 70%, #4b5563 100%);
+          background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 20%, #cbd5e1 40%, #94a3b8 100%);
           position: relative;
           overflow: hidden;
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
         
-        /* ✅ ENHANCED: Interactive Background Animation */
+        /* ✅ LIGHT: Interactive Background Animation */
         .background-animation {
           position: absolute;
           top: 0;
@@ -244,8 +244,8 @@ const Login = () => {
           width: 100%;
           height: 100%;
           background-image: 
-            linear-gradient(rgba(168, 85, 247, 0.05) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(168, 85, 247, 0.05) 1px, transparent 1px);
+            linear-gradient(rgba(124, 58, 237, 0.08) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(124, 58, 237, 0.08) 1px, transparent 1px);
           background-size: 60px 60px;
           animation: gridMove 25s linear infinite;
         }
@@ -253,44 +253,44 @@ const Login = () => {
         .floating-orb {
           position: absolute;
           border-radius: 50%;
-          filter: blur(40px);
-          opacity: 0.7;
+          filter: blur(30px);
+          opacity: 0.6;
         }
         
         .orb-1 {
-          width: 350px;
-          height: 350px;
-          background: radial-gradient(circle, rgba(124, 58, 237, 0.4) 0%, rgba(124, 58, 237, 0.1) 40%, transparent 70%);
-          top: 5%;
-          left: 8%;
-          animation: float1 10s ease-in-out infinite;
+          width: 300px;
+          height: 300px;
+          background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, rgba(124, 58, 237, 0.05) 40%, transparent 70%);
+          top: 8%;
+          left: 10%;
+          animation: float1 12s ease-in-out infinite;
         }
         
         .orb-2 {
-          width: 250px;
-          height: 250px;
-          background: radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, rgba(59, 130, 246, 0.1) 40%, transparent 70%);
-          top: 55%;
-          right: 10%;
-          animation: float2 12s ease-in-out infinite;
+          width: 220px;
+          height: 220px;
+          background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.05) 40%, transparent 70%);
+          top: 60%;
+          right: 12%;
+          animation: float2 15s ease-in-out infinite;
         }
         
         .orb-3 {
-          width: 200px;
-          height: 200px;
-          background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, rgba(16, 185, 129, 0.1) 40%, transparent 70%);
-          bottom: 15%;
-          left: 15%;
-          animation: float3 14s ease-in-out infinite;
+          width: 180px;
+          height: 180px;
+          background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(16, 185, 129, 0.04) 40%, transparent 70%);
+          bottom: 18%;
+          left: 18%;
+          animation: float3 18s ease-in-out infinite;
         }
         
         .mouse-follower {
           position: absolute;
-          width: 120px;
-          height: 120px;
-          background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%);
+          width: 100px;
+          height: 100px;
+          background: radial-gradient(circle, rgba(124, 58, 237, 0.08) 0%, transparent 70%);
           border-radius: 50%;
-          filter: blur(20px);
+          filter: blur(15px);
           transition: transform 0.3s ease-out;
           pointer-events: none;
         }
@@ -304,27 +304,27 @@ const Login = () => {
         
         .particle {
           position: absolute;
-          width: 3px;
-          height: 3px;
-          background: rgba(168, 85, 247, 0.6);
+          width: 4px;
+          height: 4px;
+          background: rgba(124, 58, 237, 0.4);
           border-radius: 50%;
         }
         
-        .particle-1 { animation: particle1 18s linear infinite; }
-        .particle-2 { animation: particle2 22s linear infinite; }
-        .particle-3 { animation: particle3 20s linear infinite; }
+        .particle-1 { animation: particle1 20s linear infinite; }
+        .particle-2 { animation: particle2 25s linear infinite; }
+        .particle-3 { animation: particle3 22s linear infinite; }
         
-        /* ✅ PROFESSIONAL: Glass Morphism Login Card */
+        /* ✅ LIGHT: Professional Glass Morphism Login Card */
         .login-card {
-          background: rgba(255, 255, 255, 0.12);
-          backdrop-filter: blur(25px) saturate(180%);
-          -webkit-backdrop-filter: blur(25px) saturate(180%);
-          border: 1px solid rgba(255, 255, 255, 0.2);
+          background: rgba(255, 255, 255, 0.85);
+          backdrop-filter: blur(20px) saturate(180%);
+          -webkit-backdrop-filter: blur(20px) saturate(180%);
+          border: 1px solid rgba(255, 255, 255, 0.6);
           border-radius: 24px;
           box-shadow: 
-            0 32px 80px rgba(0, 0, 0, 0.3),
-            0 0 0 1px rgba(255, 255, 255, 0.1),
-            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            0 20px 60px rgba(0, 0, 0, 0.1),
+            0 8px 25px rgba(124, 58, 237, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.8);
           position: relative;
           z-index: 10;
           animation: cardAppear 0.8s ease-out;
@@ -334,16 +334,16 @@ const Login = () => {
         }
         
         .login-card:hover {
-          transform: translateY(-5px);
+          transform: translateY(-8px);
           box-shadow: 
-            0 40px 100px rgba(0, 0, 0, 0.4),
-            0 0 0 1px rgba(255, 255, 255, 0.15),
-            inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            0 30px 80px rgba(0, 0, 0, 0.15),
+            0 12px 35px rgba(124, 58, 237, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.9);
         }
         
         .card-body {
           padding: 2.5rem 2rem;
-          color: white;
+          color: #1f2937;
         }
         
         /* Header Section */
@@ -362,13 +362,13 @@ const Login = () => {
         
         .logo-icon {
           font-size: 2rem;
-          filter: drop-shadow(0 0 10px rgba(124, 58, 237, 0.5));
+          filter: drop-shadow(0 2px 8px rgba(124, 58, 237, 0.3));
         }
         
         .brand-name {
           font-size: 1.8rem;
           font-weight: 800;
-          background: linear-gradient(135deg, #ffffff 0%, #a855f7 100%);
+          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -379,16 +379,12 @@ const Login = () => {
           font-size: 1.8rem;
           font-weight: 800;
           margin-bottom: 8px;
-          background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+          color: #111827;
           letter-spacing: -0.02em;
         }
         
         .welcome-subtitle {
-          color: rgba(255, 255, 255, 0.85);
+          color: #6b7280;
           font-size: 0.95rem;
           font-weight: 400;
           line-height: 1.5;
@@ -405,7 +401,7 @@ const Login = () => {
         }
         
         .form-label {
-          color: rgba(255, 255, 255, 0.9);
+          color: #374151;
           font-size: 0.9rem;
           font-weight: 600;
           margin-bottom: 8px;
@@ -420,25 +416,26 @@ const Login = () => {
         }
         
         .form-input {
-          background: rgba(255, 255, 255, 0.12) !important;
-          backdrop-filter: blur(10px);
-          border: 1px solid rgba(255, 255, 255, 0.2) !important;
+          background: rgba(255, 255, 255, 0.8) !important;
+          backdrop-filter: blur(5px);
+          border: 2px solid rgba(124, 58, 237, 0.1) !important;
           border-radius: 12px !important;
           padding: 14px 18px !important;
-          color: white !important;
+          color: #111827 !important;
           font-size: 0.95rem !important;
           transition: all 0.3s ease !important;
           font-family: 'Inter', sans-serif !important;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
         }
         
         .form-input::placeholder {
-          color: rgba(255, 255, 255, 0.5) !important;
+          color: #9ca3af !important;
         }
         
         .form-input:focus {
-          background: rgba(255, 255, 255, 0.18) !important;
-          border-color: rgba(168, 85, 247, 0.6) !important;
-          box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2) !important;
+          background: rgba(255, 255, 255, 0.95) !important;
+          border-color: #7c3aed !important;
+          box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1) !important;
           transform: scale(1.02);
         }
         
@@ -458,7 +455,7 @@ const Login = () => {
           transform: translateY(-50%);
           background: none;
           border: none;
-          color: rgba(255, 255, 255, 0.6);
+          color: #6b7280;
           cursor: pointer;
           font-size: 1.1rem;
           padding: 4px;
@@ -467,8 +464,8 @@ const Login = () => {
         }
         
         .password-toggle:hover {
-          color: rgba(255, 255, 255, 0.9);
-          background: rgba(255, 255, 255, 0.1);
+          color: #374151;
+          background: rgba(124, 58, 237, 0.1);
           transform: translateY(-50%) scale(1.1);
         }
         
@@ -483,7 +480,7 @@ const Login = () => {
           font-weight: 700 !important;
           width: 100% !important;
           transition: all 0.3s ease !important;
-          box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3) !important;
+          box-shadow: 0 8px 25px rgba(124, 58, 237, 0.25) !important;
           display: flex !important;
           align-items: center !important;
           justify-content: center !important;
@@ -496,12 +493,12 @@ const Login = () => {
         
         .submit-button:hover:not(:disabled) {
           background: linear-gradient(135deg, #6b21a8 0%, #7e22ce 100%) !important;
-          transform: translateY(-2px) scale(1.02) !important;
-          box-shadow: 0 16px 40px rgba(124, 58, 237, 0.4) !important;
+          transform: translateY(-3px) scale(1.02) !important;
+          box-shadow: 0 16px 40px rgba(124, 58, 237, 0.35) !important;
         }
         
         .submit-button:active {
-          transform: translateY(0) scale(1) !important;
+          transform: translateY(-1px) scale(1) !important;
         }
         
         .submit-button:disabled {
@@ -516,12 +513,12 @@ const Login = () => {
         
         /* Error Alert */
         .error-alert {
-          background: rgba(239, 68, 68, 0.15) !important;
-          border: 1px solid rgba(239, 68, 68, 0.3) !important;
+          background: rgba(254, 242, 242, 0.9) !important;
+          border: 2px solid rgba(248, 113, 113, 0.3) !important;
           border-radius: 12px !important;
           padding: 12px 16px !important;
           margin-bottom: 1.5rem !important;
-          color: #fca5a5 !important;
+          color: #dc2626 !important;
         }
         
         .error-content {
@@ -542,64 +539,64 @@ const Login = () => {
         }
         
         .signup-text {
-          color: rgba(255, 255, 255, 0.7);
+          color: #6b7280;
           font-size: 0.9rem;
           margin: 0;
         }
         
         .signup-link {
-          color: #a855f7 !important;
+          color: #7c3aed !important;
           text-decoration: none !important;
           font-weight: 600 !important;
           transition: all 0.2s ease !important;
         }
         
         .signup-link:hover {
-          color: #c084fc !important;
-          text-shadow: 0 0 8px rgba(168, 85, 247, 0.5) !important;
+          color: #6b21a8 !important;
+          text-shadow: 0 0 8px rgba(124, 58, 237, 0.3) !important;
         }
         
-        /* ✅ ENHANCED: Keyframe Animations */
+        /* ✅ SMOOTH: Enhanced Keyframe Animations */
         @keyframes float1 {
-          0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          25% { transform: translate(30px, -30px) rotate(90deg); }
-          50% { transform: translate(-20px, -40px) rotate(180deg); }
-          75% { transform: translate(-40px, 20px) rotate(270deg); }
+          0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+          25% { transform: translate(20px, -20px) rotate(90deg) scale(1.05); }
+          50% { transform: translate(-15px, -30px) rotate(180deg) scale(0.95); }
+          75% { transform: translate(-25px, 15px) rotate(270deg) scale(1.02); }
         }
         
         @keyframes float2 {
           0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
-          33% { transform: translate(-40px, -20px) rotate(120deg) scale(1.1); }
-          66% { transform: translate(20px, -30px) rotate(240deg) scale(0.9); }
+          30% { transform: translate(-30px, -15px) rotate(108deg) scale(1.08); }
+          70% { transform: translate(15px, -25px) rotate(252deg) scale(0.92); }
         }
         
         @keyframes float3 {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          20% { transform: translate(25px, -15px) scale(1.1); }
-          40% { transform: translate(-15px, -25px) scale(0.9); }
-          60% { transform: translate(-30px, 10px) scale(1.05); }
-          80% { transform: translate(15px, 20px) scale(0.95); }
+          0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+          20% { transform: translate(18px, -12px) scale(1.06) rotate(72deg); }
+          40% { transform: translate(-12px, -20px) scale(0.94) rotate(144deg); }
+          60% { transform: translate(-22px, 8px) scale(1.03) rotate(216deg); }
+          80% { transform: translate(12px, 16px) scale(0.97) rotate(288deg); }
         }
         
         @keyframes particle1 {
           0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { transform: translateY(-10vh) translateX(150px) rotate(360deg); opacity: 0; }
+          10% { opacity: 0.8; }
+          90% { opacity: 0.8; }
+          100% { transform: translateY(-10vh) translateX(120px) rotate(360deg); opacity: 0; }
         }
         
         @keyframes particle2 {
           0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { transform: translateY(-10vh) translateX(-100px) rotate(-360deg); opacity: 0; }
+          10% { opacity: 0.6; }
+          90% { opacity: 0.6; }
+          100% { transform: translateY(-10vh) translateX(-80px) rotate(-360deg); opacity: 0; }
         }
         
         @keyframes particle3 {
           0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { transform: translateY(-10vh) translateX(75px) rotate(180deg); opacity: 0; }
+          10% { opacity: 0.7; }
+          90% { opacity: 0.7; }
+          100% { transform: translateY(-10vh) translateX(60px) rotate(180deg); opacity: 0; }
         }
         
         @keyframes gridMove {
@@ -610,7 +607,7 @@ const Login = () => {
         @keyframes cardAppear {
           from { 
             opacity: 0; 
-            transform: translateY(30px) scale(0.95); 
+            transform: translateY(40px) scale(0.9); 
           }
           to { 
             opacity: 1; 
@@ -632,9 +629,9 @@ const Login = () => {
             font-size: 1.5rem;
           }
           
-          .orb-1 { width: 250px; height: 250px; }
-          .orb-2 { width: 200px; height: 200px; }
-          .orb-3 { width: 150px; height: 150px; }
+          .orb-1 { width: 220px; height: 220px; }
+          .orb-2 { width: 180px; height: 180px; }
+          .orb-3 { width: 140px; height: 140px; }
         }
         
         @media (max-width: 576px) {
