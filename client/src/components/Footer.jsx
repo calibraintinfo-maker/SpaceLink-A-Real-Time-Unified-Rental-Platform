@@ -12,9 +12,9 @@ const Footer = () => {
   };
 
   return (
-    <footer className="compact-footer">
+    <footer className="professional-footer">
       <Container>
-        <Row className="align-items-center">
+        <Row>
           {/* Brand & Description */}
           <Col lg={4} md={6} className="mb-3 mb-lg-0">
             <div className="footer-brand">
@@ -86,12 +86,15 @@ const Footer = () => {
       </Container>
 
       <style>{`
-        .compact-footer {
-          background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        .professional-footer {
+          background: #f1f5f9;
           border-top: 1px solid rgba(124, 58, 237, 0.08);
-          padding: 1.5rem 0 0.75rem 0;
-          margin-top: 2rem;
+          padding: 20px 0 12px 0;
+          margin-top: 0;
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          color: #64748b;
+          font-size: 13px;
+          line-height: 1.4;
         }
         
         /* Brand Section */
@@ -102,28 +105,28 @@ const Footer = () => {
         .brand-logo {
           display: flex;
           align-items: center;
-          gap: 8px;
-          margin-bottom: 0.75rem;
+          gap: 6px;
+          margin-bottom: 12px;
         }
         
         .logo-icon {
-          font-size: 1.25rem;
-          filter: drop-shadow(0 1px 3px rgba(124, 58, 237, 0.2));
+          font-size: 1.1rem;
+          filter: drop-shadow(0 1px 2px rgba(124, 58, 237, 0.2));
         }
         
         .brand-name {
-          font-size: 1.2rem;
-          font-weight: 800;
+          font-size: 1.1rem;
+          font-weight: 700;
           background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
-          letter-spacing: -0.02em;
+          letter-spacing: -0.01em;
         }
         
         .brand-description {
-          color: #6b7280;
-          font-size: 0.8rem;
+          color: #64748b;
+          font-size: 12px;
           line-height: 1.4;
           margin: 0;
         }
@@ -131,30 +134,31 @@ const Footer = () => {
         /* Footer Sections */
         .footer-title {
           color: #374151;
-          font-size: 0.8rem;
-          font-weight: 700;
-          margin-bottom: 0.5rem;
+          font-size: 12px;
+          font-weight: 600;
+          margin-bottom: 8px;
           text-transform: uppercase;
-          letter-spacing: 0.5px;
+          letter-spacing: 0.3px;
         }
         
         .footer-links {
           display: flex;
           flex-direction: column;
-          gap: 0.25rem;
+          gap: 4px;
         }
         
         .footer-links a {
-          color: #6b7280;
+          color: #64748b;
           text-decoration: none;
-          font-size: 0.75rem;
-          font-weight: 500;
+          font-size: 12px;
+          font-weight: 400;
           transition: color 0.2s ease;
-          padding: 0.125rem 0;
+          padding: 2px 0;
         }
         
         .footer-links a:hover {
           color: #7c3aed;
+          text-decoration: none;
         }
         
         /* Newsletter */
@@ -164,18 +168,18 @@ const Footer = () => {
         
         .newsletter-input-group {
           display: flex;
-          gap: 6px;
-          margin-bottom: 0.5rem;
+          gap: 4px;
+          margin-bottom: 8px;
         }
         
         .newsletter-input {
           flex: 1;
-          padding: 6px 10px;
-          border: 1px solid #e5e7eb;
-          border-radius: 6px;
+          padding: 6px 8px;
+          border: 1px solid #e2e8f0;
+          border-radius: 5px;
           background: white;
           color: #374151;
-          font-size: 0.75rem;
+          font-size: 12px;
           font-family: 'Inter', sans-serif;
           transition: border-color 0.2s ease;
         }
@@ -183,22 +187,27 @@ const Footer = () => {
         .newsletter-input:focus {
           outline: none;
           border-color: #7c3aed;
-          box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.1);
+          box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.1);
+        }
+        
+        .newsletter-input::placeholder {
+          color: #9ca3af;
+          font-size: 11px;
         }
         
         .newsletter-btn {
           background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
           border: none;
-          border-radius: 6px;
-          padding: 6px 12px;
+          border-radius: 5px;
+          padding: 6px 10px;
           color: white;
           font-weight: 600;
-          font-size: 0.7rem;
+          font-size: 11px;
           cursor: pointer;
           transition: all 0.2s ease;
           font-family: 'Inter', sans-serif;
           text-transform: uppercase;
-          letter-spacing: 0.5px;
+          letter-spacing: 0.3px;
         }
         
         .newsletter-btn:hover {
@@ -211,23 +220,23 @@ const Footer = () => {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding-top: 1rem;
-          margin-top: 1rem;
+          padding-top: 12px;
+          margin-top: 16px;
           border-top: 1px solid rgba(124, 58, 237, 0.08);
           flex-wrap: wrap;
-          gap: 0.5rem;
+          gap: 8px;
         }
         
         .footer-legal {
           display: flex;
-          gap: 1rem;
+          gap: 12px;
         }
         
         .footer-legal a {
-          color: #9ca3af;
+          color: #94a3b8;
           text-decoration: none;
-          font-size: 0.7rem;
-          font-weight: 500;
+          font-size: 11px;
+          font-weight: 400;
           transition: color 0.2s ease;
         }
         
@@ -236,34 +245,33 @@ const Footer = () => {
         }
         
         .footer-copyright {
-          color: #9ca3af;
-          font-size: 0.7rem;
-          font-weight: 500;
+          color: #94a3b8;
+          font-size: 11px;
+          font-weight: 400;
         }
         
         /* Responsive Design */
         @media (max-width: 992px) {
-          .compact-footer {
-            padding: 1.25rem 0 0.75rem 0;
+          .professional-footer {
+            padding: 16px 0 10px 0;
           }
           
           .footer-bottom {
             flex-direction: column;
             text-align: center;
-            gap: 0.75rem;
+            gap: 8px;
           }
         }
         
         @media (max-width: 768px) {
-          .compact-footer {
-            padding: 1rem 0 0.75rem 0;
-            margin-top: 1.5rem;
+          .professional-footer {
+            padding: 14px 0 10px 0;
           }
           
           .footer-brand {
             max-width: 100%;
             text-align: center;
-            margin-bottom: 1rem;
+            margin-bottom: 16px;
           }
           
           .newsletter-form {
@@ -272,11 +280,15 @@ const Footer = () => {
           
           .newsletter-input-group {
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 6px;
           }
           
           .newsletter-btn {
             width: 100%;
+          }
+          
+          .footer-title {
+            margin-bottom: 6px;
           }
         }
       `}</style>
