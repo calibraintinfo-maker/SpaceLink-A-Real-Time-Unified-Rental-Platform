@@ -1,299 +1,212 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
 const Footer = () => {
-  const [email, setEmail] = useState('');
-
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    console.log('Newsletter signup:', email);
-    setEmail('');
-  };
-
   return (
-    <footer className="professional-footer">
+    <footer style={{
+      background: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)',
+      color: 'white',
+      padding: '40px 0 20px 0'
+    }}>
       <Container>
         <Row>
-          {/* Brand & Description */}
-          <Col lg={4} md={6} className="mb-3 mb-lg-0">
-            <div className="footer-brand">
-              <div className="brand-logo">
-                <span className="logo-icon">🏠</span>
-                <span className="brand-name">SpaceLink</span>
+          <Col lg={4} className="mb-3">
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              marginBottom: '16px'
+            }}>
+              <div style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                borderRadius: '8px',
+                padding: '5px'
+              }}>
+                <span style={{ fontSize: '1.2rem' }}>🏠</span>
               </div>
-              <p className="brand-description">
-                Your trusted global rental platform. Helping clients find exceptional rentals worldwide.
-              </p>
+              <span style={{ fontSize: '1.5rem', fontWeight: 800 }}>SpaceLink</span>
             </div>
-          </Col>
-          
-          {/* Quick Links */}
-          <Col lg={2} md={3} sm={6} className="mb-3 mb-lg-0">
-            <h6 className="footer-title">Quick Links</h6>
-            <div className="footer-links">
-              <Link to="/find-property">Find Property</Link>
-              <Link to="/list-property">List Property</Link>
-              <Link to="/my-bookings">My Bookings</Link>
-              <Link to="/profile">Profile</Link>
-            </div>
-          </Col>
-          
-          {/* Categories */}
-          <Col lg={2} md={3} sm={6} className="mb-3 mb-lg-0">
-            <h6 className="footer-title">Categories</h6>
-            <div className="footer-links">
-              <Link to="/find-property?type=properties">Properties</Link>
-              <Link to="/find-property?type=events">Event Venues</Link>
-              <Link to="/find-property?type=vehicles">Vehicles</Link>
-              <Link to="/find-property?type=parking">Parking</Link>
-            </div>
-          </Col>
-          
-          {/* Newsletter */}
-          <Col lg={4} className="mb-3 mb-lg-0">
-            <h6 className="footer-title">Stay Updated</h6>
-            <form onSubmit={handleSubscribe} className="newsletter-form">
-              <div className="newsletter-input-group">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+            <p style={{
+              color: 'rgba(255, 255, 255, 0.8)',
+              fontSize: '0.9rem',
+              lineHeight: '1.6',
+              maxWidth: '280px',
+              marginBottom: '20px'
+            }}>
+              Your trusted global rental platform. Helping clients find exceptional rentals and empowering seamless transactions worldwide.
+            </p>
+            
+            {/* Newsletter Signup */}
+            <div>
+              <h5 style={{
+                fontSize: '0.95rem',
+                fontWeight: 700,
+                marginBottom: '10px',
+                color: 'white'
+              }}>Stay Updated</h5>
+              <div style={{ 
+                display: 'flex', 
+                gap: '6px',
+                maxWidth: '280px'
+              }}>
+                <input 
+                  type="email" 
                   placeholder="Enter your email"
-                  className="newsletter-input"
-                  required
+                  style={{
+                    flex: 1,
+                    padding: '8px 12px',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    borderRadius: '6px',
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    color: 'white',
+                    fontSize: '0.8rem'
+                  }}
                 />
-                <button type="submit" className="newsletter-btn">
+                <button style={{
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  border: 'none',
+                  borderRadius: '6px',
+                  padding: '8px 14px',
+                  color: 'white',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  fontSize: '0.8rem'
+                }}>
                   Subscribe
                 </button>
               </div>
-            </form>
+            </div>
+          </Col>
+          
+          <Col lg={2} md={6} className="mb-3">
+            <h5 style={{
+              fontSize: '0.95rem',
+              fontWeight: 700,
+              marginBottom: '12px',
+              color: 'white'
+            }}>Quick Links</h5>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+              {[
+                { name: 'Find Property', path: '/find-property' },
+                { name: 'List Property', path: '/add-property' },
+                { name: 'My Bookings', path: '/my-bookings' },
+                { name: 'Profile', path: '/profile' }
+              ].map((item, index) => (
+                <li key={index} style={{ marginBottom: '8px' }}>
+                  <Link 
+                    to={item.path}
+                    style={{
+                      color: 'rgba(255, 255, 255, 0.7)',
+                      textDecoration: 'none',
+                      fontSize: '0.85rem',
+                      transition: 'color 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => e.target.style.color = '#667eea'}
+                    onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Col>
+          
+          <Col lg={2} md={6} className="mb-3">
+            <h5 style={{
+              fontSize: '0.95rem',
+              fontWeight: 700,
+              marginBottom: '12px',
+              color: 'white'
+            }}>Categories</h5>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+              {['Properties', 'Event Venues', 'Vehicles', 'Parking Spaces'].map((item, index) => (
+                <li key={index} style={{ marginBottom: '8px' }}>
+                  <Link 
+                    to="/find-property"
+                    style={{
+                      color: 'rgba(255, 255, 255, 0.7)',
+                      textDecoration: 'none',
+                      fontSize: '0.85rem',
+                      transition: 'color 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => e.target.style.color = '#667eea'}
+                    onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}
+                  >
+                    {item}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Col>
+          
+          <Col lg={2} md={6} className="mb-3">
+            <h5 style={{
+              fontSize: '0.95rem',
+              fontWeight: 700,
+              marginBottom: '12px',
+              color: 'white'
+            }}>Support</h5>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+              {[
+                { name: 'Help Center', path: '/help' },
+                { name: 'Contact Us', path: '/contact' },
+                { name: 'About Us', path: '/about' },
+                { name: 'Blog', path: '/blog' }
+              ].map((item, index) => (
+                <li key={index} style={{ marginBottom: '8px' }}>
+                  <Link 
+                    to={item.path}
+                    style={{
+                      color: 'rgba(255, 255, 255, 0.7)',
+                      textDecoration: 'none',
+                      fontSize: '0.85rem',
+                      transition: 'color 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => e.target.style.color = '#667eea'}
+                    onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Col>
+          
+          <Col lg={2} md={6} className="mb-3">
+            <h5 style={{
+              fontSize: '0.95rem',
+              fontWeight: 700,
+              marginBottom: '12px',
+              color: 'white'
+            }}>Legal</h5>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+              {[
+                { name: 'Privacy Policy', path: '/privacy' },
+                { name: 'Terms of Service', path: '/terms' },
+                { name: 'Cookie Policy', path: '/cookies' },
+                { name: 'Disclaimer', path: '/disclaimer' }
+              ].map((item, index) => (
+                <li key={index} style={{ marginBottom: '8px' }}>
+                  <Link 
+                    to={item.path}
+                    style={{
+                      color: 'rgba(255, 255, 255, 0.7)',
+                      textDecoration: 'none',
+                      fontSize: '0.85rem',
+                      transition: 'color 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => e.target.style.color = '#667eea'}
+                    onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </Col>
         </Row>
-        
-        {/* Bottom Bar */}
-        <div className="footer-bottom">
-          <div className="footer-legal">
-            <Link to="/privacy">Privacy</Link>
-            <Link to="/terms">Terms</Link>
-            <Link to="/cookies">Cookies</Link>
-            <Link to="/disclaimer">Disclaimer</Link>
-          </div>
-          <div className="footer-copyright">
-            © 2025 SpaceLink. All rights reserved.
-          </div>
-        </div>
       </Container>
-
-      <style>{`
-        .professional-footer {
-          background: #f1f5f9;
-          border-top: 1px solid rgba(124, 58, 237, 0.08);
-          padding: 20px 0 12px 0;
-          margin-top: 0;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-          color: #64748b;
-          font-size: 13px;
-          line-height: 1.4;
-        }
-        
-        /* Brand Section */
-        .footer-brand {
-          max-width: 280px;
-        }
-        
-        .brand-logo {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          margin-bottom: 12px;
-        }
-        
-        .logo-icon {
-          font-size: 1.1rem;
-          filter: drop-shadow(0 1px 2px rgba(124, 58, 237, 0.2));
-        }
-        
-        .brand-name {
-          font-size: 1.1rem;
-          font-weight: 700;
-          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          letter-spacing: -0.01em;
-        }
-        
-        .brand-description {
-          color: #64748b;
-          font-size: 12px;
-          line-height: 1.4;
-          margin: 0;
-        }
-        
-        /* Footer Sections */
-        .footer-title {
-          color: #374151;
-          font-size: 12px;
-          font-weight: 600;
-          margin-bottom: 8px;
-          text-transform: uppercase;
-          letter-spacing: 0.3px;
-        }
-        
-        .footer-links {
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-        }
-        
-        .footer-links a {
-          color: #64748b;
-          text-decoration: none;
-          font-size: 12px;
-          font-weight: 400;
-          transition: color 0.2s ease;
-          padding: 2px 0;
-        }
-        
-        .footer-links a:hover {
-          color: #7c3aed;
-          text-decoration: none;
-        }
-        
-        /* Newsletter */
-        .newsletter-form {
-          max-width: 240px;
-        }
-        
-        .newsletter-input-group {
-          display: flex;
-          gap: 4px;
-          margin-bottom: 8px;
-        }
-        
-        .newsletter-input {
-          flex: 1;
-          padding: 6px 8px;
-          border: 1px solid #e2e8f0;
-          border-radius: 5px;
-          background: white;
-          color: #374151;
-          font-size: 12px;
-          font-family: 'Inter', sans-serif;
-          transition: border-color 0.2s ease;
-        }
-        
-        .newsletter-input:focus {
-          outline: none;
-          border-color: #7c3aed;
-          box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.1);
-        }
-        
-        .newsletter-input::placeholder {
-          color: #9ca3af;
-          font-size: 11px;
-        }
-        
-        .newsletter-btn {
-          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-          border: none;
-          border-radius: 5px;
-          padding: 6px 10px;
-          color: white;
-          font-weight: 600;
-          font-size: 11px;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          font-family: 'Inter', sans-serif;
-          text-transform: uppercase;
-          letter-spacing: 0.3px;
-        }
-        
-        .newsletter-btn:hover {
-          background: linear-gradient(135deg, #6b21a8 0%, #7e22ce 100%);
-          transform: translateY(-1px);
-        }
-        
-        /* Footer Bottom */
-        .footer-bottom {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding-top: 12px;
-          margin-top: 16px;
-          border-top: 1px solid rgba(124, 58, 237, 0.08);
-          flex-wrap: wrap;
-          gap: 8px;
-        }
-        
-        .footer-legal {
-          display: flex;
-          gap: 12px;
-        }
-        
-        .footer-legal a {
-          color: #94a3b8;
-          text-decoration: none;
-          font-size: 11px;
-          font-weight: 400;
-          transition: color 0.2s ease;
-        }
-        
-        .footer-legal a:hover {
-          color: #7c3aed;
-        }
-        
-        .footer-copyright {
-          color: #94a3b8;
-          font-size: 11px;
-          font-weight: 400;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 992px) {
-          .professional-footer {
-            padding: 16px 0 10px 0;
-          }
-          
-          .footer-bottom {
-            flex-direction: column;
-            text-align: center;
-            gap: 8px;
-          }
-        }
-        
-        @media (max-width: 768px) {
-          .professional-footer {
-            padding: 14px 0 10px 0;
-          }
-          
-          .footer-brand {
-            max-width: 100%;
-            text-align: center;
-            margin-bottom: 16px;
-          }
-          
-          .newsletter-form {
-            max-width: 100%;
-          }
-          
-          .newsletter-input-group {
-            flex-direction: column;
-            gap: 6px;
-          }
-          
-          .newsletter-btn {
-            width: 100%;
-          }
-          
-          .footer-title {
-            margin-bottom: 6px;
-          }
-        }
-      `}</style>
     </footer>
   );
 };
-
 export default Footer;
