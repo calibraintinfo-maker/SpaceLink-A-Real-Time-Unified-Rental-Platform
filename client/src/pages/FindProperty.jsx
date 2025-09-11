@@ -397,7 +397,7 @@ const FindProperty = () => {
       {/* Main Layout */}
       <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#ffffff' }}>
         
-        {/* SIDEBAR */}
+        {/* ✅ FIXED: SIDEBAR WITH WHITE TEXT */}
         <div style={{
           width: '400px',
           minHeight: '100vh',
@@ -409,7 +409,7 @@ const FindProperty = () => {
           boxShadow: '4px 0 20px rgba(0, 0, 0, 0.08)'
         }}>
           
-          {/* ✅ FIXED: Dashboard Header with WHITE subtitle text */}
+          {/* ✅ FIXED: Dashboard Header with WHITE text */}
           <div className="p-4 border-bottom" style={{
             background: 'linear-gradient(135deg, #6b46c1 0%, #805ad5 100%)',
             color: 'white'
@@ -421,14 +421,15 @@ const FindProperty = () => {
                   fontWeight: 800,
                   fontSize: '1.3rem',
                   fontFamily: "'Inter', system-ui, sans-serif",
-                  letterSpacing: '-0.01em'
+                  letterSpacing: '-0.01em',
+                  color: 'white' // ✅ FIXED: Explicit white color
                 }} className="d-flex align-items-center">
                   <span className="me-2">🎯</span>
                   Smart Property Filters
                 </h5>
-                {/* ✅ FIXED: WHITE text for visibility on purple background */}
+                {/* ✅ FIXED: WHITE text for subtitle */}
                 <small style={{
-                  color: 'white', // ✅ FIXED: Explicitly white instead of rgba opacity
+                  color: 'white', // ✅ FIXED: Explicit white color
                   fontSize: '0.9rem',
                   fontWeight: 500,
                   fontFamily: "'Inter', system-ui, sans-serif"
@@ -826,7 +827,7 @@ const FindProperty = () => {
           </div>
         </div>
 
-        {/* Main Content Area */}
+        {/* ✅ FIXED: Main Content Area with proper button spacing */}
         <div style={{ flex: 1, backgroundColor: '#ffffff' }}>
           <Container fluid className="py-5 px-5">
             
@@ -854,8 +855,12 @@ const FindProperty = () => {
                 </p>
               </div>
               
-              {/* View Toggle Buttons */}
-              <div className="btn-group shadow-sm" role="group" style={{ borderRadius: '12px', overflow: 'hidden' }}>
+              {/* ✅ FIXED: View Toggle Buttons with proper spacing */}
+              <div style={{ 
+                display: 'flex',
+                gap: '8px', // ✅ FIXED: Add gap between buttons
+                alignItems: 'center'
+              }}>
                 <Button 
                   variant={viewMode === 'grid' ? 'primary' : 'outline-secondary'}
                   onClick={() => setViewMode('grid')}
@@ -866,11 +871,13 @@ const FindProperty = () => {
                     backgroundColor: viewMode === 'grid' ? '#7c3aed' : 'white',
                     borderColor: viewMode === 'grid' ? '#7c3aed' : '#d1d5db',
                     color: viewMode === 'grid' ? 'white' : '#4b5563',
-                    borderRadius: '12px 0 0 12px',
+                    borderRadius: '12px',
                     transition: 'all 0.3s ease',
                     fontFamily: "'Inter', system-ui, sans-serif",
                     textTransform: 'uppercase',
-                    letterSpacing: '0.025em'
+                    letterSpacing: '0.025em',
+                    minWidth: '140px', // ✅ FIXED: Set minimum width to prevent overlap
+                    whiteSpace: 'nowrap' // ✅ FIXED: Prevent text wrapping
                   }}
                   onMouseEnter={(e) => {
                     if (viewMode !== 'grid') {
@@ -898,11 +905,13 @@ const FindProperty = () => {
                     backgroundColor: viewMode === 'list' ? '#7c3aed' : 'white',
                     borderColor: viewMode === 'list' ? '#7c3aed' : '#d1d5db',
                     color: viewMode === 'list' ? 'white' : '#4b5563',
-                    borderRadius: '0 12px 12px 0',
+                    borderRadius: '12px',
                     transition: 'all 0.3s ease',
                     fontFamily: "'Inter', system-ui, sans-serif",
                     textTransform: 'uppercase',
-                    letterSpacing: '0.025em'
+                    letterSpacing: '0.025em',
+                    minWidth: '140px', // ✅ FIXED: Set minimum width to prevent overlap
+                    whiteSpace: 'nowrap' // ✅ FIXED: Prevent text wrapping
                   }}
                   onMouseEnter={(e) => {
                     if (viewMode !== 'list') {
@@ -980,7 +989,7 @@ const FindProperty = () => {
                   return (
                     <Col key={property._id} className={viewMode === 'list' ? 'col-12' : ''}>
                       {viewMode === 'list' ? (
-                        /* ✅ PROFESSIONAL LIST VIEW */
+                        /* LIST VIEW */
                         <Card 
                           className="border-0 shadow-sm"
                           style={{ 
@@ -1063,9 +1072,8 @@ const FindProperty = () => {
                                   </span>
                                 </div>
                                 
-                                {/* ✅ PROFESSIONAL: Enhanced card title */}
                                 <Card.Title style={{ 
-                                  color: '#111827', // ✅ PROFESSIONAL: Darker for better contrast
+                                  color: '#111827',
                                   fontSize: '1.5rem',
                                   lineHeight: '1.3',
                                   fontWeight: 800,
@@ -1076,12 +1084,11 @@ const FindProperty = () => {
                                   {property.title || 'Property Title'}
                                 </Card.Title>
                                 
-                                {/* ✅ PROFESSIONAL: Enhanced description */}
                                 <p className="mb-3" style={{ 
                                   fontSize: '0.95rem',
                                   lineHeight: '1.6',
                                   flexGrow: 1,
-                                  color: '#374151', // ✅ PROFESSIONAL: Better contrast
+                                  color: '#374151',
                                   fontFamily: "'Inter', system-ui, sans-serif",
                                   fontWeight: 400
                                 }}>
@@ -1240,6 +1247,16 @@ const FindProperty = () => {
           border-radius: 12px !important;
         }
         
+        /* ✅ FIXED: Prevent button overlap */
+        .btn-group {
+          gap: 8px !important;
+        }
+        
+        .btn-group .btn {
+          min-width: 140px !important;
+          white-space: nowrap !important;
+        }
+        
         @media (max-width: 768px) {
           .btn-group {
             flex-direction: column !important;
@@ -1249,6 +1266,7 @@ const FindProperty = () => {
           .btn-group .btn {
             border-radius: 8px !important;
             margin-bottom: 4px;
+            min-width: auto !important;
           }
           
           h1 {
