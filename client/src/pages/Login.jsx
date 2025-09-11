@@ -68,15 +68,19 @@ const Login = () => {
         ref={containerRef}
         className="login-container"
       >
-        {/* ✅ PROFESSIONAL: Animated Background */}
+        {/* ✅ AMAZING: Professional Animated Background */}
         <div className="background-animation">
-          {/* Grid pattern overlay */}
+          {/* Animated gradient overlay */}
+          <div className="gradient-overlay"></div>
+          
+          {/* Moving grid pattern */}
           <div className="grid-overlay"></div>
           
-          {/* Floating orbs */}
+          {/* Large floating orbs */}
           <div className="floating-orb orb-1"></div>
           <div className="floating-orb orb-2"></div>
           <div className="floating-orb orb-3"></div>
+          <div className="floating-orb orb-4"></div>
           
           {/* Interactive mouse follower */}
           <div 
@@ -86,26 +90,33 @@ const Login = () => {
             }}
           ></div>
           
-          {/* Animated particles */}
+          {/* Floating particles */}
           <div className="particles">
-            {[...Array(12)].map((_, index) => (
+            {[...Array(20)].map((_, index) => (
               <div
                 key={index}
-                className={`particle particle-${index % 3 + 1}`}
+                className={`particle particle-${index % 4 + 1}`}
                 style={{
                   left: `${Math.random() * 100}%`,
-                  animationDelay: `${index * 1.5}s`
+                  animationDelay: `${index * 0.8}s`
                 }}
               />
             ))}
+          </div>
+          
+          {/* Geometric shapes */}
+          <div className="geometric-shapes">
+            <div className="shape shape-1"></div>
+            <div className="shape shape-2"></div>
+            <div className="shape shape-3"></div>
           </div>
         </div>
 
         <Container>
           <Row className="justify-content-center align-items-center min-vh-100">
-            <Col xs={11} sm={8} md={6} lg={4} xl={4}>
+            <Col xs={11} sm={8} md={6} lg={5} xl={4}>
               
-              {/* ✅ PERFECT: Compact Professional Login Card */}
+              {/* ✅ PERFECT: Professional Login Card */}
               <Card className="login-card">
                 <Card.Body className="card-body">
                   
@@ -165,12 +176,12 @@ const Login = () => {
                           aria-label={showPassword ? 'Hide password' : 'Show password'}
                         >
                           {showPassword ? (
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                               <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
                               <line x1="1" y1="1" x2="23" y2="23"/>
                             </svg>
                           ) : (
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                               <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                               <circle cx="12" cy="12" r="3"/>
                             </svg>
@@ -215,19 +226,19 @@ const Login = () => {
         </Container>
       </div>
 
-      {/* ✅ PERFECT: Professional Compact Styles */}
+      {/* ✅ AMAZING: Professional Animated Styles */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
         .login-container {
           min-height: 100vh;
-          background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 30%, #cbd5e1 70%, #94a3b8 100%);
+          background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #cbd5e1 50%, #94a3b8 100%);
           position: relative;
           overflow: hidden;
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
         
-        /* ✅ PROFESSIONAL: Animated Background */
+        /* ✅ AMAZING: Professional Background Animations */
         .background-animation {
           position: absolute;
           top: 0;
@@ -238,6 +249,21 @@ const Login = () => {
           z-index: 1;
         }
         
+        .gradient-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(45deg, 
+            rgba(124, 58, 237, 0.03) 0%, 
+            transparent 25%, 
+            rgba(59, 130, 246, 0.02) 50%, 
+            transparent 75%, 
+            rgba(16, 185, 129, 0.03) 100%);
+          animation: gradientShift 15s ease-in-out infinite;
+        }
+        
         .grid-overlay {
           position: absolute;
           top: 0;
@@ -245,53 +271,62 @@ const Login = () => {
           width: 100%;
           height: 100%;
           background-image: 
-            linear-gradient(rgba(124, 58, 237, 0.06) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(124, 58, 237, 0.06) 1px, transparent 1px);
-          background-size: 50px 50px;
-          animation: gridMove 30s linear infinite;
+            linear-gradient(rgba(124, 58, 237, 0.08) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(124, 58, 237, 0.08) 1px, transparent 1px);
+          background-size: 60px 60px;
+          animation: gridMove 25s linear infinite;
         }
         
         .floating-orb {
           position: absolute;
           border-radius: 50%;
-          filter: blur(25px);
-          opacity: 0.5;
+          filter: blur(30px);
+          opacity: 0.6;
         }
         
         .orb-1 {
-          width: 250px;
-          height: 250px;
-          background: radial-gradient(circle, rgba(124, 58, 237, 0.12) 0%, rgba(124, 58, 237, 0.04) 40%, transparent 70%);
-          top: 10%;
-          left: 12%;
-          animation: float1 15s ease-in-out infinite;
+          width: 300px;
+          height: 300px;
+          background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, rgba(124, 58, 237, 0.05) 40%, transparent 70%);
+          top: 8%;
+          left: 10%;
+          animation: float1 12s ease-in-out infinite;
         }
         
         .orb-2 {
-          width: 180px;
-          height: 180px;
-          background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, rgba(59, 130, 246, 0.04) 40%, transparent 70%);
-          top: 65%;
-          right: 15%;
-          animation: float2 18s ease-in-out infinite;
+          width: 220px;
+          height: 220px;
+          background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.05) 40%, transparent 70%);
+          top: 60%;
+          right: 12%;
+          animation: float2 15s ease-in-out infinite;
         }
         
         .orb-3 {
-          width: 140px;
-          height: 140px;
-          background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.03) 40%, transparent 70%);
-          bottom: 20%;
-          left: 20%;
-          animation: float3 22s ease-in-out infinite;
+          width: 180px;
+          height: 180px;
+          background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(16, 185, 129, 0.04) 40%, transparent 70%);
+          bottom: 15%;
+          left: 15%;
+          animation: float3 18s ease-in-out infinite;
+        }
+        
+        .orb-4 {
+          width: 150px;
+          height: 150px;
+          background: radial-gradient(circle, rgba(245, 101, 101, 0.1) 0%, rgba(245, 101, 101, 0.03) 40%, transparent 70%);
+          top: 30%;
+          left: 70%;
+          animation: float4 20s ease-in-out infinite;
         }
         
         .mouse-follower {
           position: absolute;
-          width: 80px;
-          height: 80px;
-          background: radial-gradient(circle, rgba(124, 58, 237, 0.06) 0%, transparent 70%);
+          width: 120px;
+          height: 120px;
+          background: radial-gradient(circle, rgba(124, 58, 237, 0.08) 0%, transparent 70%);
           border-radius: 50%;
-          filter: blur(12px);
+          filter: blur(15px);
           transition: transform 0.3s ease-out;
           pointer-events: none;
         }
@@ -305,70 +340,129 @@ const Login = () => {
         
         .particle {
           position: absolute;
-          width: 3px;
-          height: 3px;
-          background: rgba(124, 58, 237, 0.3);
           border-radius: 50%;
+          background: rgba(124, 58, 237, 0.4);
         }
         
-        .particle-1 { animation: particle1 25s linear infinite; }
-        .particle-2 { animation: particle2 30s linear infinite; }
-        .particle-3 { animation: particle3 28s linear infinite; }
+        .particle-1 { 
+          width: 4px; 
+          height: 4px; 
+          animation: particle1 20s linear infinite; 
+        }
+        .particle-2 { 
+          width: 3px; 
+          height: 3px; 
+          background: rgba(59, 130, 246, 0.4);
+          animation: particle2 25s linear infinite; 
+        }
+        .particle-3 { 
+          width: 5px; 
+          height: 5px; 
+          background: rgba(16, 185, 129, 0.4);
+          animation: particle3 22s linear infinite; 
+        }
+        .particle-4 { 
+          width: 2px; 
+          height: 2px; 
+          background: rgba(245, 101, 101, 0.4);
+          animation: particle4 18s linear infinite; 
+        }
         
-        /* ✅ PERFECT: Compact Professional Card */
+        .geometric-shapes {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+        }
+        
+        .shape {
+          position: absolute;
+          opacity: 0.1;
+        }
+        
+        .shape-1 {
+          width: 60px;
+          height: 60px;
+          border: 2px solid #7c3aed;
+          top: 20%;
+          right: 20%;
+          animation: rotate 30s linear infinite;
+        }
+        
+        .shape-2 {
+          width: 0;
+          height: 0;
+          border-left: 25px solid transparent;
+          border-right: 25px solid transparent;
+          border-bottom: 40px solid #3b82f6;
+          top: 70%;
+          left: 80%;
+          animation: float1 25s ease-in-out infinite;
+        }
+        
+        .shape-3 {
+          width: 40px;
+          height: 40px;
+          background: #10b981;
+          border-radius: 50%;
+          bottom: 30%;
+          right: 30%;
+          animation: pulse 8s ease-in-out infinite;
+        }
+        
+        /* ✅ PERFECT: Professional Login Card */
         .login-card {
-          background: rgba(255, 255, 255, 0.92);
-          backdrop-filter: blur(15px) saturate(180%);
-          -webkit-backdrop-filter: blur(15px) saturate(180%);
-          border: 1px solid rgba(255, 255, 255, 0.7);
-          border-radius: 20px;
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(20px) saturate(180%);
+          -webkit-backdrop-filter: blur(20px) saturate(180%);
+          border: 1px solid rgba(255, 255, 255, 0.8);
+          border-radius: 24px;
           box-shadow: 
-            0 15px 45px rgba(0, 0, 0, 0.08),
-            0 5px 15px rgba(124, 58, 237, 0.08),
+            0 20px 60px rgba(0, 0, 0, 0.1),
+            0 8px 25px rgba(124, 58, 237, 0.1),
             inset 0 1px 0 rgba(255, 255, 255, 0.9);
           position: relative;
           z-index: 10;
-          animation: cardAppear 0.6s ease-out;
+          animation: cardAppear 0.8s ease-out;
           transition: all 0.3s ease;
           width: 100%;
-          max-width: 340px;
+          max-width: 420px;
           margin: 0 auto;
         }
         
         .login-card:hover {
-          transform: translateY(-4px);
+          transform: translateY(-8px);
           box-shadow: 
-            0 20px 60px rgba(0, 0, 0, 0.12),
-            0 8px 25px rgba(124, 58, 237, 0.12),
+            0 30px 80px rgba(0, 0, 0, 0.15),
+            0 12px 35px rgba(124, 58, 237, 0.15),
             inset 0 1px 0 rgba(255, 255, 255, 0.95);
         }
         
         .card-body {
-          padding: 1.75rem 1.5rem;
+          padding: 2.5rem 2rem;
           color: #1f2937;
         }
         
-        /* ✅ COMPACT: Header Section */
+        /* ✅ PERFECT: Header Section */
         .header-section {
           text-align: center;
-          margin-bottom: 1.5rem;
+          margin-bottom: 2rem;
         }
         
         .brand-logo {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 8px;
-          margin-bottom: 1rem;
+          gap: 12px;
+          margin-bottom: 1.5rem;
         }
         
         .logo-icon {
-          font-size: 1.5rem;
-          filter: drop-shadow(0 2px 4px rgba(124, 58, 237, 0.2));
+          font-size: 2rem;
+          filter: drop-shadow(0 2px 8px rgba(124, 58, 237, 0.3));
         }
         
         .brand-name {
-          font-size: 1.4rem;
+          font-size: 1.8rem;
           font-weight: 800;
           background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
           -webkit-background-clip: text;
@@ -378,61 +472,61 @@ const Login = () => {
         }
         
         .welcome-title {
-          font-size: 1.4rem;
+          font-size: 1.75rem;
           font-weight: 700;
-          margin-bottom: 6px;
+          margin-bottom: 8px;
           color: #111827;
           letter-spacing: -0.02em;
         }
         
         .welcome-subtitle {
           color: #6b7280;
-          font-size: 0.8rem;
+          font-size: 0.95rem;
           font-weight: 400;
-          line-height: 1.4;
+          line-height: 1.5;
           margin: 0;
         }
         
-        /* ✅ COMPACT: Form Styling */
+        /* ✅ PERFECT: Form Styling */
         .login-form {
-          margin-bottom: 1rem;
+          margin-bottom: 1.5rem;
         }
         
         .form-group {
-          margin-bottom: 1.1rem;
+          margin-bottom: 1.5rem;
         }
         
         .form-label {
           color: #374151;
-          font-size: 0.8rem;
+          font-size: 0.9rem;
           font-weight: 600;
-          margin-bottom: 5px;
+          margin-bottom: 8px;
           display: block;
         }
         
         .form-input {
           background: rgba(255, 255, 255, 0.9) !important;
-          backdrop-filter: blur(5px);
-          border: 1.5px solid rgba(209, 213, 219, 0.8) !important;
-          border-radius: 10px !important;
-          padding: 11px 14px !important;
+          backdrop-filter: blur(10px);
+          border: 2px solid rgba(209, 213, 219, 0.6) !important;
+          border-radius: 12px !important;
+          padding: 14px 18px !important;
           color: #111827 !important;
-          font-size: 0.85rem !important;
-          transition: all 0.2s ease !important;
+          font-size: 0.95rem !important;
+          transition: all 0.3s ease !important;
           font-family: 'Inter', sans-serif !important;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
         }
         
         .form-input::placeholder {
           color: #9ca3af !important;
-          font-size: 0.8rem !important;
+          font-size: 0.9rem !important;
         }
         
         .form-input:focus {
           background: rgba(255, 255, 255, 0.95) !important;
           border-color: #7c3aed !important;
-          box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.08) !important;
-          transform: none;
+          box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1) !important;
+          transform: scale(1.02);
         }
         
         /* ✅ PROFESSIONAL: Password Field */
@@ -441,20 +535,20 @@ const Login = () => {
         }
         
         .password-input {
-          padding-right: 40px !important;
+          padding-right: 50px !important;
         }
         
         .password-toggle {
           position: absolute;
-          right: 10px;
+          right: 14px;
           top: 50%;
           transform: translateY(-50%);
           background: none;
           border: none;
           color: #6b7280;
           cursor: pointer;
-          padding: 5px;
-          border-radius: 5px;
+          padding: 6px;
+          border-radius: 6px;
           transition: all 0.2s ease;
           display: flex;
           align-items: center;
@@ -463,45 +557,45 @@ const Login = () => {
         
         .password-toggle:hover {
           color: #374151;
-          background: rgba(124, 58, 237, 0.08);
-          transform: translateY(-50%) scale(1.05);
+          background: rgba(124, 58, 237, 0.1);
+          transform: translateY(-50%) scale(1.1);
         }
         
         .password-toggle svg {
-          width: 16px;
-          height: 16px;
+          width: 20px;
+          height: 20px;
         }
         
-        /* ✅ COMPACT: Submit Button */
+        /* ✅ PERFECT: Submit Button */
         .submit-button {
           background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%) !important;
           border: none !important;
-          border-radius: 10px !important;
-          padding: 11px 18px !important;
+          border-radius: 12px !important;
+          padding: 14px 24px !important;
           color: white !important;
-          font-size: 0.8rem !important;
+          font-size: 0.95rem !important;
           font-weight: 700 !important;
           width: 100% !important;
           transition: all 0.3s ease !important;
-          box-shadow: 0 4px 15px rgba(124, 58, 237, 0.2) !important;
+          box-shadow: 0 8px 25px rgba(124, 58, 237, 0.25) !important;
           display: flex !important;
           align-items: center !important;
           justify-content: center !important;
-          gap: 5px !important;
+          gap: 8px !important;
           font-family: 'Inter', sans-serif !important;
           text-transform: uppercase;
           letter-spacing: 0.5px;
-          margin-bottom: 1rem !important;
+          margin-bottom: 1.5rem !important;
         }
         
         .submit-button:hover:not(:disabled) {
           background: linear-gradient(135deg, #6b21a8 0%, #7e22ce 100%) !important;
-          transform: translateY(-2px) !important;
-          box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3) !important;
+          transform: translateY(-3px) scale(1.02) !important;
+          box-shadow: 0 16px 40px rgba(124, 58, 237, 0.35) !important;
         }
         
         .submit-button:active {
-          transform: translateY(0) !important;
+          transform: translateY(-1px) scale(1) !important;
         }
         
         .submit-button:disabled {
@@ -511,28 +605,28 @@ const Login = () => {
         }
         
         .button-icon {
-          font-size: 0.9rem;
+          font-size: 1.1rem;
         }
         
-        /* ✅ COMPACT: Error Alert */
+        /* ✅ PERFECT: Error Alert */
         .error-alert {
           background: rgba(254, 242, 242, 0.9) !important;
-          border: 1px solid rgba(248, 113, 113, 0.3) !important;
-          border-radius: 8px !important;
-          padding: 8px 10px !important;
-          margin-bottom: 1rem !important;
+          border: 2px solid rgba(248, 113, 113, 0.3) !important;
+          border-radius: 12px !important;
+          padding: 12px 16px !important;
+          margin-bottom: 1.5rem !important;
           color: #dc2626 !important;
-          font-size: 0.8rem !important;
+          font-size: 0.9rem !important;
         }
         
-        /* ✅ COMPACT: Footer */
+        /* ✅ PERFECT: Footer */
         .login-footer {
           text-align: center;
         }
         
         .signup-text {
           color: #6b7280;
-          font-size: 0.8rem;
+          font-size: 0.9rem;
           margin: 0;
         }
         
@@ -540,59 +634,94 @@ const Login = () => {
           color: #7c3aed !important;
           text-decoration: none !important;
           font-weight: 600 !important;
-          transition: color 0.2s ease !important;
+          transition: all 0.2s ease !important;
         }
         
         .signup-link:hover {
           color: #6b21a8 !important;
+          text-shadow: 0 0 8px rgba(124, 58, 237, 0.3) !important;
         }
         
-        /* ✅ SMOOTH: Professional Animations */
+        /* ✅ AMAZING: Professional Animation Keyframes */
+        @keyframes gradientShift {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.7; }
+        }
+        
         @keyframes float1 {
-          0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          50% { transform: translate(15px, -12px) rotate(180deg); }
+          0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+          25% { transform: translate(25px, -25px) rotate(90deg) scale(1.05); }
+          50% { transform: translate(-15px, -35px) rotate(180deg) scale(0.95); }
+          75% { transform: translate(-30px, 20px) rotate(270deg) scale(1.02); }
         }
         
         @keyframes float2 {
-          0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          50% { transform: translate(-12px, -10px) rotate(-180deg); }
+          0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+          30% { transform: translate(-35px, -20px) rotate(108deg) scale(1.08); }
+          70% { transform: translate(20px, -30px) rotate(252deg) scale(0.92); }
         }
         
         @keyframes float3 {
+          0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+          20% { transform: translate(20px, -15px) scale(1.06) rotate(72deg); }
+          40% { transform: translate(-15px, -25px) scale(0.94) rotate(144deg); }
+          60% { transform: translate(-25px, 10px) scale(1.03) rotate(216deg); }
+          80% { transform: translate(15px, 20px) scale(0.97) rotate(288deg); }
+        }
+        
+        @keyframes float4 {
           0%, 100% { transform: translate(0, 0) scale(1); }
-          50% { transform: translate(8px, -6px) scale(1.02); }
+          33% { transform: translate(15px, -20px) scale(1.1); }
+          66% { transform: translate(-20px, 15px) scale(0.9); }
         }
         
         @keyframes particle1 {
-          0% { transform: translateY(100vh) translateX(0px); opacity: 0; }
-          10% { opacity: 0.6; }
-          90% { opacity: 0.6; }
-          100% { transform: translateY(-10vh) translateX(80px); opacity: 0; }
+          0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
+          10% { opacity: 0.8; }
+          90% { opacity: 0.8; }
+          100% { transform: translateY(-10vh) translateX(100px) rotate(360deg); opacity: 0; }
         }
         
         @keyframes particle2 {
-          0% { transform: translateY(100vh) translateX(0px); opacity: 0; }
-          10% { opacity: 0.4; }
-          90% { opacity: 0.4; }
-          100% { transform: translateY(-10vh) translateX(-60px); opacity: 0; }
+          0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
+          10% { opacity: 0.6; }
+          90% { opacity: 0.6; }
+          100% { transform: translateY(-10vh) translateX(-80px) rotate(-360deg); opacity: 0; }
         }
         
         @keyframes particle3 {
-          0% { transform: translateY(100vh) translateX(0px); opacity: 0; }
+          0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
+          10% { opacity: 0.7; }
+          90% { opacity: 0.7; }
+          100% { transform: translateY(-10vh) translateX(60px) rotate(180deg); opacity: 0; }
+        }
+        
+        @keyframes particle4 {
+          0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
           10% { opacity: 0.5; }
           90% { opacity: 0.5; }
-          100% { transform: translateY(-10vh) translateX(40px); opacity: 0; }
+          100% { transform: translateY(-10vh) translateX(-40px) rotate(-180deg); opacity: 0; }
         }
         
         @keyframes gridMove {
           0% { transform: translate(0, 0); }
-          100% { transform: translate(50px, 50px); }
+          100% { transform: translate(60px, 60px); }
+        }
+        
+        @keyframes rotate {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+          0%, 100% { transform: scale(1); opacity: 0.1; }
+          50% { transform: scale(1.2); opacity: 0.2; }
         }
         
         @keyframes cardAppear {
           from { 
             opacity: 0; 
-            transform: translateY(20px) scale(0.95); 
+            transform: translateY(30px) scale(0.9); 
           }
           to { 
             opacity: 1; 
@@ -603,7 +732,30 @@ const Login = () => {
         /* ✅ RESPONSIVE: Mobile Optimizations */
         @media (max-width: 768px) {
           .login-card {
-            max-width: 320px;
+            max-width: 380px;
+          }
+          
+          .card-body {
+            padding: 2rem 1.5rem;
+          }
+          
+          .welcome-title {
+            font-size: 1.5rem;
+          }
+          
+          .brand-name {
+            font-size: 1.5rem;
+          }
+          
+          .orb-1 { width: 200px; height: 200px; }
+          .orb-2 { width: 160px; height: 160px; }
+          .orb-3 { width: 130px; height: 130px; }
+          .orb-4 { width: 110px; height: 110px; }
+        }
+        
+        @media (max-width: 576px) {
+          .login-card {
+            max-width: 350px;
           }
           
           .card-body {
@@ -611,33 +763,11 @@ const Login = () => {
           }
           
           .welcome-title {
-            font-size: 1.25rem;
+            font-size: 1.3rem;
           }
           
           .brand-name {
-            font-size: 1.25rem;
-          }
-          
-          .orb-1 { width: 180px; height: 180px; }
-          .orb-2 { width: 140px; height: 140px; }
-          .orb-3 { width: 110px; height: 110px; }
-        }
-        
-        @media (max-width: 576px) {
-          .login-card {
-            max-width: 300px;
-          }
-          
-          .card-body {
-            padding: 1.25rem 1rem;
-          }
-          
-          .welcome-title {
-            font-size: 1.15rem;
-          }
-          
-          .brand-name {
-            font-size: 1.15rem;
+            font-size: 1.3rem;
           }
         }
       `}</style>
