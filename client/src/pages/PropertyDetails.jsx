@@ -23,63 +23,27 @@ const PropertyDetails = () => {
       setProperty(response.data || response);
     } catch (err) {
       setError('Failed to load property details');
-      console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleImageError = (e) => {
-    e.target.src = 'https://via.placeholder.com/800x400/f1f5f9/64748b?text=Property+Image';
-  };
-
-  const formatDate = (dateString) => {
-    if (!dateString) return 'N/A';
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
-
   if (loading) {
     return (
-      <div style={{ 
-        minHeight: '50vh', 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'center',
-        backgroundColor: '#f8fafc'
-      }}>
-        <div className="text-center">
-          <Spinner animation="border" style={{ color: '#7c3aed', width: '2.5rem', height: '2.5rem' }} />
-          <p className="mt-3" style={{ color: '#64748b', fontSize: '1rem' }}>Loading property details...</p>
-        </div>
+      <div className="loading-container">
+        <Spinner animation="border" style={{ color: '#7c3aed' }} />
+        <p className="mt-3">Loading property details...</p>
       </div>
     );
   }
 
-  if (error) {
+  if (error || !property) {
     return (
-      <Container className="py-5">
+      <Container className="py-4">
         <Alert variant="danger" className="text-center">
-          <Alert.Heading>Error Loading Property</Alert.Heading>
-          <p>{error}</p>
-          <Button onClick={fetchProperty} style={{ backgroundColor: '#7c3aed', borderColor: '#7c3aed' }}>
-            Try Again
-          </Button>
-        </Alert>
-      </Container>
-    );
-  }
-
-  if (!property) {
-    return (
-      <Container className="py-5">
-        <Alert variant="warning" className="text-center">
-          <Alert.Heading>Property Not Found</Alert.Heading>
-          <p>The property you're looking for doesn't exist.</p>
-          <Button onClick={() => navigate('/find-property')} style={{ backgroundColor: '#7c3aed', borderColor: '#7c3aed' }}>
+          <Alert.Heading>Error</Alert.Heading>
+          <p>{error || 'Property not found'}</p>
+          <Button onClick={() => navigate('/find-property')} variant="primary">
             Back to Properties
           </Button>
         </Alert>
@@ -92,685 +56,573 @@ const PropertyDetails = () => {
 
   return (
     <>
-      <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh' }}>
-        <Container style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
+      <div className="property-details-page">
+        <Container fluid className="property-container">
           
-          {/* ✅ PROFESSIONAL: Back Button */}
-          <div className="mb-4">
+          {/* ✅ FIXED: Back Button */}
+          <div className="back-button-container">
             <Button
               variant="outline-primary"
               onClick={() => navigate('/find-property')}
-              style={{
-                backgroundColor: 'white',
-                border: '2px solid #7c3aed',
-                borderRadius: '12px',
-                padding: '10px 20px',
-                fontSize: '0.9rem',
-                fontWeight: '600',
-                color: '#7c3aed',
-                fontFamily: "'Inter', system-ui, sans-serif",
-                boxShadow: '0 2px 8px rgba(124, 58, 237, 0.1)',
-                transition: 'all 0.2s ease',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.backgroundColor = '#7c3aed';
-                e.target.style.color = 'white';
-                e.target.style.transform = 'translateY(-1px)';
-                e.target.style.boxShadow = '0 4px 12px rgba(124, 58, 237, 0.2)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.backgroundColor = 'white';
-                e.target.style.color = '#7c3aed';
-                e.target.style.transform = 'translateY(0)';
-                e.target.style.boxShadow = '0 2px 8px rgba(124, 58, 237, 0.1)';
-              }}
+              className="back-button"
             >
-              <span style={{ fontSize: '1rem' }}>←</span>
-              <span>Back to Properties</span>
+              ← Back to Properties
             </Button>
           </div>
 
-          <Row className="g-4">
-            <Col lg={8}>
+          {/* ✅ FIXED: Two Column Layout */}
+          <div className="property-layout">
+            
+            {/* Left Column - Main Content */}
+            <div className="main-content">
               
-              {/* ✅ PROFESSIONAL: Image Gallery */}
-              <Card className="border-0 shadow-sm mb-4" style={{ borderRadius: '16px', overflow: 'hidden' }}>
-                <div style={{ position: 'relative', height: '350px', backgroundColor: '#f1f5f9' }}>
+              {/* Image Gallery */}
+              <Card className="image-card">
+                <div className="image-container">
                   <img
                     src={getImageUrl(currentImage)}
                     alt={property.title || 'Property'}
-                    onError={handleImageError}
-                    style={{ 
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover'
-                    }}
+                    onError={(e) => { e.target.src = 'https://via.placeholder.com/800x300/f1f5f9/64748b?text=Property+Image'; }}
+                    className="property-image"
                   />
                   
                   {images.length > 1 && (
                     <>
-                      <div className="position-absolute top-50 start-0 translate-middle-y">
-                        <Button
-                          variant="light"
-                          onClick={() => setImageIndex((imageIndex - 1 + images.length) % images.length)}
-                          style={{ 
-                            borderRadius: '50%', 
-                            width: '40px', 
-                            height: '40px',
-                            marginLeft: '10px',
-                            border: 'none',
-                            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
-                            fontSize: '1.2rem'
-                          }}
-                        >
-                          ‹
-                        </Button>
-                      </div>
-                      <div className="position-absolute top-50 end-0 translate-middle-y">
-                        <Button
-                          variant="light"
-                          onClick={() => setImageIndex((imageIndex + 1) % images.length)}
-                          style={{ 
-                            borderRadius: '50%', 
-                            width: '40px', 
-                            height: '40px',
-                            marginRight: '10px',
-                            border: 'none',
-                            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
-                            fontSize: '1.2rem'
-                          }}
-                        >
-                          ›
-                        </Button>
-                      </div>
-                      
-                      <div className="position-absolute bottom-0 start-50 translate-middle-x p-3">
-                        <div style={{
-                          background: 'rgba(0, 0, 0, 0.7)',
-                          borderRadius: '16px',
-                          padding: '6px 12px',
-                          color: 'white',
-                          fontSize: '0.8rem',
-                          fontWeight: '500',
-                          fontFamily: "'Inter', system-ui, sans-serif"
-                        }}>
-                          {imageIndex + 1} of {images.length}
-                        </div>
+                      <button className="nav-button nav-prev" onClick={() => setImageIndex((imageIndex - 1 + images.length) % images.length)}>
+                        ‹
+                      </button>
+                      <button className="nav-button nav-next" onClick={() => setImageIndex((imageIndex + 1) % images.length)}>
+                        ›
+                      </button>
+                      <div className="image-indicator">
+                        {imageIndex + 1} of {images.length}
                       </div>
                     </>
                   )}
                 </div>
               </Card>
 
-              {/* ✅ PROFESSIONAL: Property Tags */}
-              <div className="mb-4">
-                <div className="d-flex flex-wrap gap-2">
-                  <Badge 
-                    bg="primary" 
-                    style={{ 
-                      fontSize: '0.75rem',
-                      padding: '6px 12px',
-                      borderRadius: '16px',
-                      fontFamily: "'Inter', system-ui, sans-serif",
-                      fontWeight: '500'
-                    }}
-                  >
-                    🏷️ {property.category || 'Land'}
-                  </Badge>
-                  <Badge 
-                    bg="secondary" 
-                    style={{ 
-                      fontSize: '0.75rem',
-                      padding: '6px 12px',
-                      borderRadius: '16px',
-                      fontFamily: "'Inter', system-ui, sans-serif",
-                      fontWeight: '500'
-                    }}
-                  >
-                    📐 {property.subtype || 'Agricultural Land'}
-                  </Badge>
-                  <Badge 
-                    bg="info" 
-                    style={{ 
-                      fontSize: '0.75rem',
-                      padding: '6px 12px',
-                      borderRadius: '16px',
-                      fontFamily: "'Inter', system-ui, sans-serif",
-                      fontWeight: '500'
-                    }}
-                  >
-                    🕒 {Array.isArray(property.rentType) ? property.rentType.join(', ') : (property.rentType || 'yearly')}
-                  </Badge>
-                </div>
+              {/* Property Tags */}
+              <div className="property-tags">
+                <Badge bg="primary" className="property-tag">🏷️ {property.category || 'Land'}</Badge>
+                <Badge bg="secondary" className="property-tag">📐 {property.subtype || 'Agricultural Land'}</Badge>
+                <Badge bg="info" className="property-tag">🕒 {Array.isArray(property.rentType) ? property.rentType.join(', ') : (property.rentType || 'yearly')}</Badge>
               </div>
 
-              {/* ✅ PROFESSIONAL: Title and Price */}
-              <div className="mb-4">
-                <h1 style={{
-                  fontSize: '2rem',
-                  fontWeight: '700',
-                  color: '#111827',
-                  marginBottom: '8px',
-                  fontFamily: "'Inter', system-ui, sans-serif",
-                  lineHeight: '1.2'
-                }}>
-                  {property.title || 'Premium Property'}
-                </h1>
-                
-                <div className="d-flex align-items-center mb-3">
-                  <span className="me-2" style={{ color: '#7c3aed', fontSize: '1rem' }}>📍</span>
-                  <span style={{
-                    fontSize: '0.9rem',
-                    color: '#64748b',
-                    fontFamily: "'Inter', system-ui, sans-serif",
-                    fontWeight: '500'
-                  }}>
-                    {property.address?.street && `${property.address.street}, `}
-                    {property.address?.city || 'namakkal'}, {property.address?.state || 'Tamil nadu'} - {property.address?.zipCode || '123456'}
-                  </span>
+              {/* Title and Location */}
+              <div className="property-header">
+                <h1 className="property-title">{property.title || 'Premium Property'}</h1>
+                <div className="property-location">
+                  <span className="location-icon">📍</span>
+                  <span>{property.address?.city || 'namakkal'}, {property.address?.state || 'Tamil nadu'} - {property.address?.zipCode || '123456'}</span>
                 </div>
-
-                <div style={{
-                  fontSize: '1.8rem',
-                  fontWeight: '700',
-                  color: '#059669',
-                  fontFamily: "'Inter', system-ui, sans-serif",
-                  marginBottom: '4px'
-                }}>
+                <div className="property-price">
                   {formatPrice(property.price, Array.isArray(property.rentType) ? property.rentType[0] : property.rentType)}
                 </div>
-                <p style={{
-                  color: '#6b7280',
-                  fontSize: '0.9rem',
-                  margin: 0,
-                  fontFamily: "'Inter', system-ui, sans-serif",
-                  fontWeight: '500'
-                }}>
-                  Available for {Array.isArray(property.rentType) ? property.rentType.join(', ') : (property.rentType || 'yearly')} rental
-                </p>
+                <p className="price-subtitle">Available for {Array.isArray(property.rentType) ? property.rentType.join(', ') : (property.rentType || 'yearly')} rental</p>
               </div>
 
-              {/* ✅ PROFESSIONAL: Property Information */}
-              <Card className="border-0 shadow-sm mb-4" style={{ borderRadius: '16px' }}>
-                <Card.Body style={{ padding: '1.5rem' }}>
-                  <h3 style={{
-                    fontSize: '1.25rem',
-                    fontWeight: '600',
-                    color: '#111827',
-                    marginBottom: '1rem',
-                    fontFamily: "'Inter', system-ui, sans-serif",
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px'
-                  }}>
-                    <span style={{ color: '#7c3aed' }}>📊</span>
-                    Property Information
-                  </h3>
-                  
-                  <Row className="g-3">
-                    <Col md={6}>
-                      <div style={{ marginBottom: '1rem' }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          marginBottom: '4px'
-                        }}>
-                          <span style={{ color: '#7c3aed', fontSize: '0.9rem', marginRight: '6px' }}>📐</span>
-                          <span style={{
-                            fontSize: '0.8rem',
-                            color: '#6b7280',
-                            fontFamily: "'Inter', system-ui, sans-serif",
-                            fontWeight: '500',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.5px'
-                          }}>
-                            Size
-                          </span>
-                        </div>
-                        <div style={{
-                          fontSize: '1.1rem',
-                          fontWeight: '600',
-                          color: '#111827',
-                          fontFamily: "'Inter', system-ui, sans-serif"
-                        }}>
-                          {property.size || '10000'} sq ft
-                        </div>
-                      </div>
+              {/* Property Information */}
+              <Card className="info-card">
+                <Card.Body>
+                  <h3 className="section-title">📊 Property Information</h3>
+                  <Row className="info-grid">
+                    <Col md={6} className="info-item">
+                      <div className="info-label">📐 SIZE</div>
+                      <div className="info-value">{property.size || '10000'} sq ft</div>
                     </Col>
-                    
-                    <Col md={6}>
-                      <div style={{ marginBottom: '1rem' }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          marginBottom: '4px'
-                        }}>
-                          <span style={{ color: '#7c3aed', fontSize: '0.9rem', marginRight: '6px' }}>📞</span>
-                          <span style={{
-                            fontSize: '0.8rem',
-                            color: '#6b7280',
-                            fontFamily: "'Inter', system-ui, sans-serif",
-                            fontWeight: '500',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.5px'
-                          }}>
-                            Contact
-                          </span>
-                        </div>
-                        <div style={{
-                          fontSize: '1.1rem',
-                          fontWeight: '600',
-                          color: '#111827',
-                          fontFamily: "'Inter', system-ui, sans-serif"
-                        }}>
-                          {property.contact || '9087654321'}
-                        </div>
-                      </div>
+                    <Col md={6} className="info-item">
+                      <div className="info-label">📞 CONTACT</div>
+                      <div className="info-value">{property.contact || '9087654321'}</div>
                     </Col>
-                    
-                    <Col md={6}>
-                      <div style={{ marginBottom: '1rem' }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          marginBottom: '4px'
-                        }}>
-                          <span style={{ color: '#7c3aed', fontSize: '0.9rem', marginRight: '6px' }}>🏷️</span>
-                          <span style={{
-                            fontSize: '0.8rem',
-                            color: '#6b7280',
-                            fontFamily: "'Inter', system-ui, sans-serif",
-                            fontWeight: '500',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.5px'
-                          }}>
-                            Category
-                          </span>
-                        </div>
-                        <div style={{
-                          fontSize: '1.1rem',
-                          fontWeight: '600',
-                          color: '#111827',
-                          fontFamily: "'Inter', system-ui, sans-serif"
-                        }}>
-                          {property.category || 'Land'}
-                        </div>
-                      </div>
+                    <Col md={6} className="info-item">
+                      <div className="info-label">🏷️ CATEGORY</div>
+                      <div className="info-value">{property.category || 'Land'}</div>
                     </Col>
-                    
-                    <Col md={6}>
-                      <div style={{ marginBottom: '1rem' }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          marginBottom: '4px'
-                        }}>
-                          <span style={{ color: '#7c3aed', fontSize: '0.9rem', marginRight: '6px' }}>🔧</span>
-                          <span style={{
-                            fontSize: '0.8rem',
-                            color: '#6b7280',
-                            fontFamily: "'Inter', system-ui, sans-serif",
-                            fontWeight: '500',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.5px'
-                          }}>
-                            Type
-                          </span>
-                        </div>
-                        <div style={{
-                          fontSize: '1.1rem',
-                          fontWeight: '600',
-                          color: '#111827',
-                          fontFamily: "'Inter', system-ui, sans-serif"
-                        }}>
-                          {property.subtype || 'Agricultural Land'}
-                        </div>
-                      </div>
+                    <Col md={6} className="info-item">
+                      <div className="info-label">🔧 TYPE</div>
+                      <div className="info-value">{property.subtype || 'Agricultural Land'}</div>
                     </Col>
-                    
-                    <Col md={6}>
-                      <div style={{ marginBottom: '1rem' }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          marginBottom: '4px'
-                        }}>
-                          <span style={{ color: '#7c3aed', fontSize: '0.9rem', marginRight: '6px' }}>🕒</span>
-                          <span style={{
-                            fontSize: '0.8rem',
-                            color: '#6b7280',
-                            fontFamily: "'Inter', system-ui, sans-serif",
-                            fontWeight: '500',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.5px'
-                          }}>
-                            Rent Types
-                          </span>
-                        </div>
-                        <div style={{
-                          fontSize: '1.1rem',
-                          fontWeight: '600',
-                          color: '#111827',
-                          fontFamily: "'Inter', system-ui, sans-serif"
-                        }}>
-                          {Array.isArray(property.rentType) ? property.rentType.join(', ') : (property.rentType || 'yearly')}
-                        </div>
-                      </div>
+                    <Col md={6} className="info-item">
+                      <div className="info-label">🕒 RENT TYPES</div>
+                      <div className="info-value">{Array.isArray(property.rentType) ? property.rentType.join(', ') : (property.rentType || 'yearly')}</div>
                     </Col>
-                    
-                    <Col md={6}>
-                      <div style={{ marginBottom: '1rem' }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          marginBottom: '4px'
-                        }}>
-                          <span style={{ color: '#7c3aed', fontSize: '0.9rem', marginRight: '6px' }}>📅</span>
-                          <span style={{
-                            fontSize: '0.8rem',
-                            color: '#6b7280',
-                            fontFamily: "'Inter', system-ui, sans-serif",
-                            fontWeight: '500',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.5px'
-                          }}>
-                            Added
-                          </span>
-                        </div>
-                        <div style={{
-                          fontSize: '1.1rem',
-                          fontWeight: '600',
-                          color: '#111827',
-                          fontFamily: "'Inter', system-ui, sans-serif"
-                        }}>
-                          {formatDate(property.createdAt || property.dateAdded) || 'August 12, 2025'}
-                        </div>
-                      </div>
+                    <Col md={6} className="info-item">
+                      <div className="info-label">📅 ADDED</div>
+                      <div className="info-value">August 12, 2025</div>
                     </Col>
                   </Row>
                 </Card.Body>
               </Card>
 
-              {/* ✅ PROFESSIONAL: Description */}
-              <Card className="border-0 shadow-sm mb-4" style={{ borderRadius: '16px' }}>
-                <Card.Body style={{ padding: '1.5rem' }}>
-                  <h3 style={{
-                    fontSize: '1.25rem',
-                    fontWeight: '600',
-                    color: '#111827',
-                    marginBottom: '1rem',
-                    fontFamily: "'Inter', system-ui, sans-serif",
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px'
-                  }}>
-                    <span style={{ color: '#7c3aed' }}>📝</span>
-                    Description
-                  </h3>
-                  
-                  <p style={{
-                    fontSize: '1rem',
-                    lineHeight: '1.6',
-                    color: '#374151',
-                    fontFamily: "'Inter', system-ui, sans-serif",
-                    fontWeight: '400',
-                    margin: 0
-                  }}>
+              {/* Description */}
+              <Card className="description-card">
+                <Card.Body>
+                  <h3 className="section-title">📝 Description</h3>
+                  <p className="description-text">
                     {property.description || 'This is a prime agricultural land located in a strategic location, perfect for farming and cultivation. The property offers excellent accessibility and is ideal for various agricultural activities.'}
                   </p>
                 </Card.Body>
               </Card>
 
-              {/* ✅ PROFESSIONAL: Property Owner */}
-              <Card className="border-0 shadow-sm" style={{ borderRadius: '16px' }}>
-                <Card.Body style={{ padding: '1.5rem' }}>
-                  <h3 style={{
-                    fontSize: '1.25rem',
-                    fontWeight: '600',
-                    color: '#111827',
-                    marginBottom: '1rem',
-                    fontFamily: "'Inter', system-ui, sans-serif",
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px'
-                  }}>
-                    <span style={{ color: '#7c3aed' }}>👤</span>
-                    Property Owner
-                  </h3>
-                  
-                  <div className="d-flex align-items-center">
-                    <div style={{
-                      width: '50px',
-                      height: '50px',
-                      borderRadius: '50%',
-                      background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      marginRight: '12px',
-                      boxShadow: '0 2px 8px rgba(124, 58, 237, 0.3)'
-                    }}>
-                      <span style={{
-                        color: 'white',
-                        fontSize: '1.2rem',
-                        fontWeight: '600',
-                        fontFamily: "'Inter', system-ui, sans-serif"
-                      }}>
-                        {(property.owner?.name || 'BHARANEEDHARAN K').charAt(0)}
-                      </span>
+              {/* Property Owner */}
+              <Card className="owner-card">
+                <Card.Body>
+                  <h3 className="section-title">👤 Property Owner</h3>
+                  <div className="owner-info">
+                    <div className="owner-avatar">
+                      {(property.owner?.name || 'BHARANEEDHARAN K').charAt(0)}
                     </div>
-                    
-                    <div>
-                      <h4 style={{
-                        fontSize: '1.1rem',
-                        fontWeight: '600',
-                        color: '#111827',
-                        marginBottom: '2px',
-                        fontFamily: "'Inter', system-ui, sans-serif"
-                      }}>
-                        {property.owner?.name || 'BHARANEEDHARAN K'}
-                      </h4>
-                      
-                      <div className="d-flex align-items-center mb-1">
-                        <span style={{ color: '#7c3aed', fontSize: '0.8rem', marginRight: '6px' }}>✉️</span>
-                        <span style={{
-                          fontSize: '0.85rem',
-                          color: '#6b7280',
-                          fontFamily: "'Inter', system-ui, sans-serif",
-                          fontWeight: '500'
-                        }}>
-                          {property.owner?.email || 'bharaneedharan.cb22@bitsathy.ac.in'}
-                        </span>
+                    <div className="owner-details">
+                      <h4 className="owner-name">{property.owner?.name || 'BHARANEEDHARAN K'}</h4>
+                      <div className="owner-contact">
+                        <span className="contact-icon">✉️</span>
+                        <span>{property.owner?.email || 'bharaneedharan.cb22@bitsathy.ac.in'}</span>
                       </div>
-                      
-                      <div className="d-flex align-items-center">
-                        <span style={{ color: '#7c3aed', fontSize: '0.8rem', marginRight: '6px' }}>📞</span>
-                        <span style={{
-                          fontSize: '0.85rem',
-                          color: '#6b7280',
-                          fontFamily: "'Inter', system-ui, sans-serif",
-                          fontWeight: '500'
-                        }}>
-                          {property.owner?.phone || property.contact || '9087654321'}
-                        </span>
+                      <div className="owner-contact">
+                        <span className="contact-icon">📞</span>
+                        <span>{property.owner?.phone || property.contact || '9087654321'}</span>
                       </div>
                     </div>
                   </div>
                 </Card.Body>
               </Card>
+            </div>
 
-            </Col>
-
-            {/* Right Column - Booking */}
-            <Col lg={4}>
+            {/* ✅ FIXED: Right Sidebar */}
+            <div className="sidebar">
               
-              {/* ✅ PROFESSIONAL: Booking Card */}
-              <Card className="border-0 shadow-lg mb-4" style={{ 
-                borderRadius: '16px',
-                position: 'sticky',
-                top: '20px'
-              }}>
-                <Card.Body style={{ padding: '1.5rem' }}>
-                  <h4 style={{
-                    fontSize: '1.2rem',
-                    fontWeight: '600',
-                    color: '#111827',
-                    marginBottom: '1rem',
-                    fontFamily: "'Inter', system-ui, sans-serif"
-                  }}>
-                    Book This Property
-                  </h4>
-                  
-                  <div style={{
-                    fontSize: '1.6rem',
-                    fontWeight: '700',
-                    color: '#059669',
-                    fontFamily: "'Inter', system-ui, sans-serif",
-                    marginBottom: '4px'
-                  }}>
+              {/* Booking Card */}
+              <Card className="booking-card">
+                <Card.Body>
+                  <h4 className="booking-title">📅 Book This Property</h4>
+                  <div className="booking-price">
                     {formatPrice(property.price, Array.isArray(property.rentType) ? property.rentType[0] : property.rentType)}
                   </div>
-                  <p style={{
-                    color: '#6b7280',
-                    fontSize: '0.85rem',
-                    marginBottom: '1rem',
-                    fontFamily: "'Inter', system-ui, sans-serif",
-                    fontWeight: '500'
-                  }}>
-                    Available for {Array.isArray(property.rentType) ? property.rentType.join(', ') : (property.rentType || 'yearly')} rental
-                  </p>
-
-                  <Button
-                    style={{
-                      background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
-                      border: 'none',
-                      borderRadius: '12px',
-                      padding: '12px 20px',
-                      fontSize: '0.9rem',
-                      fontWeight: '600',
-                      fontFamily: "'Inter', system-ui, sans-serif",
-                      width: '100%',
-                      boxShadow: '0 4px 12px rgba(5, 150, 105, 0.3)',
-                      marginBottom: '1rem'
-                    }}
-                  >
+                  <p className="booking-subtitle">Available for {Array.isArray(property.rentType) ? property.rentType.join(', ') : (property.rentType || 'yearly')} rental</p>
+                  <Button className="book-button" size="lg">
                     📅 Book Now
                   </Button>
-
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '6px',
-                    color: '#6b7280',
-                    fontSize: '0.8rem',
-                    fontFamily: "'Inter', system-ui, sans-serif",
-                    marginBottom: '1rem'
-                  }}>
+                  <div className="payment-info">
                     <span>💳</span>
                     <span>Payment: On Spot Only</span>
                   </div>
-
-                  {/* ✅ PROFESSIONAL: Features */}
-                  <div style={{
-                    marginTop: '1rem',
-                    padding: '1rem',
-                    background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
-                    borderRadius: '12px',
-                    border: '1px solid #cbd5e1'
-                  }}>
-                    <h5 style={{
-                      fontSize: '1rem',
-                      fontWeight: '600',
-                      color: '#111827',
-                      marginBottom: '0.75rem',
-                      fontFamily: "'Inter', system-ui, sans-serif"
-                    }}>
-                      Property Features
-                    </h5>
-                    
-                    <div className="feature-list">
-                      {[
-                        { icon: '🌾', text: 'Land Space' },
-                        { icon: '📐', text: `${property.size || '10000'} Area` },
-                        { icon: '🕒', text: `${Array.isArray(property.rentType) ? property.rentType.join(', ') : (property.rentType || 'yearly')} Rental` },
-                        { icon: '📞', text: 'Direct Owner Contact' }
-                      ].map((feature, index) => (
-                        <div key={index} style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          marginBottom: '8px'
-                        }}>
-                          <span style={{ fontSize: '1rem' }}>{feature.icon}</span>
-                          <span style={{
-                            fontSize: '0.85rem',
-                            color: '#374151',
-                            fontFamily: "'Inter', system-ui, sans-serif",
-                            fontWeight: '500'
-                          }}>
-                            {feature.text}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <Alert variant="warning" className="mt-3" style={{ 
-                    fontSize: '0.8rem',
-                    padding: '0.75rem',
-                    borderRadius: '8px'
-                  }}>
-                    ⚠️ Complete your profile before booking
-                  </Alert>
                 </Card.Body>
               </Card>
 
-            </Col>
-          </Row>
+              {/* Property Features */}
+              <Card className="features-card">
+                <Card.Body>
+                  <h4 className="features-title">✨ Property Features</h4>
+                  <div className="features-list">
+                    <div className="feature-item">
+                      <span className="feature-icon">🌾</span>
+                      <span className="feature-text">Land Space</span>
+                    </div>
+                    <div className="feature-item">
+                      <span className="feature-icon">📐</span>
+                      <span className="feature-text">{property.size || '10000'} Area</span>
+                    </div>
+                    <div className="feature-item">
+                      <span className="feature-icon">🕒</span>
+                      <span className="feature-text">{Array.isArray(property.rentType) ? property.rentType.join(', ') : (property.rentType || 'yearly')} Rental</span>
+                    </div>
+                    <div className="feature-item">
+                      <span className="feature-icon">📞</span>
+                      <span className="feature-text">Direct Owner Contact</span>
+                    </div>
+                  </div>
+                </Card.Body>
+              </Card>
+
+              {/* Warning Alert */}
+              <Alert variant="warning" className="profile-alert">
+                ⚠️ Complete your profile before booking
+              </Alert>
+            </div>
+          </div>
         </Container>
       </div>
 
-      {/* ✅ PROFESSIONAL: Global Styles */}
+      {/* ✅ PROFESSIONAL: CSS Styles */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         
-        * {
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
+        .property-details-page {
+          background-color: #f8fafc;
+          min-height: 100vh;
+          font-family: 'Inter', sans-serif;
         }
         
-        body {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
-          background-color: #f8fafc !important;
+        .property-container {
+          max-width: 1400px;
+          margin: 0 auto;
+          padding: 2rem 1rem;
         }
         
-        .btn {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
-          transition: all 0.2s ease !important;
+        .loading-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          min-height: 50vh;
+          color: #64748b;
         }
         
-        .btn:hover {
+        /* ✅ FIXED: Back Button */
+        .back-button-container {
+          margin-bottom: 2rem;
+        }
+        
+        .back-button {
+          background: white;
+          border: 2px solid #7c3aed;
+          border-radius: 12px;
+          padding: 10px 20px;
+          font-size: 0.9rem;
+          font-weight: 600;
+          color: #7c3aed;
+          box-shadow: 0 2px 8px rgba(124, 58, 237, 0.1);
+          transition: all 0.2s ease;
+        }
+        
+        .back-button:hover {
+          background: #7c3aed;
+          color: white;
           transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
         }
         
-        .card {
-          border: none !important;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05) !important;
+        /* ✅ FIXED: Two Column Layout */
+        .property-layout {
+          display: grid;
+          grid-template-columns: 2fr 400px;
+          gap: 2rem;
+          align-items: start;
         }
         
-        .feature-list {
-          border-left: 3px solid #7c3aed;
-          padding-left: 12px;
+        .main-content {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+        
+        .sidebar {
+          position: sticky;
+          top: 2rem;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+        
+        /* ✅ FIXED: Card Styling */
+        .image-card,
+        .info-card,
+        .description-card,
+        .owner-card,
+        .booking-card,
+        .features-card {
+          border: none;
+          border-radius: 16px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+          overflow: hidden;
+        }
+        
+        .image-container {
+          position: relative;
+          height: 300px;
+          background: #f1f5f9;
+        }
+        
+        .property-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        
+        .nav-button {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          background: rgba(255, 255, 255, 0.9);
+          border: none;
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          font-size: 1.2rem;
+          cursor: pointer;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .nav-prev { left: 10px; }
+        .nav-next { right: 10px; }
+        
+        .image-indicator {
+          position: absolute;
+          bottom: 10px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: rgba(0, 0, 0, 0.7);
+          color: white;
+          padding: 4px 12px;
+          border-radius: 16px;
+          font-size: 0.8rem;
+        }
+        
+        /* Property Tags */
+        .property-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+        }
+        
+        .property-tag {
+          font-size: 0.75rem;
+          padding: 6px 12px;
+          border-radius: 16px;
+          font-weight: 500;
+        }
+        
+        /* Property Header */
+        .property-header {
+          margin-bottom: 0;
+        }
+        
+        .property-title {
+          font-size: 1.8rem;
+          font-weight: 700;
+          color: #111827;
+          margin-bottom: 0.5rem;
+          line-height: 1.2;
+        }
+        
+        .property-location {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          color: #64748b;
+          font-size: 0.9rem;
+          font-weight: 500;
+          margin-bottom: 1rem;
+        }
+        
+        .location-icon {
+          color: #7c3aed;
+          font-size: 1rem;
+        }
+        
+        .property-price {
+          font-size: 1.6rem;
+          font-weight: 700;
+          color: #059669;
+          margin-bottom: 4px;
+        }
+        
+        .price-subtitle {
+          color: #6b7280;
+          font-size: 0.85rem;
+          font-weight: 500;
+          margin: 0;
+        }
+        
+        /* Section Titles */
+        .section-title {
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: #111827;
+          margin-bottom: 1rem;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        
+        /* Info Grid */
+        .info-grid {
+          gap: 1rem;
+        }
+        
+        .info-item {
+          margin-bottom: 1rem;
+        }
+        
+        .info-label {
+          font-size: 0.8rem;
+          color: #6b7280;
+          font-weight: 500;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          margin-bottom: 4px;
+        }
+        
+        .info-value {
+          font-size: 1rem;
+          font-weight: 600;
+          color: #111827;
+        }
+        
+        /* Description */
+        .description-text {
+          font-size: 1rem;
+          line-height: 1.6;
+          color: #374151;
+          margin: 0;
+        }
+        
+        /* Owner Info */
+        .owner-info {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+        
+        .owner-avatar {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-size: 1.2rem;
+          font-weight: 600;
+        }
+        
+        .owner-name {
+          font-size: 1rem;
+          font-weight: 600;
+          color: #111827;
+          margin-bottom: 2px;
+        }
+        
+        .owner-contact {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 0.85rem;
+          color: #6b7280;
+          margin-bottom: 2px;
+        }
+        
+        .contact-icon {
+          color: #7c3aed;
+          font-size: 0.8rem;
+        }
+        
+        /* ✅ FIXED: Sidebar Cards */
+        .booking-card {
+          background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        }
+        
+        .booking-title {
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: #111827;
+          margin-bottom: 1rem;
+        }
+        
+        .booking-price {
+          font-size: 1.4rem;
+          font-weight: 700;
+          color: #059669;
+          margin-bottom: 4px;
+        }
+        
+        .booking-subtitle {
+          color: #6b7280;
+          font-size: 0.85rem;
+          font-weight: 500;
+          margin-bottom: 1rem;
+        }
+        
+        .book-button {
+          background: linear-gradient(135deg, #059669 0%, #047857 100%);
+          border: none;
+          border-radius: 12px;
+          font-weight: 600;
+          width: 100%;
+          margin-bottom: 1rem;
+        }
+        
+        .payment-info {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          color: #6b7280;
+          font-size: 0.8rem;
+        }
+        
+        .features-title {
+          font-size: 1rem;
+          font-weight: 600;
+          color: #111827;
+          margin-bottom: 1rem;
+        }
+        
+        .features-list {
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+        
+        .feature-item {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        
+        .feature-icon {
+          font-size: 1rem;
+        }
+        
+        .feature-text {
+          font-size: 0.85rem;
+          color: #374151;
+          font-weight: 500;
+        }
+        
+        .profile-alert {
+          font-size: 0.8rem;
+          padding: 0.75rem;
+          border-radius: 8px;
+          margin: 0;
+        }
+        
+        /* ✅ FIXED: Responsive Design */
+        @media (max-width: 1024px) {
+          .property-layout {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+          }
+          
+          .sidebar {
+            position: relative;
+            top: auto;
+            order: -1;
+          }
+          
+          .property-container {
+            padding: 1rem;
+          }
         }
         
         @media (max-width: 768px) {
-          .container {
-            padding-left: 1rem !important;
-            padding-right: 1rem !important;
+          .property-title {
+            font-size: 1.5rem;
+          }
+          
+          .property-price {
+            font-size: 1.4rem;
+          }
+          
+          .back-button {
+            width: 100%;
+            text-align: center;
+          }
+          
+          .info-grid .info-item {
+            margin-bottom: 0.75rem;
           }
         }
       `}</style>
