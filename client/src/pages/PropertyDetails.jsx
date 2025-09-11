@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Badge, Button, Alert, Spinner } from 'react-bootstrap';
-import { useParams, useNavigate } from 'react-router-dom';
-import { api, handleApiError, formatPrice, getImageUrl } from '../utils/api';
+import { useNavigate, useParams } from 'react-router-dom';
+import { api, formatPrice, getImageUrl, handleApiError } from '../utils/api';
 
 const PropertyDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [error, setError] = useState(null);
+  const [imageIndex, setImageIndex] = useState(0);
 
   useEffect(() => {
     fetchProperty();
@@ -18,23 +18,19 @@ const PropertyDetails = () => {
   const fetchProperty = async () => {
     try {
       setLoading(true);
-      setError('');
+      setError(null);
       const response = await api.properties.getById(id);
       setProperty(response.data || response);
-    } catch (error) {
-      setError(handleApiError(error));
+    } catch (err) {
+      setError('Failed to load property details');
+      console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
   const handleImageError = (e) => {
-    e.target.src = 'https://via.placeholder.com/800x400/e2e8f0/64748b?text=Property+Image';
-  };
-
-  const formatRentTypes = (rentTypes) => {
-    if (!rentTypes) return 'rental';
-    return Array.isArray(rentTypes) ? rentTypes.join(', ') : rentTypes;
+    e.target.src = 'https://via.placeholder.com/800x400/f1f5f9/64748b?text=Property+Image';
   };
 
   const formatDate = (dateString) => {
@@ -48,10 +44,16 @@ const PropertyDetails = () => {
 
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ 
+        minHeight: '50vh', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        backgroundColor: '#f8fafc'
+      }}>
         <div className="text-center">
-          <Spinner animation="border" style={{ color: '#7c3aed', width: '3rem', height: '3rem' }} />
-          <p className="mt-3 fs-5 fw-semibold" style={{ color: '#374151' }}>Loading property details...</p>
+          <Spinner animation="border" style={{ color: '#7c3aed', width: '2.5rem', height: '2.5rem' }} />
+          <p className="mt-3" style={{ color: '#64748b', fontSize: '1rem' }}>Loading property details...</p>
         </div>
       </div>
     );
@@ -61,7 +63,7 @@ const PropertyDetails = () => {
     return (
       <Container className="py-5">
         <Alert variant="danger" className="text-center">
-          <Alert.Heading>⚠️ Error Loading Property</Alert.Heading>
+          <Alert.Heading>Error Loading Property</Alert.Heading>
           <p>{error}</p>
           <Button onClick={fetchProperty} style={{ backgroundColor: '#7c3aed', borderColor: '#7c3aed' }}>
             Try Again
@@ -75,8 +77,8 @@ const PropertyDetails = () => {
     return (
       <Container className="py-5">
         <Alert variant="warning" className="text-center">
-          <Alert.Heading>🔍 Property Not Found</Alert.Heading>
-          <p>The property you're looking for doesn't exist or has been removed.</p>
+          <Alert.Heading>Property Not Found</Alert.Heading>
+          <p>The property you're looking for doesn't exist.</p>
           <Button onClick={() => navigate('/find-property')} style={{ backgroundColor: '#7c3aed', borderColor: '#7c3aed' }}>
             Back to Properties
           </Button>
@@ -85,63 +87,58 @@ const PropertyDetails = () => {
     );
   }
 
-  const images = property.images || [property.image] || [];
-  const currentImage = images[currentImageIndex] || 'https://via.placeholder.com/800x400/e2e8f0/64748b?text=Property+Image';
+  const images = property.images || (property.image ? [property.image] : []);
+  const currentImage = images[imageIndex] || '';
 
   return (
     <>
       <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh' }}>
-        <Container className="py-4">
+        <Container style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
           
-          {/* ✅ PROFESSIONAL: Enhanced Back Button */}
+          {/* ✅ PROFESSIONAL: Back Button */}
           <div className="mb-4">
             <Button
               variant="outline-primary"
               onClick={() => navigate('/find-property')}
               style={{
-                background: 'linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)',
+                backgroundColor: 'white',
                 border: '2px solid #7c3aed',
                 borderRadius: '12px',
-                padding: '12px 24px',
-                fontSize: '0.95rem',
-                fontWeight: 700,
+                padding: '10px 20px',
+                fontSize: '0.9rem',
+                fontWeight: '600',
                 color: '#7c3aed',
                 fontFamily: "'Inter', system-ui, sans-serif",
-                textTransform: 'none',
-                letterSpacing: '0.025em',
-                boxShadow: '0 4px 12px rgba(124, 58, 237, 0.1)',
-                transition: 'all 0.3s ease',
+                boxShadow: '0 2px 8px rgba(124, 58, 237, 0.1)',
+                transition: 'all 0.2s ease',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px'
               }}
               onMouseEnter={(e) => {
-                e.target.style.background = 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)';
+                e.target.style.backgroundColor = '#7c3aed';
                 e.target.style.color = 'white';
-                e.target.style.borderColor = '#7c3aed';
-                e.target.style.transform = 'translateY(-2px)';
-                e.target.style.boxShadow = '0 8px 25px rgba(124, 58, 237, 0.25)';
+                e.target.style.transform = 'translateY(-1px)';
+                e.target.style.boxShadow = '0 4px 12px rgba(124, 58, 237, 0.2)';
               }}
               onMouseLeave={(e) => {
-                e.target.style.background = 'linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)';
+                e.target.style.backgroundColor = 'white';
                 e.target.style.color = '#7c3aed';
-                e.target.style.borderColor = '#7c3aed';
                 e.target.style.transform = 'translateY(0)';
-                e.target.style.boxShadow = '0 4px 12px rgba(124, 58, 237, 0.1)';
+                e.target.style.boxShadow = '0 2px 8px rgba(124, 58, 237, 0.1)';
               }}
             >
-              <span style={{ fontSize: '1.1rem' }}>←</span>
+              <span style={{ fontSize: '1rem' }}>←</span>
               <span>Back to Properties</span>
             </Button>
           </div>
 
           <Row className="g-4">
-            {/* Left Column - Property Details */}
             <Col lg={8}>
               
               {/* ✅ PROFESSIONAL: Image Gallery */}
-              <Card className="border-0 shadow-sm mb-4" style={{ borderRadius: '20px', overflow: 'hidden' }}>
-                <div style={{ position: 'relative', height: '400px', background: '#f1f5f9' }}>
+              <Card className="border-0 shadow-sm mb-4" style={{ borderRadius: '16px', overflow: 'hidden' }}>
+                <div style={{ position: 'relative', height: '350px', backgroundColor: '#f1f5f9' }}>
                   <img
                     src={getImageUrl(currentImage)}
                     alt={property.title || 'Property'}
@@ -158,13 +155,15 @@ const PropertyDetails = () => {
                       <div className="position-absolute top-50 start-0 translate-middle-y">
                         <Button
                           variant="light"
-                          onClick={() => setCurrentImageIndex(prev => prev > 0 ? prev - 1 : images.length - 1)}
+                          onClick={() => setImageIndex((imageIndex - 1 + images.length) % images.length)}
                           style={{ 
                             borderRadius: '50%', 
-                            width: '50px', 
-                            height: '50px',
+                            width: '40px', 
+                            height: '40px',
                             marginLeft: '10px',
-                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+                            border: 'none',
+                            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+                            fontSize: '1.2rem'
                           }}
                         >
                           ‹
@@ -173,13 +172,15 @@ const PropertyDetails = () => {
                       <div className="position-absolute top-50 end-0 translate-middle-y">
                         <Button
                           variant="light"
-                          onClick={() => setCurrentImageIndex(prev => prev < images.length - 1 ? prev + 1 : 0)}
+                          onClick={() => setImageIndex((imageIndex + 1) % images.length)}
                           style={{ 
                             borderRadius: '50%', 
-                            width: '50px', 
-                            height: '50px',
+                            width: '40px', 
+                            height: '40px',
                             marginRight: '10px',
-                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+                            border: 'none',
+                            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+                            fontSize: '1.2rem'
                           }}
                         >
                           ›
@@ -189,14 +190,14 @@ const PropertyDetails = () => {
                       <div className="position-absolute bottom-0 start-50 translate-middle-x p-3">
                         <div style={{
                           background: 'rgba(0, 0, 0, 0.7)',
-                          borderRadius: '20px',
-                          padding: '8px 16px',
+                          borderRadius: '16px',
+                          padding: '6px 12px',
                           color: 'white',
-                          fontSize: '0.9rem',
-                          fontWeight: 600,
+                          fontSize: '0.8rem',
+                          fontWeight: '500',
                           fontFamily: "'Inter', system-ui, sans-serif"
                         }}>
-                          Image {currentImageIndex + 1} of {images.length}
+                          {imageIndex + 1} of {images.length}
                         </div>
                       </div>
                     </>
@@ -210,13 +211,11 @@ const PropertyDetails = () => {
                   <Badge 
                     bg="primary" 
                     style={{ 
-                      fontSize: '0.85rem',
-                      padding: '8px 16px',
-                      borderRadius: '20px',
+                      fontSize: '0.75rem',
+                      padding: '6px 12px',
+                      borderRadius: '16px',
                       fontFamily: "'Inter', system-ui, sans-serif",
-                      fontWeight: 600,
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.5px'
+                      fontWeight: '500'
                     }}
                   >
                     🏷️ {property.category || 'Land'}
@@ -224,13 +223,11 @@ const PropertyDetails = () => {
                   <Badge 
                     bg="secondary" 
                     style={{ 
-                      fontSize: '0.85rem',
-                      padding: '8px 16px',
-                      borderRadius: '20px',
+                      fontSize: '0.75rem',
+                      padding: '6px 12px',
+                      borderRadius: '16px',
                       fontFamily: "'Inter', system-ui, sans-serif",
-                      fontWeight: 600,
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.5px'
+                      fontWeight: '500'
                     }}
                   >
                     📐 {property.subtype || 'Agricultural Land'}
@@ -238,79 +235,72 @@ const PropertyDetails = () => {
                   <Badge 
                     bg="info" 
                     style={{ 
-                      fontSize: '0.85rem',
-                      padding: '8px 16px',
-                      borderRadius: '20px',
+                      fontSize: '0.75rem',
+                      padding: '6px 12px',
+                      borderRadius: '16px',
                       fontFamily: "'Inter', system-ui, sans-serif",
-                      fontWeight: 600,
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.5px'
+                      fontWeight: '500'
                     }}
                   >
-                    🕒 {formatRentTypes(property.rentType) || 'yearly'}
+                    🕒 {Array.isArray(property.rentType) ? property.rentType.join(', ') : (property.rentType || 'yearly')}
                   </Badge>
                 </div>
               </div>
 
-              {/* ✅ PROFESSIONAL: Property Title and Price */}
-              <Card className="border-0 shadow-sm mb-4" style={{ borderRadius: '20px' }}>
-                <Card.Body className="p-4">
-                  <div className="mb-3">
-                    <h1 style={{
-                      fontSize: '2.5rem',
-                      fontWeight: 800,
-                      color: '#111827',
-                      marginBottom: '8px',
-                      fontFamily: "'Inter', system-ui, sans-serif",
-                      letterSpacing: '-0.025em',
-                      lineHeight: '1.2'
-                    }}>
-                      {property.title || 'Premium Property'}
-                    </h1>
-                    
-                    <div className="d-flex align-items-center mb-3">
-                      <span className="me-2" style={{ color: '#7c3aed', fontSize: '1.2rem' }}>📍</span>
-                      <span style={{
-                        fontSize: '1.1rem',
-                        color: '#64748b',
-                        fontFamily: "'Inter', system-ui, sans-serif",
-                        fontWeight: 500
-                      }}>
-                        {property.address?.street && `${property.address.street}, `}
-                        {property.address?.city || 'namakkal'}, {property.address?.state || 'Tamil nadu'} - {property.address?.zipCode || '123456'}
-                      </span>
-                    </div>
+              {/* ✅ PROFESSIONAL: Title and Price */}
+              <div className="mb-4">
+                <h1 style={{
+                  fontSize: '2rem',
+                  fontWeight: '700',
+                  color: '#111827',
+                  marginBottom: '8px',
+                  fontFamily: "'Inter', system-ui, sans-serif",
+                  lineHeight: '1.2'
+                }}>
+                  {property.title || 'Premium Property'}
+                </h1>
+                
+                <div className="d-flex align-items-center mb-3">
+                  <span className="me-2" style={{ color: '#7c3aed', fontSize: '1rem' }}>📍</span>
+                  <span style={{
+                    fontSize: '0.9rem',
+                    color: '#64748b',
+                    fontFamily: "'Inter', system-ui, sans-serif",
+                    fontWeight: '500'
+                  }}>
+                    {property.address?.street && `${property.address.street}, `}
+                    {property.address?.city || 'namakkal'}, {property.address?.state || 'Tamil nadu'} - {property.address?.zipCode || '123456'}
+                  </span>
+                </div>
 
-                    <div style={{
-                      fontSize: '2.2rem',
-                      fontWeight: 800,
-                      color: '#059669',
-                      fontFamily: "'Inter', system-ui, sans-serif",
-                      letterSpacing: '-0.02em'
-                    }}>
-                      {formatPrice(property.price, Array.isArray(property.rentType) ? property.rentType[0] : property.rentType)}
-                    </div>
-                    <p style={{
-                      color: '#6b7280',
-                      fontSize: '0.95rem',
-                      marginTop: '4px',
-                      fontFamily: "'Inter', system-ui, sans-serif",
-                      fontWeight: 500
-                    }}>
-                      Available for {formatRentTypes(property.rentType)} rental
-                    </p>
-                  </div>
-                </Card.Body>
-              </Card>
+                <div style={{
+                  fontSize: '1.8rem',
+                  fontWeight: '700',
+                  color: '#059669',
+                  fontFamily: "'Inter', system-ui, sans-serif",
+                  marginBottom: '4px'
+                }}>
+                  {formatPrice(property.price, Array.isArray(property.rentType) ? property.rentType[0] : property.rentType)}
+                </div>
+                <p style={{
+                  color: '#6b7280',
+                  fontSize: '0.9rem',
+                  margin: 0,
+                  fontFamily: "'Inter', system-ui, sans-serif",
+                  fontWeight: '500'
+                }}>
+                  Available for {Array.isArray(property.rentType) ? property.rentType.join(', ') : (property.rentType || 'yearly')} rental
+                </p>
+              </div>
 
-              {/* ✅ PROFESSIONAL: Property Details Grid */}
-              <Card className="border-0 shadow-sm mb-4" style={{ borderRadius: '20px' }}>
-                <Card.Body className="p-4">
+              {/* ✅ PROFESSIONAL: Property Information */}
+              <Card className="border-0 shadow-sm mb-4" style={{ borderRadius: '16px' }}>
+                <Card.Body style={{ padding: '1.5rem' }}>
                   <h3 style={{
-                    fontSize: '1.5rem',
-                    fontWeight: 700,
+                    fontSize: '1.25rem',
+                    fontWeight: '600',
                     color: '#111827',
-                    marginBottom: '24px',
+                    marginBottom: '1rem',
                     fontFamily: "'Inter', system-ui, sans-serif",
                     display: 'flex',
                     alignItems: 'center',
@@ -320,20 +310,20 @@ const PropertyDetails = () => {
                     Property Information
                   </h3>
                   
-                  <Row className="g-4">
+                  <Row className="g-3">
                     <Col md={6}>
-                      <div className="detail-item">
+                      <div style={{ marginBottom: '1rem' }}>
                         <div style={{
                           display: 'flex',
                           alignItems: 'center',
-                          marginBottom: '8px'
+                          marginBottom: '4px'
                         }}>
-                          <span style={{ color: '#7c3aed', fontSize: '1.1rem', marginRight: '8px' }}>📐</span>
+                          <span style={{ color: '#7c3aed', fontSize: '0.9rem', marginRight: '6px' }}>📐</span>
                           <span style={{
-                            fontSize: '0.9rem',
+                            fontSize: '0.8rem',
                             color: '#6b7280',
                             fontFamily: "'Inter', system-ui, sans-serif",
-                            fontWeight: 500,
+                            fontWeight: '500',
                             textTransform: 'uppercase',
                             letterSpacing: '0.5px'
                           }}>
@@ -341,8 +331,8 @@ const PropertyDetails = () => {
                           </span>
                         </div>
                         <div style={{
-                          fontSize: '1.3rem',
-                          fontWeight: 700,
+                          fontSize: '1.1rem',
+                          fontWeight: '600',
                           color: '#111827',
                           fontFamily: "'Inter', system-ui, sans-serif"
                         }}>
@@ -352,18 +342,18 @@ const PropertyDetails = () => {
                     </Col>
                     
                     <Col md={6}>
-                      <div className="detail-item">
+                      <div style={{ marginBottom: '1rem' }}>
                         <div style={{
                           display: 'flex',
                           alignItems: 'center',
-                          marginBottom: '8px'
+                          marginBottom: '4px'
                         }}>
-                          <span style={{ color: '#7c3aed', fontSize: '1.1rem', marginRight: '8px' }}>📞</span>
+                          <span style={{ color: '#7c3aed', fontSize: '0.9rem', marginRight: '6px' }}>📞</span>
                           <span style={{
-                            fontSize: '0.9rem',
+                            fontSize: '0.8rem',
                             color: '#6b7280',
                             fontFamily: "'Inter', system-ui, sans-serif",
-                            fontWeight: 500,
+                            fontWeight: '500',
                             textTransform: 'uppercase',
                             letterSpacing: '0.5px'
                           }}>
@@ -371,8 +361,8 @@ const PropertyDetails = () => {
                           </span>
                         </div>
                         <div style={{
-                          fontSize: '1.3rem',
-                          fontWeight: 700,
+                          fontSize: '1.1rem',
+                          fontWeight: '600',
                           color: '#111827',
                           fontFamily: "'Inter', system-ui, sans-serif"
                         }}>
@@ -382,18 +372,18 @@ const PropertyDetails = () => {
                     </Col>
                     
                     <Col md={6}>
-                      <div className="detail-item">
+                      <div style={{ marginBottom: '1rem' }}>
                         <div style={{
                           display: 'flex',
                           alignItems: 'center',
-                          marginBottom: '8px'
+                          marginBottom: '4px'
                         }}>
-                          <span style={{ color: '#7c3aed', fontSize: '1.1rem', marginRight: '8px' }}>🏷️</span>
+                          <span style={{ color: '#7c3aed', fontSize: '0.9rem', marginRight: '6px' }}>🏷️</span>
                           <span style={{
-                            fontSize: '0.9rem',
+                            fontSize: '0.8rem',
                             color: '#6b7280',
                             fontFamily: "'Inter', system-ui, sans-serif",
-                            fontWeight: 500,
+                            fontWeight: '500',
                             textTransform: 'uppercase',
                             letterSpacing: '0.5px'
                           }}>
@@ -401,8 +391,8 @@ const PropertyDetails = () => {
                           </span>
                         </div>
                         <div style={{
-                          fontSize: '1.3rem',
-                          fontWeight: 700,
+                          fontSize: '1.1rem',
+                          fontWeight: '600',
                           color: '#111827',
                           fontFamily: "'Inter', system-ui, sans-serif"
                         }}>
@@ -412,18 +402,18 @@ const PropertyDetails = () => {
                     </Col>
                     
                     <Col md={6}>
-                      <div className="detail-item">
+                      <div style={{ marginBottom: '1rem' }}>
                         <div style={{
                           display: 'flex',
                           alignItems: 'center',
-                          marginBottom: '8px'
+                          marginBottom: '4px'
                         }}>
-                          <span style={{ color: '#7c3aed', fontSize: '1.1rem', marginRight: '8px' }}>🔧</span>
+                          <span style={{ color: '#7c3aed', fontSize: '0.9rem', marginRight: '6px' }}>🔧</span>
                           <span style={{
-                            fontSize: '0.9rem',
+                            fontSize: '0.8rem',
                             color: '#6b7280',
                             fontFamily: "'Inter', system-ui, sans-serif",
-                            fontWeight: 500,
+                            fontWeight: '500',
                             textTransform: 'uppercase',
                             letterSpacing: '0.5px'
                           }}>
@@ -431,8 +421,8 @@ const PropertyDetails = () => {
                           </span>
                         </div>
                         <div style={{
-                          fontSize: '1.3rem',
-                          fontWeight: 700,
+                          fontSize: '1.1rem',
+                          fontWeight: '600',
                           color: '#111827',
                           fontFamily: "'Inter', system-ui, sans-serif"
                         }}>
@@ -442,18 +432,18 @@ const PropertyDetails = () => {
                     </Col>
                     
                     <Col md={6}>
-                      <div className="detail-item">
+                      <div style={{ marginBottom: '1rem' }}>
                         <div style={{
                           display: 'flex',
                           alignItems: 'center',
-                          marginBottom: '8px'
+                          marginBottom: '4px'
                         }}>
-                          <span style={{ color: '#7c3aed', fontSize: '1.1rem', marginRight: '8px' }}>🕒</span>
+                          <span style={{ color: '#7c3aed', fontSize: '0.9rem', marginRight: '6px' }}>🕒</span>
                           <span style={{
-                            fontSize: '0.9rem',
+                            fontSize: '0.8rem',
                             color: '#6b7280',
                             fontFamily: "'Inter', system-ui, sans-serif",
-                            fontWeight: 500,
+                            fontWeight: '500',
                             textTransform: 'uppercase',
                             letterSpacing: '0.5px'
                           }}>
@@ -461,29 +451,29 @@ const PropertyDetails = () => {
                           </span>
                         </div>
                         <div style={{
-                          fontSize: '1.3rem',
-                          fontWeight: 700,
+                          fontSize: '1.1rem',
+                          fontWeight: '600',
                           color: '#111827',
                           fontFamily: "'Inter', system-ui, sans-serif"
                         }}>
-                          {formatRentTypes(property.rentType) || 'yearly'}
+                          {Array.isArray(property.rentType) ? property.rentType.join(', ') : (property.rentType || 'yearly')}
                         </div>
                       </div>
                     </Col>
                     
                     <Col md={6}>
-                      <div className="detail-item">
+                      <div style={{ marginBottom: '1rem' }}>
                         <div style={{
                           display: 'flex',
                           alignItems: 'center',
-                          marginBottom: '8px'
+                          marginBottom: '4px'
                         }}>
-                          <span style={{ color: '#7c3aed', fontSize: '1.1rem', marginRight: '8px' }}>📅</span>
+                          <span style={{ color: '#7c3aed', fontSize: '0.9rem', marginRight: '6px' }}>📅</span>
                           <span style={{
-                            fontSize: '0.9rem',
+                            fontSize: '0.8rem',
                             color: '#6b7280',
                             fontFamily: "'Inter', system-ui, sans-serif",
-                            fontWeight: 500,
+                            fontWeight: '500',
                             textTransform: 'uppercase',
                             letterSpacing: '0.5px'
                           }}>
@@ -491,8 +481,8 @@ const PropertyDetails = () => {
                           </span>
                         </div>
                         <div style={{
-                          fontSize: '1.3rem',
-                          fontWeight: 700,
+                          fontSize: '1.1rem',
+                          fontWeight: '600',
                           color: '#111827',
                           fontFamily: "'Inter', system-ui, sans-serif"
                         }}>
@@ -505,13 +495,13 @@ const PropertyDetails = () => {
               </Card>
 
               {/* ✅ PROFESSIONAL: Description */}
-              <Card className="border-0 shadow-sm mb-4" style={{ borderRadius: '20px' }}>
-                <Card.Body className="p-4">
+              <Card className="border-0 shadow-sm mb-4" style={{ borderRadius: '16px' }}>
+                <Card.Body style={{ padding: '1.5rem' }}>
                   <h3 style={{
-                    fontSize: '1.5rem',
-                    fontWeight: 700,
+                    fontSize: '1.25rem',
+                    fontWeight: '600',
                     color: '#111827',
-                    marginBottom: '16px',
+                    marginBottom: '1rem',
                     fontFamily: "'Inter', system-ui, sans-serif",
                     display: 'flex',
                     alignItems: 'center',
@@ -522,11 +512,11 @@ const PropertyDetails = () => {
                   </h3>
                   
                   <p style={{
-                    fontSize: '1.1rem',
-                    lineHeight: '1.7',
+                    fontSize: '1rem',
+                    lineHeight: '1.6',
                     color: '#374151',
                     fontFamily: "'Inter', system-ui, sans-serif",
-                    fontWeight: 400,
+                    fontWeight: '400',
                     margin: 0
                   }}>
                     {property.description || 'This is a prime agricultural land located in a strategic location, perfect for farming and cultivation. The property offers excellent accessibility and is ideal for various agricultural activities.'}
@@ -535,13 +525,13 @@ const PropertyDetails = () => {
               </Card>
 
               {/* ✅ PROFESSIONAL: Property Owner */}
-              <Card className="border-0 shadow-sm" style={{ borderRadius: '20px' }}>
-                <Card.Body className="p-4">
+              <Card className="border-0 shadow-sm" style={{ borderRadius: '16px' }}>
+                <Card.Body style={{ padding: '1.5rem' }}>
                   <h3 style={{
-                    fontSize: '1.5rem',
-                    fontWeight: 700,
+                    fontSize: '1.25rem',
+                    fontWeight: '600',
                     color: '#111827',
-                    marginBottom: '20px',
+                    marginBottom: '1rem',
                     fontFamily: "'Inter', system-ui, sans-serif",
                     display: 'flex',
                     alignItems: 'center',
@@ -553,20 +543,20 @@ const PropertyDetails = () => {
                   
                   <div className="d-flex align-items-center">
                     <div style={{
-                      width: '60px',
-                      height: '60px',
+                      width: '50px',
+                      height: '50px',
                       borderRadius: '50%',
                       background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      marginRight: '16px',
-                      boxShadow: '0 4px 12px rgba(124, 58, 237, 0.3)'
+                      marginRight: '12px',
+                      boxShadow: '0 2px 8px rgba(124, 58, 237, 0.3)'
                     }}>
                       <span style={{
                         color: 'white',
-                        fontSize: '1.5rem',
-                        fontWeight: 700,
+                        fontSize: '1.2rem',
+                        fontWeight: '600',
                         fontFamily: "'Inter', system-ui, sans-serif"
                       }}>
                         {(property.owner?.name || 'BHARANEEDHARAN K').charAt(0)}
@@ -575,34 +565,34 @@ const PropertyDetails = () => {
                     
                     <div>
                       <h4 style={{
-                        fontSize: '1.3rem',
-                        fontWeight: 700,
+                        fontSize: '1.1rem',
+                        fontWeight: '600',
                         color: '#111827',
-                        marginBottom: '4px',
+                        marginBottom: '2px',
                         fontFamily: "'Inter', system-ui, sans-serif"
                       }}>
                         {property.owner?.name || 'BHARANEEDHARAN K'}
                       </h4>
                       
-                      <div className="d-flex align-items-center mb-2">
-                        <span style={{ color: '#7c3aed', fontSize: '1rem', marginRight: '8px' }}>✉️</span>
+                      <div className="d-flex align-items-center mb-1">
+                        <span style={{ color: '#7c3aed', fontSize: '0.8rem', marginRight: '6px' }}>✉️</span>
                         <span style={{
-                          fontSize: '0.95rem',
+                          fontSize: '0.85rem',
                           color: '#6b7280',
                           fontFamily: "'Inter', system-ui, sans-serif",
-                          fontWeight: 500
+                          fontWeight: '500'
                         }}>
                           {property.owner?.email || 'bharaneedharan.cb22@bitsathy.ac.in'}
                         </span>
                       </div>
                       
                       <div className="d-flex align-items-center">
-                        <span style={{ color: '#7c3aed', fontSize: '1rem', marginRight: '8px' }}>📞</span>
+                        <span style={{ color: '#7c3aed', fontSize: '0.8rem', marginRight: '6px' }}>📞</span>
                         <span style={{
-                          fontSize: '0.95rem',
+                          fontSize: '0.85rem',
                           color: '#6b7280',
                           fontFamily: "'Inter', system-ui, sans-serif",
-                          fontWeight: 500
+                          fontWeight: '500'
                         }}>
                           {property.owner?.phone || property.contact || '9087654321'}
                         </span>
@@ -614,156 +604,128 @@ const PropertyDetails = () => {
 
             </Col>
 
-            {/* Right Column - Booking & Features */}
+            {/* Right Column - Booking */}
             <Col lg={4}>
               
               {/* ✅ PROFESSIONAL: Booking Card */}
               <Card className="border-0 shadow-lg mb-4" style={{ 
-                borderRadius: '20px',
+                borderRadius: '16px',
                 position: 'sticky',
                 top: '20px'
               }}>
-                <Card.Body className="p-4">
-                  <div className="text-center mb-3">
-                    <Button
-                      style={{
-                        background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
-                        border: 'none',
-                        borderRadius: '12px',
-                        padding: '12px 24px',
-                        fontSize: '1.1rem',
-                        fontWeight: 700,
-                        fontFamily: "'Inter', system-ui, sans-serif",
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.025em',
-                        width: '100%',
-                        marginBottom: '16px',
-                        boxShadow: '0 4px 16px rgba(59, 130, 246, 0.3)'
-                      }}
-                    >
-                      📅 Book This Property
-                    </Button>
-                  </div>
+                <Card.Body style={{ padding: '1.5rem' }}>
+                  <h4 style={{
+                    fontSize: '1.2rem',
+                    fontWeight: '600',
+                    color: '#111827',
+                    marginBottom: '1rem',
+                    fontFamily: "'Inter', system-ui, sans-serif"
+                  }}>
+                    Book This Property
+                  </h4>
                   
-                  <div className="text-center mb-3">
-                    <div style={{
-                      fontSize: '2rem',
-                      fontWeight: 800,
-                      color: '#059669',
-                      fontFamily: "'Inter', system-ui, sans-serif",
-                      letterSpacing: '-0.02em'
-                    }}>
-                      {formatPrice(property.price, Array.isArray(property.rentType) ? property.rentType[0] : property.rentType)}
-                    </div>
-                    <p style={{
-                      color: '#6b7280',
-                      fontSize: '0.9rem',
-                      margin: 0,
-                      fontFamily: "'Inter', system-ui, sans-serif",
-                      fontWeight: 500
-                    }}>
-                      Available for {formatRentTypes(property.rentType)} rental
-                    </p>
+                  <div style={{
+                    fontSize: '1.6rem',
+                    fontWeight: '700',
+                    color: '#059669',
+                    fontFamily: "'Inter', system-ui, sans-serif",
+                    marginBottom: '4px'
+                  }}>
+                    {formatPrice(property.price, Array.isArray(property.rentType) ? property.rentType[0] : property.rentType)}
                   </div>
+                  <p style={{
+                    color: '#6b7280',
+                    fontSize: '0.85rem',
+                    marginBottom: '1rem',
+                    fontFamily: "'Inter', system-ui, sans-serif",
+                    fontWeight: '500'
+                  }}>
+                    Available for {Array.isArray(property.rentType) ? property.rentType.join(', ') : (property.rentType || 'yearly')} rental
+                  </p>
 
                   <Button
                     style={{
                       background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
                       border: 'none',
                       borderRadius: '12px',
-                      padding: '14px 24px',
-                      fontSize: '1rem',
-                      fontWeight: 700,
+                      padding: '12px 20px',
+                      fontSize: '0.9rem',
+                      fontWeight: '600',
                       fontFamily: "'Inter', system-ui, sans-serif",
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.025em',
                       width: '100%',
-                      boxShadow: '0 4px 16px rgba(5, 150, 105, 0.3)'
+                      boxShadow: '0 4px 12px rgba(5, 150, 105, 0.3)',
+                      marginBottom: '1rem'
                     }}
                   >
-                    🔄 Book Now
+                    📅 Book Now
                   </Button>
 
-                  <div className="text-center mt-3">
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '8px',
-                      color: '#6b7280',
-                      fontSize: '0.85rem',
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '6px',
+                    color: '#6b7280',
+                    fontSize: '0.8rem',
+                    fontFamily: "'Inter', system-ui, sans-serif",
+                    marginBottom: '1rem'
+                  }}>
+                    <span>💳</span>
+                    <span>Payment: On Spot Only</span>
+                  </div>
+
+                  {/* ✅ PROFESSIONAL: Features */}
+                  <div style={{
+                    marginTop: '1rem',
+                    padding: '1rem',
+                    background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
+                    borderRadius: '12px',
+                    border: '1px solid #cbd5e1'
+                  }}>
+                    <h5 style={{
+                      fontSize: '1rem',
+                      fontWeight: '600',
+                      color: '#111827',
+                      marginBottom: '0.75rem',
                       fontFamily: "'Inter', system-ui, sans-serif"
                     }}>
-                      <span>💳</span>
-                      <span>Payment: On Spot Only</span>
+                      Property Features
+                    </h5>
+                    
+                    <div className="feature-list">
+                      {[
+                        { icon: '🌾', text: 'Land Space' },
+                        { icon: '📐', text: `${property.size || '10000'} Area` },
+                        { icon: '🕒', text: `${Array.isArray(property.rentType) ? property.rentType.join(', ') : (property.rentType || 'yearly')} Rental` },
+                        { icon: '📞', text: 'Direct Owner Contact' }
+                      ].map((feature, index) => (
+                        <div key={index} style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          marginBottom: '8px'
+                        }}>
+                          <span style={{ fontSize: '1rem' }}>{feature.icon}</span>
+                          <span style={{
+                            fontSize: '0.85rem',
+                            color: '#374151',
+                            fontFamily: "'Inter', system-ui, sans-serif",
+                            fontWeight: '500'
+                          }}>
+                            {feature.text}
+                          </span>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                </Card.Body>
-              </Card>
 
-              {/* ✅ PROFESSIONAL: Property Features */}
-              <Card className="border-0 shadow-sm" style={{ borderRadius: '20px' }}>
-                <Card.Body className="p-4">
-                  <h4 style={{
-                    fontSize: '1.3rem',
-                    fontWeight: 700,
-                    color: '#111827',
-                    marginBottom: '20px',
-                    fontFamily: "'Inter', system-ui, sans-serif",
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px'
+                  <Alert variant="warning" className="mt-3" style={{ 
+                    fontSize: '0.8rem',
+                    padding: '0.75rem',
+                    borderRadius: '8px'
                   }}>
-                    <span style={{ color: '#7c3aed' }}>✨</span>
-                    Property Features
-                  </h4>
-                  
-                  <div className="feature-list">
-                    {[
-                      { icon: '🌾', text: 'Land Space' },
-                      { icon: '📐', text: `${property.size || '10000'} Area` },
-                      { icon: '🕒', text: `${formatRentTypes(property.rentType)} Rental` },
-                      { icon: '📞', text: 'Direct Owner Contact' }
-                    ].map((feature, index) => (
-                      <div key={index} style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '12px',
-                        marginBottom: '12px',
-                        padding: '8px 0'
-                      }}>
-                        <span style={{ fontSize: '1.2rem' }}>{feature.icon}</span>
-                        <span style={{
-                          fontSize: '0.95rem',
-                          color: '#374151',
-                          fontFamily: "'Inter', system-ui, sans-serif",
-                          fontWeight: 500
-                        }}>
-                          {feature.text}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div style={{
-                    marginTop: '20px',
-                    padding: '16px',
-                    background: 'linear-gradient(135deg, #fef3c7 0%, #fbbf24 20%)',
-                    borderRadius: '12px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px'
-                  }}>
-                    <span style={{ fontSize: '1.1rem' }}>⚠️</span>
-                    <span style={{
-                      fontSize: '0.85rem',
-                      color: '#92400e',
-                      fontFamily: "'Inter', system-ui, sans-serif",
-                      fontWeight: 500
-                    }}>
-                      Complete your profile before booking
-                    </span>
-                  </div>
+                    ⚠️ Complete your profile before booking
+                  </Alert>
                 </Card.Body>
               </Card>
 
@@ -782,44 +744,34 @@ const PropertyDetails = () => {
         }
         
         body {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-          background-color: #f8fafc;
-        }
-        
-        .detail-item {
-          padding: 16px;
-          background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
-          border-radius: 12px;
-          border: 1px solid #e2e8f0;
-          transition: all 0.3s ease;
-        }
-        
-        .detail-item:hover {
-          box-shadow: 0 4px 16px rgba(124, 58, 237, 0.1);
-          transform: translateY(-2px);
-        }
-        
-        .feature-list {
-          border-left: 3px solid #7c3aed;
-          padding-left: 16px;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+          background-color: #f8fafc !important;
         }
         
         .btn {
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
-          transition: all 0.3s ease !important;
+          transition: all 0.2s ease !important;
         }
         
         .btn:hover {
-          transform: translateY(-2px);
+          transform: translateY(-1px);
         }
         
         .card {
           border: none !important;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05) !important;
         }
         
-        .card:hover {
-          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12) !important;
+        .feature-list {
+          border-left: 3px solid #7c3aed;
+          padding-left: 12px;
+        }
+        
+        @media (max-width: 768px) {
+          .container {
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+          }
         }
       `}</style>
     </>
