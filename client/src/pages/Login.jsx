@@ -51,479 +51,603 @@ const Login = () => {
       const result = await login(formData.email, formData.password);
       
       if (result.success) {
-        navigate('/');
+        navigate('/find-property');
       } else {
-        setError(result.message);
+        setError(result.message || 'Login failed');
       }
     } catch (error) {
-      setError('An unexpected error occurred');
+      setError('An unexpected error occurred. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
-  const styles = {
-    // Interactive animated container
-    loginContainer: {
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #374151 100%)',
-      display: 'flex',
-      alignItems: 'center',
-      position: 'relative',
-      overflow: 'hidden'
-    },
-
-    // Animated background elements
-    backgroundAnimation: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      pointerEvents: 'none',
-      zIndex: 1
-    },
-
-    // Floating orbs with different animations
-    floatingOrb1: {
-      position: 'absolute',
-      width: '300px',
-      height: '300px',
-      background: 'radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(59, 130, 246, 0.1) 40%, transparent 70%)',
-      borderRadius: '50%',
-      top: '10%',
-      left: '10%',
-      animation: 'float1 8s ease-in-out infinite',
-      filter: 'blur(40px)'
-    },
-
-    floatingOrb2: {
-      position: 'absolute',
-      width: '200px',
-      height: '200px',
-      background: 'radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, rgba(139, 92, 246, 0.1) 40%, transparent 70%)',
-      borderRadius: '50%',
-      top: '60%',
-      right: '15%',
-      animation: 'float2 10s ease-in-out infinite',
-      filter: 'blur(30px)'
-    },
-
-    floatingOrb3: {
-      position: 'absolute',
-      width: '150px',
-      height: '150px',
-      background: 'radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, rgba(16, 185, 129, 0.1) 40%, transparent 70%)',
-      borderRadius: '50%',
-      bottom: '20%',
-      left: '20%',
-      animation: 'float3 12s ease-in-out infinite',
-      filter: 'blur(25px)'
-    },
-
-    // Interactive mouse follower
-    mouseFollower: {
-      position: 'absolute',
-      width: '100px',
-      height: '100px',
-      background: 'radial-gradient(circle, rgba(96, 165, 250, 0.2) 0%, transparent 70%)',
-      borderRadius: '50%',
-      filter: 'blur(20px)',
-      transform: `translate(${mousePosition.x}%, ${mousePosition.y}%)`,
-      transition: 'transform 0.3s ease-out',
-      pointerEvents: 'none'
-    },
-
-    // Animated particles
-    particles: {
-      position: 'absolute',
-      width: '100%',
-      height: '100%'
-    },
-
-    particle: (index) => ({
-      position: 'absolute',
-      width: '4px',
-      height: '4px',
-      background: 'rgba(96, 165, 250, 0.6)',
-      borderRadius: '50%',
-      animation: `particle${index % 3 + 1} ${15 + index * 2}s linear infinite`,
-      animationDelay: `${index * 0.5}s`
-    }),
-
-    // Grid pattern overlay
-    gridOverlay: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      backgroundImage: `
-        linear-gradient(rgba(96, 165, 250, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(96, 165, 250, 0.03) 1px, transparent 1px)
-      `,
-      backgroundSize: '50px 50px',
-      animation: 'gridMove 20s linear infinite'
-    },
-
-    // Glass card with enhanced effects
-    loginCard: {
-      background: 'rgba(255, 255, 255, 0.1)',
-      backdropFilter: 'blur(25px) saturate(180%)',
-      WebkitBackdropFilter: 'blur(25px) saturate(180%)',
-      border: '1px solid rgba(255, 255, 255, 0.2)',
-      borderRadius: '24px',
-      boxShadow: '0 32px 80px rgba(0, 0, 0, 0.4)',
-      padding: '0',
-      maxWidth: '420px',
-      margin: '0 auto',
-      position: 'relative',
-      zIndex: 10,
-      transform: 'translateY(0)',
-      transition: 'all 0.3s ease'
-    },
-
-    cardBody: {
-      padding: '48px 40px',
-      color: 'white'
-    },
-
-    // Header section
-    headerSection: {
-      textAlign: 'center',
-      marginBottom: '40px'
-    },
-
-    welcomeTitle: {
-      fontSize: '1.8rem',
-      fontWeight: '700',
-      marginBottom: '8px',
-      textShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
-      background: 'linear-gradient(135deg, #ffffff 0%, #60a5fa 100%)',
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      backgroundClip: 'text'
-    },
-
-    welcomeSubtitle: {
-      color: 'rgba(255, 255, 255, 0.8)',
-      fontSize: '1rem',
-      fontWeight: '400'
-    },
-
-    // Form styling (same as before)
-    formGroup: {
-      marginBottom: '24px',
-      position: 'relative'
-    },
-
-    formLabel: {
-      color: 'rgba(255, 255, 255, 0.9)',
-      fontSize: '0.9rem',
-      fontWeight: '600',
-      marginBottom: '8px',
-      display: 'block'
-    },
-
-    formInput: {
-      background: 'rgba(255, 255, 255, 0.12)',
-      backdropFilter: 'blur(10px)',
-      border: '1px solid rgba(255, 255, 255, 0.2)',
-      borderRadius: '12px',
-      padding: '16px 20px',
-      color: 'white',
-      fontSize: '1rem',
-      width: '100%',
-      transition: 'all 0.3s ease',
-      outline: 'none'
-    },
-
-    passwordContainer: {
-      position: 'relative'
-    },
-
-    passwordToggle: {
-      position: 'absolute',
-      right: '16px',
-      top: '50%',
-      transform: 'translateY(-50%)',
-      background: 'none',
-      border: 'none',
-      color: 'rgba(255, 255, 255, 0.6)',
-      cursor: 'pointer',
-      fontSize: '1.1rem',
-      padding: '4px',
-      transition: 'color 0.2s ease'
-    },
-
-    submitButton: {
-      background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
-      border: 'none',
-      borderRadius: '12px',
-      padding: '16px 24px',
-      color: 'white',
-      fontSize: '1rem',
-      fontWeight: '600',
-      width: '100%',
-      transition: 'all 0.3s ease',
-      boxShadow: '0 8px 20px rgba(59, 130, 246, 0.3)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: '8px',
-      marginBottom: '24px'
-    },
-
-    errorAlert: {
-      background: 'rgba(239, 68, 68, 0.15)',
-      border: '1px solid rgba(239, 68, 68, 0.3)',
-      borderRadius: '12px',
-      color: '#fca5a5',
-      padding: '12px 16px',
-      marginBottom: '24px',
-      fontSize: '0.9rem'
-    },
-
-    loginFooter: {
-      textAlign: 'center',
-      color: 'rgba(255, 255, 255, 0.7)',
-      fontSize: '0.9rem'
-    },
-
-    signupLink: {
-      color: '#60a5fa',
-      textDecoration: 'none',
-      fontWeight: '600',
-      transition: 'color 0.2s ease'
-    }
-  };
-
   return (
     <>
-      {/* Enhanced animations and styles */}
-      <style>
-        {`
-          @keyframes float1 {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(30px, -30px) rotate(120deg); }
-            66% { transform: translate(-20px, 20px) rotate(240deg); }
-          }
-          
-          @keyframes float2 {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(-40px, -20px) rotate(180deg); }
-          }
-          
-          @keyframes float3 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(20px, -15px) scale(1.1); }
-            75% { transform: translate(-15px, 10px) scale(0.9); }
-          }
-          
-          @keyframes particle1 {
-            0% { transform: translateY(100vh) translateX(0px); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-10vh) translateX(100px); opacity: 0; }
-          }
-          
-          @keyframes particle2 {
-            0% { transform: translateY(100vh) translateX(0px); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-10vh) translateX(-50px); opacity: 0; }
-          }
-          
-          @keyframes particle3 {
-            0% { transform: translateY(100vh) translateX(0px); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-10vh) translateX(75px); opacity: 0; }
-          }
-          
-          @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-          }
-          
-          @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-          }
-          
-          .login-card {
-            animation: fadeIn 0.8s ease-out;
-          }
-          
-          .login-card:hover {
-            transform: translateY(-5px) !important;
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5) !important;
-          }
-          
-          .form-input:focus {
-            border-color: rgba(96, 165, 250, 0.6) !important;
-            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2) !important;
-            background: rgba(255, 255, 255, 0.18) !important;
-            transform: scale(1.02) !important;
-          }
-          
-          .form-input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-          }
-          
-          .submit-btn:hover:not(:disabled) {
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
-            transform: translateY(-2px) scale(1.02) !important;
-            box-shadow: 0 16px 40px rgba(59, 130, 246, 0.5) !important;
-          }
-          
-          .submit-btn:active {
-            transform: translateY(0) scale(1) !important;
-          }
-          
-          .password-toggle:hover {
-            color: rgba(255, 255, 255, 0.9) !important;
-            transform: scale(1.1) !important;
-          }
-          
-          .signup-link:hover {
-            color: #93c5fd !important;
-            text-shadow: 0 0 8px rgba(147, 197, 253, 0.5) !important;
-          }
-        `}
-      </style>
-
       <div 
         ref={containerRef}
-        style={styles.loginContainer}
+        className="login-container"
       >
-        {/* Interactive Background Animation */}
-        <div style={styles.backgroundAnimation}>
-          {/* Grid overlay */}
-          <div style={styles.gridOverlay}></div>
+        {/* ✅ ENHANCED: Interactive Background Animation */}
+        <div className="background-animation">
+          {/* Floating orbs with enhanced animations */}
+          <div className="floating-orb orb-1"></div>
+          <div className="floating-orb orb-2"></div>
+          <div className="floating-orb orb-3"></div>
           
-          {/* Floating orbs */}
-          <div style={styles.floatingOrb1}></div>
-          <div style={styles.floatingOrb2}></div>
-          <div style={styles.floatingOrb3}></div>
-          
-          {/* Mouse follower */}
-          <div style={styles.mouseFollower}></div>
+          {/* Interactive mouse follower */}
+          <div 
+            className="mouse-follower"
+            style={{
+              transform: `translate(${mousePosition.x}%, ${mousePosition.y}%)`
+            }}
+          ></div>
           
           {/* Animated particles */}
-          <div style={styles.particles}>
-            {[...Array(15)].map((_, index) => (
+          <div className="particles">
+            {[...Array(12)].map((_, index) => (
               <div
                 key={index}
+                className={`particle particle-${index % 3 + 1}`}
                 style={{
-                  ...styles.particle(index),
                   left: `${Math.random() * 100}%`,
-                  animationDelay: `${index * 1.2}s`
+                  animationDelay: `${index * 1.5}s`
                 }}
               />
             ))}
           </div>
+          
+          {/* Grid pattern overlay */}
+          <div className="grid-overlay"></div>
         </div>
 
         <Container>
-          <Row className="justify-content-center">
+          <Row className="justify-content-center align-items-center min-vh-100">
             <Col xs={12} sm={10} md={8} lg={6} xl={5}>
-              <Card style={styles.loginCard} className="login-card">
-                <Card.Body style={styles.cardBody}>
-                  {/* Header section */}
-                  <div style={styles.headerSection}>
-                    <h2 style={styles.welcomeTitle}>Welcome Back</h2>
-                    <p style={styles.welcomeSubtitle}>
-                      Sign in to your account to continue
+              
+              {/* ✅ PROFESSIONAL: Login Card */}
+              <Card className="login-card">
+                <Card.Body className="card-body">
+                  
+                  {/* Header Section */}
+                  <div className="header-section">
+                    <div className="brand-logo">
+                      <span className="logo-icon">🏠</span>
+                      <span className="brand-name">SpaceLink</span>
+                    </div>
+                    <h2 className="welcome-title">Welcome Back</h2>
+                    <p className="welcome-subtitle">
+                      Sign in to your account to continue exploring properties
                     </p>
                   </div>
 
-                  {/* Error message */}
+                  {/* Error Alert */}
                   {error && (
-                    <div style={styles.errorAlert}>
-                      <strong>Error:</strong> {error}
-                    </div>
+                    <Alert variant="danger" className="error-alert">
+                      <div className="error-content">
+                        <span className="error-icon">⚠️</span>
+                        <span>{error}</span>
+                      </div>
+                    </Alert>
                   )}
 
-                  {/* Login form */}
-                  <Form onSubmit={handleSubmit}>
-                    <div style={styles.formGroup}>
-                      <label style={styles.formLabel}>Email Address</label>
-                      <input
+                  {/* Login Form */}
+                  <Form onSubmit={handleSubmit} className="login-form">
+                    <Form.Group className="form-group">
+                      <Form.Label className="form-label">
+                        <span className="label-icon">✉️</span>
+                        Email Address
+                      </Form.Label>
+                      <Form.Control
                         type="email"
                         name="email"
                         value={formData.email}
                         onChange={handleInputChange}
-                        placeholder="Enter your email"
-                        style={styles.formInput}
+                        placeholder="Enter your email address"
                         className="form-input"
                         required
+                        autoComplete="email"
                       />
-                    </div>
+                    </Form.Group>
 
-                    <div style={styles.formGroup}>
-                      <label style={styles.formLabel}>Password</label>
-                      <div style={styles.passwordContainer}>
-                        <input
+                    <Form.Group className="form-group password-group">
+                      <Form.Label className="form-label">
+                        <span className="label-icon">🔒</span>
+                        Password
+                      </Form.Label>
+                      <div className="password-container">
+                        <Form.Control
                           type={showPassword ? 'text' : 'password'}
                           name="password"
                           value={formData.password}
                           onChange={handleInputChange}
                           placeholder="Enter your password"
-                          style={{ ...styles.formInput, paddingRight: '50px' }}
-                          className="form-input"
+                          className="form-input password-input"
                           required
+                          autoComplete="current-password"
                         />
                         <button
                           type="button"
-                          style={styles.passwordToggle}
                           className="password-toggle"
                           onClick={() => setShowPassword(!showPassword)}
+                          aria-label={showPassword ? 'Hide password' : 'Show password'}
                         >
-                          {showPassword ? '👁️' : '👁️‍🗨️'}
+                          {showPassword ? '🙈' : '👁️'}
                         </button>
                       </div>
-                    </div>
+                    </Form.Group>
 
-                    <button
+                    <Button
                       type="submit"
-                      style={styles.submitButton}
-                      className="submit-btn"
+                      className="submit-button"
                       disabled={loading}
+                      size="lg"
                     >
                       {loading ? (
                         <>
-                          <Spinner size="sm" animation="border" />
-                          Signing In...
+                          <Spinner size="sm" animation="border" className="me-2" />
+                          <span>Signing In...</span>
                         </>
                       ) : (
                         <>
-                          <span>🔐</span>
-                          Sign In to SpaceLink
+                          <span className="button-icon">🚀</span>
+                          <span>Sign In to SpaceLink</span>
                         </>
                       )}
-                    </button>
+                    </Button>
                   </Form>
 
                   {/* Footer */}
-                  <div style={styles.loginFooter}>
-                    <p style={{ margin: 0 }}>
+                  <div className="login-footer">
+                    <p className="signup-text">
                       Don't have an account?{' '}
-                      <Link 
-                        to="/register" 
-                        style={styles.signupLink}
-                        className="signup-link"
-                      >
+                      <Link to="/register" className="signup-link">
                         Create one here
                       </Link>
                     </p>
                   </div>
+
                 </Card.Body>
               </Card>
             </Col>
           </Row>
         </Container>
       </div>
+
+      {/* ✅ PROFESSIONAL: Enhanced Styles */}
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        .login-container {
+          min-height: 100vh;
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #374151 70%, #4b5563 100%);
+          position: relative;
+          overflow: hidden;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        /* ✅ ENHANCED: Background Animations */
+        .background-animation {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+          z-index: 1;
+        }
+        
+        .floating-orb {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(40px);
+          opacity: 0.7;
+        }
+        
+        .orb-1 {
+          width: 350px;
+          height: 350px;
+          background: radial-gradient(circle, rgba(124, 58, 237, 0.4) 0%, rgba(124, 58, 237, 0.1) 40%, transparent 70%);
+          top: 5%;
+          left: 8%;
+          animation: float1 10s ease-in-out infinite;
+        }
+        
+        .orb-2 {
+          width: 250px;
+          height: 250px;
+          background: radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, rgba(59, 130, 246, 0.1) 40%, transparent 70%);
+          top: 55%;
+          right: 10%;
+          animation: float2 12s ease-in-out infinite;
+        }
+        
+        .orb-3 {
+          width: 200px;
+          height: 200px;
+          background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, rgba(16, 185, 129, 0.1) 40%, transparent 70%);
+          bottom: 15%;
+          left: 15%;
+          animation: float3 14s ease-in-out infinite;
+        }
+        
+        .mouse-follower {
+          position: absolute;
+          width: 120px;
+          height: 120px;
+          background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%);
+          borderRadius: 50%;
+          filter: blur(20px);
+          transition: transform 0.3s ease-out;
+          pointer-events: none;
+        }
+        
+        .particles {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+        }
+        
+        .particle {
+          position: absolute;
+          width: 3px;
+          height: 3px;
+          background: rgba(168, 85, 247, 0.6);
+          border-radius: 50%;
+        }
+        
+        .particle-1 { animation: particle1 18s linear infinite; }
+        .particle-2 { animation: particle2 22s linear infinite; }
+        .particle-3 { animation: particle3 20s linear infinite; }
+        
+        .grid-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-image: 
+            linear-gradient(rgba(168, 85, 247, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(168, 85, 247, 0.05) 1px, transparent 1px);
+          background-size: 60px 60px;
+          animation: gridMove 25s linear infinite;
+        }
+        
+        /* ✅ PROFESSIONAL: Login Card */
+        .login-card {
+          background: rgba(255, 255, 255, 0.12);
+          backdrop-filter: blur(25px) saturate(180%);
+          -webkit-backdrop-filter: blur(25px) saturate(180%);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          border-radius: 24px;
+          box-shadow: 
+            0 32px 80px rgba(0, 0, 0, 0.3),
+            0 0 0 1px rgba(255, 255, 255, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+          position: relative;
+          z-index: 10;
+          animation: cardAppear 0.8s ease-out;
+          transition: all 0.3s ease;
+        }
+        
+        .login-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 
+            0 40px 100px rgba(0, 0, 0, 0.4),
+            0 0 0 1px rgba(255, 255, 255, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+        
+        .card-body {
+          padding: 48px 40px;
+          color: white;
+        }
+        
+        /* Header Section */
+        .header-section {
+          text-align: center;
+          margin-bottom: 40px;
+        }
+        
+        .brand-logo {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          margin-bottom: 24px;
+        }
+        
+        .logo-icon {
+          font-size: 2rem;
+          filter: drop-shadow(0 0 10px rgba(124, 58, 237, 0.5));
+        }
+        
+        .brand-name {
+          font-size: 1.8rem;
+          font-weight: 800;
+          background: linear-gradient(135deg, #ffffff 0%, #a855f7 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          letter-spacing: -0.02em;
+        }
+        
+        .welcome-title {
+          font-size: 2rem;
+          font-weight: 800;
+          margin-bottom: 8px;
+          background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+          letter-spacing: -0.02em;
+        }
+        
+        .welcome-subtitle {
+          color: rgba(255, 255, 255, 0.85);
+          font-size: 1rem;
+          font-weight: 400;
+          line-height: 1.5;
+          margin: 0;
+        }
+        
+        /* Form Styling */
+        .login-form {
+          margin-bottom: 32px;
+        }
+        
+        .form-group {
+          margin-bottom: 24px;
+        }
+        
+        .form-label {
+          color: rgba(255, 255, 255, 0.9);
+          font-size: 0.9rem;
+          font-weight: 600;
+          margin-bottom: 8px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        
+        .label-icon {
+          font-size: 1rem;
+          opacity: 0.8;
+        }
+        
+        .form-input {
+          background: rgba(255, 255, 255, 0.12) !important;
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.2) !important;
+          border-radius: 12px !important;
+          padding: 16px 20px !important;
+          color: white !important;
+          font-size: 1rem !important;
+          transition: all 0.3s ease !important;
+          font-family: 'Inter', sans-serif !important;
+        }
+        
+        .form-input::placeholder {
+          color: rgba(255, 255, 255, 0.5) !important;
+        }
+        
+        .form-input:focus {
+          background: rgba(255, 255, 255, 0.18) !important;
+          border-color: rgba(168, 85, 247, 0.6) !important;
+          box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2) !important;
+          transform: scale(1.02);
+        }
+        
+        /* Password Field */
+        .password-container {
+          position: relative;
+        }
+        
+        .password-input {
+          padding-right: 50px !important;
+        }
+        
+        .password-toggle {
+          position: absolute;
+          right: 16px;
+          top: 50%;
+          transform: translateY(-50%);
+          background: none;
+          border: none;
+          color: rgba(255, 255, 255, 0.6);
+          cursor: pointer;
+          font-size: 1.1rem;
+          padding: 4px;
+          border-radius: 4px;
+          transition: all 0.2s ease;
+        }
+        
+        .password-toggle:hover {
+          color: rgba(255, 255, 255, 0.9);
+          background: rgba(255, 255, 255, 0.1);
+          transform: translateY(-50%) scale(1.1);
+        }
+        
+        /* Submit Button */
+        .submit-button {
+          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%) !important;
+          border: none !important;
+          border-radius: 12px !important;
+          padding: 16px 24px !important;
+          color: white !important;
+          font-size: 1rem !important;
+          font-weight: 700 !important;
+          width: 100% !important;
+          transition: all 0.3s ease !important;
+          box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3) !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          gap: 8px !important;
+          font-family: 'Inter', sans-serif !important;
+          text-transform: uppercase;
+          letter-spacing: 0.025em;
+        }
+        
+        .submit-button:hover:not(:disabled) {
+          background: linear-gradient(135deg, #6b21a8 0%, #7e22ce 100%) !important;
+          transform: translateY(-2px) scale(1.02) !important;
+          box-shadow: 0 16px 40px rgba(124, 58, 237, 0.4) !important;
+        }
+        
+        .submit-button:active {
+          transform: translateY(0) scale(1) !important;
+        }
+        
+        .submit-button:disabled {
+          opacity: 0.7;
+          cursor: not-allowed;
+          transform: none !important;
+        }
+        
+        .button-icon {
+          font-size: 1.1rem;
+        }
+        
+        /* Error Alert */
+        .error-alert {
+          background: rgba(239, 68, 68, 0.15) !important;
+          border: 1px solid rgba(239, 68, 68, 0.3) !important;
+          border-radius: 12px !important;
+          padding: 12px 16px !important;
+          margin-bottom: 24px !important;
+          color: #fca5a5 !important;
+        }
+        
+        .error-content {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 0.9rem;
+          font-weight: 500;
+        }
+        
+        .error-icon {
+          font-size: 1rem;
+        }
+        
+        /* Footer */
+        .login-footer {
+          text-align: center;
+        }
+        
+        .signup-text {
+          color: rgba(255, 255, 255, 0.7);
+          font-size: 0.9rem;
+          margin: 0;
+        }
+        
+        .signup-link {
+          color: #a855f7 !important;
+          text-decoration: none !important;
+          font-weight: 600 !important;
+          transition: all 0.2s ease !important;
+        }
+        
+        .signup-link:hover {
+          color: #c084fc !important;
+          text-shadow: 0 0 8px rgba(168, 85, 247, 0.5) !important;
+        }
+        
+        /* Keyframe Animations */
+        @keyframes float1 {
+          0%, 100% { transform: translate(0, 0) rotate(0deg); }
+          25% { transform: translate(30px, -30px) rotate(90deg); }
+          50% { transform: translate(-20px, -40px) rotate(180deg); }
+          75% { transform: translate(-40px, 20px) rotate(270deg); }
+        }
+        
+        @keyframes float2 {
+          0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+          33% { transform: translate(-40px, -20px) rotate(120deg) scale(1.1); }
+          66% { transform: translate(20px, -30px) rotate(240deg) scale(0.9); }
+        }
+        
+        @keyframes float3 {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          20% { transform: translate(25px, -15px) scale(1.1); }
+          40% { transform: translate(-15px, -25px) scale(0.9); }
+          60% { transform: translate(-30px, 10px) scale(1.05); }
+          80% { transform: translate(15px, 20px) scale(0.95); }
+        }
+        
+        @keyframes particle1 {
+          0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateY(-10vh) translateX(150px) rotate(360deg); opacity: 0; }
+        }
+        
+        @keyframes particle2 {
+          0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateY(-10vh) translateX(-100px) rotate(-360deg); opacity: 0; }
+        }
+        
+        @keyframes particle3 {
+          0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateY(-10vh) translateX(75px) rotate(180deg); opacity: 0; }
+        }
+        
+        @keyframes gridMove {
+          0% { transform: translate(0, 0); }
+          100% { transform: translate(60px, 60px); }
+        }
+        
+        @keyframes cardAppear {
+          from { 
+            opacity: 0; 
+            transform: translateY(30px) scale(0.95); 
+          }
+          to { 
+            opacity: 1; 
+            transform: translateY(0) scale(1); 
+          }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+          .card-body {
+            padding: 32px 24px;
+          }
+          
+          .welcome-title {
+            font-size: 1.75rem;
+          }
+          
+          .welcome-subtitle {
+            font-size: 0.9rem;
+          }
+          
+          .orb-1 { width: 250px; height: 250px; }
+          .orb-2 { width: 200px; height: 200px; }
+          .orb-3 { width: 150px; height: 150px; }
+        }
+        
+        @media (max-width: 576px) {
+          .card-body {
+            padding: 28px 20px;
+          }
+          
+          .brand-name {
+            font-size: 1.5rem;
+          }
+          
+          .welcome-title {
+            font-size: 1.5rem;
+          }
+        }
+      `}</style>
     </>
   );
 };
