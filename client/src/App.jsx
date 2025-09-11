@@ -16,13 +16,14 @@ import Register from './pages/Register';
 import ProtectedRoute from './components/ProtectedRoute';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <div>
+        <div className="App">
           <Navbar />
-          <div style={{ paddingTop: '80px', minHeight: 'calc(100vh - 80px)' }}>
+          <div className="main-content" style={{ paddingTop: '80px', minHeight: 'calc(100vh - 80px)' }}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
@@ -42,4 +43,5 @@ function App() {
     </AuthProvider>
   );
 }
+
 export default App;
