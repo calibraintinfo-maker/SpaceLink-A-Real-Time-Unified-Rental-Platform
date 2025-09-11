@@ -68,12 +68,12 @@ const Login = () => {
         ref={containerRef}
         className="login-container"
       >
-        {/* ✅ PROFESSIONAL: Light Theme Animated Background */}
+        {/* ✅ PROFESSIONAL: Animated Background */}
         <div className="background-animation">
           {/* Grid pattern overlay */}
           <div className="grid-overlay"></div>
           
-          {/* Floating orbs with light colors */}
+          {/* Floating orbs */}
           <div className="floating-orb orb-1"></div>
           <div className="floating-orb orb-2"></div>
           <div className="floating-orb orb-3"></div>
@@ -88,13 +88,13 @@ const Login = () => {
           
           {/* Animated particles */}
           <div className="particles">
-            {[...Array(15)].map((_, index) => (
+            {[...Array(12)].map((_, index) => (
               <div
                 key={index}
                 className={`particle particle-${index % 3 + 1}`}
                 style={{
                   left: `${Math.random() * 100}%`,
-                  animationDelay: `${index * 1.2}s`
+                  animationDelay: `${index * 1.5}s`
                 }}
               />
             ))}
@@ -103,9 +103,9 @@ const Login = () => {
 
         <Container>
           <Row className="justify-content-center align-items-center min-vh-100">
-            <Col xs={12} sm={8} md={6} lg={4} xl={4}>
+            <Col xs={11} sm={8} md={6} lg={4} xl={4}>
               
-              {/* ✅ COMPACT: Professional Login Card */}
+              {/* ✅ PERFECT: Compact Professional Login Card */}
               <Card className="login-card">
                 <Card.Body className="card-body">
                   
@@ -165,12 +165,12 @@ const Login = () => {
                           aria-label={showPassword ? 'Hide password' : 'Show password'}
                         >
                           {showPassword ? (
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                               <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
                               <line x1="1" y1="1" x2="23" y2="23"/>
                             </svg>
                           ) : (
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                               <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                               <circle cx="12" cy="12" r="3"/>
                             </svg>
@@ -215,9 +215,9 @@ const Login = () => {
         </Container>
       </div>
 
-      {/* ✅ COMPACT: Professional Styles */}
+      {/* ✅ PERFECT: Professional Compact Styles */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
         .login-container {
           min-height: 100vh;
@@ -227,7 +227,7 @@ const Login = () => {
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
         
-        /* ✅ LIGHT: Interactive Background Animation */
+        /* ✅ PROFESSIONAL: Animated Background */
         .background-animation {
           position: absolute;
           top: 0;
@@ -315,9 +315,9 @@ const Login = () => {
         .particle-2 { animation: particle2 30s linear infinite; }
         .particle-3 { animation: particle3 28s linear infinite; }
         
-        /* ✅ COMPACT: Professional Login Card */
+        /* ✅ PERFECT: Compact Professional Card */
         .login-card {
-          background: rgba(255, 255, 255, 0.9);
+          background: rgba(255, 255, 255, 0.92);
           backdrop-filter: blur(15px) saturate(180%);
           -webkit-backdrop-filter: blur(15px) saturate(180%);
           border: 1px solid rgba(255, 255, 255, 0.7);
@@ -330,7 +330,8 @@ const Login = () => {
           z-index: 10;
           animation: cardAppear 0.6s ease-out;
           transition: all 0.3s ease;
-          max-width: 380px;
+          width: 100%;
+          max-width: 340px;
           margin: 0 auto;
         }
         
@@ -343,31 +344,31 @@ const Login = () => {
         }
         
         .card-body {
-          padding: 2rem 1.75rem;
+          padding: 1.75rem 1.5rem;
           color: #1f2937;
         }
         
         /* ✅ COMPACT: Header Section */
         .header-section {
           text-align: center;
-          margin-bottom: 1.75rem;
+          margin-bottom: 1.5rem;
         }
         
         .brand-logo {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 10px;
+          gap: 8px;
           margin-bottom: 1rem;
         }
         
         .logo-icon {
-          font-size: 1.6rem;
+          font-size: 1.5rem;
           filter: drop-shadow(0 2px 4px rgba(124, 58, 237, 0.2));
         }
         
         .brand-name {
-          font-size: 1.5rem;
+          font-size: 1.4rem;
           font-weight: 800;
           background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
           -webkit-background-clip: text;
@@ -377,7 +378,7 @@ const Login = () => {
         }
         
         .welcome-title {
-          font-size: 1.5rem;
+          font-size: 1.4rem;
           font-weight: 700;
           margin-bottom: 6px;
           color: #111827;
@@ -386,7 +387,7 @@ const Login = () => {
         
         .welcome-subtitle {
           color: #6b7280;
-          font-size: 0.875rem;
+          font-size: 0.8rem;
           font-weight: 400;
           line-height: 1.4;
           margin: 0;
@@ -394,29 +395,29 @@ const Login = () => {
         
         /* ✅ COMPACT: Form Styling */
         .login-form {
-          margin-bottom: 1.25rem;
+          margin-bottom: 1rem;
         }
         
         .form-group {
-          margin-bottom: 1.25rem;
+          margin-bottom: 1.1rem;
         }
         
         .form-label {
           color: #374151;
-          font-size: 0.875rem;
+          font-size: 0.8rem;
           font-weight: 600;
-          margin-bottom: 6px;
+          margin-bottom: 5px;
           display: block;
         }
         
         .form-input {
-          background: rgba(255, 255, 255, 0.85) !important;
+          background: rgba(255, 255, 255, 0.9) !important;
           backdrop-filter: blur(5px);
           border: 1.5px solid rgba(209, 213, 219, 0.8) !important;
           border-radius: 10px !important;
-          padding: 12px 16px !important;
+          padding: 11px 14px !important;
           color: #111827 !important;
-          font-size: 0.9rem !important;
+          font-size: 0.85rem !important;
           transition: all 0.2s ease !important;
           font-family: 'Inter', sans-serif !important;
           box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
@@ -424,7 +425,7 @@ const Login = () => {
         
         .form-input::placeholder {
           color: #9ca3af !important;
-          font-size: 0.875rem !important;
+          font-size: 0.8rem !important;
         }
         
         .form-input:focus {
@@ -440,20 +441,20 @@ const Login = () => {
         }
         
         .password-input {
-          padding-right: 45px !important;
+          padding-right: 40px !important;
         }
         
         .password-toggle {
           position: absolute;
-          right: 12px;
+          right: 10px;
           top: 50%;
           transform: translateY(-50%);
           background: none;
           border: none;
           color: #6b7280;
           cursor: pointer;
-          padding: 6px;
-          border-radius: 6px;
+          padding: 5px;
+          border-radius: 5px;
           transition: all 0.2s ease;
           display: flex;
           align-items: center;
@@ -463,11 +464,12 @@ const Login = () => {
         .password-toggle:hover {
           color: #374151;
           background: rgba(124, 58, 237, 0.08);
+          transform: translateY(-50%) scale(1.05);
         }
         
         .password-toggle svg {
-          width: 18px;
-          height: 18px;
+          width: 16px;
+          height: 16px;
         }
         
         /* ✅ COMPACT: Submit Button */
@@ -475,9 +477,9 @@ const Login = () => {
           background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%) !important;
           border: none !important;
           border-radius: 10px !important;
-          padding: 12px 20px !important;
+          padding: 11px 18px !important;
           color: white !important;
-          font-size: 0.875rem !important;
+          font-size: 0.8rem !important;
           font-weight: 700 !important;
           width: 100% !important;
           transition: all 0.3s ease !important;
@@ -485,11 +487,11 @@ const Login = () => {
           display: flex !important;
           align-items: center !important;
           justify-content: center !important;
-          gap: 6px !important;
+          gap: 5px !important;
           font-family: 'Inter', sans-serif !important;
           text-transform: uppercase;
           letter-spacing: 0.5px;
-          margin-bottom: 1.25rem !important;
+          margin-bottom: 1rem !important;
         }
         
         .submit-button:hover:not(:disabled) {
@@ -509,7 +511,7 @@ const Login = () => {
         }
         
         .button-icon {
-          font-size: 1rem;
+          font-size: 0.9rem;
         }
         
         /* ✅ COMPACT: Error Alert */
@@ -517,10 +519,10 @@ const Login = () => {
           background: rgba(254, 242, 242, 0.9) !important;
           border: 1px solid rgba(248, 113, 113, 0.3) !important;
           border-radius: 8px !important;
-          padding: 10px 12px !important;
-          margin-bottom: 1.25rem !important;
+          padding: 8px 10px !important;
+          margin-bottom: 1rem !important;
           color: #dc2626 !important;
-          font-size: 0.85rem !important;
+          font-size: 0.8rem !important;
         }
         
         /* ✅ COMPACT: Footer */
@@ -530,7 +532,7 @@ const Login = () => {
         
         .signup-text {
           color: #6b7280;
-          font-size: 0.85rem;
+          font-size: 0.8rem;
           margin: 0;
         }
         
@@ -545,7 +547,7 @@ const Login = () => {
           color: #6b21a8 !important;
         }
         
-        /* ✅ SMOOTH: Animation Keyframes */
+        /* ✅ SMOOTH: Professional Animations */
         @keyframes float1 {
           0%, 100% { transform: translate(0, 0) rotate(0deg); }
           50% { transform: translate(15px, -12px) rotate(180deg); }
@@ -600,16 +602,20 @@ const Login = () => {
         
         /* ✅ RESPONSIVE: Mobile Optimizations */
         @media (max-width: 768px) {
+          .login-card {
+            max-width: 320px;
+          }
+          
           .card-body {
             padding: 1.5rem 1.25rem;
           }
           
           .welcome-title {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
           }
           
           .brand-name {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
           }
           
           .orb-1 { width: 180px; height: 180px; }
@@ -618,16 +624,20 @@ const Login = () => {
         }
         
         @media (max-width: 576px) {
+          .login-card {
+            max-width: 300px;
+          }
+          
           .card-body {
             padding: 1.25rem 1rem;
           }
           
           .welcome-title {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
           }
           
           .brand-name {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
           }
         }
       `}</style>
