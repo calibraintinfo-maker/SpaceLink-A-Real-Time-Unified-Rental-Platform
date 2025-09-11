@@ -128,20 +128,29 @@ const Register = () => {
         ref={containerRef}
         className="register-container"
       >
-        {/* ✅ PROFESSIONAL: Beautiful Background Animations */}
+        {/* ✅ AMAZING: Professional Animated Background */}
         <div className="background-animation">
+          {/* Animated gradient overlay */}
           <div className="gradient-overlay"></div>
+          
+          {/* Moving grid pattern */}
           <div className="grid-overlay"></div>
+          
+          {/* Floating orbs with animations */}
           <div className="floating-orb orb-1"></div>
           <div className="floating-orb orb-2"></div>
           <div className="floating-orb orb-3"></div>
           <div className="floating-orb orb-4"></div>
+          
+          {/* Interactive mouse follower */}
           <div 
             className="mouse-follower"
             style={{
               transform: `translate(${mousePosition.x}%, ${mousePosition.y}%)`
             }}
           ></div>
+          
+          {/* Floating particles */}
           <div className="particles">
             {[...Array(15)].map((_, index) => (
               <div
@@ -154,24 +163,33 @@ const Register = () => {
               />
             ))}
           </div>
+          
+          {/* Geometric shapes */}
+          <div className="geometric-shapes">
+            <div className="shape shape-1"></div>
+            <div className="shape shape-2"></div>
+            <div className="shape shape-3"></div>
+          </div>
         </div>
 
         <Container>
           <Row className="justify-content-center align-items-center min-vh-100">
             <Col xs={11} sm={7} md={5} lg={4} xl={4}>
               
-              {/* ✅ SUPER COMPACT: Register Card */}
+              {/* ✅ COMPACT: Professional Register Card */}
               <Card className="register-card">
                 <Card.Body className="card-body">
                   
-                  {/* ✅ COMPACT: Header Section */}
+                  {/* Header Section */}
                   <div className="header-section">
                     <div className="brand-logo">
                       <span className="logo-icon">🏠</span>
                       <span className="brand-name">SpaceLink</span>
                     </div>
                     <h2 className="welcome-title">Create Account</h2>
-                    <p className="welcome-subtitle">Join SpaceLink and start exploring properties</p>
+                    <p className="welcome-subtitle">
+                      Join SpaceLink and start exploring properties
+                    </p>
                   </div>
 
                   {/* Error Alert */}
@@ -181,7 +199,7 @@ const Register = () => {
                     </Alert>
                   )}
 
-                  {/* ✅ SUPER COMPACT: Registration Form */}
+                  {/* Registration Form */}
                   <Form onSubmit={handleSubmit} className="register-form">
                     <Form.Group className="form-group">
                       <Form.Label className="form-label">Full Name</Form.Label>
@@ -243,7 +261,7 @@ const Register = () => {
                           )}
                         </button>
                       </div>
-                      {/* ✅ COMPACT: Inline Password Strength */}
+                      {/* Password Strength Indicator */}
                       {formData.password && (
                         <div className="password-strength-inline">
                           <div className="strength-bar">
@@ -318,7 +336,7 @@ const Register = () => {
                     </Button>
                   </Form>
 
-                  {/* ✅ COMPACT: Footer */}
+                  {/* Footer */}
                   <div className="register-footer">
                     <p className="login-text">
                       Already have an account?{' '}
@@ -335,7 +353,7 @@ const Register = () => {
         </Container>
       </div>
 
-      {/* ✅ SUPER COMPACT: Reduced Spacing Styles */}
+      {/* ✅ COMPLETE: All Animations & Styles */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
@@ -348,7 +366,7 @@ const Register = () => {
           padding: 1.5rem 0;
         }
         
-        /* ✅ SAME: Background Animations */
+        /* ✅ PROFESSIONAL: Background Animations */
         .background-animation {
           position: absolute;
           top: 0;
@@ -478,7 +496,48 @@ const Register = () => {
           animation: particle4 20s linear infinite; 
         }
         
-        /* ✅ SUPER COMPACT: Register Card */
+        .geometric-shapes {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+        }
+        
+        .shape {
+          position: absolute;
+          opacity: 0.1;
+        }
+        
+        .shape-1 {
+          width: 50px;
+          height: 50px;
+          border: 2px solid #7c3aed;
+          top: 20%;
+          right: 20%;
+          animation: rotate 30s linear infinite;
+        }
+        
+        .shape-2 {
+          width: 0;
+          height: 0;
+          border-left: 20px solid transparent;
+          border-right: 20px solid transparent;
+          border-bottom: 30px solid #3b82f6;
+          top: 70%;
+          left: 80%;
+          animation: float1 25s ease-in-out infinite;
+        }
+        
+        .shape-3 {
+          width: 30px;
+          height: 30px;
+          background: #10b981;
+          border-radius: 50%;
+          bottom: 30%;
+          right: 30%;
+          animation: pulse 8s ease-in-out infinite;
+        }
+        
+        /* ✅ COMPACT: Register Card */
         .register-card {
           background: rgba(255, 255, 255, 0.95);
           backdrop-filter: blur(20px) saturate(180%);
@@ -507,11 +566,11 @@ const Register = () => {
         }
         
         .card-body {
-          padding: 1.5rem 1.5rem;
+          padding: 1.5rem;
           color: #1f2937;
         }
         
-        /* ✅ SUPER COMPACT: Header Section */
+        /* ✅ COMPACT: Header Section */
         .header-section {
           text-align: center;
           margin-bottom: 1.2rem;
@@ -556,7 +615,7 @@ const Register = () => {
           margin: 0;
         }
         
-        /* ✅ SUPER COMPACT: Form Styling */
+        /* ✅ COMPACT: Form Styling */
         .register-form {
           margin-bottom: 1rem;
         }
@@ -635,7 +694,7 @@ const Register = () => {
           height: 16px;
         }
         
-        /* ✅ COMPACT: Inline Password Strength */
+        /* ✅ COMPACT: Password Strength */
         .password-strength-inline {
           display: flex;
           align-items: center;
@@ -664,7 +723,7 @@ const Register = () => {
           transition: color 0.3s ease;
         }
         
-        /* ✅ SUPER COMPACT: Submit Button */
+        /* ✅ COMPACT: Submit Button */
         .submit-button {
           background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%) !important;
           border: none !important;
@@ -741,64 +800,80 @@ const Register = () => {
           text-shadow: 0 0 6px rgba(124, 58, 237, 0.3) !important;
         }
         
-        /* ✅ SAME: Animation Keyframes */
+        /* ✅ BEAUTIFUL: Complete Animation Keyframes */
         @keyframes gradientShift {
           0%, 100% { opacity: 1; }
           50% { opacity: 0.7; }
         }
         
+        @keyframes gridMove {
+          0% { transform: translate(0, 0); }
+          100% { transform: translate(60px, 60px); }
+        }
+        
         @keyframes float1 {
-          0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          50% { transform: translate(15px, -12px) rotate(180deg); }
+          0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+          25% { transform: translate(20px, -20px) rotate(90deg) scale(1.05); }
+          50% { transform: translate(-15px, -30px) rotate(180deg) scale(0.95); }
+          75% { transform: translate(-25px, 15px) rotate(270deg) scale(1.02); }
         }
         
         @keyframes float2 {
-          0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          50% { transform: translate(-12px, -10px) rotate(-180deg); }
+          0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+          30% { transform: translate(-30px, -15px) rotate(108deg) scale(1.08); }
+          70% { transform: translate(15px, -25px) rotate(252deg) scale(0.92); }
         }
         
         @keyframes float3 {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          50% { transform: translate(8px, -6px) scale(1.02); }
+          0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+          20% { transform: translate(15px, -12px) scale(1.06) rotate(72deg); }
+          40% { transform: translate(-12px, -20px) scale(0.94) rotate(144deg); }
+          60% { transform: translate(-20px, 8px) scale(1.03) rotate(216deg); }
+          80% { transform: translate(12px, 16px) scale(0.97) rotate(288deg); }
         }
         
         @keyframes float4 {
           0%, 100% { transform: translate(0, 0) scale(1); }
-          33% { transform: translate(8px, -10px) scale(1.05); }
-          66% { transform: translate(-10px, 8px) scale(0.95); }
+          33% { transform: translate(12px, -15px) scale(1.1); }
+          66% { transform: translate(-15px, 12px) scale(0.9); }
         }
         
         @keyframes particle1 {
-          0% { transform: translateY(100vh) translateX(0px); opacity: 0; }
+          0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
           10% { opacity: 0.6; }
           90% { opacity: 0.6; }
-          100% { transform: translateY(-10vh) translateX(60px); opacity: 0; }
+          100% { transform: translateY(-10vh) translateX(60px) rotate(360deg); opacity: 0; }
         }
         
         @keyframes particle2 {
-          0% { transform: translateY(100vh) translateX(0px); opacity: 0; }
+          0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
           10% { opacity: 0.4; }
           90% { opacity: 0.4; }
-          100% { transform: translateY(-10vh) translateX(-40px); opacity: 0; }
+          100% { transform: translateY(-10vh) translateX(-40px) rotate(-360deg); opacity: 0; }
         }
         
         @keyframes particle3 {
-          0% { transform: translateY(100vh) translateX(0px); opacity: 0; }
+          0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
           10% { opacity: 0.5; }
           90% { opacity: 0.5; }
-          100% { transform: translateY(-10vh) translateX(30px); opacity: 0; }
+          100% { transform: translateY(-10vh) translateX(30px) rotate(180deg); opacity: 0; }
         }
         
         @keyframes particle4 {
-          0% { transform: translateY(100vh) translateX(0px); opacity: 0; }
+          0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
           10% { opacity: 0.3; }
           90% { opacity: 0.3; }
-          100% { transform: translateY(-10vh) translateX(-20px); opacity: 0; }
+          100% { transform: translateY(-10vh) translateX(-20px) rotate(-180deg); opacity: 0; }
         }
         
-        @keyframes gridMove {
-          0% { transform: translate(0, 0); }
-          100% { transform: translate(60px, 60px); }
+        @keyframes rotate {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+          0%, 100% { transform: scale(1); opacity: 0.1; }
+          50% { transform: scale(1.2); opacity: 0.2; }
         }
         
         @keyframes cardAppear {
@@ -829,6 +904,11 @@ const Register = () => {
           .brand-name {
             font-size: 1.2rem;
           }
+          
+          .orb-1 { width: 180px; height: 180px; }
+          .orb-2 { width: 140px; height: 140px; }
+          .orb-3 { width: 110px; height: 110px; }
+          .orb-4 { width: 100px; height: 100px; }
         }
         
         @media (max-width: 576px) {
