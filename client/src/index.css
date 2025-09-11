@@ -1,55 +1,90 @@
-/* Reset and base styles for SpaceLink */
+/* ✅ UPDATED index.css - Complete Professional Version */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* ✅ CRITICAL: Reset and base styles for SpaceLink */
 * {
   box-sizing: border-box;
 }
 
-body {
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ✅ CRITICAL: Ensure full height and no gaps */
+html {
+  height: 100%;
+  width: 100%;
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #ffffff;
-  color: #333333;
-  width: 100%;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  color: #1f2937;
   overflow-x: hidden;
-}
-
-html {
-  width: 100%;
-  overflow-x: hidden;
+  line-height: 1.6;
+  letter-spacing: 0.005em;
 }
 
 #root {
   width: 100%;
   min-height: 100vh;
+  height: 100%;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
 }
 
+/* ✅ PROFESSIONAL: Container system */
 .container-fluid {
   padding-left: 0;
   padding-right: 0;
   width: 100%;
   max-width: 100%;
+  margin: 0;
 }
 
-/* Remove default margins and ensure full width */
+.container {
+  width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ✅ PROFESSIONAL: Remove default margins and ensure full width */
 .row {
   margin-left: 0;
   margin-right: 0;
   width: 100%;
 }
 
-/* Ensure navbar spans full width */
-.navbar {
-  width: 100%;
-  margin: 0;
+.col,
+[class*="col-"] {
   padding-left: 15px;
   padding-right: 15px;
 }
 
-/* Hero section full width */
+/* ✅ PROFESSIONAL: Ensure navbar spans full width */
+.navbar {
+  width: 100%;
+  margin: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* ✅ PROFESSIONAL: Hero section full width */
 .hero-section {
   width: 100%;
   margin: 0;
@@ -57,45 +92,286 @@ html {
   padding-right: 15px;
 }
 
-/* Full width sections */
+/* ✅ PROFESSIONAL: Full width sections */
 .features-section,
-.footer {
+.footer,
+section {
   width: 100%;
   margin: 0;
 }
 
-/* Container adjustments for full width */
-.container {
-  max-width: 100%;
-  padding-left: 15px;
-  padding-right: 15px;
+/* ✅ PROFESSIONAL: Typography defaults */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  margin-bottom: 0.75rem;
+  color: #111827;
 }
 
-/* Responsive adjustments */
-@media (min-width: 1200px) {
+p {
+  margin-bottom: 1rem;
+  color: #374151;
+}
+
+/* ✅ PROFESSIONAL: List styling */
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ✅ PROFESSIONAL: Image optimization */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ✅ PROFESSIONAL: Button reset */
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* ✅ PROFESSIONAL: Input reset */
+input,
+textarea,
+select {
+  font: inherit;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+/* ✅ PROFESSIONAL: Link reset */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ✅ RESPONSIVE: Container max-widths with better breakpoints */
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1399px) {
   .container {
     max-width: 1140px;
-    margin: 0 auto;
   }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
   .container {
     max-width: 960px;
-    margin: 0 auto;
   }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
   .container {
     max-width: 720px;
-    margin: 0 auto;
+  }
+  
+  .navbar {
+    padding-left: 15px;
+    padding-right: 15px;
   }
 }
 
 @media (min-width: 576px) and (max-width: 767px) {
   .container {
     max-width: 540px;
-    margin: 0 auto;
   }
+  
+  .navbar {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  
+  .hero-section {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+@media (max-width: 575px) {
+  .container {
+    max-width: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  
+  .navbar {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  .hero-section {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  .col,
+  [class*="col-"] {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+/* ✅ PROFESSIONAL: Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ✅ PROFESSIONAL: Focus management */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ✅ PROFESSIONAL: High contrast support */
+@media (prefers-contrast: high) {
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .card,
+  .navbar {
+    background: white !important;
+    border: 2px solid black !important;
+  }
+  
+  .btn-primary {
+    background: black !important;
+    color: white !important;
+    border: 2px solid black !important;
+  }
+  
+  a {
+    color: blue !important;
+  }
+  
+  a:visited {
+    color: purple !important;
+  }
+}
+
+/* ✅ PROFESSIONAL: Dark mode support (if needed) */
+@media (prefers-color-scheme: dark) {
+  /* Keep light theme for SpaceLink brand consistency */
+  /* You can add dark mode styles here if needed in the future */
+}
+
+/* ✅ PROFESSIONAL: Print optimization */
+@media print {
+  * {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+  
+  .container {
+    max-width: none !important;
+    padding: 0 !important;
+  }
+  
+  .row {
+    margin: 0 !important;
+  }
+  
+  .col,
+  [class*="col-"] {
+    padding: 0 !important;
+  }
+  
+  a {
+    text-decoration: underline !important;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+}
+
+/* ✅ PROFESSIONAL: Performance optimizations */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ✅ PROFESSIONAL: Form styling consistency */
+input,
+select,
+textarea,
+button {
+  font-family: 'Inter', inherit;
+}
+
+/* ✅ PROFESSIONAL: Table responsive wrapper */
+.table-responsive {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.08);
+}
+
+/* ✅ PROFESSIONAL: Utility for hiding elements */
+.d-none {
+  display: none !important;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* ✅ PROFESSIONAL: Smooth transitions */
+* {
+  transition-property: color, background-color, border-color, opacity, transform, box-shadow;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+
+button,
+.btn,
+a {
+  transition-duration: 0.3s;
 }
