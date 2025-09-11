@@ -16,7 +16,7 @@ const Login = () => {
   const navigate = useNavigate();
   const containerRef = useRef(null);
 
-  // Mouse tracking for subtle interactive effects
+  // Mouse tracking for interactive effects
   useEffect(() => {
     const handleMouseMove = (e) => {
       if (containerRef.current) {
@@ -68,61 +68,93 @@ const Login = () => {
         ref={containerRef}
         className="login-container"
       >
-        {/* ✅ LIGHT: Subtle Background Elements */}
-        <div className="background-decoration">
-          <div className="floating-shape shape-1"></div>
-          <div className="floating-shape shape-2"></div>
-          <div className="floating-shape shape-3"></div>
+        {/* ✅ PROFESSIONAL: Enhanced Animated Background */}
+        <div className="background-animation">
+          {/* Grid pattern overlay */}
+          <div className="grid-overlay"></div>
+          
+          {/* Floating orbs with complex animations */}
+          <div className="floating-orb orb-1"></div>
+          <div className="floating-orb orb-2"></div>
+          <div className="floating-orb orb-3"></div>
+          
+          {/* Interactive mouse follower */}
           <div 
-            className="mouse-glow"
+            className="mouse-follower"
             style={{
               transform: `translate(${mousePosition.x}%, ${mousePosition.y}%)`
             }}
           ></div>
+          
+          {/* Animated particles */}
+          <div className="particles">
+            {[...Array(15)].map((_, index) => (
+              <div
+                key={index}
+                className={`particle particle-${index % 3 + 1}`}
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  animationDelay: `${index * 1.2}s`
+                }}
+              />
+            ))}
+          </div>
         </div>
 
         <Container>
           <Row className="justify-content-center align-items-center min-vh-100">
             <Col xs={12} sm={8} md={6} lg={5} xl={4}>
               
-              {/* ✅ COMPACT: Login Card */}
+              {/* ✅ PROFESSIONAL: Glass Morphism Login Card */}
               <Card className="login-card">
                 <Card.Body className="card-body">
                   
-                  {/* ✅ COMPACT: Header */}
+                  {/* Header Section */}
                   <div className="header-section">
-                    <div className="brand-section">
-                      <span className="brand-icon">🏠</span>
-                      <h1 className="brand-title">SpaceLink</h1>
+                    <div className="brand-logo">
+                      <span className="logo-icon">🏠</span>
+                      <span className="brand-name">SpaceLink</span>
                     </div>
                     <h2 className="welcome-title">Welcome Back</h2>
-                    <p className="welcome-subtitle">Sign in to continue</p>
+                    <p className="welcome-subtitle">
+                      Sign in to your account to continue exploring properties
+                    </p>
                   </div>
 
                   {/* Error Alert */}
                   {error && (
                     <Alert variant="danger" className="error-alert">
-                      <strong>Error:</strong> {error}
+                      <div className="error-content">
+                        <span className="error-icon">⚠️</span>
+                        <span><strong>Error:</strong> {error}</span>
+                      </div>
                     </Alert>
                   )}
 
-                  {/* ✅ COMPACT: Login Form */}
-                  <Form onSubmit={handleSubmit}>
+                  {/* Login Form */}
+                  <Form onSubmit={handleSubmit} className="login-form">
                     <Form.Group className="form-group">
-                      <Form.Label className="form-label">Email Address</Form.Label>
+                      <Form.Label className="form-label">
+                        <span className="label-icon">✉️</span>
+                        Email Address
+                      </Form.Label>
                       <Form.Control
                         type="email"
                         name="email"
                         value={formData.email}
                         onChange={handleInputChange}
-                        placeholder="Enter your email"
+                        placeholder="Enter your email address"
                         className="form-input"
                         required
+                        autoComplete="email"
                       />
                     </Form.Group>
 
                     <Form.Group className="form-group">
-                      <Form.Label className="form-label">Password</Form.Label>
+                      <Form.Label className="form-label">
+                        <span className="label-icon">🔒</span>
+                        Password
+                      </Form.Label>
                       <div className="password-container">
                         <Form.Control
                           type={showPassword ? 'text' : 'password'}
@@ -130,8 +162,9 @@ const Login = () => {
                           value={formData.password}
                           onChange={handleInputChange}
                           placeholder="Enter your password"
-                          className="form-input"
+                          className="form-input password-input"
                           required
+                          autoComplete="current-password"
                         />
                         <button
                           type="button"
@@ -148,24 +181,28 @@ const Login = () => {
                       type="submit"
                       className="submit-button"
                       disabled={loading}
+                      size="lg"
                     >
                       {loading ? (
                         <>
                           <Spinner size="sm" animation="border" className="me-2" />
-                          Signing In...
+                          <span>Signing In...</span>
                         </>
                       ) : (
-                        'Sign In'
+                        <>
+                          <span className="button-icon">🚀</span>
+                          <span>Sign In to SpaceLink</span>
+                        </>
                       )}
                     </Button>
                   </Form>
 
-                  {/* ✅ COMPACT: Footer */}
+                  {/* Footer */}
                   <div className="login-footer">
                     <p className="signup-text">
-                      Don't have an account?{' '}
+                      Don&apos;t have an account?{' '}
                       <Link to="/register" className="signup-link">
-                        Create one
+                        Create one here
                       </Link>
                     </p>
                   </div>
@@ -177,21 +214,20 @@ const Login = () => {
         </Container>
       </div>
 
-      {/* ✅ LIGHT: Professional Light Theme Styles */}
+      {/* ✅ PROFESSIONAL: Enhanced Styles with Animations */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
         .login-container {
           min-height: 100vh;
-          background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #374151 70%, #4b5563 100%);
           position: relative;
           overflow: hidden;
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-          padding: 2rem 0;
         }
         
-        /* ✅ LIGHT: Subtle Background Decoration */
-        .background-decoration {
+        /* ✅ ENHANCED: Interactive Background Animation */
+        .background-animation {
           position: absolute;
           top: 0;
           left: 0;
@@ -201,151 +237,209 @@ const Login = () => {
           z-index: 1;
         }
         
-        .floating-shape {
+        .grid-overlay {
           position: absolute;
-          border-radius: 50%;
-          filter: blur(20px);
-          opacity: 0.6;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-image: 
+            linear-gradient(rgba(168, 85, 247, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(168, 85, 247, 0.05) 1px, transparent 1px);
+          background-size: 60px 60px;
+          animation: gridMove 25s linear infinite;
         }
         
-        .shape-1 {
+        .floating-orb {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(40px);
+          opacity: 0.7;
+        }
+        
+        .orb-1 {
+          width: 350px;
+          height: 350px;
+          background: radial-gradient(circle, rgba(124, 58, 237, 0.4) 0%, rgba(124, 58, 237, 0.1) 40%, transparent 70%);
+          top: 5%;
+          left: 8%;
+          animation: float1 10s ease-in-out infinite;
+        }
+        
+        .orb-2 {
+          width: 250px;
+          height: 250px;
+          background: radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, rgba(59, 130, 246, 0.1) 40%, transparent 70%);
+          top: 55%;
+          right: 10%;
+          animation: float2 12s ease-in-out infinite;
+        }
+        
+        .orb-3 {
           width: 200px;
           height: 200px;
-          background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(168, 85, 247, 0.05) 100%);
-          top: 10%;
-          left: 10%;
-          animation: float1 8s ease-in-out infinite;
+          background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, rgba(16, 185, 129, 0.1) 40%, transparent 70%);
+          bottom: 15%;
+          left: 15%;
+          animation: float3 14s ease-in-out infinite;
         }
         
-        .shape-2 {
-          width: 150px;
-          height: 150px;
-          background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(99, 102, 241, 0.05) 100%);
-          top: 60%;
-          right: 15%;
-          animation: float2 10s ease-in-out infinite;
-        }
-        
-        .shape-3 {
+        .mouse-follower {
+          position: absolute;
           width: 120px;
           height: 120px;
-          background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.05) 100%);
-          bottom: 20%;
-          left: 20%;
-          animation: float3 12s ease-in-out infinite;
-        }
-        
-        .mouse-glow {
-          position: absolute;
-          width: 100px;
-          height: 100px;
-          background: radial-gradient(circle, rgba(124, 58, 237, 0.05) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%);
           border-radius: 50%;
+          filter: blur(20px);
           transition: transform 0.3s ease-out;
           pointer-events: none;
         }
         
-        /* ✅ COMPACT: Login Card */
+        .particles {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+        }
+        
+        .particle {
+          position: absolute;
+          width: 3px;
+          height: 3px;
+          background: rgba(168, 85, 247, 0.6);
+          border-radius: 50%;
+        }
+        
+        .particle-1 { animation: particle1 18s linear infinite; }
+        .particle-2 { animation: particle2 22s linear infinite; }
+        .particle-3 { animation: particle3 20s linear infinite; }
+        
+        /* ✅ PROFESSIONAL: Glass Morphism Login Card */
         .login-card {
-          background: rgba(255, 255, 255, 0.9);
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
-          border: 1px solid rgba(255, 255, 255, 0.6);
-          border-radius: 16px;
+          background: rgba(255, 255, 255, 0.12);
+          backdrop-filter: blur(25px) saturate(180%);
+          -webkit-backdrop-filter: blur(25px) saturate(180%);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          border-radius: 24px;
           box-shadow: 
-            0 8px 32px rgba(0, 0, 0, 0.08),
-            0 4px 16px rgba(0, 0, 0, 0.04);
+            0 32px 80px rgba(0, 0, 0, 0.3),
+            0 0 0 1px rgba(255, 255, 255, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
           position: relative;
           z-index: 10;
-          max-width: 400px;
-          margin: 0 auto;
+          animation: cardAppear 0.8s ease-out;
           transition: all 0.3s ease;
+          max-width: 420px;
+          margin: 0 auto;
         }
         
         .login-card:hover {
-          transform: translateY(-2px);
+          transform: translateY(-5px);
           box-shadow: 
-            0 12px 40px rgba(0, 0, 0, 0.12),
-            0 8px 20px rgba(0, 0, 0, 0.06);
+            0 40px 100px rgba(0, 0, 0, 0.4),
+            0 0 0 1px rgba(255, 255, 255, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.25);
         }
         
         .card-body {
-          padding: 2rem 2rem 1.5rem 2rem;
+          padding: 2.5rem 2rem;
+          color: white;
         }
         
-        /* ✅ COMPACT: Header */
+        /* Header Section */
         .header-section {
           text-align: center;
           margin-bottom: 2rem;
         }
         
-        .brand-section {
+        .brand-logo {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 8px;
-          margin-bottom: 1rem;
+          gap: 12px;
+          margin-bottom: 1.5rem;
         }
         
-        .brand-icon {
-          font-size: 1.5rem;
+        .logo-icon {
+          font-size: 2rem;
+          filter: drop-shadow(0 0 10px rgba(124, 58, 237, 0.5));
         }
         
-        .brand-title {
-          font-size: 1.5rem;
+        .brand-name {
+          font-size: 1.8rem;
           font-weight: 800;
-          color: #7c3aed;
-          margin: 0;
+          background: linear-gradient(135deg, #ffffff 0%, #a855f7 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
           letter-spacing: -0.02em;
         }
         
         .welcome-title {
-          font-size: 1.5rem;
-          font-weight: 700;
-          color: #111827;
-          margin-bottom: 0.5rem;
+          font-size: 1.8rem;
+          font-weight: 800;
+          margin-bottom: 8px;
+          background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
           letter-spacing: -0.02em;
         }
         
         .welcome-subtitle {
-          color: #64748b;
-          font-size: 0.9rem;
-          font-weight: 500;
+          color: rgba(255, 255, 255, 0.85);
+          font-size: 0.95rem;
+          font-weight: 400;
+          line-height: 1.5;
           margin: 0;
         }
         
-        /* ✅ COMPACT: Form Styling */
+        /* Form Styling */
+        .login-form {
+          margin-bottom: 1.5rem;
+        }
+        
         .form-group {
           margin-bottom: 1.5rem;
         }
         
         .form-label {
-          color: #374151;
+          color: rgba(255, 255, 255, 0.9);
           font-size: 0.9rem;
           font-weight: 600;
-          margin-bottom: 0.5rem;
+          margin-bottom: 8px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        
+        .label-icon {
+          font-size: 1rem;
+          opacity: 0.8;
         }
         
         .form-input {
-          background: rgba(255, 255, 255, 0.8) !important;
-          border: 1.5px solid #e2e8f0 !important;
-          border-radius: 8px !important;
-          padding: 12px 16px !important;
-          color: #111827 !important;
+          background: rgba(255, 255, 255, 0.12) !important;
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.2) !important;
+          border-radius: 12px !important;
+          padding: 14px 18px !important;
+          color: white !important;
           font-size: 0.95rem !important;
-          transition: all 0.2s ease !important;
+          transition: all 0.3s ease !important;
           font-family: 'Inter', sans-serif !important;
         }
         
         .form-input::placeholder {
-          color: #9ca3af !important;
+          color: rgba(255, 255, 255, 0.5) !important;
         }
         
         .form-input:focus {
-          background: rgba(255, 255, 255, 1) !important;
-          border-color: #7c3aed !important;
-          box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1) !important;
-          outline: none;
+          background: rgba(255, 255, 255, 0.18) !important;
+          border-color: rgba(168, 85, 247, 0.6) !important;
+          box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2) !important;
+          transform: scale(1.02);
         }
         
         /* Password Field */
@@ -353,46 +447,61 @@ const Login = () => {
           position: relative;
         }
         
+        .password-input {
+          padding-right: 50px !important;
+        }
+        
         .password-toggle {
           position: absolute;
-          right: 12px;
+          right: 16px;
           top: 50%;
           transform: translateY(-50%);
           background: none;
           border: none;
-          color: #6b7280;
+          color: rgba(255, 255, 255, 0.6);
           cursor: pointer;
-          font-size: 1rem;
+          font-size: 1.1rem;
           padding: 4px;
           border-radius: 4px;
           transition: all 0.2s ease;
         }
         
         .password-toggle:hover {
-          color: #374151;
-          background: rgba(107, 114, 128, 0.1);
+          color: rgba(255, 255, 255, 0.9);
+          background: rgba(255, 255, 255, 0.1);
+          transform: translateY(-50%) scale(1.1);
         }
         
-        /* ✅ COMPACT: Submit Button */
+        /* Submit Button */
         .submit-button {
           background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%) !important;
           border: none !important;
-          border-radius: 8px !important;
-          padding: 12px 20px !important;
+          border-radius: 12px !important;
+          padding: 14px 24px !important;
           color: white !important;
           font-size: 0.95rem !important;
-          font-weight: 600 !important;
+          font-weight: 700 !important;
           width: 100% !important;
-          transition: all 0.2s ease !important;
-          box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2) !important;
-          margin-bottom: 1.5rem !important;
+          transition: all 0.3s ease !important;
+          box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3) !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          gap: 8px !important;
           font-family: 'Inter', sans-serif !important;
+          text-transform: uppercase;
+          letter-spacing: 0.025em;
+          margin-bottom: 1.5rem !important;
         }
         
         .submit-button:hover:not(:disabled) {
           background: linear-gradient(135deg, #6b21a8 0%, #7e22ce 100%) !important;
-          transform: translateY(-1px) !important;
-          box-shadow: 0 6px 16px rgba(124, 58, 237, 0.3) !important;
+          transform: translateY(-2px) scale(1.02) !important;
+          box-shadow: 0 16px 40px rgba(124, 58, 237, 0.4) !important;
+        }
+        
+        .submit-button:active {
+          transform: translateY(0) scale(1) !important;
         }
         
         .submit-button:disabled {
@@ -401,89 +510,144 @@ const Login = () => {
           transform: none !important;
         }
         
-        /* Error Alert */
-        .error-alert {
-          background-color: #fee2e2 !important;
-          border: 1px solid #fca5a5 !important;
-          color: #dc2626 !important;
-          border-radius: 8px !important;
-          padding: 12px !important;
-          margin-bottom: 1.5rem !important;
-          font-size: 0.85rem !important;
+        .button-icon {
+          font-size: 1.1rem;
         }
         
-        /* ✅ COMPACT: Footer */
+        /* Error Alert */
+        .error-alert {
+          background: rgba(239, 68, 68, 0.15) !important;
+          border: 1px solid rgba(239, 68, 68, 0.3) !important;
+          border-radius: 12px !important;
+          padding: 12px 16px !important;
+          margin-bottom: 1.5rem !important;
+          color: #fca5a5 !important;
+        }
+        
+        .error-content {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 0.9rem;
+          font-weight: 500;
+        }
+        
+        .error-icon {
+          font-size: 1rem;
+        }
+        
+        /* Footer */
         .login-footer {
           text-align: center;
         }
         
         .signup-text {
-          color: #64748b;
-          font-size: 0.85rem;
+          color: rgba(255, 255, 255, 0.7);
+          font-size: 0.9rem;
           margin: 0;
         }
         
         .signup-link {
-          color: #7c3aed !important;
+          color: #a855f7 !important;
           text-decoration: none !important;
           font-weight: 600 !important;
-          transition: color 0.2s ease !important;
+          transition: all 0.2s ease !important;
         }
         
         .signup-link:hover {
-          color: #6b21a8 !important;
+          color: #c084fc !important;
+          text-shadow: 0 0 8px rgba(168, 85, 247, 0.5) !important;
         }
         
-        /* Subtle Animations */
+        /* ✅ ENHANCED: Keyframe Animations */
         @keyframes float1 {
           0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          50% { transform: translate(20px, -15px) rotate(180deg); }
+          25% { transform: translate(30px, -30px) rotate(90deg); }
+          50% { transform: translate(-20px, -40px) rotate(180deg); }
+          75% { transform: translate(-40px, 20px) rotate(270deg); }
         }
         
         @keyframes float2 {
-          0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          50% { transform: translate(-15px, -10px) rotate(-180deg); }
+          0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+          33% { transform: translate(-40px, -20px) rotate(120deg) scale(1.1); }
+          66% { transform: translate(20px, -30px) rotate(240deg) scale(0.9); }
         }
         
         @keyframes float3 {
           0%, 100% { transform: translate(0, 0) scale(1); }
-          50% { transform: translate(10px, -8px) scale(1.05); }
+          20% { transform: translate(25px, -15px) scale(1.1); }
+          40% { transform: translate(-15px, -25px) scale(0.9); }
+          60% { transform: translate(-30px, 10px) scale(1.05); }
+          80% { transform: translate(15px, 20px) scale(0.95); }
+        }
+        
+        @keyframes particle1 {
+          0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateY(-10vh) translateX(150px) rotate(360deg); opacity: 0; }
+        }
+        
+        @keyframes particle2 {
+          0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateY(-10vh) translateX(-100px) rotate(-360deg); opacity: 0; }
+        }
+        
+        @keyframes particle3 {
+          0% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateY(-10vh) translateX(75px) rotate(180deg); opacity: 0; }
+        }
+        
+        @keyframes gridMove {
+          0% { transform: translate(0, 0); }
+          100% { transform: translate(60px, 60px); }
+        }
+        
+        @keyframes cardAppear {
+          from { 
+            opacity: 0; 
+            transform: translateY(30px) scale(0.95); 
+          }
+          to { 
+            opacity: 1; 
+            transform: translateY(0) scale(1); 
+          }
         }
         
         /* ✅ RESPONSIVE: Mobile Optimizations */
         @media (max-width: 768px) {
-          .login-container {
-            padding: 1rem 0;
-          }
-          
           .card-body {
-            padding: 1.5rem;
+            padding: 2rem 1.5rem;
           }
           
           .welcome-title {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
           }
           
-          .brand-title {
-            font-size: 1.3rem;
+          .brand-name {
+            font-size: 1.5rem;
           }
           
-          .shape-1 { width: 150px; height: 150px; }
-          .shape-2 { width: 120px; height: 120px; }
-          .shape-3 { width: 100px; height: 100px; }
+          .orb-1 { width: 250px; height: 250px; }
+          .orb-2 { width: 200px; height: 200px; }
+          .orb-3 { width: 150px; height: 150px; }
         }
         
         @media (max-width: 576px) {
           .card-body {
-            padding: 1.2rem;
+            padding: 1.5rem 1.2rem;
           }
           
           .welcome-title {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
           }
           
-          .brand-title {
-            font-size: 1.2rem;
+          .brand-name {
+            font-size: 1.3rem;
           }
         }
       `}</style>
