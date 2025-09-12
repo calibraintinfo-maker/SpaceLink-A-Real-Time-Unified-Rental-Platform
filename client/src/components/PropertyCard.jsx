@@ -22,10 +22,7 @@ const FindProperty = () => {
   const indianLocations = [
     "All Locations", "Mumbai", "Delhi", "Bangalore", "Chennai", "Kolkata", 
     "Hyderabad", "Pune", "Ahmedabad", "Jaipur", "Surat", "Lucknow", "Kanpur", 
-    "Nagpur", "Indore", "Thane", "Bhopal", "Visakhapatnam", "Patna", "Vadodara",
-    "Coimbatore", "Kochi", "Madurai", "Nashik", "Faridabad", "Ghaziabad",
-    "Rajkot", "Meerut", "Kalyan", "Vasai", "Varanasi", "Dhanbad", "Jodhpur",
-    "Amritsar", "Raipur", "Allahabad", "Jabalpur", "Gwalior", "Vijayawada"
+    "Nagpur", "Indore", "Thane", "Bhopal", "Visakhapatnam", "Patna", "Vadodara"
   ];
 
   const propertyTypes = [
@@ -165,37 +162,18 @@ const FindProperty = () => {
 
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', backgroundColor: '#f8fafc' }}>
-        <section style={{
-          background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-          padding: '50px 0 70px 0',
-          color: 'white'
-        }}>
+      <div className="find-property-page">
+        <div className="hero-section">
           <Container>
             <div className="text-center">
-              <div style={{
-                display: 'inline-block',
-                background: 'rgba(255, 255, 255, 0.15)',
-                borderRadius: '25px',
-                padding: '8px 20px',
-                marginBottom: '20px',
-                fontSize: '0.85rem',
-                fontWeight: 600
-              }}>
-                ✨ Loading Properties...
-              </div>
-              <h1 style={{ fontSize: '3rem', fontWeight: 800, marginBottom: '16px' }}>
-                Find Your Perfect Property
-              </h1>
-              <p style={{ fontSize: '1.1rem', opacity: 0.9, maxWidth: '600px', margin: '0 auto' }}>
-                Discover verified properties from our premium collection across India
-              </p>
+              <h1>Find Your Perfect Property</h1>
+              <p>Discover verified properties from our premium collection across India</p>
             </div>
           </Container>
-        </section>
+        </div>
         <Container className="py-5 text-center">
           <Spinner animation="border" style={{ color: '#7c3aed' }} />
-          <p className="mt-3 fs-5 fw-semibold">Loading properties...</p>
+          <p className="mt-3">Loading properties...</p>
         </Container>
       </div>
     );
@@ -203,30 +181,20 @@ const FindProperty = () => {
 
   if (error) {
     return (
-      <div style={{ minHeight: '100vh', backgroundColor: '#f8fafc' }}>
-        <section style={{
-          background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-          padding: '50px 0 70px 0',
-          color: 'white'
-        }}>
+      <div className="find-property-page">
+        <div className="hero-section">
           <Container>
             <div className="text-center">
-              <h1 style={{ fontSize: '3rem', fontWeight: 800, marginBottom: '16px' }}>
-                Find Your Perfect Property
-              </h1>
-              <p style={{ fontSize: '1.1rem', opacity: 0.9 }}>
-                Discover verified properties from our premium collection across India
-              </p>
+              <h1>Find Your Perfect Property</h1>
+              <p>Discover verified properties from our premium collection across India</p>
             </div>
           </Container>
-        </section>
+        </div>
         <Container className="py-5">
           <Alert variant="danger" className="text-center">
-            <Alert.Heading>⚠️ Error Loading Properties</Alert.Heading>
+            <Alert.Heading>Error Loading Properties</Alert.Heading>
             <p>{error}</p>
-            <Button onClick={fetchProperties} style={{ backgroundColor: '#7c3aed', borderColor: '#7c3aed' }}>
-              Try Again
-            </Button>
+            <Button onClick={fetchProperties} variant="primary">Try Again</Button>
           </Alert>
         </Container>
       </div>
@@ -234,450 +202,187 @@ const FindProperty = () => {
   }
 
   return (
-    <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh' }}>
-      {/* Hero Section */}
-      <section style={{
-        background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-        padding: '50px 0 70px 0',
-        color: 'white',
-        position: 'relative'
-      }}>
+    <div className="find-property-page">
+      {/* ✅ SINGLE HERO SECTION */}
+      <div className="hero-section">
         <Container>
           <div className="text-center">
-            <div style={{
-              display: 'inline-block',
-              background: 'rgba(255, 255, 255, 0.15)',
-              borderRadius: '25px',
-              padding: '8px 20px',
-              marginBottom: '20px',
-              fontSize: '0.85rem',
-              fontWeight: 600,
-              textTransform: 'uppercase',
-              letterSpacing: '0.5px'
-            }}>
+            <div className="hero-badge">
               ✨ {filteredProperties.length} Premium Properties Available
             </div>
-            
-            <h1 style={{
-              fontSize: '3rem',
-              fontWeight: 800,
-              marginBottom: '16px',
-              lineHeight: 1.2
-            }}>
-              Find Your Perfect Property
-            </h1>
-            
-            <p style={{
-              fontSize: '1.1rem',
-              opacity: 0.9,
-              maxWidth: '600px',
-              margin: '0 auto'
-            }}>
-              Discover verified properties from our premium collection across India.
-              <br />From luxury apartments to commercial spaces.
-            </p>
+            <h1>Find Your Perfect Property</h1>
+            <p>Discover verified properties from our premium collection across India.<br />From luxury apartments to commercial spaces.</p>
           </div>
         </Container>
-      </section>
+      </div>
 
-      {/* ✅ FIXED LAYOUT - No More Overlapping! */}
-      <div style={{ 
-        display: 'flex',
-        minHeight: 'calc(100vh - 300px)' // Adjust for hero section
-      }}>
+      {/* ✅ FIXED LAYOUT - NO MORE OVERLAPPING! */}
+      <div className="main-layout">
         
-        {/* ✅ PROPERLY FIXED SIDEBAR */}
-        <div style={{
-          width: '350px',
-          minWidth: '350px',
-          background: 'white',
-          boxShadow: '4px 0 20px rgba(0,0,0,0.06)',
-          overflowY: 'auto',
-          maxHeight: 'calc(100vh - 300px)',
-          borderRight: '1px solid #e5e7eb'
-        }}>
-          <div style={{ padding: '30px 25px' }}>
+        {/* ✅ SIDEBAR */}
+        <div className="sidebar">
+          <div className="sidebar-content">
             
-            {/* Search Card */}
-            <Card style={{
-              border: 'none',
-              borderRadius: '16px',
-              background: 'white',
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
-              marginBottom: '20px'
-            }}>
-              <Card.Body style={{ padding: '24px' }}>
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  marginBottom: '16px'
-                }}>
-                  <span style={{ fontSize: '1.1rem' }}>🔍</span>
-                  <h6 style={{
-                    margin: 0,
-                    fontSize: '16px',
-                    fontWeight: 700,
-                    color: '#1f2937'
-                  }}>Search Properties</h6>
-                </div>
-                <Form.Control
-                  type="text"
-                  placeholder="Search by location, type, or keywords..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  style={{
-                    borderRadius: '12px',
-                    border: '2px solid #f1f5f9',
-                    padding: '12px 16px',
-                    fontSize: '14px'
-                  }}
-                />
-                {searchQuery && (
-                  <small className="text-muted mt-2 d-block" style={{ fontSize: '12px' }}>
-                    <span className="fw-semibold">{filteredProperties.length} results</span> for "{searchQuery}"
-                  </small>
-                )}
-              </Card.Body>
-            </Card>
+            {/* Search */}
+            <div className="search-section">
+              <h6>🔍 Search Properties</h6>
+              <Form.Control
+                type="text"
+                placeholder="Search by location, type, or keywords..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="search-input"
+              />
+              {searchQuery && (
+                <small className="search-results">
+                  <strong>{filteredProperties.length} results</strong> for "{searchQuery}"
+                </small>
+              )}
+            </div>
 
-            {/* Filters Card */}
-            <Card style={{
-              border: 'none',
-              borderRadius: '16px',
-              background: 'white',
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
-              marginBottom: '20px'
-            }}>
-              <Card.Body style={{ padding: '24px' }}>
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  marginBottom: '20px'
-                }}>
-                  <span style={{ fontSize: '1.1rem' }}>⚙️</span>
-                  <h6 style={{
-                    margin: 0,
-                    fontSize: '16px',
-                    fontWeight: 700,
-                    color: '#1f2937'
-                  }}>Smart Filters</h6>
-                </div>
+            {/* Filters */}
+            <div className="filters-section">
+              <h6>⚙️ Smart Filters</h6>
 
-                {/* Location Filter */}
-                <div style={{ marginBottom: '20px' }}>
-                  <Form.Label style={{
-                    fontSize: '12px',
-                    fontWeight: 600,
-                    color: '#374151',
-                    marginBottom: '8px',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px'
-                  }}>📍 Location</Form.Label>
-                  <Form.Select
-                    value={filters.location}
-                    onChange={(e) => handleFilterChange('location', e.target.value)}
-                    style={{
-                      borderRadius: '10px',
-                      border: '2px solid #f1f5f9',
-                      padding: '10px 14px',
-                      fontSize: '14px'
-                    }}
-                  >
-                    {indianLocations.map((location, index) => (
-                      <option key={index} value={location === "All Locations" ? "" : location}>
-                        {location}
-                      </option>
-                    ))}
-                  </Form.Select>
-                </div>
-
-                {/* Property Type Filter */}
-                <div style={{ marginBottom: '20px' }}>
-                  <Form.Label style={{
-                    fontSize: '12px',
-                    fontWeight: 600,
-                    color: '#374151',
-                    marginBottom: '8px',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px'
-                  }}>🏠 Property Type</Form.Label>
-                  <Form.Select
-                    value={filters.propertyType}
-                    onChange={(e) => handleFilterChange('propertyType', e.target.value)}
-                    style={{
-                      borderRadius: '10px',
-                      border: '2px solid #f1f5f9',
-                      padding: '10px 14px',
-                      fontSize: '14px'
-                    }}
-                  >
-                    {propertyTypes.map((type, index) => (
-                      <option key={index} value={type === "All Categories" ? "" : type}>
-                        {getCategoryIcon(type)} {type}
-                      </option>
-                    ))}
-                  </Form.Select>
-                </div>
-
-                {/* Price Range Filter */}
-                <div style={{ marginBottom: '20px' }}>
-                  <Form.Label style={{
-                    fontSize: '12px',
-                    fontWeight: 600,
-                    color: '#374151',
-                    marginBottom: '8px',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px'
-                  }}>💰 Price Range</Form.Label>
-                  <Form.Select
-                    value={filters.priceRange}
-                    onChange={(e) => handleFilterChange('priceRange', e.target.value)}
-                    style={{
-                      borderRadius: '10px',
-                      border: '2px solid #f1f5f9',
-                      padding: '10px 14px',
-                      fontSize: '14px'
-                    }}
-                  >
-                    <option value="">All Prices</option>
-                    <option value="0-1000">₹0 - ₹1,000</option>
-                    <option value="1000-2500">₹1,000 - ₹2,500</option>
-                    <option value="2500-5000">₹2,500 - ₹5,000</option>
-                    <option value="5000-10000">₹5,000 - ₹10,000</option>
-                    <option value="10000-25000">₹10,000 - ₹25,000</option>
-                    <option value="25000-50000">₹25,000 - ₹50,000</option>
-                    <option value="50000-999999">₹50,000+</option>
-                  </Form.Select>
-                </div>
-
-                {/* Conditional Bedrooms Filter */}
-                {shouldShowBedroomFilter() && (
-                  <div style={{ marginBottom: '20px' }}>
-                    <Form.Label style={{
-                      fontSize: '12px',
-                      fontWeight: 600,
-                      color: '#374151',
-                      marginBottom: '8px',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.5px'
-                    }}>🛏️ Bedrooms</Form.Label>
-                    <Form.Select
-                      value={filters.bedrooms}
-                      onChange={(e) => handleFilterChange('bedrooms', e.target.value)}
-                      style={{
-                        borderRadius: '10px',
-                        border: '2px solid #f1f5f9',
-                        padding: '10px 14px',
-                        fontSize: '14px'
-                      }}
-                    >
-                      <option value="">Any Bedrooms</option>
-                      <option value="1">1+ BHK</option>
-                      <option value="2">2+ BHK</option>
-                      <option value="3">3+ BHK</option>
-                      <option value="4">4+ BHK</option>
-                      <option value="5">5+ BHK</option>
-                    </Form.Select>
-                  </div>
-                )}
-
-                {/* Clear Filters Button */}
-                <Button
-                  variant="outline-primary"
-                  style={{
-                    width: '100%',
-                    borderRadius: '10px',
-                    padding: '10px',
-                    border: '2px solid #7c3aed',
-                    color: '#7c3aed',
-                    fontWeight: 600,
-                    fontSize: '14px'
-                  }}
-                  onClick={clearFilters}
-                  disabled={getActiveFiltersCount() === 0}
+              {/* Location */}
+              <div className="filter-group">
+                <Form.Label>📍 Location</Form.Label>
+                <Form.Select
+                  value={filters.location}
+                  onChange={(e) => handleFilterChange('location', e.target.value)}
+                  className="filter-select"
                 >
-                  ✕ Clear All Filters
-                  {getActiveFiltersCount() > 0 && ` (${getActiveFiltersCount()})`}
-                </Button>
-              </Card.Body>
-            </Card>
+                  {indianLocations.map((location, index) => (
+                    <option key={index} value={location === "All Locations" ? "" : location}>
+                      {location}
+                    </option>
+                  ))}
+                </Form.Select>
+              </div>
 
-            {/* Stats Card */}
-            <Card style={{
-              border: 'none',
-              borderRadius: '12px',
-              background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-              color: 'white'
-            }}>
-              <Card.Body style={{ padding: '16px', textAlign: 'center' }}>
-                <h5 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: '4px' }}>
-                  {filteredProperties.length}
-                </h5>
-                <p style={{ fontSize: '12px', opacity: 0.9, margin: 0 }}>
-                  Available
-                </p>
-              </Card.Body>
-            </Card>
+              {/* Property Type */}
+              <div className="filter-group">
+                <Form.Label>🏠 Property Type</Form.Label>
+                <Form.Select
+                  value={filters.propertyType}
+                  onChange={(e) => handleFilterChange('propertyType', e.target.value)}
+                  className="filter-select"
+                >
+                  {propertyTypes.map((type, index) => (
+                    <option key={index} value={type === "All Categories" ? "" : type}>
+                      {getCategoryIcon(type)} {type}
+                    </option>
+                  ))}
+                </Form.Select>
+              </div>
+
+              {/* Price Range */}
+              <div className="filter-group">
+                <Form.Label>💰 Price Range</Form.Label>
+                <Form.Select
+                  value={filters.priceRange}
+                  onChange={(e) => handleFilterChange('priceRange', e.target.value)}
+                  className="filter-select"
+                >
+                  <option value="">All Prices</option>
+                  <option value="0-1000">₹0 - ₹1,000</option>
+                  <option value="1000-2500">₹1,000 - ₹2,500</option>
+                  <option value="2500-5000">₹2,500 - ₹5,000</option>
+                  <option value="5000-10000">₹5,000 - ₹10,000</option>
+                  <option value="10000-25000">₹10,000 - ₹25,000</option>
+                  <option value="25000-50000">₹25,000 - ₹50,000</option>
+                  <option value="50000-999999">₹50,000+</option>
+                </Form.Select>
+              </div>
+
+              {/* Bedrooms */}
+              {shouldShowBedroomFilter() && (
+                <div className="filter-group">
+                  <Form.Label>🛏️ Bedrooms</Form.Label>
+                  <Form.Select
+                    value={filters.bedrooms}
+                    onChange={(e) => handleFilterChange('bedrooms', e.target.value)}
+                    className="filter-select"
+                  >
+                    <option value="">Any Bedrooms</option>
+                    <option value="1">1+ BHK</option>
+                    <option value="2">2+ BHK</option>
+                    <option value="3">3+ BHK</option>
+                    <option value="4">4+ BHK</option>
+                    <option value="5">5+ BHK</option>
+                  </Form.Select>
+                </div>
+              )}
+
+              {/* Clear Filters */}
+              <Button
+                variant="outline-primary"
+                className="clear-filters-btn"
+                onClick={clearFilters}
+                disabled={getActiveFiltersCount() === 0}
+              >
+                ✕ Clear All Filters {getActiveFiltersCount() > 0 && `(${getActiveFiltersCount()})`}
+              </Button>
+            </div>
+
+            {/* Stats */}
+            <div className="stats-section">
+              <div className="stats-card">
+                <h4>{filteredProperties.length}</h4>
+                <p>Available</p>
+              </div>
+            </div>
 
           </div>
         </div>
 
-        {/* ✅ PROPERLY POSITIONED MAIN CONTENT */}
-        <div style={{ 
-          flex: 1,
-          padding: '30px',
-          background: '#f8fafc',
-          overflowY: 'auto',
-          maxHeight: 'calc(100vh - 300px)'
-        }}>
+        {/* ✅ MAIN CONTENT */}
+        <div className="main-content">
           
           {/* Header */}
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: '30px'
-          }}>
+          <div className="content-header">
             <div>
-              <h2 style={{
-                fontSize: '2.2rem',
-                fontWeight: 800,
-                color: '#1f2937',
-                marginBottom: '8px'
-              }}>
-                {filteredProperties.length} Properties Found
-              </h2>
-              <p style={{
-                color: '#6b7280',
-                fontSize: '14px',
-                margin: 0
-              }}>
-                Browse our premium collection • Updated {new Date().toLocaleDateString()}
-              </p>
+              <h2>{filteredProperties.length} Properties Found</h2>
+              <p>Browse our premium collection • Updated {new Date().toLocaleDateString()}</p>
             </div>
 
-            {/* View Toggle */}
-            <div style={{
-              display: 'flex',
-              gap: '8px',
-              background: 'white',
-              padding: '4px',
-              borderRadius: '12px',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
-            }}>
+            <div className="view-toggle">
               <Button
-                variant={viewMode === 'grid' ? 'primary' : 'light'}
+                variant={viewMode === 'grid' ? 'primary' : 'outline-primary'}
                 onClick={() => setViewMode('grid')}
-                style={{
-                  border: 'none',
-                  borderRadius: '8px',
-                  padding: '8px 16px',
-                  fontSize: '14px',
-                  fontWeight: 600
-                }}
               >
                 ⊞ Grid
               </Button>
               <Button
-                variant={viewMode === 'list' ? 'primary' : 'light'}
+                variant={viewMode === 'list' ? 'primary' : 'outline-primary'}
                 onClick={() => setViewMode('list')}
-                style={{
-                  border: 'none',
-                  borderRadius: '8px',
-                  padding: '8px 16px',
-                  fontSize: '14px',
-                  fontWeight: 600
-                }}
               >
                 ☰ List
               </Button>
             </div>
           </div>
 
-          {/* Featured Properties Section */}
+          {/* Featured Properties */}
           {filteredProperties.length > 0 && filteredProperties.length < 5 && (
-            <div style={{
-              background: 'white',
-              borderRadius: '20px',
-              padding: '24px',
-              marginBottom: '30px',
-              boxShadow: '0 8px 30px rgba(0,0,0,0.06)',
-              border: '1px solid #e2e8f0'
-            }}>
-              <h4 style={{ 
-                fontSize: '1.2rem', 
-                fontWeight: 700, 
-                color: '#1f2937', 
-                marginBottom: '16px'
-              }}>
-                💎 Featured Properties
-              </h4>
-              <p style={{ 
-                color: '#6b7280', 
-                fontSize: '14px', 
-                marginBottom: '20px'
-              }}>
-                Handpicked premium properties that match your search criteria
-              </p>
-              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+            <div className="featured-section">
+              <h4>💎 Featured Properties</h4>
+              <p>Handpicked premium properties that match your search criteria</p>
+              <div className="featured-tags">
                 {['Luxury Villas in Mumbai', 'Modern Apartments in Bangalore', 'Commercial Spaces in Delhi'].map((item, index) => (
-                  <Badge key={index} bg="light" text="dark" style={{ 
-                    padding: '8px 12px', 
-                    fontSize: '12px', 
-                    fontWeight: 500
-                  }}>
-                    {item}
-                  </Badge>
+                  <Badge key={index} bg="light" text="dark">{item}</Badge>
                 ))}
               </div>
             </div>
           )}
 
-          {/* Properties Grid/List */}
+          {/* Properties */}
           {filteredProperties.length === 0 ? (
-            <div className="text-center py-5" style={{
-              background: 'white',
-              borderRadius: '20px',
-              padding: '60px 40px',
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)'
-            }}>
-              <div style={{ fontSize: '4rem', opacity: 0.6, marginBottom: '20px' }}>
-                {searchQuery ? '🔍' : getActiveFiltersCount() > 0 ? '🎯' : '🏠'}
-              </div>
-              <h3 style={{
-                fontWeight: 800,
-                color: '#1f2937',
-                fontSize: '1.8rem',
-                marginBottom: '12px'
-              }}>
-                {searchQuery ? 'No Search Results' : getActiveFiltersCount() > 0 ? 'No Matching Properties' : 'No Properties Available'}
-              </h3>
-              <p style={{
-                color: '#6b7280',
-                fontSize: '16px',
-                marginBottom: '24px',
-                maxWidth: '500px',
-                margin: '0 auto 24px auto'
-              }}>
-                {searchQuery ? `We couldn't find any properties matching "${searchQuery}". Try adjusting your search terms.` :
-                 getActiveFiltersCount() > 0 ? 'No properties match your current filters. Try adjusting or clearing some filters.' :
-                 'No properties are currently available. Please check back later.'}
-              </p>
-              <Button 
-                style={{
-                  background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-                  border: 'none',
-                  fontWeight: 700,
-                  borderRadius: '12px',
-                  padding: '12px 30px',
-                  textTransform: 'uppercase'
-                }}
-                size="lg"
-                onClick={clearFilters}
-              >
-                {getActiveFiltersCount() > 0 ? 'Clear All Filters' : 'Refresh Properties'}
+            <div className="no-properties">
+              <div className="no-properties-icon">🏠</div>
+              <h3>No Properties Found</h3>
+              <p>Try adjusting your search criteria or clear filters to see more results.</p>
+              <Button variant="primary" onClick={clearFilters}>
+                Clear All Filters
               </Button>
             </div>
           ) : (
@@ -700,72 +405,299 @@ const FindProperty = () => {
         </div>
       </div>
 
-      {/* Professional CSS */}
+      {/* ✅ PERFECT CSS - NO MORE CONFLICTS! */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-        
-        * {
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-        }
-        
-        body {
+        .find-property-page {
           font-family: 'Inter', sans-serif;
-          font-weight: 400;
-          line-height: 1.5;
+          background-color: #f8fafc;
+          min-height: 100vh;
         }
-        
-        h1, h2, h3, h4, h5, h6 {
-          font-family: 'Inter', sans-serif;
+
+        .hero-section {
+          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+          color: white;
+          padding: 60px 0;
+          text-align: center;
+        }
+
+        .hero-badge {
+          display: inline-block;
+          background: rgba(255, 255, 255, 0.15);
+          border-radius: 25px;
+          padding: 8px 20px;
+          margin-bottom: 20px;
+          font-size: 0.85rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+
+        .hero-section h1 {
+          font-size: 3rem;
+          font-weight: 800;
+          margin-bottom: 16px;
+          line-height: 1.2;
+        }
+
+        .hero-section p {
+          font-size: 1.1rem;
+          opacity: 0.9;
+          max-width: 600px;
+          margin: 0 auto;
+        }
+
+        .main-layout {
+          display: flex;
+          min-height: calc(100vh - 200px);
+        }
+
+        .sidebar {
+          width: 350px;
+          min-width: 350px;
+          background: white;
+          box-shadow: 4px 0 20px rgba(0,0,0,0.06);
+          border-right: 1px solid #e5e7eb;
+          overflow-y: auto;
+        }
+
+        .sidebar-content {
+          padding: 30px 25px;
+        }
+
+        .search-section, .filters-section {
+          margin-bottom: 25px;
+        }
+
+        .search-section h6, .filters-section h6 {
+          font-size: 16px;
           font-weight: 700;
-          line-height: 1.3;
+          color: #1f2937;
+          margin-bottom: 16px;
         }
-        
-        .card-title {
-          font-family: 'Inter', sans-serif !important;
-          font-weight: 600 !important;
-          color: '#1f2937' !important; 
-          line-height: 1.3 !important;
-          font-size: 1.15rem !important;
+
+        .search-input, .filter-select {
+          border-radius: 10px;
+          border: 2px solid #f1f5f9;
+          padding: 10px 14px;
+          font-size: 14px;
+          width: 100%;
         }
-        
-        .card-text {
-          font-family: 'Inter', sans-serif !important;
-          color: '#6b7280' !important;
-          font-weight: 400 !important;
-          line-height: 1.5 !important;
-          font-size: 0.9rem !important;
+
+        .search-results {
+          color: #6b7280;
+          font-size: 12px;
+          margin-top: 8px;
+          display: block;
         }
-        
-        .btn {
-          font-family: 'Inter', sans-serif !important;
-          font-weight: 600 !important;
-          transition: all 0.3s ease !important;
+
+        .filter-group {
+          margin-bottom: 20px;
         }
-        
-        .form-control, .form-select {
-          font-family: 'Inter', sans-serif !important;
+
+        .filter-group label {
+          font-size: 12px;
+          font-weight: 600;
+          color: #374151;
+          margin-bottom: 8px;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          display: block;
         }
-        
-        .form-control:focus, .form-select:focus {
-          border-color: #7c3aed !important;
-          box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1) !important;
+
+        .clear-filters-btn {
+          width: 100%;
+          border-radius: 10px;
+          padding: 10px;
+          border: 2px solid #7c3aed;
+          color: #7c3aed;
+          font-weight: 600;
+          font-size: 14px;
         }
-        
+
+        .clear-filters-btn:hover {
+          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+          color: white;
+          border-color: transparent;
+        }
+
+        .stats-section {
+          margin-top: 20px;
+        }
+
+        .stats-card {
+          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+          color: white;
+          padding: 20px;
+          border-radius: 12px;
+          text-align: center;
+        }
+
+        .stats-card h4 {
+          font-size: 1.8rem;
+          font-weight: 800;
+          margin-bottom: 4px;
+          margin: 0;
+        }
+
+        .stats-card p {
+          font-size: 12px;
+          opacity: 0.9;
+          margin: 0;
+        }
+
+        .main-content {
+          flex: 1;
+          padding: 30px;
+          overflow-y: auto;
+        }
+
+        .content-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 30px;
+        }
+
+        .content-header h2 {
+          font-size: 2.2rem;
+          font-weight: 800;
+          color: #1f2937;
+          margin-bottom: 8px;
+        }
+
+        .content-header p {
+          color: #6b7280;
+          font-size: 14px;
+          margin: 0;
+        }
+
+        .view-toggle {
+          display: flex;
+          gap: 8px;
+          background: white;
+          padding: 4px;
+          border-radius: 12px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .view-toggle button {
+          border: none;
+          border-radius: 8px;
+          padding: 8px 16px;
+          font-size: 14px;
+          font-weight: 600;
+        }
+
+        .featured-section {
+          background: white;
+          border-radius: 20px;
+          padding: 24px;
+          margin-bottom: 30px;
+          box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+          border: 1px solid #e2e8f0;
+        }
+
+        .featured-section h4 {
+          font-size: 1.2rem;
+          font-weight: 700;
+          color: #1f2937;
+          margin-bottom: 16px;
+        }
+
+        .featured-section p {
+          color: #6b7280;
+          font-size: 14px;
+          margin-bottom: 20px;
+        }
+
+        .featured-tags {
+          display: flex;
+          gap: 12px;
+          flex-wrap: wrap;
+        }
+
+        .featured-tags .badge {
+          padding: 8px 12px;
+          font-size: 12px;
+          font-weight: 500;
+        }
+
+        .no-properties {
+          text-align: center;
+          padding: 60px 40px;
+          background: white;
+          border-radius: 20px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .no-properties-icon {
+          font-size: 4rem;
+          opacity: 0.6;
+          margin-bottom: 20px;
+        }
+
+        .no-properties h3 {
+          font-weight: 800;
+          color: #1f2937;
+          font-size: 1.8rem;
+          margin-bottom: 12px;
+        }
+
+        .no-properties p {
+          color: #6b7280;
+          font-size: 16px;
+          margin-bottom: 24px;
+          max-width: 500px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
         .btn-primary {
-          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%) !important;
-          border: none !important;
+          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+          border: none;
         }
-        
+
         .btn-primary:hover {
           transform: translateY(-1px);
           box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
         }
-        
-        .btn-outline-primary:hover {
-          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%) !important;
-          color: white !important;
-          border-color: transparent !important;
+
+        .form-control:focus, .form-select:focus {
+          border-color: #7c3aed;
+          box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+        }
+
+        .card-title {
+          font-family: 'Inter', sans-serif;
+          font-weight: 600;
+          color: #1f2937;
+          line-height: 1.3;
+          font-size: 1.15rem;
+        }
+
+        .card-text {
+          font-family: 'Inter', sans-serif;
+          color: #6b7280;
+          font-weight: 400;
+          line-height: 1.5;
+          font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+          .main-layout {
+            flex-direction: column;
+          }
+          
+          .sidebar {
+            width: 100%;
+            min-width: auto;
+          }
+          
+          .content-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
+          }
         }
       `}</style>
     </div>
