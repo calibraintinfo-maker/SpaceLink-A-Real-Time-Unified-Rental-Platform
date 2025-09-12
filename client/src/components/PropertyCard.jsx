@@ -9,7 +9,7 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
   if (!property) return null;
 
   const handleImageError = (e) => {
-    e.target.src = 'https://via.placeholder.com/400x240/e2e8f0/64748b?text=Property+Image';
+    e.target.src = 'https://via.placeholder.com/400x250/f8fafc/64748b?text=Property+Image';
   };
 
   const renderPropertyDetails = () => {
@@ -21,14 +21,24 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
     if (property.subtype && residentialTypes.includes(property.subtype)) {
       if (property.bedrooms > 0) {
         details.push(
-          <Badge key="bedrooms" bg="light" text="dark" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
+          <Badge key="bedrooms" bg="light" text="dark" className="me-2 mb-1" style={{ 
+            fontSize: '0.75rem', 
+            fontWeight: '600',
+            padding: '6px 10px',
+            borderRadius: '8px'
+          }}>
             {property.bedrooms} BHK
           </Badge>
         );
       }
       if (property.bathrooms > 0) {
         details.push(
-          <Badge key="bathrooms" bg="light" text="dark" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
+          <Badge key="bathrooms" bg="light" text="dark" className="me-2 mb-1" style={{ 
+            fontSize: '0.75rem', 
+            fontWeight: '600',
+            padding: '6px 10px',
+            borderRadius: '8px'
+          }}>
             {property.bathrooms} Bath
           </Badge>
         );
@@ -37,7 +47,12 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
 
     if (property.size) {
       details.push(
-        <Badge key="area" bg="light" text="dark" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
+        <Badge key="area" bg="info" text="white" className="me-2 mb-1" style={{ 
+          fontSize: '0.75rem', 
+          fontWeight: '600',
+          padding: '6px 10px',
+          borderRadius: '8px'
+        }}>
           {property.size}
         </Badge>
       );
@@ -45,7 +60,12 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
 
     if (property.capacity) {
       details.push(
-        <Badge key="capacity" bg="info" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
+        <Badge key="capacity" bg="warning" text="dark" className="me-2 mb-1" style={{ 
+          fontSize: '0.75rem', 
+          fontWeight: '600',
+          padding: '6px 10px',
+          borderRadius: '8px'
+        }}>
           {property.capacity}
         </Badge>
       );
@@ -55,7 +75,7 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
   };
 
   const getSafeRentType = () => {
-    if (!property?.rentType) return 'rental';
+    if (!property?.rentType) return 'monthly';
     return Array.isArray(property.rentType) ? property.rentType[0] : property.rentType;
   };
 
@@ -68,25 +88,23 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
   };
 
   if (viewMode === 'list') {
-    // ✅ PROFESSIONAL LIST VIEW
+    // 🎯 PERFECT LIST VIEW - No Overlapping
     return (
-      <Card className="border-0 shadow-sm mb-4" style={{ 
-        borderRadius: '20px', 
+      <Card className="mb-4 border-0 shadow-sm" style={{ 
+        borderRadius: '16px',
+        overflow: 'hidden',
         transition: 'all 0.3s ease',
-        cursor: 'pointer',
-        minHeight: '240px',
-        backgroundColor: '#ffffff',
-        border: '1px solid #e5e7eb'
+        backgroundColor: '#ffffff'
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.transform = 'translateY(-4px)';
-        e.currentTarget.style.boxShadow = '0 12px 30px rgba(124, 58, 237, 0.15)';
+        e.currentTarget.style.transform = 'translateY(-3px)';
+        e.currentTarget.style.boxShadow = '0 10px 30px rgba(124, 58, 237, 0.15)';
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.transform = 'translateY(0)';
-        e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.08)';
+        e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.08)';
       }}>
-        <Row className="g-0 align-items-center">
+        <Row className="g-0">
           <Col md={4}>
             <div style={{ position: 'relative', height: '240px', overflow: 'hidden' }}>
               <img
@@ -97,30 +115,25 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
                 style={{ 
                   width: '100%', 
                   height: '100%', 
-                  objectFit: 'cover',
-                  borderRadius: '20px 0 0 20px'
+                  objectFit: 'cover'
                 }}
               />
               <div className="position-absolute top-0 start-0 p-3">
-                <Badge bg="success" className="me-2 fw-semibold shadow-sm" style={{
-                  borderRadius: '20px',
-                  padding: '8px 14px',
-                  fontSize: '0.75rem',
-                  fontFamily: 'Inter, system-ui, sans-serif',
-                  fontWeight: '600',
+                <Badge bg="success" className="me-2 fw-bold shadow" style={{
+                  borderRadius: '12px',
+                  padding: '8px 12px',
+                  fontSize: '0.7rem',
                   textTransform: 'uppercase',
-                  letterSpacing: '0.025em'
+                  letterSpacing: '0.5px'
                 }}>
                   Available
                 </Badge>
-                <Badge bg="primary" className="fw-semibold shadow-sm" style={{
-                  borderRadius: '20px',
-                  padding: '8px 14px',
-                  fontSize: '0.75rem',
-                  fontFamily: 'Inter, system-ui, sans-serif',
-                  fontWeight: '600',
+                <Badge bg="primary" className="fw-bold shadow" style={{
+                  borderRadius: '12px',
+                  padding: '8px 12px',
+                  fontSize: '0.7rem',
                   textTransform: 'uppercase',
-                  letterSpacing: '0.025em'
+                  letterSpacing: '0.5px'
                 }}>
                   Verified
                 </Badge>
@@ -128,49 +141,49 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
             </div>
           </Col>
           <Col md={8}>
-            <Card.Body className="p-4" style={{ minHeight: '240px', display: 'flex', flexDirection: 'column' }}>
-              <div className="d-flex align-items-center mb-3">
-                <span className="me-2" style={{ color: '#7c3aed', fontSize: '1.1rem' }}>📍</span>
+            <Card.Body className="p-4 h-100 d-flex flex-column">
+              <div className="d-flex align-items-center mb-2">
+                <span className="me-2" style={{ color: '#7c3aed', fontSize: '1rem' }}>📍</span>
                 <span style={{
-                  fontSize: '0.9rem',
+                  fontSize: '0.85rem',
                   color: '#64748b',
-                  fontFamily: 'Inter, system-ui, sans-serif',
-                  fontWeight: '500',
+                  fontFamily: "'Inter', sans-serif",
+                  fontWeight: '600',
                   textTransform: 'uppercase',
                   letterSpacing: '0.5px'
                 }}>
-                  {property.address?.city || 'City'}, {property.address?.state || 'State'}
+                  {property.address?.city || 'Namakkal'}, {property.address?.state || 'Tamil Nadu'}
                 </span>
               </div>
               
               <Card.Title style={{
-                color: '#111827',
+                color: '#1f2937',
                 fontSize: '1.5rem',
-                lineHeight: '1.3',
                 fontWeight: '800',
                 marginBottom: '12px',
-                fontFamily: 'Inter, system-ui, sans-serif',
-                letterSpacing: '-0.015em'
+                fontFamily: "'Inter', sans-serif",
+                lineHeight: '1.3',
+                letterSpacing: '-0.025em'
               }}>
-                {property.title || 'Property Title'}
+                {property.title || 'Premium Property'}
               </Card.Title>
               
-              <p className="mb-3" style={{
+              <Card.Text style={{
                 fontSize: '0.95rem',
                 lineHeight: '1.6',
-                flexGrow: 1,
-                color: '#374151',
-                fontFamily: 'Inter, system-ui, sans-serif',
-                fontWeight: '400'
+                color: '#4b5563',
+                fontFamily: "'Inter', sans-serif",
+                marginBottom: '16px',
+                flexGrow: 1
               }}>
                 {property.description ? 
-                  property.description.substring(0, 140) + '...' : 
-                  'Premium property with modern amenities and excellent location.'
+                  property.description.substring(0, 130) + '...' : 
+                  'Premium property with modern amenities and excellent location perfect for families.'
                 }
-              </p>
+              </Card.Text>
               
               <div className="mb-3">
-                <div className="d-flex flex-wrap gap-2">
+                <div className="d-flex flex-wrap">
                   {renderPropertyDetails()}
                 </div>
               </div>
@@ -182,15 +195,15 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
                     fontWeight: '800',
                     color: '#059669',
                     marginBottom: '4px',
-                    fontFamily: 'Inter, system-ui, sans-serif',
-                    letterSpacing: '-0.01em'
+                    fontFamily: "'Inter', sans-serif",
+                    letterSpacing: '-0.025em'
                   }}>
-                    ₹{formatPrice(property.price) || '1,22,345'}/month
+                    Rs {formatPrice(property.price) || '1,22,345'}/month
                   </div>
                   <small style={{
                     color: '#64748b',
                     fontSize: '0.8rem',
-                    fontFamily: 'Inter, system-ui, sans-serif',
+                    fontFamily: "'Inter', sans-serif",
                     fontWeight: '500',
                     textTransform: 'uppercase',
                     letterSpacing: '0.5px'
@@ -199,38 +212,38 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
                   </small>
                 </div>
                 
-                <div className="d-flex gap-3">
+                <div className="d-flex gap-2">
                   <Button 
                     variant="outline-primary" 
+                    size="sm"
+                    onClick={handleViewDetails}
                     style={{
-                      borderRadius: '12px',
-                      padding: '12px 20px',
-                      borderWidth: '2px',
+                      borderRadius: '10px',
                       fontWeight: '700',
                       fontSize: '0.8rem',
+                      padding: '10px 16px',
                       borderColor: '#7c3aed',
                       color: '#7c3aed',
-                      fontFamily: 'Inter, system-ui, sans-serif',
+                      borderWidth: '2px',
                       textTransform: 'uppercase',
-                      letterSpacing: '0.05em'
+                      letterSpacing: '0.5px'
                     }}
-                    onClick={handleViewDetails}
                   >
                     View Details
                   </Button>
                   <Button 
+                    size="sm"
+                    onClick={handleBookNow}
                     style={{
                       background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
                       border: 'none',
-                      borderRadius: '12px',
-                      padding: '12px 20px',
+                      borderRadius: '10px',
                       fontWeight: '700',
                       fontSize: '0.8rem',
-                      fontFamily: 'Inter, system-ui, sans-serif',
+                      padding: '10px 16px',
                       textTransform: 'uppercase',
-                      letterSpacing: '0.05em'
+                      letterSpacing: '0.5px'
                     }}
-                    onClick={handleBookNow}
                   >
                     Book Now
                   </Button>
@@ -243,24 +256,24 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
     );
   }
 
-  // ✅ PROFESSIONAL GRID VIEW
+  // 🎯 PERFECT GRID VIEW - Professional Cards
   return (
     <Card className="h-100 border-0 shadow-sm" style={{ 
-      borderRadius: '20px', 
+      borderRadius: '16px',
+      overflow: 'hidden',
       transition: 'all 0.3s ease',
-      cursor: 'pointer',
       backgroundColor: '#ffffff',
-      border: '1px solid #e5e7eb'
+      minHeight: '450px'
     }}
     onMouseEnter={(e) => {
-      e.currentTarget.style.transform = 'translateY(-4px)';
+      e.currentTarget.style.transform = 'translateY(-5px)';
       e.currentTarget.style.boxShadow = '0 12px 30px rgba(124, 58, 237, 0.15)';
     }}
     onMouseLeave={(e) => {
       e.currentTarget.style.transform = 'translateY(0)';
-      e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.08)';
+      e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.08)';
     }}>
-      <div style={{ position: 'relative', height: '240px', overflow: 'hidden' }}>
+      <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
         <img
           src={getImageUrl(Array.isArray(property.images) ? property.images[0] : property.image)}
           alt={property.title || 'Property'}
@@ -269,30 +282,25 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
           style={{ 
             width: '100%', 
             height: '100%', 
-            objectFit: 'cover',
-            borderRadius: '20px 20px 0 0'
+            objectFit: 'cover'
           }}
         />
         <div className="position-absolute top-0 start-0 p-3">
-          <Badge bg="success" className="me-2 fw-semibold shadow-sm" style={{
-            borderRadius: '20px',
-            padding: '8px 14px',
-            fontSize: '0.75rem',
-            fontFamily: 'Inter, system-ui, sans-serif',
-            fontWeight: '600',
+          <Badge bg="success" className="me-2 fw-bold shadow" style={{
+            borderRadius: '12px',
+            padding: '8px 12px',
+            fontSize: '0.7rem',
             textTransform: 'uppercase',
-            letterSpacing: '0.025em'
+            letterSpacing: '0.5px'
           }}>
             Available
           </Badge>
-          <Badge bg="primary" className="fw-semibold shadow-sm" style={{
-            borderRadius: '20px',
-            padding: '8px 14px',
-            fontSize: '0.75rem',
-            fontFamily: 'Inter, system-ui, sans-serif',
-            fontWeight: '600',
+          <Badge bg="primary" className="fw-bold shadow" style={{
+            borderRadius: '12px',
+            padding: '8px 12px',
+            fontSize: '0.7rem',
             textTransform: 'uppercase',
-            letterSpacing: '0.025em'
+            letterSpacing: '0.5px'
           }}>
             Verified
           </Badge>
@@ -300,108 +308,110 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
       </div>
       
       <Card.Body className="p-4 d-flex flex-column">
-        <div className="d-flex align-items-center mb-3">
-          <span className="me-2" style={{ color: '#7c3aed', fontSize: '1.1rem' }}>📍</span>
+        <div className="d-flex align-items-center mb-2">
+          <span className="me-2" style={{ color: '#7c3aed', fontSize: '1rem' }}>📍</span>
           <span style={{
-            fontSize: '0.9rem',
+            fontSize: '0.85rem',
             color: '#64748b',
-            fontFamily: 'Inter, system-ui, sans-serif',
-            fontWeight: '500',
+            fontFamily: "'Inter', sans-serif",
+            fontWeight: '600',
             textTransform: 'uppercase',
             letterSpacing: '0.5px'
           }}>
-            {property.address?.city || 'City'}, {property.address?.state || 'State'}
+            {property.address?.city || 'Namakkal'}, {property.address?.state || 'TN'}
           </span>
         </div>
         
         <Card.Title style={{
-          color: '#111827',
-          fontSize: '1.5rem',
-          lineHeight: '1.3',
+          color: '#1f2937',
+          fontSize: '1.25rem',
           fontWeight: '800',
           marginBottom: '12px',
-          fontFamily: 'Inter, system-ui, sans-serif',
-          letterSpacing: '-0.015em'
+          fontFamily: "'Inter', sans-serif",
+          lineHeight: '1.3',
+          letterSpacing: '-0.025em'
         }}>
-          {property.title || 'Property Title'}
+          {property.title || 'Premium Property'}
         </Card.Title>
         
-        <Card.Text className="mb-3" style={{
-          fontSize: '0.95rem',
+        <Card.Text style={{
+          fontSize: '0.9rem',
           lineHeight: '1.6',
-          flexGrow: 1,
-          color: '#374151',
-          fontFamily: 'Inter, system-ui, sans-serif',
-          fontWeight: '400'
+          color: '#4b5563',
+          fontFamily: "'Inter', sans-serif",
+          marginBottom: '16px',
+          flexGrow: 1
         }}>
           {property.description ? 
-            property.description.substring(0, 140) + '...' : 
-            'Premium property with modern amenities and excellent location.'
+            property.description.substring(0, 90) + '...' : 
+            'Premium property with modern amenities.'
           }
         </Card.Text>
         
         <div className="mb-3">
-          <div className="d-flex flex-wrap gap-2">
+          <div className="d-flex flex-wrap">
             {renderPropertyDetails()}
           </div>
         </div>
         
         <div className="mt-auto">
           <div style={{
-            fontSize: '1.6rem',
+            fontSize: '1.4rem',
             fontWeight: '800',
             color: '#059669',
-            marginBottom: '4px',
-            fontFamily: 'Inter, system-ui, sans-serif',
-            letterSpacing: '-0.01em'
+            marginBottom: '8px',
+            fontFamily: "'Inter', sans-serif",
+            letterSpacing: '-0.025em'
           }}>
-            ₹{formatPrice(property.price) || '1,22,345'}/month
+            Rs {formatPrice(property.price) || '1,234'}/month
           </div>
           <small style={{
             color: '#64748b',
             fontSize: '0.8rem',
-            fontFamily: 'Inter, system-ui, sans-serif',
+            fontFamily: "'Inter', sans-serif",
             fontWeight: '500',
             textTransform: 'uppercase',
-            letterSpacing: '0.5px'
+            letterSpacing: '0.5px',
+            marginBottom: '16px',
+            display: 'block'
           }}>
             Available for {getSafeRentType()}
           </small>
           
-          <div className="d-flex gap-3 mt-3">
+          <div className="d-flex gap-2">
             <Button 
               variant="outline-primary" 
+              size="sm"
               className="flex-fill"
+              onClick={handleViewDetails}
               style={{
-                borderRadius: '12px',
-                padding: '12px 16px',
-                borderWidth: '2px',
+                borderRadius: '10px',
                 fontWeight: '700',
-                fontSize: '0.8rem',
+                fontSize: '0.75rem',
+                padding: '10px 12px',
                 borderColor: '#7c3aed',
                 color: '#7c3aed',
-                fontFamily: 'Inter, system-ui, sans-serif',
+                borderWidth: '2px',
                 textTransform: 'uppercase',
-                letterSpacing: '0.05em'
+                letterSpacing: '0.5px'
               }}
-              onClick={handleViewDetails}
             >
               View Details
             </Button>
             <Button 
+              size="sm"
               className="flex-fill"
+              onClick={handleBookNow}
               style={{
                 background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
                 border: 'none',
-                borderRadius: '12px',
-                padding: '12px 16px',
+                borderRadius: '10px',
                 fontWeight: '700',
-                fontSize: '0.8rem',
-                fontFamily: 'Inter, system-ui, sans-serif',
+                fontSize: '0.75rem',
+                padding: '10px 12px',
                 textTransform: 'uppercase',
-                letterSpacing: '0.05em'
+                letterSpacing: '0.5px'
               }}
-              onClick={handleBookNow}
             >
               Book Now
             </Button>
