@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Container, Row, Col, Card, Badge, Button, Form, Spinner, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { api, handleApiError, formatPrice, getImageUrl } from '../utils/api';
@@ -163,7 +163,7 @@ const FindProperty = () => {
     return icons[category] || '🏷️';
   };
 
-  // Loading state
+  // ✅ LOADING STATE
   if (loading) {
     return (
       <div style={{ minHeight: '100vh', backgroundColor: '#f8fafc' }}>
@@ -202,7 +202,7 @@ const FindProperty = () => {
     );
   }
 
-  // Error state
+  // ✅ ERROR STATE
   if (error) {
     return (
       <div style={{ minHeight: '100vh', backgroundColor: '#f8fafc' }}>
@@ -237,7 +237,7 @@ const FindProperty = () => {
 
   return (
     <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh' }}>
-      {/* Hero Section */}
+      {/* ✅ HERO SECTION */}
       <section style={{
         background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
         padding: '50px 0 70px 0',
@@ -264,7 +264,8 @@ const FindProperty = () => {
               fontSize: '3rem',
               fontWeight: 800,
               marginBottom: '16px',
-              lineHeight: 1.2
+              lineHeight: 1.2,
+              fontFamily: "'Inter', sans-serif"
             }}>
               Find Your Perfect Property
             </h1>
@@ -273,7 +274,8 @@ const FindProperty = () => {
               fontSize: '1.1rem',
               opacity: 0.9,
               maxWidth: '600px',
-              margin: '0 auto'
+              margin: '0 auto',
+              fontFamily: "'Inter', sans-serif"
             }}>
               Discover verified properties from our premium collection across India.
               <br />From luxury apartments to commercial spaces.
@@ -282,11 +284,11 @@ const FindProperty = () => {
         </Container>
       </section>
 
-      {/* Main Layout */}
-      <Container fluid style={{ padding: '0' }}>
+      {/* ✅ MAIN LAYOUT */}
+      <Container fluid style={{ padding: '0', maxWidth: '1200px', margin: '0 auto' }}>
         <Row style={{ margin: '0' }}>
           
-          {/* Sidebar */}
+          {/* ✅ PROFESSIONAL SIDEBAR */}
           <Col xl={3} lg={4} style={{
             background: 'white',
             boxShadow: '4px 0 20px rgba(0,0,0,0.04)',
@@ -296,7 +298,7 @@ const FindProperty = () => {
             <div style={{ 
               position: 'sticky', 
               top: '100px',
-              padding: '30px 25px',
+              padding: '25px 20px',
               maxHeight: 'calc(100vh - 120px)',
               overflowY: 'auto'
             }}>
@@ -304,24 +306,25 @@ const FindProperty = () => {
               {/* Search Card */}
               <Card style={{
                 border: 'none',
-                borderRadius: '16px',
+                borderRadius: '12px',
                 background: 'white',
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
-                marginBottom: '20px'
+                boxShadow: '0 2px 12px rgba(0, 0, 0, 0.05)',
+                marginBottom: '16px'
               }}>
-                <Card.Body style={{ padding: '24px' }}>
+                <Card.Body style={{ padding: '18px' }}>
                   <div style={{
                     display: 'flex',
                     alignItems: 'center',
                     gap: '8px',
-                    marginBottom: '16px'
+                    marginBottom: '12px'
                   }}>
-                    <span style={{ fontSize: '1.1rem' }}>🔍</span>
+                    <span style={{ fontSize: '1rem' }}>🔍</span>
                     <h6 style={{
                       margin: 0,
-                      fontSize: '16px',
-                      fontWeight: 700,
-                      color: '#1f2937'
+                      fontSize: '14px',
+                      fontWeight: 600,
+                      color: '#1f2937',
+                      fontFamily: "'Inter', sans-serif"
                     }}>Search Properties</h6>
                   </div>
                   <Form.Control
@@ -330,14 +333,18 @@ const FindProperty = () => {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     style={{
-                      borderRadius: '12px',
-                      border: '2px solid #f1f5f9',
-                      padding: '12px 16px',
-                      fontSize: '14px'
+                      borderRadius: '8px',
+                      border: '1px solid #e5e7eb',
+                      padding: '10px 12px',
+                      fontSize: '13px',
+                      fontFamily: "'Inter', sans-serif"
                     }}
                   />
                   {searchQuery && (
-                    <small className="text-muted mt-2 d-block" style={{ fontSize: '12px' }}>
+                    <small className="text-muted mt-2 d-block" style={{ 
+                      fontSize: '11px',
+                      fontFamily: "'Inter', sans-serif"
+                    }}>
                       <span className="fw-semibold">{filteredProperties.length} results</span> for "{searchQuery}"
                     </small>
                   )}
@@ -347,45 +354,48 @@ const FindProperty = () => {
               {/* Filters Card */}
               <Card style={{
                 border: 'none',
-                borderRadius: '16px',
+                borderRadius: '12px',
                 background: 'white',
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
-                marginBottom: '20px'
+                boxShadow: '0 2px 12px rgba(0, 0, 0, 0.05)',
+                marginBottom: '16px'
               }}>
-                <Card.Body style={{ padding: '24px' }}>
+                <Card.Body style={{ padding: '18px' }}>
                   <div style={{
                     display: 'flex',
                     alignItems: 'center',
                     gap: '8px',
-                    marginBottom: '20px'
+                    marginBottom: '16px'
                   }}>
-                    <span style={{ fontSize: '1.1rem' }}>⚙️</span>
+                    <span style={{ fontSize: '1rem' }}>⚙️</span>
                     <h6 style={{
                       margin: 0,
-                      fontSize: '16px',
-                      fontWeight: 700,
-                      color: '#1f2937'
+                      fontSize: '14px',
+                      fontWeight: 600,
+                      color: '#1f2937',
+                      fontFamily: "'Inter', sans-serif"
                     }}>Smart Filters</h6>
                   </div>
 
                   {/* Location Filter */}
-                  <div style={{ marginBottom: '20px' }}>
+                  <div style={{ marginBottom: '14px' }}>
                     <Form.Label style={{
-                      fontSize: '12px',
+                      fontSize: '11px',
                       fontWeight: 600,
                       color: '#374151',
-                      marginBottom: '8px',
+                      marginBottom: '6px',
                       textTransform: 'uppercase',
-                      letterSpacing: '0.5px'
+                      letterSpacing: '0.5px',
+                      fontFamily: "'Inter', sans-serif"
                     }}>📍 Location</Form.Label>
                     <Form.Select
                       value={filters.location}
                       onChange={(e) => handleFilterChange('location', e.target.value)}
                       style={{
-                        borderRadius: '10px',
-                        border: '2px solid #f1f5f9',
-                        padding: '10px 14px',
-                        fontSize: '14px'
+                        borderRadius: '6px',
+                        border: '1px solid #e5e7eb',
+                        padding: '8px 10px',
+                        fontSize: '13px',
+                        fontFamily: "'Inter', sans-serif"
                       }}
                     >
                       {indianLocations.map((location, index) => (
@@ -397,23 +407,25 @@ const FindProperty = () => {
                   </div>
 
                   {/* Property Type Filter */}
-                  <div style={{ marginBottom: '20px' }}>
+                  <div style={{ marginBottom: '14px' }}>
                     <Form.Label style={{
-                      fontSize: '12px',
+                      fontSize: '11px',
                       fontWeight: 600,
                       color: '#374151',
-                      marginBottom: '8px',
+                      marginBottom: '6px',
                       textTransform: 'uppercase',
-                      letterSpacing: '0.5px'
+                      letterSpacing: '0.5px',
+                      fontFamily: "'Inter', sans-serif"
                     }}>🏠 Property Type</Form.Label>
                     <Form.Select
                       value={filters.propertyType}
                       onChange={(e) => handleFilterChange('propertyType', e.target.value)}
                       style={{
-                        borderRadius: '10px',
-                        border: '2px solid #f1f5f9',
-                        padding: '10px 14px',
-                        fontSize: '14px'
+                        borderRadius: '6px',
+                        border: '1px solid #e5e7eb',
+                        padding: '8px 10px',
+                        fontSize: '13px',
+                        fontFamily: "'Inter', sans-serif"
                       }}
                     >
                       {propertyTypes.map((type, index) => (
@@ -425,23 +437,25 @@ const FindProperty = () => {
                   </div>
 
                   {/* Price Range Filter */}
-                  <div style={{ marginBottom: '20px' }}>
+                  <div style={{ marginBottom: '14px' }}>
                     <Form.Label style={{
-                      fontSize: '12px',
+                      fontSize: '11px',
                       fontWeight: 600,
                       color: '#374151',
-                      marginBottom: '8px',
+                      marginBottom: '6px',
                       textTransform: 'uppercase',
-                      letterSpacing: '0.5px'
+                      letterSpacing: '0.5px',
+                      fontFamily: "'Inter', sans-serif"
                     }}>💰 Price Range</Form.Label>
                     <Form.Select
                       value={filters.priceRange}
                       onChange={(e) => handleFilterChange('priceRange', e.target.value)}
                       style={{
-                        borderRadius: '10px',
-                        border: '2px solid #f1f5f9',
-                        padding: '10px 14px',
-                        fontSize: '14px'
+                        borderRadius: '6px',
+                        border: '1px solid #e5e7eb',
+                        padding: '8px 10px',
+                        fontSize: '13px',
+                        fontFamily: "'Inter', sans-serif"
                       }}
                     >
                       <option value="">All Prices</option>
@@ -457,23 +471,25 @@ const FindProperty = () => {
 
                   {/* Conditional Bedrooms Filter */}
                   {shouldShowBedroomFilter() && (
-                    <div style={{ marginBottom: '20px' }}>
+                    <div style={{ marginBottom: '14px' }}>
                       <Form.Label style={{
-                        fontSize: '12px',
+                        fontSize: '11px',
                         fontWeight: 600,
                         color: '#374151',
-                        marginBottom: '8px',
+                        marginBottom: '6px',
                         textTransform: 'uppercase',
-                        letterSpacing: '0.5px'
+                        letterSpacing: '0.5px',
+                        fontFamily: "'Inter', sans-serif"
                       }}>🛏️ Bedrooms</Form.Label>
                       <Form.Select
                         value={filters.bedrooms}
                         onChange={(e) => handleFilterChange('bedrooms', e.target.value)}
                         style={{
-                          borderRadius: '10px',
-                          border: '2px solid #f1f5f9',
-                          padding: '10px 14px',
-                          fontSize: '14px'
+                          borderRadius: '6px',
+                          border: '1px solid #e5e7eb',
+                          padding: '8px 10px',
+                          fontSize: '13px',
+                          fontFamily: "'Inter', sans-serif"
                         }}
                       >
                         <option value="">Any Bedrooms</option>
@@ -491,12 +507,13 @@ const FindProperty = () => {
                     variant="outline-primary"
                     style={{
                       width: '100%',
-                      borderRadius: '10px',
-                      padding: '10px',
-                      border: '2px solid #7c3aed',
+                      borderRadius: '6px',
+                      padding: '8px',
+                      border: '1px solid #7c3aed',
                       color: '#7c3aed',
-                      fontWeight: 600,
-                      fontSize: '14px'
+                      fontWeight: 500,
+                      fontSize: '12px',
+                      fontFamily: "'Inter', sans-serif"
                     }}
                     onClick={clearFilters}
                     disabled={getActiveFiltersCount() === 0}
@@ -507,29 +524,50 @@ const FindProperty = () => {
                 </Card.Body>
               </Card>
 
-              {/* Stats Card */}
+              {/* ✅ PROFESSIONAL COMPACT STATS CARD */}
               <Card style={{
-                border: 'none',
-                borderRadius: '12px',
-                background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-                color: 'white'
+                border: '1px solid #e5e7eb',
+                borderRadius: '10px',
+                background: '#f9fafb',
+                maxHeight: '140px'
               }}>
                 <Card.Body style={{ padding: '16px', textAlign: 'center' }}>
-                  <h5 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: '4px' }}>
+                  <div style={{ 
+                    fontSize: '1.8rem', 
+                    fontWeight: 700, 
+                    marginBottom: '4px',
+                    color: '#7c3aed',
+                    fontFamily: "'Inter', sans-serif"
+                  }}>
                     {filteredProperties.length}
-                  </h5>
-                  <p style={{ fontSize: '12px', opacity: 0.9, margin: 0 }}>
-                    Available
-                  </p>
+                  </div>
+                  <div style={{ 
+                    fontSize: '11px', 
+                    color: '#6b7280',
+                    fontWeight: 500,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px',
+                    marginBottom: '6px',
+                    fontFamily: "'Inter', sans-serif"
+                  }}>
+                    Properties Available
+                  </div>
+                  <div style={{
+                    width: '40px',
+                    height: '3px',
+                    background: 'linear-gradient(90deg, #7c3aed, #a855f7)',
+                    borderRadius: '2px',
+                    margin: '0 auto'
+                  }}></div>
                 </Card.Body>
               </Card>
 
             </div>
           </Col>
 
-          {/* Main Content Area */}
+          {/* ✅ MAIN CONTENT AREA */}
           <Col xl={9} lg={8} style={{ 
-            padding: '30px',
+            padding: '25px',
             background: '#f8fafc'
           }}>
             
@@ -538,21 +576,23 @@ const FindProperty = () => {
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              marginBottom: '30px'
+              marginBottom: '25px'
             }}>
               <div>
                 <h2 style={{
-                  fontSize: '2.2rem',
-                  fontWeight: 800,
+                  fontSize: '1.9rem',
+                  fontWeight: 700,
                   color: '#1f2937',
-                  marginBottom: '8px'
+                  marginBottom: '6px',
+                  fontFamily: "'Inter', sans-serif"
                 }}>
                   {filteredProperties.length} Properties Found
                 </h2>
                 <p style={{
                   color: '#6b7280',
-                  fontSize: '14px',
-                  margin: 0
+                  fontSize: '13px',
+                  margin: 0,
+                  fontFamily: "'Inter', sans-serif"
                 }}>
                   Browse our premium collection • Updated {new Date().toLocaleDateString()}
                 </p>
@@ -561,21 +601,22 @@ const FindProperty = () => {
               {/* View Toggle */}
               <div style={{
                 display: 'flex',
-                gap: '8px',
+                gap: '4px',
                 background: 'white',
-                padding: '4px',
-                borderRadius: '12px',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                padding: '3px',
+                borderRadius: '8px',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
               }}>
                 <Button
                   variant={viewMode === 'grid' ? 'primary' : 'light'}
                   onClick={() => setViewMode('grid')}
                   style={{
                     border: 'none',
-                    borderRadius: '8px',
-                    padding: '8px 16px',
-                    fontSize: '14px',
-                    fontWeight: 600
+                    borderRadius: '6px',
+                    padding: '6px 12px',
+                    fontSize: '12px',
+                    fontWeight: 600,
+                    fontFamily: "'Inter', sans-serif"
                   }}
                 >
                   ⊞ Grid
@@ -585,10 +626,11 @@ const FindProperty = () => {
                   onClick={() => setViewMode('list')}
                   style={{
                     border: 'none',
-                    borderRadius: '8px',
-                    padding: '8px 16px',
-                    fontSize: '14px',
-                    fontWeight: 600
+                    borderRadius: '6px',
+                    padding: '6px 12px',
+                    fontSize: '12px',
+                    fontWeight: 600,
+                    fontFamily: "'Inter', sans-serif"
                   }}
                 >
                   ☰ List
@@ -600,33 +642,36 @@ const FindProperty = () => {
             {filteredProperties.length > 0 && filteredProperties.length < 5 && (
               <div style={{
                 background: 'white',
-                borderRadius: '20px',
-                padding: '24px',
-                marginBottom: '30px',
-                boxShadow: '0 8px 30px rgba(0,0,0,0.06)',
-                border: '1px solid #e2e8f0'
+                borderRadius: '12px',
+                padding: '18px',
+                marginBottom: '24px',
+                boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
+                border: '1px solid #e5e7eb'
               }}>
                 <h4 style={{ 
-                  fontSize: '1.2rem', 
-                  fontWeight: 700, 
+                  fontSize: '1rem', 
+                  fontWeight: 600, 
                   color: '#1f2937', 
-                  marginBottom: '16px'
+                  marginBottom: '10px',
+                  fontFamily: "'Inter', sans-serif"
                 }}>
                   💎 Featured Properties
                 </h4>
                 <p style={{ 
                   color: '#6b7280', 
-                  fontSize: '14px', 
-                  marginBottom: '20px'
+                  fontSize: '12px', 
+                  marginBottom: '14px',
+                  fontFamily: "'Inter', sans-serif"
                 }}>
                   Handpicked premium properties that match your search criteria
                 </p>
-                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                   {['Luxury Villas in Mumbai', 'Modern Apartments in Bangalore', 'Commercial Spaces in Delhi'].map((item, index) => (
                     <Badge key={index} bg="light" text="dark" style={{ 
-                      padding: '8px 12px', 
-                      fontSize: '12px', 
-                      fontWeight: 500
+                      padding: '5px 10px', 
+                      fontSize: '10px', 
+                      fontWeight: 500,
+                      fontFamily: "'Inter', sans-serif"
                     }}>
                       {item}
                     </Badge>
@@ -635,31 +680,33 @@ const FindProperty = () => {
               </div>
             )}
 
-            {/* Properties Grid/List */}
+            {/* ✅ COMPACT PROPERTIES GRID/LIST */}
             {filteredProperties.length === 0 ? (
-              <div className="text-center py-5" style={{
+              <div className="text-center py-4" style={{
                 background: 'white',
-                borderRadius: '20px',
-                padding: '60px 40px',
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)'
+                borderRadius: '12px',
+                padding: '40px 30px',
+                boxShadow: '0 2px 12px rgba(0, 0, 0, 0.04)'
               }}>
-                <div style={{ fontSize: '4rem', opacity: 0.6, marginBottom: '20px' }}>
+                <div style={{ fontSize: '3rem', opacity: 0.6, marginBottom: '16px' }}>
                   {searchQuery ? '🔍' : getActiveFiltersCount() > 0 ? '🎯' : '🏠'}
                 </div>
                 <h3 style={{
-                  fontWeight: 800,
+                  fontWeight: 600,
                   color: '#1f2937',
-                  fontSize: '1.8rem',
-                  marginBottom: '12px'
+                  fontSize: '1.3rem',
+                  marginBottom: '8px',
+                  fontFamily: "'Inter', sans-serif"
                 }}>
                   {searchQuery ? 'No Search Results' : getActiveFiltersCount() > 0 ? 'No Matching Properties' : 'No Properties Available'}
                 </h3>
                 <p style={{
                   color: '#6b7280',
-                  fontSize: '16px',
-                  marginBottom: '24px',
-                  maxWidth: '500px',
-                  margin: '0 auto 24px auto'
+                  fontSize: '13px',
+                  marginBottom: '18px',
+                  maxWidth: '400px',
+                  margin: '0 auto 18px auto',
+                  fontFamily: "'Inter', sans-serif"
                 }}>
                   {searchQuery ? `We couldn't find any properties matching "${searchQuery}". Try adjusting your search terms.` :
                    getActiveFiltersCount() > 0 ? 'No properties match your current filters. Try adjusting or clearing some filters.' :
@@ -669,39 +716,239 @@ const FindProperty = () => {
                   style={{
                     background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
                     border: 'none',
-                    fontWeight: 700,
-                    borderRadius: '12px',
-                    padding: '12px 30px',
-                    textTransform: 'uppercase'
+                    fontWeight: 600,
+                    borderRadius: '8px',
+                    padding: '10px 20px',
+                    fontSize: '12px',
+                    fontFamily: "'Inter', sans-serif"
                   }}
-                  size="lg"
                   onClick={clearFilters}
                 >
                   {getActiveFiltersCount() > 0 ? 'Clear All Filters' : 'Refresh Properties'}
                 </Button>
               </div>
             ) : (
-              <Row className={viewMode === 'grid' ? 'row-cols-1 row-cols-md-2 row-cols-xl-3 g-4' : 'g-4'}>
+              <div style={{ 
+                display: 'grid',
+                gridTemplateColumns: viewMode === 'grid' ? 'repeat(auto-fill, minmax(300px, 1fr))' : '1fr',
+                gap: '18px',
+                alignItems: 'start'
+              }}>
                 {filteredProperties.map((property) => {
                   if (!property || !property._id) return null;
                   
                   return (
-                    <Col key={property._id} className={viewMode === 'list' ? 'col-12' : ''}>
+                    <div key={property._id} style={{ maxWidth: viewMode === 'grid' ? '320px' : '100%' }}>
                       <PropertyCard 
                         property={property} 
                         showOwner={false}
                         viewMode={viewMode}
                       />
-                    </Col>
+                    </div>
                   );
                 })}
-              </Row>
+              </div>
             )}
           </Col>
         </Row>
       </Container>
 
-      {/* Perfect Professional CSS */}
+      {/* ✅ PROFESSIONAL FOOTER */}
+      <footer style={{
+        background: '#f9fafb',
+        borderTop: '1px solid #e5e7eb',
+        padding: '40px 0 20px 0',
+        marginTop: '60px'
+      }}>
+        <Container style={{ maxWidth: '1200px' }}>
+          <Row>
+            <Col lg={3} md={6} className="mb-4">
+              <div style={{ marginBottom: '20px' }}>
+                <h5 style={{
+                  fontSize: '16px',
+                  fontWeight: 700,
+                  color: '#7c3aed',
+                  marginBottom: '16px',
+                  fontFamily: "'Inter', sans-serif"
+                }}>
+                  SpaceLink
+                </h5>
+                <p style={{
+                  fontSize: '12px',
+                  color: '#6b7280',
+                  lineHeight: '1.5',
+                  fontFamily: "'Inter', sans-serif"
+                }}>
+                  Your trusted global rental platform helping clients worldwide.
+                </p>
+              </div>
+            </Col>
+            <Col lg={2} md={6} className="mb-4">
+              <h6 style={{
+                fontSize: '13px',
+                fontWeight: 600,
+                color: '#374151',
+                marginBottom: '12px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px',
+                fontFamily: "'Inter', sans-serif"
+              }}>
+                Quick Links
+              </h6>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                {['Find Property', 'List Property', 'My Bookings', 'Profile'].map((item, index) => (
+                  <li key={index} style={{ marginBottom: '6px' }}>
+                    <a href="#" style={{
+                      fontSize: '12px',
+                      color: '#6b7280',
+                      textDecoration: 'none',
+                      fontFamily: "'Inter', sans-serif",
+                      transition: 'color 0.2s ease'
+                    }}
+                    onMouseEnter={e => e.target.style.color = '#7c3aed'}
+                    onMouseLeave={e => e.target.style.color = '#6b7280'}>
+                      {item}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </Col>
+            <Col lg={2} md={6} className="mb-4">
+              <h6 style={{
+                fontSize: '13px',
+                fontWeight: 600,
+                color: '#374151',
+                marginBottom: '12px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px',
+                fontFamily: "'Inter', sans-serif"
+              }}>
+                Categories
+              </h6>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                {['Properties', 'Event Venues', 'Vehicles', 'Parking'].map((item, index) => (
+                  <li key={index} style={{ marginBottom: '6px' }}>
+                    <a href="#" style={{
+                      fontSize: '12px',
+                      color: '#6b7280',
+                      textDecoration: 'none',
+                      fontFamily: "'Inter', sans-serif",
+                      transition: 'color 0.2s ease'
+                    }}
+                    onMouseEnter={e => e.target.style.color = '#7c3aed'}
+                    onMouseLeave={e => e.target.style.color = '#6b7280'}>
+                      {item}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </Col>
+            <Col lg={2} md={6} className="mb-4">
+              <h6 style={{
+                fontSize: '13px',
+                fontWeight: 600,
+                color: '#374151',
+                marginBottom: '12px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px',
+                fontFamily: "'Inter', sans-serif"
+              }}>
+                Support
+              </h6>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                {['Help Center', 'Contact Us', 'About Us', 'Blog'].map((item, index) => (
+                  <li key={index} style={{ marginBottom: '6px' }}>
+                    <a href="#" style={{
+                      fontSize: '12px',
+                      color: '#6b7280',
+                      textDecoration: 'none',
+                      fontFamily: "'Inter', sans-serif",
+                      transition: 'color 0.2s ease'
+                    }}
+                    onMouseEnter={e => e.target.style.color = '#7c3aed'}
+                    onMouseLeave={e => e.target.style.color = '#6b7280'}>
+                      {item}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </Col>
+            <Col lg={3} md={6} className="mb-4">
+              <h6 style={{
+                fontSize: '13px',
+                fontWeight: 600,
+                color: '#374151',
+                marginBottom: '12px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px',
+                fontFamily: "'Inter', sans-serif"
+              }}>
+                Stay Updated
+              </h6>
+              <Form style={{ display: 'flex', gap: '8px' }}>
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email"
+                  style={{
+                    fontSize: '12px',
+                    padding: '8px 10px',
+                    borderRadius: '6px',
+                    border: '1px solid #e5e7eb',
+                    fontFamily: "'Inter', sans-serif"
+                  }}
+                />
+                <Button
+                  style={{
+                    background: '#7c3aed',
+                    border: 'none',
+                    borderRadius: '6px',
+                    padding: '8px 12px',
+                    fontSize: '11px',
+                    fontWeight: 600,
+                    fontFamily: "'Inter', sans-serif"
+                  }}
+                >
+                  Subscribe
+                </Button>
+              </Form>
+            </Col>
+          </Row>
+          
+          <hr style={{ margin: '30px 0 20px 0', border: 'none', borderTop: '1px solid #e5e7eb' }} />
+          
+          <Row className="align-items-center">
+            <Col md={6}>
+              <p style={{
+                fontSize: '11px',
+                color: '#9ca3af',
+                margin: 0,
+                fontFamily: "'Inter', sans-serif"
+              }}>
+                © 2025 SpaceLink. All rights reserved.
+              </p>
+            </Col>
+            <Col md={6} className="text-end">
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '16px' }}>
+                {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map((item, index) => (
+                  <a key={index} href="#" style={{
+                    fontSize: '11px',
+                    color: '#9ca3af',
+                    textDecoration: 'none',
+                    fontFamily: "'Inter', sans-serif",
+                    transition: 'color 0.2s ease'
+                  }}
+                  onMouseEnter={e => e.target.style.color = '#7c3aed'}
+                  onMouseLeave={e => e.target.style.color = '#9ca3af'}>
+                    {item}
+                  </a>
+                ))}
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </footer>
+
+      {/* ✅ PROFESSIONAL CSS */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         
@@ -727,21 +974,21 @@ const FindProperty = () => {
           font-weight: 600 !important;
           color: '#1f2937' !important; 
           line-height: 1.3 !important;
-          font-size: 1.15rem !important;
+          font-size: 1.1rem !important;
         }
         
         .card-text {
           font-family: 'Inter', sans-serif !important;
           color: '#6b7280' !important;
           font-weight: 400 !important;
-          line-height: 1.5 !important;
-          font-size: 0.9rem !important;
+          line-height: 1.4 !important;
+          font-size: 0.85rem !important;
         }
         
         .btn {
           font-family: 'Inter', sans-serif !important;
-          font-weight: 600 !important;
-          transition: all 0.3s ease !important;
+          font-weight: 500 !important;
+          transition: all 0.2s ease !important;
         }
         
         .form-control, .form-select {
@@ -750,7 +997,13 @@ const FindProperty = () => {
         
         .form-control:focus, .form-select:focus {
           border-color: #7c3aed !important;
-          box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1) !important;
+          box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.1) !important;
+        }
+        
+        .btn-outline-primary:hover {
+          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%) !important;
+          color: white !important;
+          border-color: transparent !important;
         }
         
         .btn-primary {
@@ -760,29 +1013,22 @@ const FindProperty = () => {
         
         .btn-primary:hover {
           transform: translateY(-1px);
-          box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+          box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
         }
         
-        .btn-outline-primary:hover {
-          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%) !important;
-          color: white !important;
-          border-color: transparent !important;
+        /* Compact Grid */
+        @media (max-width: 1200px) {
+          .properties-grid-container {
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+            gap: 16px !important;
+          }
         }
         
-        /* Property Card Typography */
-        .card .badge {
-          font-family: 'Inter', sans-serif !important;
-          font-weight: 500 !important;
-          font-size: 0.75rem !important;
-        }
-        
-        .card .text-muted {
-          font-family: 'Inter', sans-serif !important;
-          font-size: 0.8rem !important;
-        }
-        
-        .card .fw-bold, .card .fw-semibold {
-          font-family: 'Inter', sans-serif !important;
+        @media (max-width: 768px) {
+          .properties-grid-container {
+            grid-template-columns: 1fr !important;
+            gap: 14px !important;
+          }
         }
       `}</style>
     </div>
