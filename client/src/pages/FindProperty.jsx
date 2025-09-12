@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Container, Row, Col, Card, Badge, Button, Form, Spinner, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { api, handleApiError, formatPrice, getImageUrl } from '../utils/api';
@@ -18,6 +18,8 @@ const FindProperty = () => {
     bedrooms: ''
   });
   const [viewMode, setViewMode] = useState('grid');
+  const [visibleCards, setVisibleCards] = useState(new Set());
+  const observerRef = useRef();
 
   const indianLocations = [
     "All Locations", "Mumbai", "Delhi", "Bangalore", "Chennai", "Kolkata", 
@@ -33,6 +35,23 @@ const FindProperty = () => {
   ];
 
   const residentialTypes = ["Villa", "Apartment", "House", "Studio", "Flat"];
+
+  // ✅ SCROLL ANIMATION OBSERVER
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisibleCards(prev => new Set([...prev, entry.target.dataset.cardId]));
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '50px' }
+    );
+
+    observerRef.current = observer;
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     fetchProperties();
@@ -134,6 +153,7 @@ const FindProperty = () => {
     }
 
     setFilteredProperties(filtered);
+    setVisibleCards(new Set()); // Reset animations when filters change
   }, [searchQuery, filters, properties]);
 
   const handleFilterChange = (filterType, value) => {
@@ -177,14 +197,14 @@ const FindProperty = () => {
     if (property.subtype && residentialTypes.includes(property.subtype)) {
       if (property.bedrooms > 0) {
         details.push(
-          <Badge key="bedrooms" bg="light" text="dark" className="me-2 mb-2" style={{ fontSize: '0.75rem' }}>
+          <Badge key="bedrooms" bg="light" text="dark" className="me-2 mb-2 animate-badge" style={{ fontSize: '0.75rem' }}>
             Bed {property.bedrooms} BHK
           </Badge>
         );
       }
       if (property.bathrooms > 0) {
         details.push(
-          <Badge key="bathrooms" bg="light" text="dark" className="me-2 mb-2" style={{ fontSize: '0.75rem' }}>
+          <Badge key="bathrooms" bg="light" text="dark" className="me-2 mb-2 animate-badge" style={{ fontSize: '0.75rem' }}>
             Bath {property.bathrooms}
           </Badge>
         );
@@ -193,7 +213,7 @@ const FindProperty = () => {
 
     if (property.size) {
       details.push(
-        <Badge key="area" bg="light" text="dark" className="me-2 mb-2" style={{ fontSize: '0.75rem' }}>
+        <Badge key="area" bg="light" text="dark" className="me-2 mb-2 animate-badge" style={{ fontSize: '0.75rem' }}>
           Area {property.size}
         </Badge>
       );
@@ -201,7 +221,7 @@ const FindProperty = () => {
 
     if (property.capacity) {
       details.push(
-        <Badge key="capacity" bg="info" className="me-2 mb-2" style={{ fontSize: '0.75rem' }}>
+        <Badge key="capacity" bg="info" className="me-2 mb-2 animate-badge" style={{ fontSize: '0.75rem' }}>
           Capacity {property.capacity}
         </Badge>
       );
@@ -220,86 +240,290 @@ const FindProperty = () => {
     return Array.isArray(property.rentType) ? property.rentType : [property.rentType];
   };
 
-  // ✅ SKELETON LOADER COMPONENT
-  const SkeletonCard = () => (
-    <Card style={{ border: 'none', borderRadius: '20px', background: 'white', boxShadow: '0 8px 30px rgba(0,0,0,0.04)' }}>
-      <div style={{ 
-        height: '240px', 
-        background: 'linear-gradient(90deg, #f0f2f5 25%, #e4e6ea 50%, #f0f2f5 75%)', 
-        backgroundSize: '200% 100%', 
-        animation: 'shimmer 1.5s infinite', 
-        borderRadius: '20px 20px 0 0' 
-      }}></div>
-      <Card.Body style={{ padding: '20px' }}>
-        <div style={{ 
-          height: '20px', 
-          background: 'linear-gradient(90deg, #f0f2f5 25%, #e4e6ea 50%, #f0f2f5 75%)', 
-          backgroundSize: '200% 100%', 
-          animation: 'shimmer 1.5s infinite', 
-          borderRadius: '4px', 
-          marginBottom: '12px', 
-          width: '70%' 
-        }}></div>
-        <div style={{ 
-          height: '16px', 
-          background: 'linear-gradient(90deg, #f0f2f5 25%, #e4e6ea 50%, #f0f2f5 75%)', 
-          backgroundSize: '200% 100%', 
-          animation: 'shimmer 1.5s infinite', 
-          borderRadius: '4px', 
-          marginBottom: '16px', 
-          width: '90%' 
-        }}></div>
-        <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
-          <div style={{ 
-            height: '24px', 
-            width: '60px', 
-            background: 'linear-gradient(90deg, #f0f2f5 25%, #e4e6ea 50%, #f0f2f5 75%)', 
-            backgroundSize: '200% 100%', 
-            animation: 'shimmer 1.5s infinite', 
-            borderRadius: '12px' 
-          }}></div>
-          <div style={{ 
-            height: '24px', 
-            width: '60px', 
-            background: 'linear-gradient(90deg, #f0f2f5 25%, #e4e6ea 50%, #f0f2f5 75%)', 
-            backgroundSize: '200% 100%', 
-            animation: 'shimmer 1.5s infinite', 
-            borderRadius: '12px' 
-          }}></div>
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div style={{ 
-            height: '20px', 
-            width: '80px', 
-            background: 'linear-gradient(90deg, #f0f2f5 25%, #e4e6ea 50%, #f0f2f5 75%)', 
-            backgroundSize: '200% 100%', 
-            animation: 'shimmer 1.5s infinite', 
-            borderRadius: '4px' 
-          }}></div>
-          <div style={{ display: 'flex', gap: '8px' }}>
-            <div style={{ 
-              height: '32px', 
-              width: '80px', 
-              background: 'linear-gradient(90deg, #f0f2f5 25%, #e4e6ea 50%, #f0f2f5 75%)', 
-              backgroundSize: '200% 100%', 
-              animation: 'shimmer 1.5s infinite', 
-              borderRadius: '6px' 
-            }}></div>
-            <div style={{ 
-              height: '32px', 
-              width: '80px', 
-              background: 'linear-gradient(90deg, #f0f2f5 25%, #e4e6ea 50%, #f0f2f5 75%)', 
-              backgroundSize: '200% 100%', 
-              animation: 'shimmer 1.5s infinite', 
-              borderRadius: '6px' 
-            }}></div>
-          </div>
-        </div>
-      </Card.Body>
-    </Card>
-  );
+  // ✅ ENHANCED ANIMATED PROPERTY CARD
+  const AnimatedPropertyCard = ({ property, index, viewMode }) => {
+    const cardRef = useRef();
+    const [imageIndex, setImageIndex] = useState(0);
+    const [isHovered, setIsHovered] = useState(false);
+    const images = property.images || [property.image];
+    const isVisible = visibleCards.has(property._id);
 
-  // Loading state with skeletons
+    useEffect(() => {
+      if (cardRef.current && observerRef.current) {
+        cardRef.current.dataset.cardId = property._id;
+        observerRef.current.observe(cardRef.current);
+      }
+    }, [property._id]);
+
+    useEffect(() => {
+      let interval;
+      if (isHovered && images.length > 1) {
+        interval = setInterval(() => {
+          setImageIndex(prev => (prev + 1) % images.length);
+        }, 2000);
+      } else {
+        setImageIndex(0);
+      }
+      return () => clearInterval(interval);
+    }, [isHovered, images.length]);
+
+    if (viewMode === 'list') {
+      return (
+        <div
+          ref={cardRef}
+          className={`property-card-wrapper ${isVisible ? 'fade-up-visible' : 'fade-up-hidden'}`}
+          style={{ 
+            animationDelay: `${index * 100}ms`,
+            opacity: isVisible ? 1 : 0,
+            transform: isVisible ? 'translateY(0)' : 'translateY(50px)',
+            transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
+          }}
+        >
+          <Card 
+            className="property-card-enhanced"
+            style={{ 
+              border: 'none',
+              borderRadius: '20px',
+              background: 'white',
+              boxShadow: '0 8px 30px rgba(0,0,0,0.06)',
+              transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+              cursor: 'pointer',
+              minHeight: '240px',
+              overflow: 'hidden'
+            }}
+            onMouseEnter={(e) => {
+              setIsHovered(true);
+              e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
+              e.currentTarget.style.boxShadow = '0 25px 50px rgba(124, 58, 237, 0.15)';
+            }}
+            onMouseLeave={(e) => {
+              setIsHovered(false);
+              e.currentTarget.style.transform = 'translateY(0) scale(1)';
+              e.currentTarget.style.boxShadow = '0 8px 30px rgba(0,0,0,0.06)';
+            }}
+          >
+            <Row className="g-0 align-items-center">
+              <Col md={4}>
+                <div style={{ position: 'relative', height: '240px', overflow: 'hidden' }}>
+                  {/* ✅ ANIMATED IMAGE SLIDER */}
+                  <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+                    {images.map((img, idx) => (
+                      <img
+                        key={idx}
+                        src={getImageUrl(img)}
+                        alt={`${property.title} - ${idx + 1}`}
+                        onError={handleImageError}
+                        style={{ 
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          borderRadius: '20px 0 0 20px',
+                          opacity: idx === imageIndex ? 1 : 0,
+                          transition: 'opacity 0.5s ease-in-out',
+                          transform: isHovered ? 'scale(1.05)' : 'scale(1)'
+                        }}
+                      />
+                    ))}
+                  </div>
+                  
+                  {/* ✅ ANIMATED BADGES */}
+                  <div className="position-absolute top-0 start-0 p-3">
+                    <Badge 
+                      bg="success" 
+                      className="me-2 fw-semibold shadow-sm animated-badge" 
+                      style={{ 
+                        borderRadius: '20px',
+                        padding: '6px 12px', 
+                        fontSize: '0.75rem',
+                        fontWeight: 600,
+                        textTransform: 'uppercase',
+                        animation: 'bounceIn 0.6s ease-out 0.2s both'
+                      }}
+                    >
+                      ✓ Available
+                    </Badge>
+                    <Badge 
+                      bg="primary" 
+                      className="fw-semibold shadow-sm animated-badge" 
+                      style={{ 
+                        borderRadius: '20px', 
+                        padding: '6px 12px', 
+                        fontSize: '0.75rem',
+                        fontWeight: 600,
+                        textTransform: 'uppercase',
+                        animation: 'bounceIn 0.6s ease-out 0.4s both'
+                      }}
+                    >
+                      🏆 Verified
+                    </Badge>
+                  </div>
+
+                  {/* ✅ IMAGE INDICATORS */}
+                  {images.length > 1 && (
+                    <div className="position-absolute bottom-0 start-0 end-0 p-3">
+                      <div className="d-flex justify-content-center gap-1">
+                        {images.map((_, idx) => (
+                          <div
+                            key={idx}
+                            style={{
+                              width: '6px',
+                              height: '6px',
+                              borderRadius: '50%',
+                              background: idx === imageIndex ? 'white' : 'rgba(255,255,255,0.5)',
+                              transition: 'all 0.3s ease'
+                            }}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </Col>
+              
+              <Col md={8}>
+                <Card.Body className="p-4" style={{ minHeight: '240px', display: 'flex', flexDirection: 'column' }}>
+                  <div className="d-flex align-items-center mb-3">
+                    <span className="me-2" style={{ color: '#7c3aed', fontSize: '1.1rem' }}>📍</span>
+                    <span style={{ 
+                      fontSize: '0.85rem', 
+                      color: '#6b7280',
+                      fontWeight: 500,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px'
+                    }}>
+                      {property.address?.city || 'City'}, {property.address?.state || 'State'}
+                    </span>
+                  </div>
+                  
+                  <Card.Title style={{ 
+                    color: '#1f2937',
+                    fontSize: '1.5rem',
+                    fontWeight: 800,
+                    marginBottom: '12px',
+                    lineHeight: '1.3',
+                    fontFamily: "'Inter', sans-serif"
+                  }}>
+                    {property.title || 'Property Title'}
+                  </Card.Title>
+                  
+                  <p className="mb-3" style={{ 
+                    fontSize: '0.95rem',
+                    lineHeight: '1.6',
+                    flexGrow: 1,
+                    color: '#374151',
+                    fontFamily: "'Inter', sans-serif"
+                  }}>
+                    {property.description ? 
+                      property.description.substring(0, 140) + '...' : 
+                      'Premium property with modern amenities and excellent location.'
+                    }
+                  </p>
+                  
+                  <div className="mb-3">
+                    <div className="d-flex flex-wrap gap-2">
+                      {renderPropertyDetails(property)}
+                    </div>
+                  </div>
+                  
+                  <div className="d-flex justify-content-between align-items-center mt-auto">
+                    <div>
+                      <div style={{ 
+                        fontSize: '1.6rem',
+                        fontWeight: 800,
+                        color: '#059669',
+                        marginBottom: '4px',
+                        fontFamily: "'Inter', sans-serif"
+                      }}>
+                        {formatPrice(property.price, getSafeRentType(property))}
+                      </div>
+                      <small style={{ 
+                        color: '#64748b',
+                        fontSize: '0.8rem',
+                        fontFamily: "'Inter', sans-serif",
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em'
+                      }}>
+                        Available for {getSafeRentTypes(property).join(', ')} rental
+                      </small>
+                    </div>
+                    
+                    <div className="d-flex gap-3">
+                      <Button
+                        variant="outline-primary"
+                        className="animated-button"
+                        style={{
+                          borderRadius: '12px',
+                          padding: '12px 20px',
+                          borderWidth: '2px',
+                          fontWeight: 700,
+                          fontSize: '0.8rem',
+                          borderColor: '#7c3aed',
+                          color: '#7c3aed',
+                          fontFamily: "'Inter', sans-serif",
+                          textTransform: 'uppercase',
+                          position: 'relative',
+                          overflow: 'hidden',
+                          transition: 'all 0.3s ease'
+                        }}
+                        onClick={() => handleViewDetails(property._id)}
+                      >
+                        View Details
+                      </Button>
+                      <Button
+                        className="animated-button-primary"
+                        style={{ 
+                          background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
+                          border: 'none',
+                          borderRadius: '12px',
+                          padding: '12px 20px',
+                          fontWeight: 700,
+                          fontSize: '0.8rem',
+                          fontFamily: "'Inter', sans-serif",
+                          textTransform: 'uppercase',
+                          color: 'white',
+                          position: 'relative',
+                          overflow: 'hidden',
+                          transition: 'all 0.3s ease'
+                        }}
+                        onClick={() => handleBookNow(property._id)}
+                      >
+                        Book Now
+                      </Button>
+                    </div>
+                  </div>
+                </Card.Body>
+              </Col>
+            </Row>
+          </Card>
+        </div>
+      );
+    } else {
+      // Grid view
+      return (
+        <div
+          ref={cardRef}
+          className={`property-card-wrapper ${isVisible ? 'fade-up-visible' : 'fade-up-hidden'}`}
+          style={{ 
+            animationDelay: `${index * 150}ms`,
+            opacity: isVisible ? 1 : 0,
+            transform: isVisible ? 'translateY(0)' : 'translateY(50px)',
+            transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
+          }}
+        >
+          <PropertyCard 
+            property={property} 
+            showOwner={false}
+            className="enhanced-grid-card"
+          />
+        </div>
+      );
+    }
+  };
+
+  // Loading state
   if (loading) {
     return (
       <div style={{ minHeight: '100vh', backgroundColor: '#f8fafc' }}>
@@ -310,14 +534,15 @@ const FindProperty = () => {
         }}>
           <Container>
             <div className="text-center">
-              <div style={{
+              <div className="loading-badge" style={{
                 display: 'inline-block',
                 background: 'rgba(255, 255, 255, 0.15)',
                 borderRadius: '25px',
                 padding: '8px 20px',
                 marginBottom: '20px',
                 fontSize: '0.85rem',
-                fontWeight: 600
+                fontWeight: 600,
+                animation: 'pulse 2s infinite'
               }}>
                 ✨ Loading Properties...
               </div>
@@ -331,23 +556,24 @@ const FindProperty = () => {
           </Container>
         </section>
         
-        {/* ✅ FIXED: Added proper spacing */}
         <div style={{ marginTop: '60px' }}>
           <Container fluid style={{ padding: '0' }}>
             <Row style={{ margin: '0' }}>
               <Col xl={3} lg={4} style={{ background: 'white', padding: '30px 25px' }}>
-                <div style={{ height: '200px', background: '#f8fafc', borderRadius: '16px', marginBottom: '20px' }}></div>
-                <div style={{ height: '300px', background: '#f8fafc', borderRadius: '16px', marginBottom: '20px' }}></div>
-                <div style={{ height: '80px', background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)', borderRadius: '16px' }}></div>
+                <div className="skeleton-card" style={{ height: '200px', marginBottom: '20px' }}></div>
+                <div className="skeleton-card" style={{ height: '300px', marginBottom: '20px' }}></div>
+                <div className="skeleton-card" style={{ height: '80px' }}></div>
               </Col>
               <Col xl={9} lg={8} style={{ padding: '30px', background: '#f8fafc' }}>
                 <div style={{ marginBottom: '30px' }}>
-                  <h2 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#1f2937' }}>Loading Properties...</h2>
-                  <p style={{ color: '#6b7280', fontSize: '14px' }}>Please wait while we fetch the latest listings</p>
+                  <div className="skeleton-text" style={{ height: '40px', width: '300px', marginBottom: '10px' }}></div>
+                  <div className="skeleton-text" style={{ height: '20px', width: '200px' }}></div>
                 </div>
                 <Row className="row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
                   {[1, 2, 3, 4, 5, 6].map(i => (
-                    <Col key={i}><SkeletonCard /></Col>
+                    <Col key={i}>
+                      <div className="skeleton-card animate-pulse" style={{ height: '400px' }}></div>
+                    </Col>
                   ))}
                 </Row>
               </Col>
@@ -358,7 +584,7 @@ const FindProperty = () => {
     );
   }
 
-  // Error state
+  // Error state  
   if (error) {
     return (
       <div style={{ minHeight: '100vh', backgroundColor: '#f8fafc' }}>
@@ -381,10 +607,10 @@ const FindProperty = () => {
         
         <div style={{ marginTop: '60px' }}>
           <Container className="py-5">
-            <Alert variant="danger" className="text-center">
+            <Alert variant="danger" className="text-center animate-shake">
               <Alert.Heading>⚠️ Error Loading Properties</Alert.Heading>
               <p>{error}</p>
-              <Button onClick={fetchProperties} style={{ backgroundColor: '#7c3aed', borderColor: '#7c3aed' }}>
+              <Button onClick={fetchProperties} className="animated-button-primary">
                 Try Again
               </Button>
             </Alert>
@@ -396,16 +622,18 @@ const FindProperty = () => {
 
   return (
     <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh' }}>
-      {/* ✅ HERO SECTION - Perfect spacing */}
+      {/* ✅ ANIMATED HERO SECTION */}
       <section style={{
         background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
         padding: '50px 0 70px 0',
         color: 'white',
-        position: 'relative'
+        position: 'relative',
+        overflow: 'hidden'
       }}>
-        <Container>
+        <div className="hero-bg-animation"></div>
+        <Container className="position-relative">
           <div className="text-center">
-            <div style={{
+            <div className="hero-badge" style={{
               display: 'inline-block',
               background: 'rgba(255, 255, 255, 0.15)',
               borderRadius: '25px',
@@ -414,16 +642,20 @@ const FindProperty = () => {
               fontSize: '0.85rem',
               fontWeight: 600,
               textTransform: 'uppercase',
-              letterSpacing: '0.5px'
+              letterSpacing: '0.5px',
+              animation: 'slideInDown 0.8s ease-out'
             }}>
-              ✨ {filteredProperties.length} Premium Properties Available
+              <span className="counter-animation">
+                ✨ {filteredProperties.length} Premium Properties Available
+              </span>
             </div>
             
             <h1 style={{
               fontSize: '3rem',
               fontWeight: 800,
               marginBottom: '16px',
-              lineHeight: 1.2
+              lineHeight: 1.2,
+              animation: 'fadeInUp 0.8s ease-out 0.2s both'
             }}>
               Find Your Perfect Property
             </h1>
@@ -432,7 +664,8 @@ const FindProperty = () => {
               fontSize: '1.1rem',
               opacity: 0.9,
               maxWidth: '600px',
-              margin: '0 auto'
+              margin: '0 auto',
+              animation: 'fadeInUp 0.8s ease-out 0.4s both'
             }}>
               Discover verified properties from our premium collection across India. From luxury apartments to commercial spaces.
             </p>
@@ -440,12 +673,12 @@ const FindProperty = () => {
         </Container>
       </section>
 
-      {/* ✅ MAIN LAYOUT - Fixed spacing and overlaps */}
+      {/* ✅ MAIN LAYOUT */}
       <div style={{ marginTop: '60px' }}>
         <Container fluid style={{ padding: '0' }}>
           <Row style={{ margin: '0' }}>
             
-            {/* ✅ PROFESSIONAL SIDEBAR - Fixed positioning */}
+            {/* ✅ ANIMATED SIDEBAR */}
             <Col xl={3} lg={4} style={{ 
               background: 'white',
               boxShadow: '4px 0 20px rgba(0,0,0,0.04)',
@@ -456,16 +689,18 @@ const FindProperty = () => {
                 top: '100px',
                 padding: '30px 25px',
                 maxHeight: 'calc(100vh - 120px)',
-                overflowY: 'auto'
+                overflowY: 'auto',
+                animation: 'slideInLeft 0.6s ease-out'
               }}>
                 
-                {/* Search Card - ✅ FIXED: Removed hover effects to prevent overlap */}
-                <Card style={{
+                {/* Search Card */}
+                <Card className="animated-search-card" style={{
                   border: 'none',
                   borderRadius: '16px',
                   background: 'white',
                   boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
-                  marginBottom: '20px'
+                  marginBottom: '20px',
+                  transition: 'transform 0.3s ease'
                 }}>
                   <Card.Body style={{ padding: '24px' }}>
                     <div style={{
@@ -487,24 +722,25 @@ const FindProperty = () => {
                       placeholder="Search by location, type, or keywords..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
+                      className="animated-input"
                       style={{
                         borderRadius: '12px',
                         border: '2px solid #f1f5f9',
                         padding: '12px 16px',
                         fontSize: '14px',
-                        transition: 'all 0.3s ease'
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
                       }}
                     />
                     {searchQuery && (
-                      <small className="text-muted mt-2 d-block" style={{ fontSize: '12px' }}>
-                        <span className="fw-semibold">{filteredProperties.length} results</span> for "{searchQuery}"
+                      <small className="text-muted mt-2 d-block animate-slide-in" style={{ fontSize: '12px' }}>
+                        <span className="fw-semibold counter-animation">{filteredProperties.length} results</span> for "{searchQuery}"
                       </small>
                     )}
                   </Card.Body>
                 </Card>
 
                 {/* Filters Card */}
-                <Card style={{
+                <Card className="animated-filters-card" style={{
                   border: 'none',
                   borderRadius: '16px',
                   background: 'white',
@@ -540,6 +776,7 @@ const FindProperty = () => {
                       <Form.Select
                         value={filters.location}
                         onChange={(e) => handleFilterChange('location', e.target.value)}
+                        className="animated-select"
                         style={{
                           borderRadius: '10px',
                           border: '2px solid #f1f5f9',
@@ -568,6 +805,7 @@ const FindProperty = () => {
                       <Form.Select
                         value={filters.propertyType}
                         onChange={(e) => handleFilterChange('propertyType', e.target.value)}
+                        className="animated-select"
                         style={{
                           borderRadius: '10px',
                           border: '2px solid #f1f5f9',
@@ -596,6 +834,7 @@ const FindProperty = () => {
                       <Form.Select
                         value={filters.priceRange}
                         onChange={(e) => handleFilterChange('priceRange', e.target.value)}
+                        className="animated-select"
                         style={{
                           borderRadius: '10px',
                           border: '2px solid #f1f5f9',
@@ -628,6 +867,7 @@ const FindProperty = () => {
                         <Form.Select
                           value={filters.bedrooms}
                           onChange={(e) => handleFilterChange('bedrooms', e.target.value)}
+                          className="animated-select"
                           style={{
                             borderRadius: '10px',
                             border: '2px solid #f1f5f9',
@@ -648,6 +888,7 @@ const FindProperty = () => {
                     {/* Clear Filters Button */}
                     <Button
                       variant="outline-primary"
+                      className="animated-clear-button"
                       style={{
                         width: '100%',
                         borderRadius: '10px',
@@ -655,26 +896,31 @@ const FindProperty = () => {
                         border: '2px solid #7c3aed',
                         color: '#7c3aed',
                         fontWeight: 600,
-                        fontSize: '14px'
+                        fontSize: '14px',
+                        transition: 'all 0.3s ease'
                       }}
                       onClick={clearFilters}
                       disabled={getActiveFiltersCount() === 0}
                     >
                       ✕ Clear All Filters
-                      {getActiveFiltersCount() > 0 && ` (${getActiveFiltersCount()})`}
+                      {getActiveFiltersCount() > 0 && (
+                        <span className="filter-count-badge">
+                          ({getActiveFiltersCount()})
+                        </span>
+                      )}
                     </Button>
                   </Card.Body>
                 </Card>
 
-                {/* ✅ COMPACT Stats Card - Much smaller */}
-                <Card style={{
+                {/* Stats Card */}
+                <Card className="animated-stats-card" style={{
                   border: 'none',
                   borderRadius: '12px',
                   background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
                   color: 'white'
                 }}>
                   <Card.Body style={{ padding: '12px', textAlign: 'center' }}>
-                    <h5 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '2px' }}>
+                    <h5 className="counter-animation" style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '2px' }}>
                       {filteredProperties.length}
                     </h5>
                     <p style={{ fontSize: '11px', opacity: 0.9, margin: 0 }}>
@@ -686,14 +932,14 @@ const FindProperty = () => {
               </div>
             </Col>
 
-            {/* ✅ MAIN CONTENT AREA - Better spacing */}
+            {/* ✅ MAIN CONTENT AREA */}
             <Col xl={9} lg={8} style={{ 
               padding: '30px',
               background: '#f8fafc'
             }}>
               
               {/* Header */}
-              <div style={{
+              <div className="animate-slide-in" style={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
@@ -706,7 +952,7 @@ const FindProperty = () => {
                     color: '#1f2937',
                     marginBottom: '8px'
                   }}>
-                    {filteredProperties.length} Properties Found
+                    <span className="counter-animation">{filteredProperties.length}</span> Properties Found
                   </h2>
                   <p style={{
                     color: '#6b7280',
@@ -717,37 +963,60 @@ const FindProperty = () => {
                   </p>
                 </div>
 
-                {/* View Toggle */}
-                <div style={{
+                {/* ✅ ANIMATED VIEW TOGGLE */}
+                <div className="view-toggle-wrapper" style={{
                   display: 'flex',
                   gap: '8px',
                   background: 'white',
                   padding: '4px',
                   borderRadius: '12px',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                  position: 'relative'
                 }}>
+                  <div 
+                    className="toggle-slider"
+                    style={{
+                      position: 'absolute',
+                      top: '4px',
+                      left: viewMode === 'grid' ? '4px' : '50%',
+                      width: 'calc(50% - 4px)',
+                      height: 'calc(100% - 8px)',
+                      background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
+                      borderRadius: '8px',
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                      zIndex: 1
+                    }}
+                  />
                   <Button
-                    variant={viewMode === 'grid' ? 'primary' : 'light'}
+                    variant="ghost"
                     onClick={() => setViewMode('grid')}
                     style={{
                       border: 'none',
                       borderRadius: '8px',
                       padding: '8px 16px',
                       fontSize: '14px',
-                      fontWeight: 600
+                      fontWeight: 600,
+                      background: 'transparent',
+                      color: viewMode === 'grid' ? 'white' : '#6b7280',
+                      zIndex: 2,
+                      position: 'relative'
                     }}
                   >
                     ⊞ Grid
                   </Button>
                   <Button
-                    variant={viewMode === 'list' ? 'primary' : 'light'}
+                    variant="ghost"
                     onClick={() => setViewMode('list')}
                     style={{
                       border: 'none',
                       borderRadius: '8px',
                       padding: '8px 16px',
                       fontSize: '14px',
-                      fontWeight: 600
+                      fontWeight: 600,
+                      background: 'transparent',
+                      color: viewMode === 'list' ? 'white' : '#6b7280',
+                      zIndex: 2,
+                      position: 'relative'
                     }}
                   >
                     ☰ List
@@ -755,14 +1024,15 @@ const FindProperty = () => {
                 </div>
               </div>
 
-              {/* ✅ INNOVATIVE: Featured Properties Section (when properties < 5) */}
+              {/* ✅ INNOVATIVE FEATURES */}
               {filteredProperties.length > 0 && filteredProperties.length < 5 && (
-                <div style={{
+                <div className="featured-section animate-slide-in" style={{
                   background: 'white',
                   borderRadius: '20px',
                   padding: '24px',
                   marginBottom: '30px',
-                  boxShadow: '0 8px 30px rgba(0,0,0,0.06)'
+                  boxShadow: '0 8px 30px rgba(0,0,0,0.06)',
+                  border: '1px solid #e2e8f0'
                 }}>
                   <h4 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#1f2937', marginBottom: '16px' }}>
                     💎 Featured Properties
@@ -772,7 +1042,12 @@ const FindProperty = () => {
                   </p>
                   <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
                     {['Luxury Villas in Mumbai', 'Modern Apartments in Bangalore', 'Commercial Spaces in Delhi'].map((item, index) => (
-                      <Badge key={index} bg="light" text="dark" style={{ padding: '8px 12px', fontSize: '12px', fontWeight: 500 }}>
+                      <Badge key={index} bg="light" text="dark" className="animated-badge" style={{ 
+                        padding: '8px 12px', 
+                        fontSize: '12px', 
+                        fontWeight: 500,
+                        animation: `bounceIn 0.6s ease-out ${index * 0.2}s both`
+                      }}>
                         {item}
                       </Badge>
                     ))}
@@ -780,53 +1055,15 @@ const FindProperty = () => {
                 </div>
               )}
 
-              {/* ✅ INNOVATIVE: Market Insights Section (when properties > 10) */}
-              {filteredProperties.length > 10 && (
-                <div style={{
-                  background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
-                  borderRadius: '20px',
-                  padding: '24px',
-                  marginBottom: '30px',
-                  border: '1px solid #e2e8f0'
-                }}>
-                  <Row>
-                    <Col md={8}>
-                      <h4 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#1f2937', marginBottom: '8px' }}>
-                        📊 Market Insights
-                      </h4>
-                      <p style={{ color: '#6b7280', fontSize: '14px', marginBottom: '16px' }}>
-                        We found {filteredProperties.length} properties matching your criteria across multiple locations
-                      </p>
-                    </Col>
-                    <Col md={4} className="text-end">
-                      <div style={{ display: 'flex', gap: '16px', justifyContent: 'flex-end' }}>
-                        <div style={{ textAlign: 'center' }}>
-                          <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#7c3aed' }}>
-                            {Math.round(filteredProperties.length * 0.7)}
-                          </div>
-                          <small style={{ color: '#6b7280', fontSize: '11px' }}>Available Now</small>
-                        </div>
-                        <div style={{ textAlign: 'center' }}>
-                          <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#059669' }}>
-                            {Math.round(filteredProperties.length * 0.3)}
-                          </div>
-                          <small style={{ color: '#6b7280', fontSize: '11px' }}>Recently Added</small>
-                        </div>
-                      </div>
-                    </Col>
-                  </Row>
-                </div>
-              )}
-
               {/* Properties Grid/List */}
               {filteredProperties.length === 0 ? (
-                <div className="text-center py-5" style={{
+                <div className="text-center py-5 animate-fade-in" style={{
                   background: 'white',
                   borderRadius: '20px',
                   padding: '60px 40px',
                   boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)'
                 }}>
-                  <div style={{ fontSize: '4rem', opacity: 0.6, marginBottom: '20px' }}>
+                  <div className="animate-bounce-slow" style={{ fontSize: '4rem', opacity: 0.6, marginBottom: '20px' }}>
                     {searchQuery ? '🔍' : getActiveFiltersCount() > 0 ? '🎯' : '🏠'}
                   </div>
                   <h3 style={{
@@ -849,6 +1086,7 @@ const FindProperty = () => {
                      'No properties are currently available. Please check back later.'}
                   </p>
                   <Button 
+                    className="animated-button-primary"
                     style={{
                       background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
                       border: 'none',
@@ -864,204 +1102,314 @@ const FindProperty = () => {
                   </Button>
                 </div>
               ) : (
-                <Row className={viewMode === 'grid' ? 'row-cols-1 row-cols-md-2 row-cols-xl-3 g-4' : 'g-4'}>
-                  {filteredProperties.map((property) => {
-                    if (!property || !property._id) return null;
-                    
-                    return (
-                      <Col key={property._id} className={viewMode === 'list' ? 'col-12' : ''}>
-                        {viewMode === 'list' ? (
-                          /* ✅ PROFESSIONAL LIST VIEW - Fixed styling */
-                          <Card style={{ 
-                            border: 'none',
-                            borderRadius: '20px',
-                            background: 'white',
-                            boxShadow: '0 8px 30px rgba(0,0,0,0.06)',
-                            transition: 'all 0.3s ease',
-                            cursor: 'pointer',
-                            minHeight: '240px'
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.transform = 'translateY(-4px)';
-                            e.currentTarget.style.boxShadow = '0 20px 40px rgba(124, 58, 237, 0.12)';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.transform = 'translateY(0)';
-                            e.currentTarget.style.boxShadow = '0 8px 30px rgba(0,0,0,0.06)';
-                          }}>
-                            <Row className="g-0 align-items-center">
-                              <Col md={4}>
-                                <div style={{ position: 'relative', height: '240px', overflow: 'hidden' }}>
-                                  <img
-                                    src={getImageUrl(
-                                      (property.images && Array.isArray(property.images) && property.images[0]) || 
-                                      property.image
-                                    )}
-                                    alt={property.title || 'Property'}
-                                    onError={handleImageError}
-                                    style={{ 
-                                      width: '100%',
-                                      height: '100%',
-                                      objectFit: 'cover',
-                                      borderRadius: '20px 0 0 20px'
-                                    }}
-                                  />
-                                  
-                                  <div className="position-absolute top-0 start-0 p-3">
-                                    <Badge bg="success" className="me-2 fw-semibold shadow-sm" 
-                                           style={{ 
-                                             borderRadius: '20px',
-                                             padding: '6px 12px', 
-                                             fontSize: '0.75rem',
-                                             fontWeight: 600,
-                                             textTransform: 'uppercase'
-                                           }}>
-                                      ✓ Available
-                                    </Badge>
-                                    <Badge bg="primary" className="fw-semibold shadow-sm" 
-                                           style={{ 
-                                             borderRadius: '20px', 
-                                             padding: '6px 12px', 
-                                             fontSize: '0.75rem',
-                                             fontWeight: 600,
-                                             textTransform: 'uppercase'
-                                           }}>
-                                      🏆 Verified
-                                    </Badge>
-                                  </div>
-                                </div>
-                              </Col>
-                              
-                              <Col md={8}>
-                                <Card.Body className="p-4" style={{ minHeight: '240px', display: 'flex', flexDirection: 'column' }}>
-                                  <div className="d-flex align-items-center mb-3">
-                                    <span className="me-2" style={{ color: '#7c3aed', fontSize: '1.1rem' }}>📍</span>
-                                    <span style={{ 
-                                      fontSize: '0.85rem', 
-                                      color: '#6b7280',
-                                      fontWeight: 500,
-                                      textTransform: 'uppercase',
-                                      letterSpacing: '0.5px'
-                                    }}>
-                                      {property.address?.city || 'City'}, {property.address?.state || 'State'}
-                                    </span>
-                                  </div>
-                                  
-                                  <Card.Title style={{ 
-                                    color: '#1f2937',
-                                    fontSize: '1.5rem',
-                                    fontWeight: 800,
-                                    marginBottom: '12px',
-                                    lineHeight: '1.3',
-                                    fontFamily: "'Inter', sans-serif"
-                                  }}>
-                                    {property.title || 'Property Title'}
-                                  </Card.Title>
-                                  
-                                  <p className="mb-3" style={{ 
-                                    fontSize: '0.95rem',
-                                    lineHeight: '1.6',
-                                    flexGrow: 1,
-                                    color: '#374151',
-                                    fontFamily: "'Inter', sans-serif"
-                                  }}>
-                                    {property.description ? 
-                                      property.description.substring(0, 140) + '...' : 
-                                      'Premium property with modern amenities and excellent location.'
-                                    }
-                                  </p>
-                                  
-                                  <div className="mb-3">
-                                    <div className="d-flex flex-wrap gap-2">
-                                      {renderPropertyDetails(property)}
-                                    </div>
-                                  </div>
-                                  
-                                  <div className="d-flex justify-content-between align-items-center mt-auto">
-                                    <div>
-                                      <div style={{ 
-                                        fontSize: '1.6rem',
-                                        fontWeight: 800,
-                                        color: '#059669',
-                                        marginBottom: '4px',
-                                        fontFamily: "'Inter', sans-serif"
-                                      }}>
-                                        {formatPrice(property.price, getSafeRentType(property))}
-                                      </div>
-                                      <small style={{ 
-                                        color: '#64748b',
-                                        fontSize: '0.8rem',
-                                        fontFamily: "'Inter', sans-serif",
-                                        textTransform: 'uppercase',
-                                        letterSpacing: '0.05em'
-                                      }}>
-                                        Available for {getSafeRentTypes(property).join(', ')} rental
-                                      </small>
-                                    </div>
-                                    
-                                    <div className="d-flex gap-3">
-                                      <Button
-                                        variant="outline-primary"
-                                        style={{
-                                          borderRadius: '12px',
-                                          padding: '12px 20px',
-                                          borderWidth: '2px',
-                                          fontWeight: 700,
-                                          fontSize: '0.8rem',
-                                          borderColor: '#7c3aed',
-                                          color: '#7c3aed',
-                                          fontFamily: "'Inter', sans-serif",
-                                          textTransform: 'uppercase'
-                                        }}
-                                        onClick={() => handleViewDetails(property._id)}
-                                      >
-                                        View Details
-                                      </Button>
-                                      <Button
-                                        style={{ 
-                                          background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-                                          border: 'none',
-                                          borderRadius: '12px',
-                                          padding: '12px 20px',
-                                          fontWeight: 700,
-                                          fontSize: '0.8rem',
-                                          fontFamily: "'Inter', sans-serif",
-                                          textTransform: 'uppercase',
-                                          color: 'white'
-                                        }}
-                                        onClick={() => handleBookNow(property._id)}
-                                      >
-                                        Book Now
-                                      </Button>
-                                    </div>
-                                  </div>
-                                </Card.Body>
-                              </Col>
-                            </Row>
-                          </Card>
-                        ) : (
-                          <PropertyCard 
+                <div 
+                  className={`properties-container ${viewMode === 'grid' ? 'grid-layout' : 'list-layout'}`}
+                  style={{
+                    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                  }}
+                >
+                  <Row className={viewMode === 'grid' ? 'row-cols-1 row-cols-md-2 row-cols-xl-3 g-4' : 'g-4'}>
+                    {filteredProperties.map((property, index) => {
+                      if (!property || !property._id) return null;
+                      
+                      return (
+                        <Col key={property._id} className={viewMode === 'list' ? 'col-12' : ''}>
+                          <AnimatedPropertyCard 
                             property={property} 
-                            showOwner={false}
+                            index={index}
+                            viewMode={viewMode}
                           />
-                        )}
-                      </Col>
-                    );
-                  })}
-                </Row>
+                        </Col>
+                      );
+                    })}
+                  </Row>
+                </div>
               )}
             </Col>
           </Row>
         </Container>
       </div>
 
-      {/* ✅ PROFESSIONAL CSS */}
+      {/* ✅ PROFESSIONAL ANIMATIONS CSS */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
+        /* ✅ KEYFRAMES */
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        @keyframes slideInDown {
+          from {
+            opacity: 0;
+            transform: translateY(-30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        @keyframes slideInLeft {
+          from {
+            opacity: 0;
+            transform: translateX(-30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        
+        @keyframes bounceIn {
+          0% {
+            opacity: 0;
+            transform: scale(0.3);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1.05);
+          }
+          70% {
+            transform: scale(0.9);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+        
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.5;
+          }
+        }
+        
         @keyframes shimmer {
-          0% { background-position: -1000px 0; }
-          100% { background-position: 1000px 0; }
+          0% { 
+            background-position: -1000px 0; 
+          }
+          100% { 
+            background-position: 1000px 0; 
+          }
+        }
+        
+        @keyframes shake {
+          0%, 100% {
+            transform: translateX(0);
+          }
+          10%, 30%, 50%, 70%, 90% {
+            transform: translateX(-5px);
+          }
+          20%, 40%, 60%, 80% {
+            transform: translateX(5px);
+          }
+        }
+        
+        /* ✅ HERO ANIMATIONS */
+        .hero-bg-animation {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+          animation: pulse 4s ease-in-out infinite;
+        }
+        
+        .counter-animation {
+          display: inline-block;
+          transition: all 0.3s ease;
+        }
+        
+        /* ✅ CARD ANIMATIONS */
+        .property-card-enhanced {
+          transform-origin: center;
+        }
+        
+        .property-card-enhanced:hover .animated-badge {
+          transform: scale(1.05);
+        }
+        
+        .fade-up-hidden {
+          opacity: 0;
+          transform: translateY(50px);
+        }
+        
+        .fade-up-visible {
+          opacity: 1;
+          transform: translateY(0);
+          transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* ✅ BUTTON ANIMATIONS */
+        .animated-button {
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .animated-button::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.2), transparent);
+          transition: left 0.5s;
+        }
+        
+        .animated-button:hover::before {
+          left: 100%;
+        }
+        
+        .animated-button:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 25px rgba(124, 58, 237, 0.3);
+        }
+        
+        .animated-button-primary {
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .animated-button-primary::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+          transition: left 0.5s;
+        }
+        
+        .animated-button-primary:hover::before {
+          left: 100%;
+        }
+        
+        .animated-button-primary:hover {
+          transform: translateY(-2px) scale(1.02);
+          box-shadow: 0 15px 35px rgba(124, 58, 237, 0.4);
+        }
+        
+        /* ✅ FORM ANIMATIONS */
+        .animated-input:focus {
+          border-color: #7c3aed !important;
+          box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1) !important;
+          transform: translateY(-2px);
+        }
+        
+        .animated-select:focus {
+          border-color: #7c3aed !important;
+          box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1) !important;
+          transform: translateY(-1px);
+        }
+        
+        .animated-search-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(124, 58, 237, 0.1) !important;
+        }
+        
+        .animated-clear-button:hover:not(:disabled) {
+          transform: translateY(-1px);
+          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+          color: white !important;
+          border-color: transparent !important;
+        }
+        
+        /* ✅ SKELETON ANIMATIONS */
+        .skeleton-card {
+          background: linear-gradient(90deg, #f0f2f5 25%, #e4e6ea 50%, #f0f2f5 75%);
+          background-size: 200% 100%;
+          animation: shimmer 1.5s infinite;
+          border-radius: 16px;
+        }
+        
+        .skeleton-text {
+          background: linear-gradient(90deg, #f0f2f5 25%, #e4e6ea 50%, #f0f2f5 75%);
+          background-size: 200% 100%;
+          animation: shimmer 1.5s infinite;
+          border-radius: 8px;
+        }
+        
+        .animate-pulse {
+          animation: pulse 2s infinite;
+        }
+        
+        .animate-bounce-slow {
+          animation: bounceIn 2s infinite;
+        }
+        
+        .animate-shake {
+          animation: shake 0.5s ease-in-out;
+        }
+        
+        .animate-slide-in {
+          animation: slideInLeft 0.6s ease-out;
+        }
+        
+        .animate-fade-in {
+          animation: fadeInUp 0.8s ease-out;
+        }
+        
+        /* ✅ VIEW TOGGLE ANIMATIONS */
+        .view-toggle-wrapper {
+          position: relative;
+        }
+        
+        .toggle-slider {
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* ✅ LAYOUT TRANSITIONS */
+        .properties-container {
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .grid-layout .property-card-wrapper {
+          transition: all 0.3s ease;
+        }
+        
+        .list-layout .property-card-wrapper {
+          transition: all 0.3s ease;
+        }
+        
+        /* ✅ RESPONSIVE ANIMATIONS */
+        @media (max-width: 768px) {
+          .animated-button, .animated-button-primary {
+            transform: none !important;
+          }
+          
+          .property-card-enhanced:hover {
+            transform: translateY(-4px) scale(1.01) !important;
+          }
+          
+          .hero-bg-animation {
+            animation: none;
+          }
+        }
+        
+        /* ✅ ACCESSIBILITY */
+        @media (prefers-reduced-motion: reduce) {
+          *,
+          *::before,
+          *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+          }
         }
         
         * {
@@ -1071,41 +1419,6 @@ const FindProperty = () => {
         
         body {
           font-family: 'Inter', sans-serif;
-        }
-        
-        .form-control:focus, .form-select:focus {
-          border-color: #7c3aed !important;
-          box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1) !important;
-          transform: translateY(-1px);
-        }
-        
-        .btn-primary {
-          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%) !important;
-          border: none !important;
-        }
-        
-        .btn-primary:hover {
-          transform: translateY(-1px);
-          box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
-        }
-        
-        .card:hover {
-          transform: translateY(-2px);
-        }
-        
-        @media (max-width: 768px) {
-          .btn-group {
-            flex-direction: column !important;
-            width: 100% !important;
-          }
-          
-          h1 {
-            font-size: 2.5rem !important;
-          }
-          
-          h2 {
-            font-size: 2rem !important;
-          }
         }
       `}</style>
     </div>
