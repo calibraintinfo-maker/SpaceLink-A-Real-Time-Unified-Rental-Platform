@@ -21,7 +21,7 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
     if (property.subtype && residentialTypes.includes(property.subtype)) {
       if (property.bedrooms > 0) {
         details.push(
-          <Badge key="bedrooms" bg="light" text="dark" className="me-2 mb-1" style={{ 
+          <Badge key="bedrooms" bg="info" className="me-2 mb-1" style={{ 
             fontSize: '0.75rem', 
             fontWeight: '600',
             padding: '6px 10px',
@@ -33,7 +33,7 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
       }
       if (property.bathrooms > 0) {
         details.push(
-          <Badge key="bathrooms" bg="light" text="dark" className="me-2 mb-1" style={{ 
+          <Badge key="bathrooms" bg="secondary" className="me-2 mb-1" style={{ 
             fontSize: '0.75rem', 
             fontWeight: '600',
             padding: '6px 10px',
@@ -47,26 +47,13 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
 
     if (property.size) {
       details.push(
-        <Badge key="area" bg="info" text="white" className="me-2 mb-1" style={{ 
+        <Badge key="area" bg="warning" text="dark" className="me-2 mb-1" style={{ 
           fontSize: '0.75rem', 
           fontWeight: '600',
           padding: '6px 10px',
           borderRadius: '8px'
         }}>
           {property.size}
-        </Badge>
-      );
-    }
-
-    if (property.capacity) {
-      details.push(
-        <Badge key="capacity" bg="warning" text="dark" className="me-2 mb-1" style={{ 
-          fontSize: '0.75rem', 
-          fontWeight: '600',
-          padding: '6px 10px',
-          borderRadius: '8px'
-        }}>
-          {property.capacity}
         </Badge>
       );
     }
@@ -88,7 +75,7 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
   };
 
   if (viewMode === 'list') {
-    // 🎯 PERFECT LIST VIEW - No Overlapping
+    // 🎯 PERFECT LIST VIEW
     return (
       <Card className="mb-4 border-0 shadow-sm" style={{ 
         borderRadius: '16px',
@@ -122,20 +109,16 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
                 <Badge bg="success" className="me-2 fw-bold shadow" style={{
                   borderRadius: '12px',
                   padding: '8px 12px',
-                  fontSize: '0.7rem',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.5px'
+                  fontSize: '0.7rem'
                 }}>
-                  Available
+                  AVAILABLE
                 </Badge>
                 <Badge bg="primary" className="fw-bold shadow" style={{
                   borderRadius: '12px',
                   padding: '8px 12px',
-                  fontSize: '0.7rem',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.5px'
+                  fontSize: '0.7rem'
                 }}>
-                  Verified
+                  VERIFIED
                 </Badge>
               </div>
             </div>
@@ -158,12 +141,11 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
               
               <Card.Title style={{
                 color: '#1f2937',
-                fontSize: '1.5rem',
+                fontSize: '1.4rem',
                 fontWeight: '800',
                 marginBottom: '12px',
                 fontFamily: "'Inter', sans-serif",
-                lineHeight: '1.3',
-                letterSpacing: '-0.025em'
+                lineHeight: '1.3'
               }}>
                 {property.title || 'Premium Property'}
               </Card.Title>
@@ -177,8 +159,8 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
                 flexGrow: 1
               }}>
                 {property.description ? 
-                  property.description.substring(0, 130) + '...' : 
-                  'Premium property with modern amenities and excellent location perfect for families.'
+                  property.description.substring(0, 120) + '...' : 
+                  'Premium property with modern amenities and excellent location.'
                 }
               </Card.Text>
               
@@ -191,12 +173,11 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
               <div className="d-flex justify-content-between align-items-center mt-auto">
                 <div>
                   <div style={{
-                    fontSize: '1.6rem',
+                    fontSize: '1.5rem',
                     fontWeight: '800',
                     color: '#059669',
                     marginBottom: '4px',
-                    fontFamily: "'Inter', sans-serif",
-                    letterSpacing: '-0.025em'
+                    fontFamily: "'Inter', sans-serif"
                   }}>
                     Rs {formatPrice(property.price) || '1,22,345'}/month
                   </div>
@@ -205,8 +186,7 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
                     fontSize: '0.8rem',
                     fontFamily: "'Inter', sans-serif",
                     fontWeight: '500',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px'
+                    textTransform: 'uppercase'
                   }}>
                     Available for {getSafeRentType()}
                   </small>
@@ -223,13 +203,10 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
                       fontSize: '0.8rem',
                       padding: '10px 16px',
                       borderColor: '#7c3aed',
-                      color: '#7c3aed',
-                      borderWidth: '2px',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.5px'
+                      color: '#7c3aed'
                     }}
                   >
-                    View Details
+                    VIEW DETAILS
                   </Button>
                   <Button 
                     size="sm"
@@ -240,12 +217,10 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
                       borderRadius: '10px',
                       fontWeight: '700',
                       fontSize: '0.8rem',
-                      padding: '10px 16px',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.5px'
+                      padding: '10px 16px'
                     }}
                   >
-                    Book Now
+                    BOOK NOW
                   </Button>
                 </div>
               </div>
@@ -256,7 +231,7 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
     );
   }
 
-  // 🎯 PERFECT GRID VIEW - Professional Cards
+  // 🎯 PERFECT GRID VIEW
   return (
     <Card className="h-100 border-0 shadow-sm" style={{ 
       borderRadius: '16px',
@@ -289,20 +264,16 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
           <Badge bg="success" className="me-2 fw-bold shadow" style={{
             borderRadius: '12px',
             padding: '8px 12px',
-            fontSize: '0.7rem',
-            textTransform: 'uppercase',
-            letterSpacing: '0.5px'
+            fontSize: '0.7rem'
           }}>
-            Available
+            AVAILABLE
           </Badge>
           <Badge bg="primary" className="fw-bold shadow" style={{
             borderRadius: '12px',
             padding: '8px 12px',
-            fontSize: '0.7rem',
-            textTransform: 'uppercase',
-            letterSpacing: '0.5px'
+            fontSize: '0.7rem'
           }}>
-            Verified
+            VERIFIED
           </Badge>
         </div>
       </div>
@@ -315,8 +286,7 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
             color: '#64748b',
             fontFamily: "'Inter', sans-serif",
             fontWeight: '600',
-            textTransform: 'uppercase',
-            letterSpacing: '0.5px'
+            textTransform: 'uppercase'
           }}>
             {property.address?.city || 'Namakkal'}, {property.address?.state || 'TN'}
           </span>
@@ -328,8 +298,7 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
           fontWeight: '800',
           marginBottom: '12px',
           fontFamily: "'Inter', sans-serif",
-          lineHeight: '1.3',
-          letterSpacing: '-0.025em'
+          lineHeight: '1.3'
         }}>
           {property.title || 'Premium Property'}
         </Card.Title>
@@ -356,12 +325,11 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
         
         <div className="mt-auto">
           <div style={{
-            fontSize: '1.4rem',
+            fontSize: '1.3rem',
             fontWeight: '800',
             color: '#059669',
             marginBottom: '8px',
-            fontFamily: "'Inter', sans-serif",
-            letterSpacing: '-0.025em'
+            fontFamily: "'Inter', sans-serif"
           }}>
             Rs {formatPrice(property.price) || '1,234'}/month
           </div>
@@ -371,7 +339,6 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
             fontFamily: "'Inter', sans-serif",
             fontWeight: '500',
             textTransform: 'uppercase',
-            letterSpacing: '0.5px',
             marginBottom: '16px',
             display: 'block'
           }}>
@@ -390,13 +357,10 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
                 fontSize: '0.75rem',
                 padding: '10px 12px',
                 borderColor: '#7c3aed',
-                color: '#7c3aed',
-                borderWidth: '2px',
-                textTransform: 'uppercase',
-                letterSpacing: '0.5px'
+                color: '#7c3aed'
               }}
             >
-              View Details
+              VIEW DETAILS
             </Button>
             <Button 
               size="sm"
@@ -408,12 +372,10 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
                 borderRadius: '10px',
                 fontWeight: '700',
                 fontSize: '0.75rem',
-                padding: '10px 12px',
-                textTransform: 'uppercase',
-                letterSpacing: '0.5px'
+                padding: '10px 12px'
               }}
             >
-              Book Now
+              BOOK NOW
             </Button>
           </div>
         </div>
