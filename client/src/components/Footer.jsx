@@ -13,10 +13,12 @@ const Footer = () => {
 
   return (
     <footer style={{
-      background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%)',
-      color: 'white',
-      padding: '40px 0 20px 0',
-      marginTop: 'auto'
+      background: 'linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%)',
+      borderTop: '1px solid rgba(124, 58, 237, 0.1)',
+      color: '#374151',
+      padding: '24px 0 16px 0',
+      marginTop: 'auto',
+      fontSize: '0.85rem'
     }}>
       <Container>
         <Row>
@@ -24,41 +26,50 @@ const Footer = () => {
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '10px',
-              marginBottom: '16px'
+              gap: '8px',
+              marginBottom: '12px'
             }}>
               <div style={{
-                background: 'rgba(255, 255, 255, 0.2)',
-                borderRadius: '8px',
-                padding: '5px'
+                background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
+                borderRadius: '6px',
+                padding: '4px'
               }}>
-                <span style={{ fontSize: '1.2rem' }}>🏠</span>
+                <span style={{ fontSize: '1rem', display: 'block' }}>🏠</span>
               </div>
-              <span style={{ fontSize: '1.5rem', fontWeight: 800 }}>SpaceLink</span>
+              <span style={{ 
+                fontSize: '1.2rem', 
+                fontWeight: 800, 
+                background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text'
+              }}>SpaceLink</span>
             </div>
             <p style={{
-              color: 'rgba(255, 255, 255, 0.9)',
-              fontSize: '0.9rem',
-              lineHeight: '1.6',
-              maxWidth: '280px',
-              marginBottom: '20px'
+              color: '#6b7280',
+              fontSize: '0.8rem',
+              lineHeight: '1.4',
+              maxWidth: '260px',
+              marginBottom: '16px'
             }}>
-              Your trusted global rental platform. Helping clients find exceptional rentals and empowering seamless transactions worldwide.
+              Your trusted global rental platform. Helping clients find exceptional rentals worldwide.
             </p>
             
             {/* Newsletter Signup */}
             <div>
-              <h5 style={{
-                fontSize: '0.95rem',
+              <h6 style={{
+                fontSize: '0.8rem',
                 fontWeight: 700,
-                marginBottom: '10px',
-                color: 'white'
-              }}>Stay Updated</h5>
+                marginBottom: '8px',
+                color: '#374151',
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px'
+              }}>Stay Updated</h6>
               <form onSubmit={handleSubscribe}>
                 <div style={{ 
                   display: 'flex', 
-                  gap: '6px',
-                  maxWidth: '280px'
+                  gap: '4px',
+                  maxWidth: '260px'
                 }}>
                   <input 
                     type="email"
@@ -67,33 +78,28 @@ const Footer = () => {
                     placeholder="Enter your email"
                     style={{
                       flex: 1,
-                      padding: '8px 12px',
-                      border: '1px solid rgba(255, 255, 255, 0.3)',
-                      borderRadius: '6px',
-                      background: 'rgba(255, 255, 255, 0.15)',
-                      color: 'white',
-                      fontSize: '0.8rem'
+                      padding: '6px 10px',
+                      border: '1px solid #d1d5db',
+                      borderRadius: '5px',
+                      background: 'white',
+                      color: '#374151',
+                      fontSize: '0.75rem'
                     }}
                     required
                   />
                   <button 
                     type="submit"
                     style={{
-                      background: 'rgba(255, 255, 255, 0.25)',
+                      background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
                       border: 'none',
-                      borderRadius: '6px',
-                      padding: '8px 14px',
+                      borderRadius: '5px',
+                      padding: '6px 12px',
                       color: 'white',
-                      fontWeight: 700,
+                      fontWeight: 600,
                       cursor: 'pointer',
-                      fontSize: '0.8rem',
-                      transition: 'all 0.3s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.background = 'rgba(255, 255, 255, 0.4)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.background = 'rgba(255, 255, 255, 0.25)';
+                      fontSize: '0.7rem',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.3px'
                     }}
                   >
                     Subscribe
@@ -104,12 +110,14 @@ const Footer = () => {
           </Col>
           
           <Col lg={2} md={6} className="mb-3">
-            <h5 style={{
-              fontSize: '0.95rem',
+            <h6 style={{
+              fontSize: '0.8rem',
               fontWeight: 700,
-              marginBottom: '12px',
-              color: 'white'
-            }}>Quick Links</h5>
+              marginBottom: '8px',
+              color: '#374151',
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px'
+            }}>Quick Links</h6>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               {[
                 { name: 'Find Property', path: '/find-property' },
@@ -117,17 +125,20 @@ const Footer = () => {
                 { name: 'My Bookings', path: '/my-bookings' },
                 { name: 'Profile', path: '/profile' }
               ].map((item, index) => (
-                <li key={index} style={{ marginBottom: '8px' }}>
+                <li key={index} style={{ marginBottom: '4px' }}>
                   <Link 
                     to={item.path}
                     style={{
-                      color: 'rgba(255, 255, 255, 0.8)',
+                      color: '#6b7280',
                       textDecoration: 'none',
-                      fontSize: '0.85rem',
-                      transition: 'color 0.2s ease'
+                      fontSize: '0.75rem',
+                      fontWeight: 500,
+                      transition: 'color 0.2s ease',
+                      display: 'block',
+                      padding: '2px 0'
                     }}
-                    onMouseEnter={(e) => e.target.style.color = 'white'}
-                    onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.8)'}
+                    onMouseEnter={(e) => e.target.style.color = '#7c3aed'}
+                    onMouseLeave={(e) => e.target.style.color = '#6b7280'}
                   >
                     {item.name}
                   </Link>
@@ -137,25 +148,30 @@ const Footer = () => {
           </Col>
           
           <Col lg={2} md={6} className="mb-3">
-            <h5 style={{
-              fontSize: '0.95rem',
+            <h6 style={{
+              fontSize: '0.8rem',
               fontWeight: 700,
-              marginBottom: '12px',
-              color: 'white'
-            }}>Categories</h5>
+              marginBottom: '8px',
+              color: '#374151',
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px'
+            }}>Categories</h6>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              {['Properties', 'Event Venues', 'Vehicles', 'Parking Spaces'].map((item, index) => (
-                <li key={index} style={{ marginBottom: '8px' }}>
+              {['Properties', 'Event Venues', 'Vehicles', 'Parking'].map((item, index) => (
+                <li key={index} style={{ marginBottom: '4px' }}>
                   <Link 
                     to="/find-property"
                     style={{
-                      color: 'rgba(255, 255, 255, 0.8)',
+                      color: '#6b7280',
                       textDecoration: 'none',
-                      fontSize: '0.85rem',
-                      transition: 'color 0.2s ease'
+                      fontSize: '0.75rem',
+                      fontWeight: 500,
+                      transition: 'color 0.2s ease',
+                      display: 'block',
+                      padding: '2px 0'
                     }}
-                    onMouseEnter={(e) => e.target.style.color = 'white'}
-                    onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.8)'}
+                    onMouseEnter={(e) => e.target.style.color = '#7c3aed'}
+                    onMouseLeave={(e) => e.target.style.color = '#6b7280'}
                   >
                     {item}
                   </Link>
@@ -165,12 +181,14 @@ const Footer = () => {
           </Col>
           
           <Col lg={2} md={6} className="mb-3">
-            <h5 style={{
-              fontSize: '0.95rem',
+            <h6 style={{
+              fontSize: '0.8rem',
               fontWeight: 700,
-              marginBottom: '12px',
-              color: 'white'
-            }}>Support</h5>
+              marginBottom: '8px',
+              color: '#374151',
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px'
+            }}>Support</h6>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               {[
                 { name: 'Help Center', path: '/help' },
@@ -178,17 +196,20 @@ const Footer = () => {
                 { name: 'About Us', path: '/about' },
                 { name: 'Blog', path: '/blog' }
               ].map((item, index) => (
-                <li key={index} style={{ marginBottom: '8px' }}>
+                <li key={index} style={{ marginBottom: '4px' }}>
                   <Link 
                     to={item.path}
                     style={{
-                      color: 'rgba(255, 255, 255, 0.8)',
+                      color: '#6b7280',
                       textDecoration: 'none',
-                      fontSize: '0.85rem',
-                      transition: 'color 0.2s ease'
+                      fontSize: '0.75rem',
+                      fontWeight: 500,
+                      transition: 'color 0.2s ease',
+                      display: 'block',
+                      padding: '2px 0'
                     }}
-                    onMouseEnter={(e) => e.target.style.color = 'white'}
-                    onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.8)'}
+                    onMouseEnter={(e) => e.target.style.color = '#7c3aed'}
+                    onMouseLeave={(e) => e.target.style.color = '#6b7280'}
                   >
                     {item.name}
                   </Link>
@@ -198,30 +219,35 @@ const Footer = () => {
           </Col>
           
           <Col lg={2} md={6} className="mb-3">
-            <h5 style={{
-              fontSize: '0.95rem',
+            <h6 style={{
+              fontSize: '0.8rem',
               fontWeight: 700,
-              marginBottom: '12px',
-              color: 'white'
-            }}>Legal</h5>
+              marginBottom: '8px',
+              color: '#374151',
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px'
+            }}>Legal</h6>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               {[
-                { name: 'Privacy Policy', path: '/privacy' },
-                { name: 'Terms of Service', path: '/terms' },
-                { name: 'Cookie Policy', path: '/cookies' },
+                { name: 'Privacy', path: '/privacy' },
+                { name: 'Terms', path: '/terms' },
+                { name: 'Cookies', path: '/cookies' },
                 { name: 'Disclaimer', path: '/disclaimer' }
               ].map((item, index) => (
-                <li key={index} style={{ marginBottom: '8px' }}>
+                <li key={index} style={{ marginBottom: '4px' }}>
                   <Link 
                     to={item.path}
                     style={{
-                      color: 'rgba(255, 255, 255, 0.8)',
+                      color: '#6b7280',
                       textDecoration: 'none',
-                      fontSize: '0.85rem',
-                      transition: 'color 0.2s ease'
+                      fontSize: '0.75rem',
+                      fontWeight: 500,
+                      transition: 'color 0.2s ease',
+                      display: 'block',
+                      padding: '2px 0'
                     }}
-                    onMouseEnter={(e) => e.target.style.color = 'white'}
-                    onMouseLeave={(e) => e.target.style.color = 'rgba(255, 255, 255, 0.8)'}
+                    onMouseEnter={(e) => e.target.style.color = '#7c3aed'}
+                    onMouseLeave={(e) => e.target.style.color = '#6b7280'}
                   >
                     {item.name}
                   </Link>
@@ -232,17 +258,21 @@ const Footer = () => {
         </Row>
         
         {/* Copyright Row */}
-        <Row className="mt-4 pt-3" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.2)' }}>
-          <Col className="text-center">
-            <p style={{ 
-              color: 'rgba(255, 255, 255, 0.7)', 
-              fontSize: '0.8rem', 
-              margin: 0 
-            }}>
-              © 2025 SpaceLink. All rights reserved.
-            </p>
-          </Col>
-        </Row>
+        <div style={{ 
+          borderTop: '1px solid rgba(124, 58, 237, 0.1)', 
+          paddingTop: '12px', 
+          marginTop: '16px',
+          textAlign: 'center'
+        }}>
+          <p style={{ 
+            color: '#9ca3af', 
+            fontSize: '0.7rem', 
+            margin: 0,
+            fontWeight: 500
+          }}>
+            © 2025 SpaceLink. All rights reserved.
+          </p>
+        </div>
       </Container>
     </footer>
   );
