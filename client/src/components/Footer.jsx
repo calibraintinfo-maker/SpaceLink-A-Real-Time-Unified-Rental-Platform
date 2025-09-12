@@ -16,28 +16,27 @@ const Footer = () => {
       background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
       borderTop: '1px solid rgba(124, 58, 237, 0.1)',
       color: '#374151',
-      padding: '20px 0 12px 0', // Much smaller padding
-      marginTop: 'auto',
-      fontSize: '13px' // Smaller base font
+      padding: '28px 0 16px 0',
+      marginTop: 'auto'
     }}>
       <Container>
-        <Row>
-          <Col lg={4} className="mb-3">
+        <Row className="gx-4"> {/* Add Bootstrap gutter spacing */}
+          <Col lg={4} className="mb-4">
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '8px',
-              marginBottom: '10px' // Reduced margin
+              gap: '10px',
+              marginBottom: '16px'
             }}>
               <div style={{
                 background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-                borderRadius: '6px',
-                padding: '4px'
+                borderRadius: '8px',
+                padding: '6px'
               }}>
-                <span style={{ fontSize: '1rem' }}>🏠</span>
+                <span style={{ fontSize: '1.1rem' }}>🏠</span>
               </div>
               <span style={{ 
-                fontSize: '1.2rem', 
+                fontSize: '1.3rem', 
                 fontWeight: 800, 
                 background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
                 WebkitBackgroundClip: 'text',
@@ -47,20 +46,20 @@ const Footer = () => {
             </div>
             <p style={{
               color: '#6b7280',
-              fontSize: '12px',
-              lineHeight: '1.4',
-              maxWidth: '260px',
-              marginBottom: '12px' // Reduced margin
+              fontSize: '14px',
+              lineHeight: '1.6',
+              maxWidth: '280px',
+              marginBottom: '20px'
             }}>
-              Your trusted global rental platform. Helping clients find exceptional rentals worldwide.
+              Your trusted global rental platform. Helping clients find exceptional rentals and empowering seamless transactions worldwide.
             </p>
             
             {/* Newsletter Signup */}
             <div>
               <h6 style={{
-                fontSize: '11px',
+                fontSize: '13px',
                 fontWeight: 700,
-                marginBottom: '6px', // Much smaller margin
+                marginBottom: '12px',
                 color: '#374151',
                 textTransform: 'uppercase',
                 letterSpacing: '0.5px'
@@ -68,8 +67,8 @@ const Footer = () => {
               <form onSubmit={handleSubscribe}>
                 <div style={{ 
                   display: 'flex', 
-                  gap: '4px',
-                  maxWidth: '260px'
+                  gap: '8px',
+                  maxWidth: '280px'
                 }}>
                   <input 
                     type="email"
@@ -78,12 +77,12 @@ const Footer = () => {
                     placeholder="Enter your email"
                     style={{
                       flex: 1,
-                      padding: '6px 8px', // Smaller padding
+                      padding: '8px 12px',
                       border: '1px solid #d1d5db',
-                      borderRadius: '4px',
+                      borderRadius: '6px',
                       background: 'white',
                       color: '#374151',
-                      fontSize: '11px'
+                      fontSize: '13px'
                     }}
                     required
                   />
@@ -92,14 +91,14 @@ const Footer = () => {
                     style={{
                       background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
                       border: 'none',
-                      borderRadius: '4px',
-                      padding: '6px 10px', // Smaller padding
+                      borderRadius: '6px',
+                      padding: '8px 14px',
                       color: 'white',
                       fontWeight: 600,
                       cursor: 'pointer',
-                      fontSize: '10px',
+                      fontSize: '11px',
                       textTransform: 'uppercase',
-                      letterSpacing: '0.3px'
+                      letterSpacing: '0.5px'
                     }}
                   >
                     Subscribe
@@ -109,168 +108,160 @@ const Footer = () => {
             </div>
           </Col>
           
-          <Col lg={2} md={6} className="mb-3">
+          <Col lg={2} md={6} className="mb-4" style={{ paddingLeft: '24px' }}>
             <h6 style={{
-              fontSize: '11px',
+              fontSize: '13px',
               fontWeight: 700,
-              marginBottom: '8px', // Smaller margin
+              marginBottom: '16px',
               color: '#374151',
               textTransform: 'uppercase',
               letterSpacing: '0.5px'
             }}>Quick Links</h6>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {[
                 { name: 'Find Property', path: '/find-property' },
                 { name: 'List Property', path: '/add-property' },
                 { name: 'My Bookings', path: '/my-bookings' },
                 { name: 'Profile', path: '/profile' }
               ].map((item, index) => (
-                <li key={index} style={{ marginBottom: '4px' }}> {/* Much smaller margin */}
-                  <Link 
-                    to={item.path}
-                    style={{
-                      color: '#6b7280',
-                      textDecoration: 'none',
-                      fontSize: '12px',
-                      fontWeight: 500,
-                      transition: 'color 0.2s ease',
-                      display: 'block',
-                      padding: '2px 0', // Smaller padding
-                      lineHeight: '1.4'
-                    }}
-                    onMouseEnter={(e) => e.target.style.color = '#7c3aed'}
-                    onMouseLeave={(e) => e.target.style.color = '#6b7280'}
-                  >
-                    {item.name}
-                  </Link>
-                </li>
+                <Link 
+                  key={index}
+                  to={item.path}
+                  style={{
+                    color: '#6b7280',
+                    textDecoration: 'none',
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    transition: 'color 0.2s ease',
+                    padding: '4px 0',
+                    lineHeight: '1.5'
+                  }}
+                  onMouseEnter={(e) => e.target.style.color = '#7c3aed'}
+                  onMouseLeave={(e) => e.target.style.color = '#6b7280'}
+                >
+                  {item.name}
+                </Link>
               ))}
-            </ul>
+            </div>
           </Col>
           
-          <Col lg={2} md={6} className="mb-3">
+          <Col lg={2} md={6} className="mb-4" style={{ paddingLeft: '24px' }}>
             <h6 style={{
-              fontSize: '11px',
+              fontSize: '13px',
               fontWeight: 700,
-              marginBottom: '8px',
+              marginBottom: '16px',
               color: '#374151',
               textTransform: 'uppercase',
               letterSpacing: '0.5px'
             }}>Categories</h6>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {['Properties', 'Event Venues', 'Vehicles', 'Parking'].map((item, index) => (
-                <li key={index} style={{ marginBottom: '4px' }}>
-                  <Link 
-                    to="/find-property"
-                    style={{
-                      color: '#6b7280',
-                      textDecoration: 'none',
-                      fontSize: '12px',
-                      fontWeight: 500,
-                      transition: 'color 0.2s ease',
-                      display: 'block',
-                      padding: '2px 0',
-                      lineHeight: '1.4'
-                    }}
-                    onMouseEnter={(e) => e.target.style.color = '#7c3aed'}
-                    onMouseLeave={(e) => e.target.style.color = '#6b7280'}
-                  >
-                    {item}
-                  </Link>
-                </li>
+                <Link 
+                  key={index}
+                  to="/find-property"
+                  style={{
+                    color: '#6b7280',
+                    textDecoration: 'none',
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    transition: 'color 0.2s ease',
+                    padding: '4px 0',
+                    lineHeight: '1.5'
+                  }}
+                  onMouseEnter={(e) => e.target.style.color = '#7c3aed'}
+                  onMouseLeave={(e) => e.target.style.color = '#6b7280'}
+                >
+                  {item}
+                </Link>
               ))}
-            </ul>
+            </div>
           </Col>
           
-          <Col lg={2} md={6} className="mb-3">
+          <Col lg={2} md={6} className="mb-4" style={{ paddingLeft: '24px' }}>
             <h6 style={{
-              fontSize: '11px',
+              fontSize: '13px',
               fontWeight: 700,
-              marginBottom: '8px',
+              marginBottom: '16px',
               color: '#374151',
               textTransform: 'uppercase',
               letterSpacing: '0.5px'
             }}>Support</h6>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {[
                 { name: 'Help Center', path: '/help' },
                 { name: 'Contact Us', path: '/contact' },
                 { name: 'About Us', path: '/about' },
                 { name: 'Blog', path: '/blog' }
               ].map((item, index) => (
-                <li key={index} style={{ marginBottom: '4px' }}>
-                  <Link 
-                    to={item.path}
-                    style={{
-                      color: '#6b7280',
-                      textDecoration: 'none',
-                      fontSize: '12px',
-                      fontWeight: 500,
-                      transition: 'color 0.2s ease',
-                      display: 'block',
-                      padding: '2px 0',
-                      lineHeight: '1.4'
-                    }}
-                    onMouseEnter={(e) => e.target.style.color = '#7c3aed'}
-                    onMouseLeave={(e) => e.target.style.color = '#6b7280'}
-                  >
-                    {item.name}
-                  </Link>
-                </li>
+                <Link 
+                  key={index}
+                  to={item.path}
+                  style={{
+                    color: '#6b7280',
+                    textDecoration: 'none',
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    transition: 'color 0.2s ease',
+                    padding: '4px 0',
+                    lineHeight: '1.5'
+                  }}
+                  onMouseEnter={(e) => e.target.style.color = '#7c3aed'}
+                  onMouseLeave={(e) => e.target.style.color = '#6b7280'}
+                >
+                  {item.name}
+                </Link>
               ))}
-            </ul>
+            </div>
           </Col>
           
-          <Col lg={2} md={6} className="mb-3">
+          <Col lg={2} md={6} className="mb-4" style={{ paddingLeft: '24px' }}>
             <h6 style={{
-              fontSize: '11px',
+              fontSize: '13px',
               fontWeight: 700,
-              marginBottom: '8px',
+              marginBottom: '16px',
               color: '#374151',
               textTransform: 'uppercase',
               letterSpacing: '0.5px'
             }}>Legal</h6>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {[
                 { name: 'Privacy', path: '/privacy' },
                 { name: 'Terms', path: '/terms' },
                 { name: 'Cookies', path: '/cookies' },
                 { name: 'Disclaimer', path: '/disclaimer' }
               ].map((item, index) => (
-                <li key={index} style={{ marginBottom: '4px' }}>
-                  <Link 
-                    to={item.path}
-                    style={{
-                      color: '#6b7280',
-                      textDecoration: 'none',
-                      fontSize: '12px',
-                      fontWeight: 500,
-                      transition: 'color 0.2s ease',
-                      display: 'block',
-                      padding: '2px 0',
-                      lineHeight: '1.4'
-                    }}
-                    onMouseEnter={(e) => e.target.style.color = '#7c3aed'}
-                    onMouseLeave={(e) => e.target.style.color = '#6b7280'}
-                  >
-                    {item.name}
-                  </Link>
-                </li>
+                <Link 
+                  key={index}
+                  to={item.path}
+                  style={{
+                    color: '#6b7280',
+                    textDecoration: 'none',
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    transition: 'color 0.2s ease',
+                    padding: '4px 0',
+                    lineHeight: '1.5'
+                  }}
+                  onMouseEnter={(e) => e.target.style.color = '#7c3aed'}
+                  onMouseLeave={(e) => e.target.style.color = '#6b7280'}
+                >
+                  {item.name}
+                </Link>
               ))}
-            </ul>
+            </div>
           </Col>
         </Row>
         
-        {/* Copyright Row - Super Compact */}
+        {/* Copyright Row */}
         <div style={{ 
           borderTop: '1px solid rgba(124, 58, 237, 0.1)', 
-          paddingTop: '8px', // Much smaller padding
-          marginTop: '12px', // Smaller margin
+          paddingTop: '12px', 
+          marginTop: '20px',
           textAlign: 'center'
         }}>
           <p style={{ 
             color: '#9ca3af', 
-            fontSize: '11px', // Smaller font
+            fontSize: '12px', 
             margin: 0,
             fontWeight: 500
           }}>
