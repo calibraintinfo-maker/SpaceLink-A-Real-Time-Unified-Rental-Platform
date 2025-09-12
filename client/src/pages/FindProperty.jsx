@@ -190,340 +190,86 @@ const FindProperty = () => {
     e.target.src = 'https://via.placeholder.com/400x240/e2e8f0/64748b?text=Property+Image';
   };
 
-  const renderPropertyDetails = (property) => {
-    if (!property) return [];
-    const details = [];
-
-    if (property.subtype && residentialTypes.includes(property.subtype)) {
-      if (property.bedrooms > 0) {
-        details.push(
-          <Badge key="bedrooms" bg="light" text="dark" className="me-2 mb-2 animate-badge" style={{ fontSize: '0.75rem' }}>
-            Bed {property.bedrooms} BHK
-          </Badge>
-        );
-      }
-      if (property.bathrooms > 0) {
-        details.push(
-          <Badge key="bathrooms" bg="light" text="dark" className="me-2 mb-2 animate-badge" style={{ fontSize: '0.75rem' }}>
-            Bath {property.bathrooms}
-          </Badge>
-        );
-      }
-    }
-
-    if (property.size) {
-      details.push(
-        <Badge key="area" bg="light" text="dark" className="me-2 mb-2 animate-badge" style={{ fontSize: '0.75rem' }}>
-          Area {property.size}
-        </Badge>
-      );
-    }
-
-    if (property.capacity) {
-      details.push(
-        <Badge key="capacity" bg="info" className="me-2 mb-2 animate-badge" style={{ fontSize: '0.75rem' }}>
-          Capacity {property.capacity}
-        </Badge>
-      );
-    }
-
-    return details;
-  };
-
-  const getSafeRentType = (property) => {
-    if (!property?.rentType) return 'rental';
-    return Array.isArray(property.rentType) ? property.rentType[0] : property.rentType;
-  };
-
-  const getSafeRentTypes = (property) => {
-    if (!property?.rentType) return ['rental'];
-    return Array.isArray(property.rentType) ? property.rentType : [property.rentType];
-  };
-
-  // ✅ ENHANCED ANIMATED PROPERTY CARD
-  const AnimatedPropertyCard = ({ property, index, viewMode }) => {
-    const cardRef = useRef();
-    const [imageIndex, setImageIndex] = useState(0);
-    const [isHovered, setIsHovered] = useState(false);
-    const images = property.images || [property.image];
-    const isVisible = visibleCards.has(property._id);
-
-    useEffect(() => {
-      if (cardRef.current && observerRef.current) {
-        cardRef.current.dataset.cardId = property._id;
-        observerRef.current.observe(cardRef.current);
-      }
-    }, [property._id]);
-
-    useEffect(() => {
-      let interval;
-      if (isHovered && images.length > 1) {
-        interval = setInterval(() => {
-          setImageIndex(prev => (prev + 1) % images.length);
-        }, 2000);
-      } else {
-        setImageIndex(0);
-      }
-      return () => clearInterval(interval);
-    }, [isHovered, images.length]);
-
-    if (viewMode === 'list') {
-      return (
-        <div
-          ref={cardRef}
-          className={`property-card-wrapper ${isVisible ? 'fade-up-visible' : 'fade-up-hidden'}`}
-          style={{ 
-            animationDelay: `${index * 100}ms`,
-            opacity: isVisible ? 1 : 0,
-            transform: isVisible ? 'translateY(0)' : 'translateY(50px)',
-            transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
-          }}
-        >
-          <Card 
-            className="property-card-enhanced"
-            style={{ 
-              border: 'none',
-              borderRadius: '20px',
-              background: 'white',
-              boxShadow: '0 8px 30px rgba(0,0,0,0.06)',
-              transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-              cursor: 'pointer',
-              minHeight: '240px',
-              overflow: 'hidden'
-            }}
-            onMouseEnter={(e) => {
-              setIsHovered(true);
-              e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
-              e.currentTarget.style.boxShadow = '0 25px 50px rgba(124, 58, 237, 0.15)';
-            }}
-            onMouseLeave={(e) => {
-              setIsHovered(false);
-              e.currentTarget.style.transform = 'translateY(0) scale(1)';
-              e.currentTarget.style.boxShadow = '0 8px 30px rgba(0,0,0,0.06)';
-            }}
-          >
-            <Row className="g-0 align-items-center">
-              <Col md={4}>
-                <div style={{ position: 'relative', height: '240px', overflow: 'hidden' }}>
-                  {/* ✅ ANIMATED IMAGE SLIDER */}
-                  <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-                    {images.map((img, idx) => (
-                      <img
-                        key={idx}
-                        src={getImageUrl(img)}
-                        alt={`${property.title} - ${idx + 1}`}
-                        onError={handleImageError}
-                        style={{ 
-                          position: 'absolute',
-                          top: 0,
-                          left: 0,
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover',
-                          borderRadius: '20px 0 0 20px',
-                          opacity: idx === imageIndex ? 1 : 0,
-                          transition: 'opacity 0.5s ease-in-out',
-                          transform: isHovered ? 'scale(1.05)' : 'scale(1)'
-                        }}
-                      />
-                    ))}
-                  </div>
-                  
-                  {/* ✅ ANIMATED BADGES */}
-                  <div className="position-absolute top-0 start-0 p-3">
-                    <Badge 
-                      bg="success" 
-                      className="me-2 fw-semibold shadow-sm animated-badge" 
-                      style={{ 
-                        borderRadius: '20px',
-                        padding: '6px 12px', 
-                        fontSize: '0.75rem',
-                        fontWeight: 600,
-                        textTransform: 'uppercase',
-                        animation: 'bounceIn 0.6s ease-out 0.2s both'
-                      }}
-                    >
-                      ✓ Available
-                    </Badge>
-                    <Badge 
-                      bg="primary" 
-                      className="fw-semibold shadow-sm animated-badge" 
-                      style={{ 
-                        borderRadius: '20px', 
-                        padding: '6px 12px', 
-                        fontSize: '0.75rem',
-                        fontWeight: 600,
-                        textTransform: 'uppercase',
-                        animation: 'bounceIn 0.6s ease-out 0.4s both'
-                      }}
-                    >
-                      🏆 Verified
-                    </Badge>
-                  </div>
-
-                  {/* ✅ IMAGE INDICATORS */}
-                  {images.length > 1 && (
-                    <div className="position-absolute bottom-0 start-0 end-0 p-3">
-                      <div className="d-flex justify-content-center gap-1">
-                        {images.map((_, idx) => (
-                          <div
-                            key={idx}
-                            style={{
-                              width: '6px',
-                              height: '6px',
-                              borderRadius: '50%',
-                              background: idx === imageIndex ? 'white' : 'rgba(255,255,255,0.5)',
-                              transition: 'all 0.3s ease'
-                            }}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </Col>
-              
-              <Col md={8}>
-                <Card.Body className="p-4" style={{ minHeight: '240px', display: 'flex', flexDirection: 'column' }}>
-                  <div className="d-flex align-items-center mb-3">
-                    <span className="me-2" style={{ color: '#7c3aed', fontSize: '1.1rem' }}>📍</span>
-                    <span style={{ 
-                      fontSize: '0.85rem', 
-                      color: '#6b7280',
-                      fontWeight: 500,
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.5px'
-                    }}>
-                      {property.address?.city || 'City'}, {property.address?.state || 'State'}
-                    </span>
-                  </div>
-                  
-                  <Card.Title style={{ 
-                    color: '#1f2937',
-                    fontSize: '1.5rem',
-                    fontWeight: 800,
-                    marginBottom: '12px',
-                    lineHeight: '1.3',
-                    fontFamily: "'Inter', sans-serif"
-                  }}>
-                    {property.title || 'Property Title'}
-                  </Card.Title>
-                  
-                  <p className="mb-3" style={{ 
-                    fontSize: '0.95rem',
-                    lineHeight: '1.6',
-                    flexGrow: 1,
-                    color: '#374151',
-                    fontFamily: "'Inter', sans-serif"
-                  }}>
-                    {property.description ? 
-                      property.description.substring(0, 140) + '...' : 
-                      'Premium property with modern amenities and excellent location.'
-                    }
-                  </p>
-                  
-                  <div className="mb-3">
-                    <div className="d-flex flex-wrap gap-2">
-                      {renderPropertyDetails(property)}
-                    </div>
-                  </div>
-                  
-                  <div className="d-flex justify-content-between align-items-center mt-auto">
-                    <div>
-                      <div style={{ 
-                        fontSize: '1.6rem',
-                        fontWeight: 800,
-                        color: '#059669',
-                        marginBottom: '4px',
-                        fontFamily: "'Inter', sans-serif"
-                      }}>
-                        {formatPrice(property.price, getSafeRentType(property))}
-                      </div>
-                      <small style={{ 
-                        color: '#64748b',
-                        fontSize: '0.8rem',
-                        fontFamily: "'Inter', sans-serif",
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.05em'
-                      }}>
-                        Available for {getSafeRentTypes(property).join(', ')} rental
-                      </small>
-                    </div>
-                    
-                    <div className="d-flex gap-3">
-                      <Button
-                        variant="outline-primary"
-                        className="animated-button"
-                        style={{
-                          borderRadius: '12px',
-                          padding: '12px 20px',
-                          borderWidth: '2px',
-                          fontWeight: 700,
-                          fontSize: '0.8rem',
-                          borderColor: '#7c3aed',
-                          color: '#7c3aed',
-                          fontFamily: "'Inter', sans-serif",
-                          textTransform: 'uppercase',
-                          position: 'relative',
-                          overflow: 'hidden',
-                          transition: 'all 0.3s ease'
-                        }}
-                        onClick={() => handleViewDetails(property._id)}
-                      >
-                        View Details
-                      </Button>
-                      <Button
-                        className="animated-button-primary"
-                        style={{ 
-                          background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-                          border: 'none',
-                          borderRadius: '12px',
-                          padding: '12px 20px',
-                          fontWeight: 700,
-                          fontSize: '0.8rem',
-                          fontFamily: "'Inter', sans-serif",
-                          textTransform: 'uppercase',
-                          color: 'white',
-                          position: 'relative',
-                          overflow: 'hidden',
-                          transition: 'all 0.3s ease'
-                        }}
-                        onClick={() => handleBookNow(property._id)}
-                      >
-                        Book Now
-                      </Button>
-                    </div>
-                  </div>
-                </Card.Body>
-              </Col>
-            </Row>
-          </Card>
+  // ✅ SKELETON LOADER COMPONENT
+  const SkeletonCard = () => (
+    <Card style={{ border: 'none', borderRadius: '20px', background: 'white', boxShadow: '0 8px 30px rgba(0,0,0,0.04)' }}>
+      <div style={{ 
+        height: '240px', 
+        background: 'linear-gradient(90deg, #f0f2f5 25%, #e4e6ea 50%, #f0f2f5 75%)', 
+        backgroundSize: '200% 100%', 
+        animation: 'shimmer 1.5s infinite', 
+        borderRadius: '20px 20px 0 0' 
+      }}></div>
+      <Card.Body style={{ padding: '20px' }}>
+        <div style={{ 
+          height: '20px', 
+          background: 'linear-gradient(90deg, #f0f2f5 25%, #e4e6ea 50%, #f0f2f5 75%)', 
+          backgroundSize: '200% 100%', 
+          animation: 'shimmer 1.5s infinite', 
+          borderRadius: '4px', 
+          marginBottom: '12px', 
+          width: '70%' 
+        }}></div>
+        <div style={{ 
+          height: '16px', 
+          background: 'linear-gradient(90deg, #f0f2f5 25%, #e4e6ea 50%, #f0f2f5 75%)', 
+          backgroundSize: '200% 100%', 
+          animation: 'shimmer 1.5s infinite', 
+          borderRadius: '4px', 
+          marginBottom: '16px', 
+          width: '90%' 
+        }}></div>
+        <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
+          <div style={{ 
+            height: '24px', 
+            width: '60px', 
+            background: 'linear-gradient(90deg, #f0f2f5 25%, #e4e6ea 50%, #f0f2f5 75%)', 
+            backgroundSize: '200% 100%', 
+            animation: 'shimmer 1.5s infinite', 
+            borderRadius: '12px' 
+          }}></div>
+          <div style={{ 
+            height: '24px', 
+            width: '60px', 
+            background: 'linear-gradient(90deg, #f0f2f5 25%, #e4e6ea 50%, #f0f2f5 75%)', 
+            backgroundSize: '200% 100%', 
+            animation: 'shimmer 1.5s infinite', 
+            borderRadius: '12px' 
+          }}></div>
         </div>
-      );
-    } else {
-      // Grid view
-      return (
-        <div
-          ref={cardRef}
-          className={`property-card-wrapper ${isVisible ? 'fade-up-visible' : 'fade-up-hidden'}`}
-          style={{ 
-            animationDelay: `${index * 150}ms`,
-            opacity: isVisible ? 1 : 0,
-            transform: isVisible ? 'translateY(0)' : 'translateY(50px)',
-            transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
-          }}
-        >
-          <PropertyCard 
-            property={property} 
-            showOwner={false}
-            className="enhanced-grid-card"
-          />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ 
+            height: '20px', 
+            width: '80px', 
+            background: 'linear-gradient(90deg, #f0f2f5 25%, #e4e6ea 50%, #f0f2f5 75%)', 
+            backgroundSize: '200% 100%', 
+            animation: 'shimmer 1.5s infinite', 
+            borderRadius: '4px' 
+          }}></div>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <div style={{ 
+              height: '32px', 
+              width: '80px', 
+              background: 'linear-gradient(90deg, #f0f2f5 25%, #e4e6ea 50%, #f0f2f5 75%)', 
+              backgroundSize: '200% 100%', 
+              animation: 'shimmer 1.5s infinite', 
+              borderRadius: '6px' 
+            }}></div>
+            <div style={{ 
+              height: '32px', 
+              width: '80px', 
+              background: 'linear-gradient(90deg, #f0f2f5 25%, #e4e6ea 50%, #f0f2f5 75%)', 
+              backgroundSize: '200% 100%', 
+              animation: 'shimmer 1.5s infinite', 
+              borderRadius: '6px' 
+            }}></div>
+          </div>
         </div>
-      );
-    }
-  };
+      </Card.Body>
+    </Card>
+  );
 
-  // Loading state
+  // ✅ LOADING STATE
   if (loading) {
     return (
       <div style={{ minHeight: '100vh', backgroundColor: '#f8fafc' }}>
@@ -571,9 +317,7 @@ const FindProperty = () => {
                 </div>
                 <Row className="row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
                   {[1, 2, 3, 4, 5, 6].map(i => (
-                    <Col key={i}>
-                      <div className="skeleton-card animate-pulse" style={{ height: '400px' }}></div>
-                    </Col>
+                    <Col key={i}><SkeletonCard /></Col>
                   ))}
                 </Row>
               </Col>
@@ -584,7 +328,7 @@ const FindProperty = () => {
     );
   }
 
-  // Error state  
+  // ✅ ERROR STATE
   if (error) {
     return (
       <div style={{ minHeight: '100vh', backgroundColor: '#f8fafc' }}>
@@ -622,7 +366,7 @@ const FindProperty = () => {
 
   return (
     <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh' }}>
-      {/* ✅ ANIMATED HERO SECTION */}
+      {/* ✅ PROFESSIONAL HERO SECTION */}
       <section style={{
         background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
         padding: '50px 0 70px 0',
@@ -655,7 +399,8 @@ const FindProperty = () => {
               fontWeight: 800,
               marginBottom: '16px',
               lineHeight: 1.2,
-              animation: 'fadeInUp 0.8s ease-out 0.2s both'
+              animation: 'fadeInUp 0.8s ease-out 0.2s both',
+              fontFamily: "'Inter', sans-serif"
             }}>
               Find Your Perfect Property
             </h1>
@@ -665,7 +410,8 @@ const FindProperty = () => {
               opacity: 0.9,
               maxWidth: '600px',
               margin: '0 auto',
-              animation: 'fadeInUp 0.8s ease-out 0.4s both'
+              animation: 'fadeInUp 0.8s ease-out 0.4s both',
+              fontFamily: "'Inter', sans-serif"
             }}>
               Discover verified properties from our premium collection across India. From luxury apartments to commercial spaces.
             </p>
@@ -673,464 +419,694 @@ const FindProperty = () => {
         </Container>
       </section>
 
-      {/* ✅ MAIN LAYOUT */}
-      <div style={{ marginTop: '60px' }}>
-        <Container fluid style={{ padding: '0' }}>
-          <Row style={{ margin: '0' }}>
-            
-            {/* ✅ ANIMATED SIDEBAR */}
-            <Col xl={3} lg={4} style={{ 
-              background: 'white',
-              boxShadow: '4px 0 20px rgba(0,0,0,0.04)',
-              padding: '0'
-            }}>
+      {/* ✅ PROFESSIONAL BRIDGE SECTION */}
+      <div style={{ 
+        background: 'linear-gradient(180deg, rgba(124, 58, 237, 0.03) 0%, rgba(248, 250, 252, 1) 100%)',
+        padding: '30px 0',
+        marginTop: '-30px',
+        borderBottom: '1px solid rgba(124, 58, 237, 0.08)'
+      }}>
+        <Container>
+          <Row className="align-items-center">
+            <Col md={8}>
               <div style={{ 
-                position: 'sticky', 
-                top: '100px',
-                padding: '30px 25px',
-                maxHeight: 'calc(100vh - 120px)',
-                overflowY: 'auto',
-                animation: 'slideInLeft 0.6s ease-out'
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '20px',
+                animation: 'slideInLeft 0.8s ease-out',
+                flexWrap: 'wrap'
               }}>
-                
-                {/* Search Card */}
-                <Card className="animated-search-card" style={{
-                  border: 'none',
-                  borderRadius: '16px',
+                <div style={{
                   background: 'white',
-                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
-                  marginBottom: '20px',
-                  transition: 'transform 0.3s ease'
-                }}>
-                  <Card.Body style={{ padding: '24px' }}>
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px',
-                      marginBottom: '16px'
-                    }}>
-                      <span style={{ fontSize: '1.1rem' }}>🔍</span>
-                      <h6 style={{
-                        margin: 0,
-                        fontSize: '16px',
-                        fontWeight: 700,
-                        color: '#1f2937'
-                      }}>Search Properties</h6>
-                    </div>
-                    <Form.Control
-                      type="text"
-                      placeholder="Search by location, type, or keywords..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="animated-input"
-                      style={{
-                        borderRadius: '12px',
-                        border: '2px solid #f1f5f9',
-                        padding: '12px 16px',
-                        fontSize: '14px',
-                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-                      }}
-                    />
-                    {searchQuery && (
-                      <small className="text-muted mt-2 d-block animate-slide-in" style={{ fontSize: '12px' }}>
-                        <span className="fw-semibold counter-animation">{filteredProperties.length} results</span> for "{searchQuery}"
-                      </small>
-                    )}
-                  </Card.Body>
-                </Card>
-
-                {/* Filters Card */}
-                <Card className="animated-filters-card" style={{
-                  border: 'none',
-                  borderRadius: '16px',
-                  background: 'white',
-                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
-                  marginBottom: '20px'
-                }}>
-                  <Card.Body style={{ padding: '24px' }}>
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px',
-                      marginBottom: '20px'
-                    }}>
-                      <span style={{ fontSize: '1.1rem' }}>⚙️</span>
-                      <h6 style={{
-                        margin: 0,
-                        fontSize: '16px',
-                        fontWeight: 700,
-                        color: '#1f2937'
-                      }}>Smart Filters</h6>
-                    </div>
-
-                    {/* Location Filter */}
-                    <div style={{ marginBottom: '20px' }}>
-                      <Form.Label style={{
-                        fontSize: '12px',
-                        fontWeight: 600,
-                        color: '#374151',
-                        marginBottom: '8px',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.5px'
-                      }}>📍 Location</Form.Label>
-                      <Form.Select
-                        value={filters.location}
-                        onChange={(e) => handleFilterChange('location', e.target.value)}
-                        className="animated-select"
-                        style={{
-                          borderRadius: '10px',
-                          border: '2px solid #f1f5f9',
-                          padding: '10px 14px',
-                          fontSize: '14px'
-                        }}
-                      >
-                        {indianLocations.map((location, index) => (
-                          <option key={index} value={location === "All Locations" ? "" : location}>
-                            {location}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    </div>
-
-                    {/* Property Type Filter */}
-                    <div style={{ marginBottom: '20px' }}>
-                      <Form.Label style={{
-                        fontSize: '12px',
-                        fontWeight: 600,
-                        color: '#374151',
-                        marginBottom: '8px',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.5px'
-                      }}>🏠 Property Type</Form.Label>
-                      <Form.Select
-                        value={filters.propertyType}
-                        onChange={(e) => handleFilterChange('propertyType', e.target.value)}
-                        className="animated-select"
-                        style={{
-                          borderRadius: '10px',
-                          border: '2px solid #f1f5f9',
-                          padding: '10px 14px',
-                          fontSize: '14px'
-                        }}
-                      >
-                        {propertyTypes.map((type, index) => (
-                          <option key={index} value={type === "All Categories" ? "" : type}>
-                            {getCategoryIcon(type)} {type}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    </div>
-
-                    {/* Price Range Filter */}
-                    <div style={{ marginBottom: '20px' }}>
-                      <Form.Label style={{
-                        fontSize: '12px',
-                        fontWeight: 600,
-                        color: '#374151',
-                        marginBottom: '8px',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.5px'
-                      }}>💰 Price Range</Form.Label>
-                      <Form.Select
-                        value={filters.priceRange}
-                        onChange={(e) => handleFilterChange('priceRange', e.target.value)}
-                        className="animated-select"
-                        style={{
-                          borderRadius: '10px',
-                          border: '2px solid #f1f5f9',
-                          padding: '10px 14px',
-                          fontSize: '14px'
-                        }}
-                      >
-                        <option value="">All Prices</option>
-                        <option value="0-1000">₹0 - ₹1,000</option>
-                        <option value="1000-2500">₹1,000 - ₹2,500</option>
-                        <option value="2500-5000">₹2,500 - ₹5,000</option>
-                        <option value="5000-10000">₹5,000 - ₹10,000</option>
-                        <option value="10000-25000">₹10,000 - ₹25,000</option>
-                        <option value="25000-50000">₹25,000 - ₹50,000</option>
-                        <option value="50000-999999">₹50,000+</option>
-                      </Form.Select>
-                    </div>
-
-                    {/* Conditional Bedrooms Filter */}
-                    {shouldShowBedroomFilter() && (
-                      <div style={{ marginBottom: '20px' }}>
-                        <Form.Label style={{
-                          fontSize: '12px',
-                          fontWeight: 600,
-                          color: '#374151',
-                          marginBottom: '8px',
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.5px'
-                        }}>🛏️ Bedrooms</Form.Label>
-                        <Form.Select
-                          value={filters.bedrooms}
-                          onChange={(e) => handleFilterChange('bedrooms', e.target.value)}
-                          className="animated-select"
-                          style={{
-                            borderRadius: '10px',
-                            border: '2px solid #f1f5f9',
-                            padding: '10px 14px',
-                            fontSize: '14px'
-                          }}
-                        >
-                          <option value="">Any Bedrooms</option>
-                          <option value="1">1+ BHK</option>
-                          <option value="2">2+ BHK</option>
-                          <option value="3">3+ BHK</option>
-                          <option value="4">4+ BHK</option>
-                          <option value="5">5+ BHK</option>
-                        </Form.Select>
-                      </div>
-                    )}
-
-                    {/* Clear Filters Button */}
-                    <Button
-                      variant="outline-primary"
-                      className="animated-clear-button"
-                      style={{
-                        width: '100%',
-                        borderRadius: '10px',
-                        padding: '10px',
-                        border: '2px solid #7c3aed',
-                        color: '#7c3aed',
-                        fontWeight: 600,
-                        fontSize: '14px',
-                        transition: 'all 0.3s ease'
-                      }}
-                      onClick={clearFilters}
-                      disabled={getActiveFiltersCount() === 0}
-                    >
-                      ✕ Clear All Filters
-                      {getActiveFiltersCount() > 0 && (
-                        <span className="filter-count-badge">
-                          ({getActiveFiltersCount()})
-                        </span>
-                      )}
-                    </Button>
-                  </Card.Body>
-                </Card>
-
-                {/* Stats Card */}
-                <Card className="animated-stats-card" style={{
-                  border: 'none',
                   borderRadius: '12px',
-                  background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-                  color: 'white'
+                  padding: '12px 20px',
+                  boxShadow: '0 4px 20px rgba(124, 58, 237, 0.08)',
+                  border: '1px solid rgba(124, 58, 237, 0.1)'
                 }}>
-                  <Card.Body style={{ padding: '12px', textAlign: 'center' }}>
-                    <h5 className="counter-animation" style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '2px' }}>
-                      {filteredProperties.length}
-                    </h5>
-                    <p style={{ fontSize: '11px', opacity: 0.9, margin: 0 }}>
-                      Available
-                    </p>
-                  </Card.Body>
-                </Card>
-
+                  <span style={{ 
+                    fontSize: '0.9rem', 
+                    fontWeight: 700, 
+                    color: '#7c3aed',
+                    fontFamily: "'Inter', sans-serif"
+                  }}>
+                    🔥 {filteredProperties.length} Active Listings
+                  </span>
+                </div>
+                <div style={{
+                  background: 'white',
+                  borderRadius: '12px',
+                  padding: '12px 20px',
+                  boxShadow: '0 4px 20px rgba(16, 185, 129, 0.08)',
+                  border: '1px solid rgba(16, 185, 129, 0.1)'
+                }}>
+                  <span style={{ 
+                    fontSize: '0.9rem', 
+                    fontWeight: 700, 
+                    color: '#059669',
+                    fontFamily: "'Inter', sans-serif"
+                  }}>
+                    ✓ All Verified Properties
+                  </span>
+                </div>
+                <div style={{
+                  background: 'white',
+                  borderRadius: '12px',
+                  padding: '12px 20px',
+                  boxShadow: '0 4px 20px rgba(245, 158, 11, 0.08)',
+                  border: '1px solid rgba(245, 158, 11, 0.1)'
+                }}>
+                  <span style={{ 
+                    fontSize: '0.9rem', 
+                    fontWeight: 700, 
+                    color: '#f59e0b',
+                    fontFamily: "'Inter', sans-serif"
+                  }}>
+                    ⚡ Updated Today
+                  </span>
+                </div>
               </div>
             </Col>
-
-            {/* ✅ MAIN CONTENT AREA */}
-            <Col xl={9} lg={8} style={{ 
-              padding: '30px',
-              background: '#f8fafc'
-            }}>
-              
-              {/* Header */}
-              <div className="animate-slide-in" style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: '30px'
+            <Col md={4} className="text-end">
+              <div style={{
+                fontSize: '0.85rem',
+                color: '#6b7280',
+                fontWeight: 500,
+                fontFamily: "'Inter', sans-serif",
+                animation: 'slideInRight 0.8s ease-out'
               }}>
-                <div>
-                  <h2 style={{
-                    fontSize: '2.2rem',
-                    fontWeight: 800,
-                    color: '#1f2937',
-                    marginBottom: '8px'
-                  }}>
-                    <span className="counter-animation">{filteredProperties.length}</span> Properties Found
-                  </h2>
-                  <p style={{
-                    color: '#6b7280',
-                    fontSize: '14px',
-                    margin: 0
-                  }}>
-                    Browse our premium collection • Updated {new Date().toLocaleDateString()}
-                  </p>
-                </div>
-
-                {/* ✅ ANIMATED VIEW TOGGLE */}
-                <div className="view-toggle-wrapper" style={{
-                  display: 'flex',
-                  gap: '8px',
-                  background: 'white',
-                  padding: '4px',
-                  borderRadius: '12px',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                  position: 'relative'
-                }}>
-                  <div 
-                    className="toggle-slider"
-                    style={{
-                      position: 'absolute',
-                      top: '4px',
-                      left: viewMode === 'grid' ? '4px' : '50%',
-                      width: 'calc(50% - 4px)',
-                      height: 'calc(100% - 8px)',
-                      background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-                      borderRadius: '8px',
-                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                      zIndex: 1
-                    }}
-                  />
-                  <Button
-                    variant="ghost"
-                    onClick={() => setViewMode('grid')}
-                    style={{
-                      border: 'none',
-                      borderRadius: '8px',
-                      padding: '8px 16px',
-                      fontSize: '14px',
-                      fontWeight: 600,
-                      background: 'transparent',
-                      color: viewMode === 'grid' ? 'white' : '#6b7280',
-                      zIndex: 2,
-                      position: 'relative'
-                    }}
-                  >
-                    ⊞ Grid
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    onClick={() => setViewMode('list')}
-                    style={{
-                      border: 'none',
-                      borderRadius: '8px',
-                      padding: '8px 16px',
-                      fontSize: '14px',
-                      fontWeight: 600,
-                      background: 'transparent',
-                      color: viewMode === 'list' ? 'white' : '#6b7280',
-                      zIndex: 2,
-                      position: 'relative'
-                    }}
-                  >
-                    ☰ List
-                  </Button>
-                </div>
+                Last updated: {new Date().toLocaleDateString()}
               </div>
-
-              {/* ✅ INNOVATIVE FEATURES */}
-              {filteredProperties.length > 0 && filteredProperties.length < 5 && (
-                <div className="featured-section animate-slide-in" style={{
-                  background: 'white',
-                  borderRadius: '20px',
-                  padding: '24px',
-                  marginBottom: '30px',
-                  boxShadow: '0 8px 30px rgba(0,0,0,0.06)',
-                  border: '1px solid #e2e8f0'
-                }}>
-                  <h4 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#1f2937', marginBottom: '16px' }}>
-                    💎 Featured Properties
-                  </h4>
-                  <p style={{ color: '#6b7280', fontSize: '14px', marginBottom: '20px' }}>
-                    Handpicked premium properties that match your search criteria
-                  </p>
-                  <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                    {['Luxury Villas in Mumbai', 'Modern Apartments in Bangalore', 'Commercial Spaces in Delhi'].map((item, index) => (
-                      <Badge key={index} bg="light" text="dark" className="animated-badge" style={{ 
-                        padding: '8px 12px', 
-                        fontSize: '12px', 
-                        fontWeight: 500,
-                        animation: `bounceIn 0.6s ease-out ${index * 0.2}s both`
-                      }}>
-                        {item}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Properties Grid/List */}
-              {filteredProperties.length === 0 ? (
-                <div className="text-center py-5 animate-fade-in" style={{
-                  background: 'white',
-                  borderRadius: '20px',
-                  padding: '60px 40px',
-                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)'
-                }}>
-                  <div className="animate-bounce-slow" style={{ fontSize: '4rem', opacity: 0.6, marginBottom: '20px' }}>
-                    {searchQuery ? '🔍' : getActiveFiltersCount() > 0 ? '🎯' : '🏠'}
-                  </div>
-                  <h3 style={{
-                    fontWeight: 800,
-                    color: '#1f2937',
-                    fontSize: '1.8rem',
-                    marginBottom: '12px'
-                  }}>
-                    {searchQuery ? 'No Search Results' : getActiveFiltersCount() > 0 ? 'No Matching Properties' : 'No Properties Available'}
-                  </h3>
-                  <p style={{
-                    color: '#6b7280',
-                    fontSize: '16px',
-                    marginBottom: '24px',
-                    maxWidth: '500px',
-                    margin: '0 auto 24px auto'
-                  }}>
-                    {searchQuery ? `We couldn't find any properties matching "${searchQuery}". Try adjusting your search terms.` :
-                     getActiveFiltersCount() > 0 ? 'No properties match your current filters. Try adjusting or clearing some filters.' :
-                     'No properties are currently available. Please check back later.'}
-                  </p>
-                  <Button 
-                    className="animated-button-primary"
-                    style={{
-                      background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-                      border: 'none',
-                      fontWeight: 700,
-                      borderRadius: '12px',
-                      padding: '12px 30px',
-                      textTransform: 'uppercase'
-                    }}
-                    size="lg"
-                    onClick={clearFilters}
-                  >
-                    {getActiveFiltersCount() > 0 ? 'Clear All Filters' : 'Refresh Properties'}
-                  </Button>
-                </div>
-              ) : (
-                <div 
-                  className={`properties-container ${viewMode === 'grid' ? 'grid-layout' : 'list-layout'}`}
-                  style={{
-                    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
-                  }}
-                >
-                  <Row className={viewMode === 'grid' ? 'row-cols-1 row-cols-md-2 row-cols-xl-3 g-4' : 'g-4'}>
-                    {filteredProperties.map((property, index) => {
-                      if (!property || !property._id) return null;
-                      
-                      return (
-                        <Col key={property._id} className={viewMode === 'list' ? 'col-12' : ''}>
-                          <AnimatedPropertyCard 
-                            property={property} 
-                            index={index}
-                            viewMode={viewMode}
-                          />
-                        </Col>
-                      );
-                    })}
-                  </Row>
-                </div>
-              )}
             </Col>
           </Row>
         </Container>
       </div>
 
-      {/* ✅ PROFESSIONAL ANIMATIONS CSS */}
+      {/* ✅ MAIN LAYOUT */}
+      <Container fluid style={{ padding: '0', maxWidth: '1400px', margin: '0 auto' }}>
+        <Row style={{ margin: '0' }}>
+          
+          {/* ✅ PROFESSIONAL SIDEBAR */}
+          <Col xl={3} lg={4} style={{ 
+            background: 'white',
+            boxShadow: '4px 0 30px rgba(0,0,0,0.06)',
+            padding: '0',
+            minHeight: 'calc(100vh - 200px)'
+          }}>
+            <div style={{ 
+              position: 'sticky', 
+              top: '100px',
+              padding: '30px 25px',
+              maxHeight: 'calc(100vh - 120px)',
+              overflowY: 'auto',
+              animation: 'slideInLeft 0.6s ease-out'
+            }}>
+              
+              {/* Search Card */}
+              <Card className="animated-search-card" style={{
+                border: 'none',
+                borderRadius: '16px',
+                background: 'white',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
+                marginBottom: '20px',
+                transition: 'transform 0.3s ease'
+              }}>
+                <Card.Body style={{ padding: '24px' }}>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    marginBottom: '16px'
+                  }}>
+                    <span style={{ fontSize: '1.1rem' }}>🔍</span>
+                    <h6 style={{
+                      margin: 0,
+                      fontSize: '16px',
+                      fontWeight: 700,
+                      color: '#1f2937',
+                      fontFamily: "'Inter', sans-serif"
+                    }}>Search Properties</h6>
+                  </div>
+                  <Form.Control
+                    type="text"
+                    placeholder="Search by location, type, or keywords..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="animated-input"
+                    style={{
+                      borderRadius: '12px',
+                      border: '2px solid #f1f5f9',
+                      padding: '12px 16px',
+                      fontSize: '14px',
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                      fontFamily: "'Inter', sans-serif"
+                    }}
+                  />
+                  {searchQuery && (
+                    <small className="text-muted mt-2 d-block animate-slide-in" style={{ 
+                      fontSize: '12px',
+                      fontFamily: "'Inter', sans-serif"
+                    }}>
+                      <span className="fw-semibold counter-animation">{filteredProperties.length} results</span> for "{searchQuery}"
+                    </small>
+                  )}
+                </Card.Body>
+              </Card>
+
+              {/* Filters Card */}
+              <Card className="animated-filters-card" style={{
+                border: 'none',
+                borderRadius: '16px',
+                background: 'white',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
+                marginBottom: '20px'
+              }}>
+                <Card.Body style={{ padding: '24px' }}>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    marginBottom: '20px'
+                  }}>
+                    <span style={{ fontSize: '1.1rem' }}>⚙️</span>
+                    <h6 style={{
+                      margin: 0,
+                      fontSize: '16px',
+                      fontWeight: 700,
+                      color: '#1f2937',
+                      fontFamily: "'Inter', sans-serif"
+                    }}>Smart Filters</h6>
+                  </div>
+
+                  {/* Location Filter */}
+                  <div style={{ marginBottom: '20px' }}>
+                    <Form.Label style={{
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      color: '#374151',
+                      marginBottom: '8px',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px',
+                      fontFamily: "'Inter', sans-serif"
+                    }}>📍 Location</Form.Label>
+                    <Form.Select
+                      value={filters.location}
+                      onChange={(e) => handleFilterChange('location', e.target.value)}
+                      className="animated-select"
+                      style={{
+                        borderRadius: '10px',
+                        border: '2px solid #f1f5f9',
+                        padding: '10px 14px',
+                        fontSize: '14px',
+                        fontFamily: "'Inter', sans-serif"
+                      }}
+                    >
+                      {indianLocations.map((location, index) => (
+                        <option key={index} value={location === "All Locations" ? "" : location}>
+                          {location}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </div>
+
+                  {/* Property Type Filter */}
+                  <div style={{ marginBottom: '20px' }}>
+                    <Form.Label style={{
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      color: '#374151',
+                      marginBottom: '8px',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px',
+                      fontFamily: "'Inter', sans-serif"
+                    }}>🏠 Property Type</Form.Label>
+                    <Form.Select
+                      value={filters.propertyType}
+                      onChange={(e) => handleFilterChange('propertyType', e.target.value)}
+                      className="animated-select"
+                      style={{
+                        borderRadius: '10px',
+                        border: '2px solid #f1f5f9',
+                        padding: '10px 14px',
+                        fontSize: '14px',
+                        fontFamily: "'Inter', sans-serif"
+                      }}
+                    >
+                      {propertyTypes.map((type, index) => (
+                        <option key={index} value={type === "All Categories" ? "" : type}>
+                          {getCategoryIcon(type)} {type}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </div>
+
+                  {/* Price Range Filter */}
+                  <div style={{ marginBottom: '20px' }}>
+                    <Form.Label style={{
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      color: '#374151',
+                      marginBottom: '8px',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px',
+                      fontFamily: "'Inter', sans-serif"
+                    }}>💰 Price Range</Form.Label>
+                    <Form.Select
+                      value={filters.priceRange}
+                      onChange={(e) => handleFilterChange('priceRange', e.target.value)}
+                      className="animated-select"
+                      style={{
+                        borderRadius: '10px',
+                        border: '2px solid #f1f5f9',
+                        padding: '10px 14px',
+                        fontSize: '14px',
+                        fontFamily: "'Inter', sans-serif"
+                      }}
+                    >
+                      <option value="">All Prices</option>
+                      <option value="0-1000">₹0 - ₹1,000</option>
+                      <option value="1000-2500">₹1,000 - ₹2,500</option>
+                      <option value="2500-5000">₹2,500 - ₹5,000</option>
+                      <option value="5000-10000">₹5,000 - ₹10,000</option>
+                      <option value="10000-25000">₹10,000 - ₹25,000</option>
+                      <option value="25000-50000">₹25,000 - ₹50,000</option>
+                      <option value="50000-999999">₹50,000+</option>
+                    </Form.Select>
+                  </div>
+
+                  {/* Conditional Bedrooms Filter */}
+                  {shouldShowBedroomFilter() && (
+                    <div style={{ marginBottom: '20px' }}>
+                      <Form.Label style={{
+                        fontSize: '12px',
+                        fontWeight: 600,
+                        color: '#374151',
+                        marginBottom: '8px',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.5px',
+                        fontFamily: "'Inter', sans-serif"
+                      }}>🛏️ Bedrooms</Form.Label>
+                      <Form.Select
+                        value={filters.bedrooms}
+                        onChange={(e) => handleFilterChange('bedrooms', e.target.value)}
+                        className="animated-select"
+                        style={{
+                          borderRadius: '10px',
+                          border: '2px solid #f1f5f9',
+                          padding: '10px 14px',
+                          fontSize: '14px',
+                          fontFamily: "'Inter', sans-serif"
+                        }}
+                      >
+                        <option value="">Any Bedrooms</option>
+                        <option value="1">1+ BHK</option>
+                        <option value="2">2+ BHK</option>
+                        <option value="3">3+ BHK</option>
+                        <option value="4">4+ BHK</option>
+                        <option value="5">5+ BHK</option>
+                      </Form.Select>
+                    </div>
+                  )}
+
+                  {/* Clear Filters Button */}
+                  <Button
+                    variant="outline-primary"
+                    className="animated-clear-button"
+                    style={{
+                      width: '100%',
+                      borderRadius: '10px',
+                      padding: '10px',
+                      border: '2px solid #7c3aed',
+                      color: '#7c3aed',
+                      fontWeight: 600,
+                      fontSize: '14px',
+                      transition: 'all 0.3s ease',
+                      fontFamily: "'Inter', sans-serif"
+                    }}
+                    onClick={clearFilters}
+                    disabled={getActiveFiltersCount() === 0}
+                  >
+                    ✕ Clear All Filters
+                    {getActiveFiltersCount() > 0 && (
+                      <span className="filter-count-badge">
+                        ({getActiveFiltersCount()})
+                      </span>
+                    )}
+                  </Button>
+                </Card.Body>
+              </Card>
+
+              {/* Stats Card */}
+              <Card className="animated-stats-card" style={{
+                border: 'none',
+                borderRadius: '12px',
+                background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
+                color: 'white'
+              }}>
+                <Card.Body style={{ padding: '16px', textAlign: 'center' }}>
+                  <h5 className="counter-animation" style={{ 
+                    fontSize: '1.4rem', 
+                    fontWeight: 800, 
+                    marginBottom: '4px',
+                    fontFamily: "'Inter', sans-serif"
+                  }}>
+                    {filteredProperties.length}
+                  </h5>
+                  <p style={{ 
+                    fontSize: '12px', 
+                    opacity: 0.9, 
+                    margin: 0,
+                    fontFamily: "'Inter', sans-serif"
+                  }}>
+                    Properties Available
+                  </p>
+                </Card.Body>
+              </Card>
+
+            </div>
+          </Col>
+
+          {/* ✅ MAIN CONTENT AREA */}
+          <Col xl={9} lg={8} style={{ 
+            padding: '40px 30px',
+            background: '#f8fafc',
+            minHeight: '100vh'
+          }}>
+            
+            {/* Header */}
+            <div className="animate-slide-in" style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: '30px'
+            }}>
+              <div>
+                <h2 style={{
+                  fontSize: '2.2rem',
+                  fontWeight: 800,
+                  color: '#1f2937',
+                  marginBottom: '8px',
+                  fontFamily: "'Inter', sans-serif"
+                }}>
+                  <span className="counter-animation">{filteredProperties.length}</span> Properties Found
+                </h2>
+                <p style={{
+                  color: '#6b7280',
+                  fontSize: '14px',
+                  margin: 0,
+                  fontFamily: "'Inter', sans-serif"
+                }}>
+                  Browse our premium collection • Updated {new Date().toLocaleDateString()}
+                </p>
+              </div>
+
+              {/* ✅ PROFESSIONAL VIEW TOGGLE */}
+              <div className="view-toggle-wrapper" style={{
+                display: 'flex',
+                gap: '8px',
+                background: 'white',
+                padding: '4px',
+                borderRadius: '12px',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                position: 'relative'
+              }}>
+                <div 
+                  className="toggle-slider"
+                  style={{
+                    position: 'absolute',
+                    top: '4px',
+                    left: viewMode === 'grid' ? '4px' : '50%',
+                    width: 'calc(50% - 4px)',
+                    height: 'calc(100% - 8px)',
+                    background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
+                    borderRadius: '8px',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    zIndex: 1
+                  }}
+                />
+                <Button
+                  variant="ghost"
+                  onClick={() => setViewMode('grid')}
+                  style={{
+                    border: 'none',
+                    borderRadius: '8px',
+                    padding: '8px 16px',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    background: 'transparent',
+                    color: viewMode === 'grid' ? 'white' : '#6b7280',
+                    zIndex: 2,
+                    position: 'relative',
+                    fontFamily: "'Inter', sans-serif"
+                  }}
+                >
+                  ⊞ Grid
+                </Button>
+                <Button
+                  variant="ghost"
+                  onClick={() => setViewMode('list')}
+                  style={{
+                    border: 'none',
+                    borderRadius: '8px',
+                    padding: '8px 16px',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    background: 'transparent',
+                    color: viewMode === 'list' ? 'white' : '#6b7280',
+                    zIndex: 2,
+                    position: 'relative',
+                    fontFamily: "'Inter', sans-serif"
+                  }}
+                >
+                  ☰ List
+                </Button>
+              </div>
+            </div>
+
+            {/* ✅ FEATURED PROPERTIES SECTION */}
+            {filteredProperties.length > 0 && filteredProperties.length < 5 && (
+              <div className="featured-section animate-slide-in" style={{
+                background: 'white',
+                borderRadius: '20px',
+                padding: '24px',
+                marginBottom: '30px',
+                boxShadow: '0 8px 30px rgba(0,0,0,0.06)',
+                border: '1px solid #e2e8f0'
+              }}>
+                <h4 style={{ 
+                  fontSize: '1.2rem', 
+                  fontWeight: 700, 
+                  color: '#1f2937', 
+                  marginBottom: '16px',
+                  fontFamily: "'Inter', sans-serif"
+                }}>
+                  💎 Featured Properties
+                </h4>
+                <p style={{ 
+                  color: '#6b7280', 
+                  fontSize: '14px', 
+                  marginBottom: '20px',
+                  fontFamily: "'Inter', sans-serif"
+                }}>
+                  Handpicked premium properties that match your search criteria
+                </p>
+                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                  {['Luxury Villas in Mumbai', 'Modern Apartments in Bangalore', 'Commercial Spaces in Delhi'].map((item, index) => (
+                    <Badge key={index} bg="light" text="dark" className="animated-badge" style={{ 
+                      padding: '8px 12px', 
+                      fontSize: '12px', 
+                      fontWeight: 500,
+                      animation: `bounceIn 0.6s ease-out ${index * 0.2}s both`,
+                      fontFamily: "'Inter', sans-serif"
+                    }}>
+                      {item}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* ✅ MARKET INSIGHTS SECTION */}
+            {filteredProperties.length > 10 && (
+              <div style={{
+                background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
+                borderRadius: '20px',
+                padding: '24px',
+                marginBottom: '30px',
+                border: '1px solid #e2e8f0'
+              }}>
+                <Row>
+                  <Col md={8}>
+                    <h4 style={{ 
+                      fontSize: '1.2rem', 
+                      fontWeight: 700, 
+                      color: '#1f2937', 
+                      marginBottom: '8px',
+                      fontFamily: "'Inter', sans-serif"
+                    }}>
+                      📊 Market Insights
+                    </h4>
+                    <p style={{ 
+                      color: '#6b7280', 
+                      fontSize: '14px', 
+                      marginBottom: '16px',
+                      fontFamily: "'Inter', sans-serif"
+                    }}>
+                      We found {filteredProperties.length} properties matching your criteria across multiple locations
+                    </p>
+                  </Col>
+                  <Col md={4} className="text-end">
+                    <div style={{ display: 'flex', gap: '16px', justifyContent: 'flex-end' }}>
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ 
+                          fontSize: '1.5rem', 
+                          fontWeight: 800, 
+                          color: '#7c3aed',
+                          fontFamily: "'Inter', sans-serif"
+                        }}>
+                          {Math.round(filteredProperties.length * 0.7)}
+                        </div>
+                        <small style={{ 
+                          color: '#6b7280', 
+                          fontSize: '11px',
+                          fontFamily: "'Inter', sans-serif"
+                        }}>Available Now</small>
+                      </div>
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ 
+                          fontSize: '1.5rem', 
+                          fontWeight: 800, 
+                          color: '#059669',
+                          fontFamily: "'Inter', sans-serif"
+                        }}>
+                          {Math.round(filteredProperties.length * 0.3)}
+                        </div>
+                        <small style={{ 
+                          color: '#6b7280', 
+                          fontSize: '11px',
+                          fontFamily: "'Inter', sans-serif"
+                        }}>Recently Added</small>
+                      </div>
+                    </div>
+                  </Col>
+                </Row>
+              </div>
+            )}
+
+            {/* ✅ PROPERTIES GRID/LIST */}
+            {filteredProperties.length === 0 ? (
+              <div className="text-center py-5 animate-fade-in" style={{
+                background: 'white',
+                borderRadius: '20px',
+                padding: '60px 40px',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)'
+              }}>
+                <div className="animate-bounce-slow" style={{ fontSize: '4rem', opacity: 0.6, marginBottom: '20px' }}>
+                  {searchQuery ? '🔍' : getActiveFiltersCount() > 0 ? '🎯' : '🏠'}
+                </div>
+                <h3 style={{
+                  fontWeight: 800,
+                  color: '#1f2937',
+                  fontSize: '1.8rem',
+                  marginBottom: '12px',
+                  fontFamily: "'Inter', sans-serif"
+                }}>
+                  {searchQuery ? 'No Search Results' : getActiveFiltersCount() > 0 ? 'No Matching Properties' : 'No Properties Available'}
+                </h3>
+                <p style={{
+                  color: '#6b7280',
+                  fontSize: '16px',
+                  marginBottom: '24px',
+                  maxWidth: '500px',
+                  margin: '0 auto 24px auto',
+                  fontFamily: "'Inter', sans-serif"
+                }}>
+                  {searchQuery ? `We couldn't find any properties matching "${searchQuery}". Try adjusting your search terms.` :
+                   getActiveFiltersCount() > 0 ? 'No properties match your current filters. Try adjusting or clearing some filters.' :
+                   'No properties are currently available. Please check back later.'}
+                </p>
+                <Button 
+                  className="animated-button-primary"
+                  style={{
+                    background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
+                    border: 'none',
+                    fontWeight: 700,
+                    borderRadius: '12px',
+                    padding: '12px 30px',
+                    textTransform: 'uppercase',
+                    fontFamily: "'Inter', sans-serif"
+                  }}
+                  size="lg"
+                  onClick={clearFilters}
+                >
+                  {getActiveFiltersCount() > 0 ? 'Clear All Filters' : 'Refresh Properties'}
+                </Button>
+              </div>
+            ) : (
+              <div 
+                className={`properties-container ${viewMode === 'grid' ? 'grid-layout' : 'list-layout'}`}
+                style={{
+                  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                }}
+              >
+                {viewMode === 'grid' ? (
+                  <div 
+                    className="properties-grid-container"
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+                      gap: '24px',
+                      alignItems: 'start'
+                    }}
+                  >
+                    {filteredProperties.map((property, index) => {
+                      if (!property || !property._id) return null;
+                      
+                      return (
+                        <div 
+                          key={property._id}
+                          style={{
+                            animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
+                          }}
+                        >
+                          <PropertyCard 
+                            property={property} 
+                            showOwner={false}
+                            viewMode={viewMode}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <Row className="g-4">
+                    {filteredProperties.map((property, index) => {
+                      if (!property || !property._id) return null;
+                      
+                      return (
+                        <Col key={property._id} xs={12}>
+                          <div
+                            style={{
+                              animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
+                            }}
+                          >
+                            <PropertyCard 
+                              property={property} 
+                              showOwner={false}
+                              viewMode={viewMode}
+                            />
+                          </div>
+                        </Col>
+                      );
+                    })}
+                  </Row>
+                )}
+              </div>
+            )}
+          </Col>
+        </Row>
+      </Container>
+
+      {/* ✅ PROFESSIONAL CSS */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
@@ -1161,6 +1137,17 @@ const FindProperty = () => {
           from {
             opacity: 0;
             transform: translateX(-30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        
+        @keyframes slideInRight {
+          from {
+            opacity: 0;
+            transform: translateX(30px);
           }
           to {
             opacity: 1;
@@ -1233,77 +1220,6 @@ const FindProperty = () => {
           transition: all 0.3s ease;
         }
         
-        /* ✅ CARD ANIMATIONS */
-        .property-card-enhanced {
-          transform-origin: center;
-        }
-        
-        .property-card-enhanced:hover .animated-badge {
-          transform: scale(1.05);
-        }
-        
-        .fade-up-hidden {
-          opacity: 0;
-          transform: translateY(50px);
-        }
-        
-        .fade-up-visible {
-          opacity: 1;
-          transform: translateY(0);
-          transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        /* ✅ BUTTON ANIMATIONS */
-        .animated-button {
-          position: relative;
-          overflow: hidden;
-        }
-        
-        .animated-button::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.2), transparent);
-          transition: left 0.5s;
-        }
-        
-        .animated-button:hover::before {
-          left: 100%;
-        }
-        
-        .animated-button:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 10px 25px rgba(124, 58, 237, 0.3);
-        }
-        
-        .animated-button-primary {
-          position: relative;
-          overflow: hidden;
-        }
-        
-        .animated-button-primary::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-          transition: left 0.5s;
-        }
-        
-        .animated-button-primary:hover::before {
-          left: 100%;
-        }
-        
-        .animated-button-primary:hover {
-          transform: translateY(-2px) scale(1.02);
-          box-shadow: 0 15px 35px rgba(124, 58, 237, 0.4);
-        }
-        
         /* ✅ FORM ANIMATIONS */
         .animated-input:focus {
           border-color: #7c3aed !important;
@@ -1327,6 +1243,17 @@ const FindProperty = () => {
           background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
           color: white !important;
           border-color: transparent !important;
+        }
+        
+        /* ✅ BUTTON ANIMATIONS */
+        .animated-button-primary {
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .animated-button-primary:hover {
+          transform: translateY(-2px) scale(1.02);
+          box-shadow: 0 15px 35px rgba(124, 58, 237, 0.4);
         }
         
         /* ✅ SKELETON ANIMATIONS */
@@ -1378,27 +1305,61 @@ const FindProperty = () => {
           transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        .grid-layout .property-card-wrapper {
-          transition: all 0.3s ease;
+        /* ✅ PROFESSIONAL GRID */
+        .properties-grid-container {
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        .list-layout .property-card-wrapper {
-          transition: all 0.3s ease;
+        /* ✅ RESPONSIVE GRID */
+        @media (max-width: 1200px) {
+          .properties-grid-container {
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+            gap: 20px !important;
+          }
         }
         
-        /* ✅ RESPONSIVE ANIMATIONS */
         @media (max-width: 768px) {
-          .animated-button, .animated-button-primary {
-            transform: none !important;
+          .properties-grid-container {
+            grid-template-columns: 1fr !important;
+            gap: 16px !important;
           }
           
-          .property-card-enhanced:hover {
-            transform: translateY(-4px) scale(1.01) !important;
+          .animated-button, .animated-button-primary {
+            transform: none !important;
           }
           
           .hero-bg-animation {
             animation: none;
           }
+        }
+        
+        /* ✅ TYPOGRAPHY */
+        * {
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+        
+        body {
+          font-family: 'Inter', sans-serif;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+          font-family: 'Inter', sans-serif;
+          font-weight: 800;
+          line-height: 1.2;
+          letter-spacing: -0.025em;
+        }
+        
+        .card-title {
+          font-family: 'Inter', sans-serif !important;
+          font-weight: 800 !important;
+          letter-spacing: -0.01em !important;
+        }
+        
+        .card-text {
+          font-family: 'Inter', sans-serif !important;
+          font-weight: 400 !important;
+          line-height: 1.6 !important;
         }
         
         /* ✅ ACCESSIBILITY */
@@ -1410,15 +1371,6 @@ const FindProperty = () => {
             animation-iteration-count: 1 !important;
             transition-duration: 0.01ms !important;
           }
-        }
-        
-        * {
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-        }
-        
-        body {
-          font-family: 'Inter', sans-serif;
         }
       `}</style>
     </div>
