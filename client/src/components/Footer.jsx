@@ -16,28 +16,28 @@ const Footer = () => {
       background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
       borderTop: '1px solid rgba(124, 58, 237, 0.1)',
       color: '#374151',
-      padding: '32px 0 20px 0',
+      padding: '20px 0 12px 0', // Much smaller padding
       marginTop: 'auto',
-      fontSize: '14px'
+      fontSize: '13px' // Smaller base font
     }}>
       <Container>
         <Row>
-          <Col lg={4} className="mb-4">
+          <Col lg={4} className="mb-3">
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '10px',
-              marginBottom: '16px'
+              gap: '8px',
+              marginBottom: '10px' // Reduced margin
             }}>
               <div style={{
                 background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-                borderRadius: '8px',
-                padding: '6px'
+                borderRadius: '6px',
+                padding: '4px'
               }}>
-                <span style={{ fontSize: '1.1rem', display: 'block' }}>🏠</span>
+                <span style={{ fontSize: '1rem' }}>🏠</span>
               </div>
               <span style={{ 
-                fontSize: '1.4rem', 
+                fontSize: '1.2rem', 
                 fontWeight: 800, 
                 background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
                 WebkitBackgroundClip: 'text',
@@ -47,20 +47,20 @@ const Footer = () => {
             </div>
             <p style={{
               color: '#6b7280',
-              fontSize: '14px',
-              lineHeight: '1.6',
-              maxWidth: '280px',
-              marginBottom: '20px'
+              fontSize: '12px',
+              lineHeight: '1.4',
+              maxWidth: '260px',
+              marginBottom: '12px' // Reduced margin
             }}>
-              Your trusted global rental platform. Helping clients find exceptional rentals and empowering seamless transactions worldwide.
+              Your trusted global rental platform. Helping clients find exceptional rentals worldwide.
             </p>
             
             {/* Newsletter Signup */}
             <div>
               <h6 style={{
-                fontSize: '14px',
+                fontSize: '11px',
                 fontWeight: 700,
-                marginBottom: '12px',
+                marginBottom: '6px', // Much smaller margin
                 color: '#374151',
                 textTransform: 'uppercase',
                 letterSpacing: '0.5px'
@@ -68,8 +68,8 @@ const Footer = () => {
               <form onSubmit={handleSubscribe}>
                 <div style={{ 
                   display: 'flex', 
-                  gap: '8px',
-                  maxWidth: '280px'
+                  gap: '4px',
+                  maxWidth: '260px'
                 }}>
                   <input 
                     type="email"
@@ -78,12 +78,12 @@ const Footer = () => {
                     placeholder="Enter your email"
                     style={{
                       flex: 1,
-                      padding: '10px 12px',
+                      padding: '6px 8px', // Smaller padding
                       border: '1px solid #d1d5db',
-                      borderRadius: '6px',
+                      borderRadius: '4px',
                       background: 'white',
                       color: '#374151',
-                      fontSize: '14px'
+                      fontSize: '11px'
                     }}
                     required
                   />
@@ -92,14 +92,14 @@ const Footer = () => {
                     style={{
                       background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
                       border: 'none',
-                      borderRadius: '6px',
-                      padding: '10px 16px',
+                      borderRadius: '4px',
+                      padding: '6px 10px', // Smaller padding
                       color: 'white',
                       fontWeight: 600,
                       cursor: 'pointer',
-                      fontSize: '12px',
+                      fontSize: '10px',
                       textTransform: 'uppercase',
-                      letterSpacing: '0.5px'
+                      letterSpacing: '0.3px'
                     }}
                   >
                     Subscribe
@@ -109,11 +109,11 @@ const Footer = () => {
             </div>
           </Col>
           
-          <Col lg={2} md={6} className="mb-4">
+          <Col lg={2} md={6} className="mb-3">
             <h6 style={{
-              fontSize: '14px',
+              fontSize: '11px',
               fontWeight: 700,
-              marginBottom: '16px',
+              marginBottom: '8px', // Smaller margin
               color: '#374151',
               textTransform: 'uppercase',
               letterSpacing: '0.5px'
@@ -125,18 +125,18 @@ const Footer = () => {
                 { name: 'My Bookings', path: '/my-bookings' },
                 { name: 'Profile', path: '/profile' }
               ].map((item, index) => (
-                <li key={index} style={{ marginBottom: '10px' }}>
+                <li key={index} style={{ marginBottom: '4px' }}> {/* Much smaller margin */}
                   <Link 
                     to={item.path}
                     style={{
                       color: '#6b7280',
                       textDecoration: 'none',
-                      fontSize: '14px',
+                      fontSize: '12px',
                       fontWeight: 500,
                       transition: 'color 0.2s ease',
                       display: 'block',
-                      padding: '4px 0',
-                      lineHeight: '1.5'
+                      padding: '2px 0', // Smaller padding
+                      lineHeight: '1.4'
                     }}
                     onMouseEnter={(e) => e.target.style.color = '#7c3aed'}
                     onMouseLeave={(e) => e.target.style.color = '#6b7280'}
@@ -148,29 +148,29 @@ const Footer = () => {
             </ul>
           </Col>
           
-          <Col lg={2} md={6} className="mb-4">
+          <Col lg={2} md={6} className="mb-3">
             <h6 style={{
-              fontSize: '14px',
+              fontSize: '11px',
               fontWeight: 700,
-              marginBottom: '16px',
+              marginBottom: '8px',
               color: '#374151',
               textTransform: 'uppercase',
               letterSpacing: '0.5px'
             }}>Categories</h6>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               {['Properties', 'Event Venues', 'Vehicles', 'Parking'].map((item, index) => (
-                <li key={index} style={{ marginBottom: '10px' }}>
+                <li key={index} style={{ marginBottom: '4px' }}>
                   <Link 
                     to="/find-property"
                     style={{
                       color: '#6b7280',
                       textDecoration: 'none',
-                      fontSize: '14px',
+                      fontSize: '12px',
                       fontWeight: 500,
                       transition: 'color 0.2s ease',
                       display: 'block',
-                      padding: '4px 0',
-                      lineHeight: '1.5'
+                      padding: '2px 0',
+                      lineHeight: '1.4'
                     }}
                     onMouseEnter={(e) => e.target.style.color = '#7c3aed'}
                     onMouseLeave={(e) => e.target.style.color = '#6b7280'}
@@ -182,11 +182,11 @@ const Footer = () => {
             </ul>
           </Col>
           
-          <Col lg={2} md={6} className="mb-4">
+          <Col lg={2} md={6} className="mb-3">
             <h6 style={{
-              fontSize: '14px',
+              fontSize: '11px',
               fontWeight: 700,
-              marginBottom: '16px',
+              marginBottom: '8px',
               color: '#374151',
               textTransform: 'uppercase',
               letterSpacing: '0.5px'
@@ -198,18 +198,18 @@ const Footer = () => {
                 { name: 'About Us', path: '/about' },
                 { name: 'Blog', path: '/blog' }
               ].map((item, index) => (
-                <li key={index} style={{ marginBottom: '10px' }}>
+                <li key={index} style={{ marginBottom: '4px' }}>
                   <Link 
                     to={item.path}
                     style={{
                       color: '#6b7280',
                       textDecoration: 'none',
-                      fontSize: '14px',
+                      fontSize: '12px',
                       fontWeight: 500,
                       transition: 'color 0.2s ease',
                       display: 'block',
-                      padding: '4px 0',
-                      lineHeight: '1.5'
+                      padding: '2px 0',
+                      lineHeight: '1.4'
                     }}
                     onMouseEnter={(e) => e.target.style.color = '#7c3aed'}
                     onMouseLeave={(e) => e.target.style.color = '#6b7280'}
@@ -221,34 +221,34 @@ const Footer = () => {
             </ul>
           </Col>
           
-          <Col lg={2} md={6} className="mb-4">
+          <Col lg={2} md={6} className="mb-3">
             <h6 style={{
-              fontSize: '14px',
+              fontSize: '11px',
               fontWeight: 700,
-              marginBottom: '16px',
+              marginBottom: '8px',
               color: '#374151',
               textTransform: 'uppercase',
               letterSpacing: '0.5px'
             }}>Legal</h6>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               {[
-                { name: 'Privacy Policy', path: '/privacy' },
-                { name: 'Terms of Service', path: '/terms' },
-                { name: 'Cookie Policy', path: '/cookies' },
+                { name: 'Privacy', path: '/privacy' },
+                { name: 'Terms', path: '/terms' },
+                { name: 'Cookies', path: '/cookies' },
                 { name: 'Disclaimer', path: '/disclaimer' }
               ].map((item, index) => (
-                <li key={index} style={{ marginBottom: '10px' }}>
+                <li key={index} style={{ marginBottom: '4px' }}>
                   <Link 
                     to={item.path}
                     style={{
                       color: '#6b7280',
                       textDecoration: 'none',
-                      fontSize: '14px',
+                      fontSize: '12px',
                       fontWeight: 500,
                       transition: 'color 0.2s ease',
                       display: 'block',
-                      padding: '4px 0',
-                      lineHeight: '1.5'
+                      padding: '2px 0',
+                      lineHeight: '1.4'
                     }}
                     onMouseEnter={(e) => e.target.style.color = '#7c3aed'}
                     onMouseLeave={(e) => e.target.style.color = '#6b7280'}
@@ -261,16 +261,16 @@ const Footer = () => {
           </Col>
         </Row>
         
-        {/* Copyright Row */}
+        {/* Copyright Row - Super Compact */}
         <div style={{ 
           borderTop: '1px solid rgba(124, 58, 237, 0.1)', 
-          paddingTop: '16px', 
-          marginTop: '20px',
+          paddingTop: '8px', // Much smaller padding
+          marginTop: '12px', // Smaller margin
           textAlign: 'center'
         }}>
           <p style={{ 
             color: '#9ca3af', 
-            fontSize: '13px', 
+            fontSize: '11px', // Smaller font
             margin: 0,
             fontWeight: 500
           }}>
