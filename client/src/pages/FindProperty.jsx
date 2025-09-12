@@ -1,31 +1,46 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Container, Row, Col, Card, Badge, Button, Form, Spinner, Alert } from 'react-bootstrap';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { Container, Row, Col, Button, Spinner, Form, Badge, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { api, handleApiError, formatPrice, getImageUrl } from '../utils/api';
+import { api, handleApiError } from '../utils/api';
 import PropertyCard from '../components/PropertyCard';
+
+// ✅ PERFORMANCE HOOKS
+const useDebounce = (value, delay) => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+  useEffect(() => {
+    const handler = setTimeout(() => setDebouncedValue(value), delay);
+    return () => clearTimeout(handler);
+  }, [value, delay]);
+  return debouncedValue;
+};
 
 const FindProperty = () => {
   const navigate = useNavigate();
+  
+  // ✅ OPTIMIZED STATE
   const [properties, setProperties] = useState([]);
-  const [filteredProperties, setFilteredProperties] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
   const [filters, setFilters] = useState({
     location: '',
     propertyType: '',
     priceRange: '',
     bedrooms: ''
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
   const [viewMode, setViewMode] = useState('grid');
+  
+  // ✅ PERFORMANCE SETTINGS
+  const ITEMS_PER_PAGE = 9;
+  const debouncedSearch = useDebounce(searchQuery, 500);
+  const debouncedFilters = useDebounce(filters, 400);
+  const abortRef = useRef();
 
+  // ✅ CONSTANTS
   const indianLocations = [
     "All Locations", "Mumbai", "Delhi", "Bangalore", "Chennai", "Kolkata", 
-    "Hyderabad", "Pune", "Ahmedabad", "Jaipur", "Surat", "Lucknow", "Kanpur", 
-    "Nagpur", "Indore", "Thane", "Bhopal", "Visakhapatnam", "Patna", "Vadodara",
-    "Coimbatore", "Kochi", "Madurai", "Nashik", "Faridabad", "Ghaziabad",
-    "Rajkot", "Meerut", "Kalyan", "Vasai", "Varanasi", "Dhanbad", "Jodhpur",
-    "Amritsar", "Raipur", "Allahabad", "Jabalpur", "Gwalior", "Vijayawada"
+    "Hyderabad", "Pune", "Ahmedabad", "Jaipur", "Surat", "Lucknow", "Kanpur"
   ];
 
   const propertyTypes = [
@@ -34,87 +49,52 @@ const FindProperty = () => {
 
   const residentialTypes = ["Villa", "Apartment", "House", "Studio", "Flat"];
 
-  useEffect(() => {
-    fetchProperties();
-  }, []);
-
-  const fetchProperties = async () => {
-    try {
-      setLoading(true);
-      setError('');
-      
-      const response = await api.properties.getAll();
-      
-      let propertiesArray = [];
-      
-      if (Array.isArray(response)) {
-        propertiesArray = response;
-      } else if (Array.isArray(response?.data)) {
-        propertiesArray = response.data;
-      } else if (Array.isArray(response?.data?.properties)) {
-        propertiesArray = response.data.properties;
-      } else if (response?.data && typeof response.data === 'object') {
-        const dataObj = response.data;
-        for (const key in dataObj) {
-          if (Array.isArray(dataObj[key])) {
-            propertiesArray = dataObj[key];
-            break;
-          }
-        }
-      }
-      
-      setProperties(propertiesArray);
-      setFilteredProperties(propertiesArray);
-      
-    } catch (error) {
-      setError(handleApiError(error));
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (!Array.isArray(properties)) {
-      setFilteredProperties([]);
-      return;
-    }
-
+  // ✅ MEMOIZED FILTERED DATA
+  const filteredProperties = useMemo(() => {
+    if (!Array.isArray(properties)) return [];
+    
     let filtered = properties;
 
-    if (searchQuery.trim()) {
+    // Apply search
+    if (debouncedSearch.trim()) {
+      const searchTerm = debouncedSearch.toLowerCase();
       filtered = filtered.filter(property => {
-        if (!property) return false;
         const searchFields = [
-          property.title, property.description, property.address?.city,
-          property.address?.state, property.address?.street, property.category, property.subtype
+          property.title, property.description, 
+          property.address?.city, property.address?.state,
+          property.address?.street, property.category, property.subtype
         ].filter(Boolean);
         return searchFields.some(field => 
-          field.toLowerCase().includes(searchQuery.toLowerCase())
+          field.toLowerCase().includes(searchTerm)
         );
       });
     }
 
-    if (filters.location && filters.location !== "All Locations") {
+    // Apply location filter
+    if (debouncedFilters.location && debouncedFilters.location !== "All Locations") {
       filtered = filtered.filter(property => {
         if (!property?.address) return false;
         const locationFields = [
           property.address.city, property.address.state, property.address.street
         ].filter(Boolean);
         return locationFields.some(field =>
-          field.toLowerCase().includes(filters.location.toLowerCase())
+          field.toLowerCase().includes(debouncedFilters.location.toLowerCase())
         );
       });
     }
 
-    if (filters.propertyType && filters.propertyType !== "All Categories") {
+    // Apply property type filter
+    if (debouncedFilters.propertyType && debouncedFilters.propertyType !== "All Categories") {
       filtered = filtered.filter(property => {
         if (!property) return false;
-        return property.category === filters.propertyType || property.subtype === filters.propertyType;
+        return property.category === debouncedFilters.propertyType ||
+               property.subtype === debouncedFilters.propertyType;
       });
     }
 
-    if (filters.priceRange) {
-      const [min, max] = filters.priceRange.split('-').map(Number);
+    // Apply price range filter
+    if (debouncedFilters.priceRange) {
+      const [min, max] = debouncedFilters.priceRange.split('-').map(Number);
       filtered = filtered.filter(property => {
         if (!property?.price) return false;
         const price = Number(property.price);
@@ -122,8 +102,9 @@ const FindProperty = () => {
       });
     }
 
-    if (filters.bedrooms) {
-      const minBedrooms = parseInt(filters.bedrooms);
+    // Apply bedrooms filter
+    if (debouncedFilters.bedrooms) {
+      const minBedrooms = parseInt(debouncedFilters.bedrooms);
       filtered = filtered.filter(property => {
         if (!property?.subtype) return false;
         if (residentialTypes.includes(property.subtype)) {
@@ -133,16 +114,79 @@ const FindProperty = () => {
       });
     }
 
-    setFilteredProperties(filtered);
-  }, [searchQuery, filters, properties]);
+    return filtered;
+  }, [properties, debouncedSearch, debouncedFilters, residentialTypes]);
 
-  const handleFilterChange = (filterType, value) => {
-    setFilters(prev => ({ ...prev, [filterType]: value }));
+  // ✅ PAGINATED DATA
+  const paginatedProperties = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredProperties.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredProperties, currentPage, ITEMS_PER_PAGE]);
+
+  const totalPages = Math.ceil(filteredProperties.length / ITEMS_PER_PAGE);
+
+  // ✅ OPTIMIZED API CALL
+  useEffect(() => {
+    const fetchData = async () => {
+      if (abortRef.current) abortRef.current.abort();
+      abortRef.current = new AbortController();
+      
+      setLoading(true);
+      setError('');
+      
+      try {
+        const response = await api.properties.getAll({
+          signal: abortRef.current.signal,
+          timeout: 10000
+        });
+        
+        let propertiesArray = [];
+        
+        if (Array.isArray(response)) {
+          propertiesArray = response;
+        } else if (Array.isArray(response?.data)) {
+          propertiesArray = response.data;
+        } else if (Array.isArray(response?.data?.properties)) {
+          propertiesArray = response.data.properties;
+        } else if (response?.data && typeof response.data === 'object') {
+          const dataObj = response.data;
+          for (const key in dataObj) {
+            if (Array.isArray(dataObj[key])) {
+              propertiesArray = dataObj[key];
+              break;
+            }
+          }
+        }
+        
+        setProperties(propertiesArray);
+        setCurrentPage(1);
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          console.error('API Error:', err);
+          setError(handleApiError(err));
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+
+    return () => {
+      if (abortRef.current) abortRef.current.abort();
+    };
+  }, []);
+
+  // ✅ OPTIMIZED HANDLERS
+  const handleFilterChange = (key, value) => {
+    setFilters(prev => ({ ...prev, [key]: value }));
+    setCurrentPage(1);
   };
 
   const clearFilters = () => {
     setFilters({ location: '', propertyType: '', priceRange: '', bedrooms: '' });
     setSearchQuery('');
+    setCurrentPage(1);
   };
 
   const shouldShowBedroomFilter = () => {
@@ -163,130 +207,24 @@ const FindProperty = () => {
     return icons[category] || '🏷️';
   };
 
-  const handleViewDetails = (propertyId) => {
-    navigate(`/property/${propertyId}`);
-  };
-
-  const handleBookNow = (propertyId) => {
-    navigate(`/book/${propertyId}`);
-  };
-
-  const handleImageError = (e) => {
-    e.target.src = 'https://via.placeholder.com/400x240/e2e8f0/64748b?text=Property+Image';
-  };
-
-  const renderPropertyDetails = (property) => {
-    if (!property) return [];
-    
-    const details = [];
-    
-    if (property.subtype && residentialTypes.includes(property.subtype)) {
-      if (property.bedrooms > 0) {
-        details.push(
-          <Badge key="bedrooms" bg="light" text="dark" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
-            {property.bedrooms} BHK
-          </Badge>
-        );
-      }
-      if (property.bathrooms > 0) {
-        details.push(
-          <Badge key="bathrooms" bg="light" text="dark" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
-            {property.bathrooms} Bath
-          </Badge>
-        );
-      }
-    }
-
-    if (property.size) {
-      details.push(
-        <Badge key="area" bg="light" text="dark" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
-          {property.size}
-        </Badge>
-      );
-    }
-
-    if (property.capacity) {
-      details.push(
-        <Badge key="capacity" bg="info" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
-          {property.capacity}
-        </Badge>
-      );
-    }
-
-    return details;
-  };
-
-  const getSafeRentType = (property) => {
-    if (!property?.rentType) return 'rental';
-    return Array.isArray(property.rentType) ? property.rentType[0] : property.rentType;
-  };
-
-  const getSafeRentTypes = (property) => {
-    if (!property?.rentType) return ['rental'];
-    return Array.isArray(property.rentType) ? property.rentType : [property.rentType];
-  };
-
-  // Loading state
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', backgroundColor: '#ffffff' }}>
-        {/* Hero Section */}
-        <section className="py-5 text-white" style={{
-          background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%)',
-          minHeight: '300px',
-          display: 'flex',
-          alignItems: 'center'
-        }}>
-          <Container className="text-center">
-            <h1 className="display-4 fw-bold mb-4">Find Your Perfect Property</h1>
-            <p className="fs-5 opacity-90">Discover verified properties from our premium collection across India</p>
-          </Container>
-        </section>
-        <Container className="py-5 text-center">
-          <Spinner animation="border" style={{ color: '#7c3aed' }} />
-          <p className="mt-3 fs-5 fw-semibold">Loading properties...</p>
-        </Container>
-      </div>
-    );
-  }
-
-  // Error state
-  if (error) {
-    return (
-      <div style={{ minHeight: '100vh', backgroundColor: '#ffffff' }}>
-        {/* Hero Section */}
-        <section className="py-5 text-white" style={{
-          background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%)',
-          minHeight: '300px',
-          display: 'flex',
-          alignItems: 'center'
-        }}>
-          <Container className="text-center">
-            <h1 className="display-4 fw-bold mb-4">Find Your Perfect Property</h1>
-            <p className="fs-5 opacity-90">Discover verified properties from our premium collection across India</p>
-          </Container>
-        </section>
-        <Container className="py-5">
-          <Alert variant="danger" className="text-center">
-            <Alert.Heading>Error Loading Properties</Alert.Heading>
-            <p>{error}</p>
-            <Button onClick={fetchProperties} style={{ backgroundColor: '#7c3aed', borderColor: '#7c3aed' }}>
-              Try Again
-            </Button>
-          </Alert>
-        </Container>
+      <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '60vh' }}>
+        <div className="text-center">
+          <Spinner animation="border" style={{ color: '#6d28d9' }} />
+          <p className="mt-3">Loading properties...</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <>
-      {/* ✅ Hero Section */}
-      <section className="py-5 text-white" style={{
-        background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%)',
-        minHeight: '320px',
-        display: 'flex',
-        alignItems: 'center',
+    <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh' }}>
+      {/* ✅ HERO SECTION - Fixed Colors */}
+      <section style={{
+        background: 'linear-gradient(135deg, #6d28d9 0%, #8b5cf6 100%)', // ✅ Fixed consistent purple
+        color: 'white',
+        padding: '60px 0',
         position: 'relative',
         overflow: 'hidden'
       }}>
@@ -302,19 +240,8 @@ const FindProperty = () => {
           filter: 'blur(40px)',
           animation: 'float 8s ease-in-out infinite'
         }}></div>
-        <div style={{
-          position: 'absolute',
-          bottom: '10%',
-          left: '5%',
-          width: '150px',
-          height: '150px',
-          background: 'rgba(255, 255, 255, 0.08)',
-          borderRadius: '50%',
-          filter: 'blur(30px)',
-          animation: 'float 6s ease-in-out infinite reverse'
-        }}></div>
         
-        <Container className="position-relative">
+        <Container>
           <div className="text-center">
             <div style={{
               display: 'inline-block',
@@ -322,27 +249,20 @@ const FindProperty = () => {
               border: '1px solid rgba(255, 255, 255, 0.3)',
               borderRadius: '25px',
               padding: '8px 20px',
-              marginBottom: '20px'
+              marginBottom: '20px',
+              fontSize: '0.85rem',
+              fontWeight: '600'
             }}>
-              <span style={{
-                fontSize: '0.85rem',
-                fontWeight: '700',
-                letterSpacing: '0.5px',
-                textTransform: 'uppercase',
-                color: 'white'
-              }}>
-                ✨ {filteredProperties.length} Premium Properties Available
-              </span>
+              ✨ {filteredProperties.length} PREMIUM PROPERTIES AVAILABLE
             </div>
             
             <h1 style={{
               fontSize: '3.5rem',
               fontWeight: '900',
-              fontFamily: 'Inter, Plus Jakarta Sans, system-ui, sans-serif',
+              fontFamily: 'Inter, system-ui, sans-serif',
               letterSpacing: '-0.025em',
               lineHeight: '1.1',
-              marginBottom: '24px',
-              color: 'white'
+              marginBottom: '24px'
             }}>
               Find Your Perfect Property
             </h1>
@@ -350,39 +270,38 @@ const FindProperty = () => {
             <p style={{
               fontSize: '1.25rem',
               fontWeight: '400',
-              color: 'rgba(255, 255, 255, 0.95)',
+              opacity: '0.95',
               maxWidth: '600px',
               margin: '0 auto',
               lineHeight: '1.6',
-              fontFamily: 'Inter, system-ui, sans-serif',
-              textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
+              fontFamily: 'Inter, system-ui, sans-serif'
             }}>
-              Discover verified properties from our premium collection across India. 
-              From luxury apartments to sports turfs and commercial spaces.
+              Discover verified properties from our premium collection across India. From luxury apartments to sports turfs and commercial spaces.
             </p>
           </div>
         </Container>
       </section>
 
-      {/* ✅ Main Layout */}
-      <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#ffffff' }}>
+      {/* ✅ MAIN LAYOUT - Fixed Sidebar & Content */}
+      <div style={{ display: 'flex', minHeight: 'calc(100vh - 300px)' }}>
         
-        {/* ✅ SIDEBAR */}
+        {/* ✅ SIDEBAR - Fixed White Text & Consistent Colors */}
         <div style={{
-          width: '400px',
-          minHeight: '100vh',
+          width: '380px',
+          minWidth: '380px',
           background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)',
           position: 'sticky',
           top: '0',
+          height: 'calc(100vh - 300px)',
           overflowY: 'auto',
           borderRight: '1px solid #e2e8f0',
           boxShadow: '4px 0 20px rgba(0, 0, 0, 0.08)'
         }}>
           
-          {/* FIXED Dashboard Header with WHITE subtitle text */}
+          {/* ✅ FIXED HEADER - White Text on Purple Background */}
           <div className="p-4 border-bottom" style={{
-            background: 'linear-gradient(135deg, #6b46c1 0%, #805ad5 100%)',
-            color: 'white'
+            background: 'linear-gradient(135deg, #6d28d9 0%, #8b5cf6 100%)', // ✅ Consistent purple
+            color: '#ffffff' // ✅ Fixed to pure white
           }}>
             <div className="d-flex align-items-center justify-content-between">
               <div>
@@ -391,17 +310,18 @@ const FindProperty = () => {
                   fontWeight: '800',
                   fontSize: '1.3rem',
                   fontFamily: 'Inter, system-ui, sans-serif',
-                  letterSpacing: '-0.01em'
+                  letterSpacing: '-0.01em',
+                  color: '#ffffff' // ✅ Fixed to pure white
                 }} className="d-flex align-items-center">
                   <span className="me-2">⚙️</span>
                   Smart Property Filters
                 </h5>
-                {/* FIXED: WHITE text for visibility on purple background */}
                 <small style={{
-                  color: 'white', // FIXED: Explicitly white instead of rgba opacity
+                  color: '#ffffff', // ✅ Fixed to pure white
                   fontSize: '0.9rem',
                   fontWeight: '500',
-                  fontFamily: 'Inter, system-ui, sans-serif'
+                  fontFamily: 'Inter, system-ui, sans-serif',
+                  opacity: 0.9
                 }}>
                   Find your perfect match
                 </small>
@@ -413,7 +333,8 @@ const FindProperty = () => {
                 fontSize: '0.85rem',
                 fontWeight: '700',
                 border: '1px solid rgba(255, 255, 255, 0.3)',
-                fontFamily: 'Inter, system-ui, sans-serif'
+                fontFamily: 'Inter, system-ui, sans-serif',
+                color: '#ffffff' // ✅ Fixed to pure white
               }}>
                 {filteredProperties.length} found
               </div>
@@ -449,8 +370,8 @@ const FindProperty = () => {
                   fontFamily: 'Inter, system-ui, sans-serif'
                 }}
                 onFocus={(e) => {
-                  e.target.style.borderColor = '#7c3aed';
-                  e.target.style.boxShadow = '0 0 0 3px rgba(124, 58, 237, 0.1)';
+                  e.target.style.borderColor = '#6d28d9'; // ✅ Consistent purple
+                  e.target.style.boxShadow = '0 0 0 3px rgba(109, 40, 217, 0.1)';
                 }}
                 onBlur={(e) => {
                   e.target.style.borderColor = '#e2e8f0';
@@ -549,22 +470,6 @@ const FindProperty = () => {
                   </option>
                 ))}
               </Form.Select>
-              
-              {filters.propertyType && filters.propertyType !== "All Categories" && (
-                <div className="mt-2 p-2 bg-light rounded" style={{
-                  fontSize: '0.8rem',
-                  fontFamily: 'Inter, system-ui, sans-serif'
-                }}>
-                  <span className="text-muted">
-                    {filters.propertyType === 'Property Rentals' && 'Includes: Villa, Apartment, House, Studio, Flat'}
-                    {filters.propertyType === 'Commercial' && 'Includes: Office, Shop, Warehouse, Showroom'}
-                    {filters.propertyType === 'Event' && 'Includes: Banquet Hall, Garden, Meeting Room'}
-                    {filters.propertyType === 'Turf' && 'Includes: Football Turf, Cricket Ground, Multi-Sport, Tennis Court'}
-                    {filters.propertyType === 'Parking' && 'Includes: Car Parking, Bike Parking, Garage'}
-                    {filters.propertyType === 'Land' && 'Includes: Agricultural, Commercial Plot, Residential Plot'}
-                  </span>
-                </div>
-              )}
             </div>
 
             {/* Price Range Filter */}
@@ -612,7 +517,7 @@ const FindProperty = () => {
               </Form.Select>
             </div>
 
-            {/* Conditional Bedrooms Filter */}
+            {/* Bedrooms Filter */}
             {shouldShowBedroomFilter() && (
               <div className="mb-4">
                 <Form.Label style={{
@@ -648,18 +553,18 @@ const FindProperty = () => {
                   }}
                 >
                   <option value="">Any Bedrooms</option>
-                  <option value="1">1 BHK</option>
-                  <option value="2">2 BHK</option>
-                  <option value="3">3 BHK</option>
-                  <option value="4">4 BHK</option>
+                  <option value="1">1+ BHK</option>
+                  <option value="2">2+ BHK</option>
+                  <option value="3">3+ BHK</option>
+                  <option value="4">4+ BHK</option>
                   <option value="5">5+ BHK</option>
                 </Form.Select>
               </div>
             )}
 
-            {/* Clear Filters Button */}
+            {/* Clear Filters */}
             <Button
-              variant="outline-secondary"
+              variant="outline-danger"
               className="w-100 mb-4"
               onClick={clearFilters}
               disabled={getActiveFiltersCount() === 0}
@@ -673,380 +578,274 @@ const FindProperty = () => {
                 fontFamily: 'Inter, system-ui, sans-serif'
               }}
             >
-              <span className="me-2">✕</span>
-              Clear All Filters
-              {getActiveFiltersCount() > 0 && ` (${getActiveFiltersCount()})`}
+              ✕ Clear All Filters {getActiveFiltersCount() > 0 && `(${getActiveFiltersCount()})`}
             </Button>
 
-            {/* Active Filters Summary */}
-            <div style={{
-              background: 'linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%)',
+            {/* Stats */}
+            <div className="text-center" style={{
+              background: 'linear-gradient(135deg, #6d28d9 0%, #8b5cf6 100%)', // ✅ Consistent purple
+              color: 'white',
               padding: '20px',
-              borderRadius: '16px',
-              border: '1px solid #cbd5e1'
+              borderRadius: '16px'
             }}>
-              <div className="d-flex justify-content-between align-items-center mb-3">
-                <span style={{
-                  fontWeight: '700',
-                  color: '#1f2937',
-                  fontSize: '1rem',
-                  fontFamily: 'Inter, system-ui, sans-serif',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}>
-                  <span className="me-2">📊</span>
-                  Active Filters
-                </span>
-                <div style={{
-                  background: getActiveFiltersCount() > 0 ? 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)' : '#6b7280',
-                  color: 'white',
-                  fontSize: '0.8rem',
-                  fontWeight: '600',
-                  padding: '6px 12px',
-                  borderRadius: '20px',
-                  minWidth: '30px',
-                  textAlign: 'center',
-                  fontFamily: 'Inter, system-ui, sans-serif'
-                }}>
-                  {getActiveFiltersCount()}
-                </div>
-              </div>
-              
-              <div className="d-flex flex-wrap gap-2">
-                {searchQuery && (
-                  <div style={{
-                    background: '#3b82f6',
-                    color: 'white',
-                    padding: '4px 10px',
-                    borderRadius: '20px',
-                    fontSize: '0.8rem',
-                    fontWeight: '500',
-                    fontFamily: 'Inter, system-ui, sans-serif'
-                  }}>
-                    {searchQuery.substring(0, 15)}{searchQuery.length > 15 ? '...' : ''}
-                  </div>
-                )}
-                {filters.location && (
-                  <div style={{
-                    background: '#10b981',
-                    color: 'white',
-                    padding: '4px 10px',
-                    borderRadius: '20px',
-                    fontSize: '0.8rem',
-                    fontWeight: '500',
-                    fontFamily: 'Inter, system-ui, sans-serif'
-                  }}>
-                    {filters.location}
-                  </div>
-                )}
-                {filters.propertyType && (
-                  <div style={{
-                    background: '#f59e0b',
-                    color: 'white',
-                    padding: '4px 10px',
-                    borderRadius: '20px',
-                    fontSize: '0.8rem',
-                    fontWeight: '500',
-                    fontFamily: 'Inter, system-ui, sans-serif'
-                  }}>
-                    {getCategoryIcon(filters.propertyType)} {filters.propertyType}
-                  </div>
-                )}
-                {filters.priceRange && (
-                  <div style={{
-                    background: '#ef4444',
-                    color: 'white',
-                    padding: '4px 10px',
-                    borderRadius: '20px',
-                    fontSize: '0.8rem',
-                    fontWeight: '500',
-                    fontFamily: 'Inter, system-ui, sans-serif'
-                  }}>
-                    ₹{filters.priceRange.replace('-', ' - ₹')}
-                  </div>
-                )}
-                {filters.bedrooms && (
-                  <div style={{
-                    background: '#8b5cf6',
-                    color: 'white',
-                    padding: '4px 10px',
-                    borderRadius: '20px',
-                    fontSize: '0.8rem',
-                    fontWeight: '500',
-                    fontFamily: 'Inter, system-ui, sans-serif'
-                  }}>
-                    {filters.bedrooms} BHK
-                  </div>
-                )}
-              </div>
-              
-              {getActiveFiltersCount() === 0 && (
-                <div className="text-center">
-                  <p className="text-muted mb-0" style={{
-                    fontSize: '0.85rem',
-                    fontFamily: 'Inter, system-ui, sans-serif'
-                  }}>
-                    No active filters
-                  </p>
-                  <small className="text-muted" style={{
-                    fontFamily: 'Inter, system-ui, sans-serif'
-                  }}>
-                    Use filters above to refine your search
-                  </small>
-                </div>
-              )}
+              <h4 className="mb-1" style={{ fontSize: '1.8rem', fontWeight: '800', margin: 0 }}>
+                {filteredProperties.length}
+              </h4>
+              <small style={{ fontSize: '12px', opacity: 0.9, margin: 0 }}>
+                Properties Found
+              </small>
             </div>
           </div>
         </div>
 
-        {/* ✅ Main Content Area */}
-        <div style={{ flex: 1, backgroundColor: '#ffffff' }}>
-          <Container fluid className="py-5 px-5">
-            
-            {/* Results Header */}
-            <div className="d-flex justify-content-between align-items-center mb-5">
-              <div>
-                <h2 style={{
-                  fontWeight: '800',
-                  marginBottom: '8px',
-                  color: '#111827',
-                  fontSize: '2.5rem',
-                  fontFamily: 'Inter, system-ui, sans-serif',
-                  letterSpacing: '-0.02em'
-                }}>
-                  {filteredProperties.length} Properties Found
-                </h2>
-                <p style={{
-                  color: '#6b7280',
-                  fontSize: '1rem',
-                  marginBottom: '0',
-                  fontFamily: 'Inter, system-ui, sans-serif',
-                  fontWeight: '400'
-                }}>
-                  Browse our premium collection • Updated {new Date().toLocaleDateString()} • All verified listings
-                </p>
-              </div>
-
-              {/* View Toggle Buttons */}
-              <div className="btn-group shadow-sm" role="group" style={{
-                borderRadius: '12px',
-                overflow: 'hidden'
+        {/* ✅ MAIN CONTENT - Fixed Grid Layout */}
+        <div style={{ 
+          flex: 1,
+          padding: '30px',
+          backgroundColor: '#f8fafc',
+          overflowY: 'auto',
+          height: 'calc(100vh - 300px)'
+        }}>
+          
+          {/* Header */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '30px'
+          }}>
+            <div>
+              <h2 style={{
+                fontSize: '2.2rem',
+                fontWeight: '800',
+                color: '#1f2937',
+                marginBottom: '8px',
+                fontFamily: 'Inter, system-ui, sans-serif'
               }}>
-                <Button
-                  variant={viewMode === 'grid' ? 'primary' : 'outline-secondary'}
-                  onClick={() => setViewMode('grid')}
-                  style={{
-                    fontWeight: '700',
-                    padding: '14px 24px',
-                    fontSize: '0.9rem',
-                    backgroundColor: viewMode === 'grid' ? '#7c3aed' : 'white',
-                    borderColor: viewMode === 'grid' ? '#7c3aed' : '#d1d5db',
-                    color: viewMode === 'grid' ? 'white' : '#4b5563',
-                    borderRadius: '12px 0 0 12px',
-                    transition: 'all 0.3s ease',
-                    fontFamily: 'Inter, system-ui, sans-serif',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.025em'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (viewMode !== 'grid') {
-                      e.target.style.backgroundColor = '#f3f4f6';
-                      e.target.style.color = '#1f2937';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (viewMode !== 'grid') {
-                      e.target.style.backgroundColor = 'white';
-                      e.target.style.color = '#4b5563';
-                    }
-                  }}
-                >
-                  ⊞ GRID VIEW
-                </Button>
-                <Button
-                  variant={viewMode === 'list' ? 'primary' : 'outline-secondary'}
-                  onClick={() => setViewMode('list')}
-                  style={{
-                    fontWeight: '700',
-                    padding: '14px 24px',
-                    fontSize: '0.9rem',
-                    backgroundColor: viewMode === 'list' ? '#7c3aed' : 'white',
-                    borderColor: viewMode === 'list' ? '#7c3aed' : '#d1d5db',
-                    color: viewMode === 'list' ? 'white' : '#4b5563',
-                    borderRadius: '0 12px 12px 0',
-                    transition: 'all 0.3s ease',
-                    fontFamily: 'Inter, system-ui, sans-serif',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.025em'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (viewMode !== 'list') {
-                      e.target.style.backgroundColor = '#f3f4f6';
-                      e.target.style.color = '#1f2937';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (viewMode !== 'list') {
-                      e.target.style.backgroundColor = 'white';
-                      e.target.style.color = '#4b5563';
-                    }
-                  }}
-                >
-                  ☰ LIST VIEW
-                </Button>
-              </div>
+                {filteredProperties.length} Properties Found
+              </h2>
+              <p style={{
+                color: '#6b7280',
+                fontSize: '14px',
+                margin: 0,
+                fontFamily: 'Inter, system-ui, sans-serif'
+              }}>
+                Browse our premium collection • Updated {new Date().toLocaleDateString()} • All verified listings
+              </p>
             </div>
 
-            {/* Properties Grid/List */}
-            {filteredProperties.length === 0 ? (
-              <div className="text-center py-5" style={{
-                background: 'linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)',
-                borderRadius: '20px',
-                border: '1px solid #e2e8f0',
-                padding: '3rem'
-              }}>
-                <div className="mb-4" style={{ fontSize: '5rem', opacity: '0.6' }}>
-                  {searchQuery ? '🔍' : getActiveFiltersCount() > 0 ? '🎯' : '🏠'}
-                </div>
-                <h3 style={{
-                  fontWeight: '800',
-                  marginBottom: '16px',
-                  color: '#111827',
-                  fontSize: '1.8rem',
-                  fontFamily: 'Inter, system-ui, sans-serif'
-                }}>
-                  {searchQuery ? 'No Search Results' : 
-                   getActiveFiltersCount() > 0 ? 'No Matching Properties' : 
-                   'No Properties Available'}
-                </h3>
-                <p style={{
-                  color: '#6b7280',
-                  fontSize: '1.05rem',
-                  marginBottom: '24px',
-                  maxWidth: '500px',
-                  margin: '0 auto 24px auto',
-                  fontFamily: 'Inter, system-ui, sans-serif',
-                  lineHeight: '1.6'
-                }}>
-                  {searchQuery ? `We couldn't find any properties matching "${searchQuery}". Try adjusting your search terms.` :
-                   getActiveFiltersCount() > 0 ? 'No properties match your current filters. Try adjusting or clearing some filters.' :
-                   'No properties are currently available. Please check back later.'}
-                </p>
-                <Button
-                  style={{
-                    background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-                    border: 'none',
-                    fontWeight: '700',
-                    borderRadius: '12px',
-                    padding: '12px 30px',
-                    fontFamily: 'Inter, system-ui, sans-serif',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.025em'
-                  }}
-                  size="lg"
-                  onClick={clearFilters}
-                >
-                  {getActiveFiltersCount() > 0 ? 'Clear All Filters' : 'Refresh Properties'}
-                </Button>
-              </div>
-            ) : (
-              <Row className={viewMode === 'grid' ? 'row-cols-1 row-cols-md-2 row-cols-xl-3 g-4' : 'g-3'}>
-                {filteredProperties.map((property) => {
-                  if (!property || !property._id) return null;
-                  
-                  return (
-                    <Col key={property._id} className={viewMode === 'list' ? 'col-12' : ''}>
-                      <PropertyCard 
-                        property={property} 
-                        showOwner={false}
-                        viewMode={viewMode}
-                      />
+            {/* ✅ FIXED VIEW TOGGLE - Consistent Colors */}
+            <div style={{
+              display: 'flex',
+              gap: '8px',
+              background: 'white',
+              padding: '4px',
+              borderRadius: '12px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+            }}>
+              <Button
+                variant={viewMode === 'grid' ? 'primary' : 'light'}
+                onClick={() => setViewMode('grid')}
+                style={{
+                  border: 'none',
+                  borderRadius: '8px',
+                  padding: '8px 16px',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  background: viewMode === 'grid' ? 'linear-gradient(135deg, #6d28d9 0%, #8b5cf6 100%)' : '#f8fafc' // ✅ Consistent purple
+                }}
+              >
+                ⊞ GRID VIEW
+              </Button>
+              <Button
+                variant={viewMode === 'list' ? 'primary' : 'light'}
+                onClick={() => setViewMode('list')}
+                style={{
+                  border: 'none',
+                  borderRadius: '8px',
+                  padding: '8px 16px',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  background: viewMode === 'list' ? 'linear-gradient(135deg, #6d28d9 0%, #8b5cf6 100%)' : '#f8fafc' // ✅ Consistent purple
+                }}
+              >
+                ☰ LIST VIEW
+              </Button>
+            </div>
+          </div>
+
+          {/* Error State */}
+          {error && (
+            <Alert variant="danger" className="text-center">
+              <Alert.Heading>⚠️ Error Loading Properties</Alert.Heading>
+              <p>{error}</p>
+              <Button onClick={() => window.location.reload()} variant="primary">
+                Retry
+              </Button>
+            </Alert>
+          )}
+
+          {/* No Results */}
+          {filteredProperties.length === 0 && !loading && !error && (
+            <div className="text-center py-5" style={{
+              background: 'white',
+              borderRadius: '20px',
+              padding: '60px 40px',
+              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)'
+            }}>
+              <div style={{ fontSize: '4rem', opacity: 0.6, marginBottom: '20px' }}>🏠</div>
+              <h3 style={{ fontWeight: 800, fontSize: '1.8rem', marginBottom: '12px' }}>
+                No Properties Found
+              </h3>
+              <p style={{ color: '#6b7280', fontSize: '16px', marginBottom: '24px' }}>
+                Try adjusting your search criteria or clear filters to see more results.
+              </p>
+              <Button 
+                variant="primary" 
+                onClick={clearFilters}
+                style={{
+                  background: 'linear-gradient(135deg, #6d28d9 0%, #8b5cf6 100%)', // ✅ Consistent purple
+                  border: 'none',
+                  fontWeight: '700',
+                  borderRadius: '12px',
+                  padding: '12px 30px'
+                }}
+              >
+                Clear All Filters
+              </Button>
+            </div>
+          )}
+
+          {/* ✅ PROPERTIES DISPLAY - Fixed Layout */}
+          {filteredProperties.length > 0 && (
+            <>
+              {viewMode === 'grid' ? (
+                <Row className="g-4" style={{ minHeight: '400px' }}> {/* ✅ Fixed minimum height */}
+                  {paginatedProperties.map(property => (
+                    <Col key={property._id} md={6} lg={4}> {/* ✅ Fixed responsive columns */}
+                      <PropertyCard property={property} viewMode="grid" showOwner={false} />
                     </Col>
-                  );
-                })}
-              </Row>
-            )}
-          </Container>
+                  ))}
+                </Row>
+              ) : (
+                <div style={{ minHeight: '400px' }}> {/* ✅ Fixed minimum height */}
+                  {paginatedProperties.map(property => (
+                    <PropertyCard key={property._id} property={property} viewMode="list" showOwner={false} />
+                  ))}
+                </div>
+              )}
+
+              {/* ✅ PAGINATION */}
+              {totalPages > 1 && (
+                <div className="d-flex justify-content-center mt-5">
+                  <div className="btn-group">
+                    <Button
+                      variant="outline-primary"
+                      disabled={currentPage === 1}
+                      onClick={() => setCurrentPage(currentPage - 1)}
+                      style={{
+                        borderColor: '#6d28d9', // ✅ Consistent purple
+                        color: '#6d28d9'
+                      }}
+                    >
+                      ← Previous
+                    </Button>
+                    
+                    <Button 
+                      variant="primary" 
+                      disabled
+                      style={{
+                        background: 'linear-gradient(135deg, #6d28d9 0%, #8b5cf6 100%)', // ✅ Consistent purple
+                        border: 'none'
+                      }}
+                    >
+                      {currentPage} of {totalPages}
+                    </Button>
+                    
+                    <Button
+                      variant="outline-primary"
+                      disabled={currentPage === totalPages}
+                      onClick={() => setCurrentPage(currentPage + 1)}
+                      style={{
+                        borderColor: '#6d28d9', // ✅ Consistent purple
+                        color: '#6d28d9'
+                      }}
+                    >
+                      Next →
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
         </div>
       </div>
 
-      {/* ✅ Perfect Professional CSS */}
+      {/* ✅ GLOBAL STYLES - Fixed Colors & Typography */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(5deg); }
-        }
-        
-        .btn-group .btn:focus {
-          box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.3) !important;
-        }
-        
-        .form-control:focus, .form-select:focus {
-          border-color: #7c3aed !important;
-          box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1) !important;
-        }
-        
-        * {
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
+          50% { transform: translateY(-20px) rotate(2deg); }
         }
         
         body {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          font-family: 'Inter', sans-serif !important;
           font-weight: 400;
-          line-height: 1.6;
+          line-height: 1.5;
           color: #1f2937;
-          letter-spacing: 0.005em;
         }
         
         h1, h2, h3, h4, h5, h6 {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-          font-weight: 800;
-          line-height: 1.2;
-          letter-spacing: -0.025em;
-          margin-bottom: 0.5em;
-          color: #0f172a;
+          font-family: 'Inter', sans-serif !important;
+          font-weight: 700;
+          color: #111827;
         }
         
-        .card-title {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
-          font-weight: 800 !important;
-          color: #111827 !important;
-          letter-spacing: -0.02em !important;
-          line-height: 1.3 !important;
+        .form-control:focus, .form-select:focus {
+          border-color: #6d28d9 !important;
+          box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.1) !important;
         }
         
-        .card-text {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
-          color: #374151 !important;
-          font-weight: 400 !important;
-          line-height: 1.6 !important;
+        .btn-primary {
+          background: linear-gradient(135deg, #6d28d9 0%, #8b5cf6 100%) !important;
+          border: none !important;
         }
         
-        .btn {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
-          font-weight: 700 !important;
-          letter-spacing: 0.025em !important;
-          transition: all 0.3s ease !important;
-          border-radius: 12px !important;
+        .btn-primary:hover {
+          background: linear-gradient(135deg, #5b21b6 0%, #7c3aed 100%) !important;
+          transform: translateY(-1px);
+          box-shadow: 0 8px 20px rgba(109, 40, 217, 0.3);
+        }
+        
+        .btn-outline-primary {
+          border-color: #6d28d9 !important;
+          color: #6d28d9 !important;
+        }
+        
+        .btn-outline-primary:hover {
+          background: linear-gradient(135deg, #6d28d9 0%, #8b5cf6 100%) !important;
+          color: white !important;
+          border-color: transparent !important;
+        }
+
+        .card:hover {
+          transform: translateY(-2px);
+        }
+        
+        .text-muted {
+          color: #6b7280 !important;
         }
         
         @media (max-width: 768px) {
-          .btn-group {
-            flex-direction: column !important;
-            width: 100% !important;
+          .d-flex.justify-content-between {
+            flex-direction: column;
+            gap: 20px;
           }
-          .btn-group .btn {
-            border-radius: 8px !important;
-            margin-bottom: 4px;
-          }
-          h1 { font-size: 2.5rem !important; }
-          h2 { font-size: 2rem !important; }
         }
       `}</style>
-    </>
+    </div>
   );
 };
 
