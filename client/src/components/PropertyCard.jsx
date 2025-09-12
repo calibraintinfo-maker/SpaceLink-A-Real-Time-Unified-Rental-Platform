@@ -9,7 +9,7 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
   if (!property) return null;
 
   const handleImageError = (e) => {
-    e.target.src = 'https://via.placeholder.com/400x250/e2e8f0/64748b?text=Property+Image';
+    e.target.src = 'https://via.placeholder.com/400x240/e2e8f0/64748b?text=Property+Image';
   };
 
   const renderPropertyDetails = () => {
@@ -21,14 +21,14 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
     if (property.subtype && residentialTypes.includes(property.subtype)) {
       if (property.bedrooms > 0) {
         details.push(
-          <Badge key="bedrooms" bg="light" text="dark" className="me-2 mb-1" style={{ fontSize: '0.75rem', fontWeight: '500' }}>
+          <Badge key="bedrooms" bg="light" text="dark" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
             {property.bedrooms} BHK
           </Badge>
         );
       }
       if (property.bathrooms > 0) {
         details.push(
-          <Badge key="bathrooms" bg="light" text="dark" className="me-2 mb-1" style={{ fontSize: '0.75rem', fontWeight: '500' }}>
+          <Badge key="bathrooms" bg="light" text="dark" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
             {property.bathrooms} Bath
           </Badge>
         );
@@ -37,7 +37,7 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
 
     if (property.size) {
       details.push(
-        <Badge key="area" bg="light" text="dark" className="me-2 mb-1" style={{ fontSize: '0.75rem', fontWeight: '500' }}>
+        <Badge key="area" bg="light" text="dark" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
           {property.size}
         </Badge>
       );
@@ -45,7 +45,7 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
 
     if (property.capacity) {
       details.push(
-        <Badge key="capacity" bg="info" className="me-2 mb-1" style={{ fontSize: '0.75rem', fontWeight: '500' }}>
+        <Badge key="capacity" bg="info" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
           {property.capacity}
         </Badge>
       );
@@ -68,24 +68,27 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
   };
 
   if (viewMode === 'list') {
-    // ✅ FIXED LIST VIEW - No Overlap
+    // ✅ PROFESSIONAL LIST VIEW
     return (
-      <Card className="mb-4 border-0 shadow-sm" style={{ 
-        borderRadius: '16px',
-        overflow: 'hidden',
-        transition: 'all 0.3s ease'
+      <Card className="border-0 shadow-sm mb-4" style={{ 
+        borderRadius: '20px', 
+        transition: 'all 0.3s ease',
+        cursor: 'pointer',
+        minHeight: '240px',
+        backgroundColor: '#ffffff',
+        border: '1px solid #e5e7eb'
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.transform = 'translateY(-2px)';
-        e.currentTarget.style.boxShadow = '0 8px 25px rgba(124, 58, 237, 0.15)';
+        e.currentTarget.style.transform = 'translateY(-4px)';
+        e.currentTarget.style.boxShadow = '0 12px 30px rgba(124, 58, 237, 0.15)';
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.transform = 'translateY(0)';
-        e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
+        e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.08)';
       }}>
-        <Row className="g-0">
+        <Row className="g-0 align-items-center">
           <Col md={4}>
-            <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
+            <div style={{ position: 'relative', height: '240px', overflow: 'hidden' }}>
               <img
                 src={getImageUrl(Array.isArray(property.images) ? property.images[0] : property.image)}
                 alt={property.title || 'Property'}
@@ -94,113 +97,142 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
                 style={{ 
                   width: '100%', 
                   height: '100%', 
-                  objectFit: 'cover'
+                  objectFit: 'cover',
+                  borderRadius: '20px 0 0 20px'
                 }}
               />
               <div className="position-absolute top-0 start-0 p-3">
-                <Badge bg="success" className="me-2 fw-semibold" style={{ fontSize: '0.7rem', borderRadius: '12px' }}>
-                  AVAILABLE
+                <Badge bg="success" className="me-2 fw-semibold shadow-sm" style={{
+                  borderRadius: '20px',
+                  padding: '8px 14px',
+                  fontSize: '0.75rem',
+                  fontFamily: 'Inter, system-ui, sans-serif',
+                  fontWeight: '600',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.025em'
+                }}>
+                  Available
                 </Badge>
-                <Badge bg="primary" className="fw-semibold" style={{ fontSize: '0.7rem', borderRadius: '12px' }}>
-                  VERIFIED
+                <Badge bg="primary" className="fw-semibold shadow-sm" style={{
+                  borderRadius: '20px',
+                  padding: '8px 14px',
+                  fontSize: '0.75rem',
+                  fontFamily: 'Inter, system-ui, sans-serif',
+                  fontWeight: '600',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.025em'
+                }}>
+                  Verified
                 </Badge>
               </div>
             </div>
           </Col>
           <Col md={8}>
-            <Card.Body className="p-4">
-              <div className="d-flex align-items-center mb-2">
-                <span className="me-2" style={{ color: '#6d28d9', fontSize: '1rem' }}>📍</span>
+            <Card.Body className="p-4" style={{ minHeight: '240px', display: 'flex', flexDirection: 'column' }}>
+              <div className="d-flex align-items-center mb-3">
+                <span className="me-2" style={{ color: '#7c3aed', fontSize: '1.1rem' }}>📍</span>
                 <span style={{
-                  fontSize: '0.85rem',
-                  color: '#6b7280',
+                  fontSize: '0.9rem',
+                  color: '#64748b',
                   fontFamily: 'Inter, system-ui, sans-serif',
                   fontWeight: '500',
                   textTransform: 'uppercase',
                   letterSpacing: '0.5px'
                 }}>
-                  {property.address?.city || 'Namakkal'}, {property.address?.state || 'Tamil Nadu'}
+                  {property.address?.city || 'City'}, {property.address?.state || 'State'}
                 </span>
               </div>
               
               <Card.Title style={{
                 color: '#111827',
-                fontSize: '1.4rem',
-                fontWeight: '700',
+                fontSize: '1.5rem',
+                lineHeight: '1.3',
+                fontWeight: '800',
                 marginBottom: '12px',
                 fontFamily: 'Inter, system-ui, sans-serif',
-                lineHeight: '1.3'
+                letterSpacing: '-0.015em'
               }}>
-                {property.title || 'Premium Property'}
+                {property.title || 'Property Title'}
               </Card.Title>
               
-              <Card.Text style={{
-                fontSize: '0.9rem',
+              <p className="mb-3" style={{
+                fontSize: '0.95rem',
                 lineHeight: '1.6',
-                color: '#4b5563',
+                flexGrow: 1,
+                color: '#374151',
                 fontFamily: 'Inter, system-ui, sans-serif',
-                marginBottom: '16px'
+                fontWeight: '400'
               }}>
                 {property.description ? 
-                  property.description.substring(0, 120) + '...' : 
+                  property.description.substring(0, 140) + '...' : 
                   'Premium property with modern amenities and excellent location.'
                 }
-              </Card.Text>
+              </p>
               
               <div className="mb-3">
-                {renderPropertyDetails()}
+                <div className="d-flex flex-wrap gap-2">
+                  {renderPropertyDetails()}
+                </div>
               </div>
               
-              <div className="d-flex justify-content-between align-items-center">
+              <div className="d-flex justify-content-between align-items-center mt-auto">
                 <div>
                   <div style={{
-                    fontSize: '1.5rem',
-                    fontWeight: '700',
+                    fontSize: '1.6rem',
+                    fontWeight: '800',
                     color: '#059669',
                     marginBottom: '4px',
-                    fontFamily: 'Inter, system-ui, sans-serif'
+                    fontFamily: 'Inter, system-ui, sans-serif',
+                    letterSpacing: '-0.01em'
                   }}>
                     ₹{formatPrice(property.price) || '1,22,345'}/month
                   </div>
                   <small style={{
-                    color: '#6b7280',
-                    fontSize: '0.75rem',
+                    color: '#64748b',
+                    fontSize: '0.8rem',
                     fontFamily: 'Inter, system-ui, sans-serif',
-                    textTransform: 'uppercase'
+                    fontWeight: '500',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px'
                   }}>
                     Available for {getSafeRentType()}
                   </small>
                 </div>
                 
-                <div className="d-flex gap-2">
+                <div className="d-flex gap-3">
                   <Button 
                     variant="outline-primary" 
-                    size="sm"
-                    onClick={handleViewDetails}
                     style={{
-                      borderRadius: '8px',
-                      fontWeight: '600',
+                      borderRadius: '12px',
+                      padding: '12px 20px',
+                      borderWidth: '2px',
+                      fontWeight: '700',
                       fontSize: '0.8rem',
-                      padding: '8px 16px',
-                      borderColor: '#6d28d9',
-                      color: '#6d28d9'
+                      borderColor: '#7c3aed',
+                      color: '#7c3aed',
+                      fontFamily: 'Inter, system-ui, sans-serif',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em'
                     }}
+                    onClick={handleViewDetails}
                   >
-                    VIEW DETAILS
+                    View Details
                   </Button>
                   <Button 
-                    size="sm"
-                    onClick={handleBookNow}
                     style={{
-                      background: 'linear-gradient(135deg, #6d28d9 0%, #8b5cf6 100%)',
+                      background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
                       border: 'none',
-                      borderRadius: '8px',
-                      fontWeight: '600',
+                      borderRadius: '12px',
+                      padding: '12px 20px',
+                      fontWeight: '700',
                       fontSize: '0.8rem',
-                      padding: '8px 16px'
+                      fontFamily: 'Inter, system-ui, sans-serif',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em'
                     }}
+                    onClick={handleBookNow}
                   >
-                    BOOK NOW
+                    Book Now
                   </Button>
                 </div>
               </div>
@@ -211,23 +243,24 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
     );
   }
 
-  // ✅ FIXED GRID VIEW - Consistent Sizing
+  // ✅ PROFESSIONAL GRID VIEW
   return (
     <Card className="h-100 border-0 shadow-sm" style={{ 
-      borderRadius: '16px',
-      overflow: 'hidden',
+      borderRadius: '20px', 
       transition: 'all 0.3s ease',
-      minHeight: '420px' // ✅ Fixed height for consistency
+      cursor: 'pointer',
+      backgroundColor: '#ffffff',
+      border: '1px solid #e5e7eb'
     }}
     onMouseEnter={(e) => {
       e.currentTarget.style.transform = 'translateY(-4px)';
-      e.currentTarget.style.boxShadow = '0 8px 25px rgba(124, 58, 237, 0.15)';
+      e.currentTarget.style.boxShadow = '0 12px 30px rgba(124, 58, 237, 0.15)';
     }}
     onMouseLeave={(e) => {
       e.currentTarget.style.transform = 'translateY(0)';
-      e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
+      e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.08)';
     }}>
-      <div style={{ position: 'relative', height: '200px', overflow: 'hidden' }}>
+      <div style={{ position: 'relative', height: '240px', overflow: 'hidden' }}>
         <img
           src={getImageUrl(Array.isArray(property.images) ? property.images[0] : property.image)}
           alt={property.title || 'Property'}
@@ -236,114 +269,141 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid', showOwner = fals
           style={{ 
             width: '100%', 
             height: '100%', 
-            objectFit: 'cover'
+            objectFit: 'cover',
+            borderRadius: '20px 20px 0 0'
           }}
         />
         <div className="position-absolute top-0 start-0 p-3">
-          <Badge bg="success" className="me-2 fw-semibold" style={{ fontSize: '0.7rem', borderRadius: '12px' }}>
-            AVAILABLE
+          <Badge bg="success" className="me-2 fw-semibold shadow-sm" style={{
+            borderRadius: '20px',
+            padding: '8px 14px',
+            fontSize: '0.75rem',
+            fontFamily: 'Inter, system-ui, sans-serif',
+            fontWeight: '600',
+            textTransform: 'uppercase',
+            letterSpacing: '0.025em'
+          }}>
+            Available
           </Badge>
-          <Badge bg="primary" className="fw-semibold" style={{ fontSize: '0.7rem', borderRadius: '12px' }}>
-            VERIFIED
+          <Badge bg="primary" className="fw-semibold shadow-sm" style={{
+            borderRadius: '20px',
+            padding: '8px 14px',
+            fontSize: '0.75rem',
+            fontFamily: 'Inter, system-ui, sans-serif',
+            fontWeight: '600',
+            textTransform: 'uppercase',
+            letterSpacing: '0.025em'
+          }}>
+            Verified
           </Badge>
         </div>
       </div>
       
-      <Card.Body className="d-flex flex-column p-3">
-        <div className="d-flex align-items-center mb-2">
-          <span className="me-2" style={{ color: '#6d28d9', fontSize: '0.9rem' }}>📍</span>
+      <Card.Body className="p-4 d-flex flex-column">
+        <div className="d-flex align-items-center mb-3">
+          <span className="me-2" style={{ color: '#7c3aed', fontSize: '1.1rem' }}>📍</span>
           <span style={{
-            fontSize: '0.8rem',
-            color: '#6b7280',
+            fontSize: '0.9rem',
+            color: '#64748b',
             fontFamily: 'Inter, system-ui, sans-serif',
             fontWeight: '500',
-            textTransform: 'uppercase'
+            textTransform: 'uppercase',
+            letterSpacing: '0.5px'
           }}>
-            {property.address?.city || 'Namakkal'}, {property.address?.state || 'TN'}
+            {property.address?.city || 'City'}, {property.address?.state || 'State'}
           </span>
         </div>
         
         <Card.Title style={{
           color: '#111827',
-          fontSize: '1.1rem',
-          fontWeight: '700',
-          marginBottom: '10px',
+          fontSize: '1.5rem',
+          lineHeight: '1.3',
+          fontWeight: '800',
+          marginBottom: '12px',
           fontFamily: 'Inter, system-ui, sans-serif',
-          lineHeight: '1.3'
+          letterSpacing: '-0.015em'
         }}>
-          {property.title || 'Premium Property'}
+          {property.title || 'Property Title'}
         </Card.Title>
         
-        <Card.Text style={{
-          fontSize: '0.85rem',
-          lineHeight: '1.5',
-          color: '#4b5563',
+        <Card.Text className="mb-3" style={{
+          fontSize: '0.95rem',
+          lineHeight: '1.6',
+          flexGrow: 1,
+          color: '#374151',
           fontFamily: 'Inter, system-ui, sans-serif',
-          marginBottom: '12px',
-          flexGrow: 1
+          fontWeight: '400'
         }}>
           {property.description ? 
-            property.description.substring(0, 80) + '...' : 
-            'Premium property with modern amenities.'
+            property.description.substring(0, 140) + '...' : 
+            'Premium property with modern amenities and excellent location.'
           }
         </Card.Text>
         
         <div className="mb-3">
-          {renderPropertyDetails()}
+          <div className="d-flex flex-wrap gap-2">
+            {renderPropertyDetails()}
+          </div>
         </div>
         
         <div className="mt-auto">
           <div style={{
-            fontSize: '1.3rem',
-            fontWeight: '700',
+            fontSize: '1.6rem',
+            fontWeight: '800',
             color: '#059669',
-            marginBottom: '8px',
-            fontFamily: 'Inter, system-ui, sans-serif'
+            marginBottom: '4px',
+            fontFamily: 'Inter, system-ui, sans-serif',
+            letterSpacing: '-0.01em'
           }}>
-            ₹{formatPrice(property.price) || '1,234'}/month
+            ₹{formatPrice(property.price) || '1,22,345'}/month
           </div>
           <small style={{
-            color: '#6b7280',
-            fontSize: '0.75rem',
+            color: '#64748b',
+            fontSize: '0.8rem',
             fontFamily: 'Inter, system-ui, sans-serif',
+            fontWeight: '500',
             textTransform: 'uppercase',
-            marginBottom: '12px',
-            display: 'block'
+            letterSpacing: '0.5px'
           }}>
             Available for {getSafeRentType()}
           </small>
           
-          <div className="d-flex gap-2">
+          <div className="d-flex gap-3 mt-3">
             <Button 
               variant="outline-primary" 
-              size="sm"
               className="flex-fill"
-              onClick={handleViewDetails}
               style={{
-                borderRadius: '8px',
-                fontWeight: '600',
-                fontSize: '0.75rem',
-                padding: '8px 12px',
-                borderColor: '#6d28d9',
-                color: '#6d28d9'
+                borderRadius: '12px',
+                padding: '12px 16px',
+                borderWidth: '2px',
+                fontWeight: '700',
+                fontSize: '0.8rem',
+                borderColor: '#7c3aed',
+                color: '#7c3aed',
+                fontFamily: 'Inter, system-ui, sans-serif',
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em'
               }}
+              onClick={handleViewDetails}
             >
-              VIEW DETAILS
+              View Details
             </Button>
             <Button 
-              size="sm"
               className="flex-fill"
-              onClick={handleBookNow}
               style={{
-                background: 'linear-gradient(135deg, #6d28d9 0%, #8b5cf6 100%)',
+                background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
                 border: 'none',
-                borderRadius: '8px',
-                fontWeight: '600',
-                fontSize: '0.75rem',
-                padding: '8px 12px'
+                borderRadius: '12px',
+                padding: '12px 16px',
+                fontWeight: '700',
+                fontSize: '0.8rem',
+                fontFamily: 'Inter, system-ui, sans-serif',
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em'
               }}
+              onClick={handleBookNow}
             >
-              BOOK NOW
+              Book Now
             </Button>
           </div>
         </div>
