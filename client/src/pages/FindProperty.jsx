@@ -150,10 +150,10 @@ const FindProperty = () => {
 
   if (loading) {
     return (
-      <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '70vh' }}>
-        <div className="text-center">
-          <Spinner animation="border" style={{ color: '#7c3aed' }} />
-          <p className="mt-3" style={{ fontFamily: "'Inter', sans-serif" }}>Loading properties...</p>
+      <div className="loading-container">
+        <div className="loading-spinner">
+          <Spinner animation="border" />
+          <p>Finding your perfect properties...</p>
         </div>
       </div>
     );
@@ -161,103 +161,54 @@ const FindProperty = () => {
 
   if (error) {
     return (
-      <Container className="py-5 text-center">
+      <div className="error-container">
         <Alert variant="danger">{error}</Alert>
-        <Button onClick={fetchProperties} style={{ 
-          background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)', 
-          border: 'none'
-        }}>Try Again</Button>
-      </Container>
+        <Button onClick={fetchProperties} className="retry-button">Try Again</Button>
+      </div>
     );
   }
 
   return (
     <>
-      {/* 🎯 MAIN LAYOUT - Exactly like Reference */}
-      <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#f8fafc' }}>
+      {/* 🌟 WORLD-CLASS LAYOUT */}
+      <div className="app-layout">
         
-        {/* 🎯 PERFECT COMPACT DASHBOARD - Exact Reference Sizing */}
-        <div style={{
-          width: '280px',
-          minWidth: '280px',
-          backgroundColor: '#ffffff',
-          padding: '20px 18px',
-          borderRight: '1px solid #e5e7eb',
-          position: 'sticky',
-          top: 0,
-          height: '100vh',
-          overflowY: 'auto',
-          boxShadow: '1px 0 6px rgba(0, 0, 0, 0.05)'
-        }}>
+        {/* 🎯 ULTRA-PROFESSIONAL SIDEBAR */}
+        <div className="sidebar-container">
           
-          {/* 🔍 Search Properties - Compact */}
-          <div className="mb-4">
-            <h3 style={{
-              color: '#1f2937',
-              fontWeight: '600',
-              fontSize: '0.9rem',
-              marginBottom: '10px',
-              fontFamily: "'Inter', sans-serif",
-              display: 'flex',
-              alignItems: 'center'
-            }}>
-              <span className="me-2" style={{ fontSize: '1rem' }}>🔍</span>
-              Search Properties
-            </h3>
-            <Form.Control
-              type="text"
-              placeholder="Search by location, type, or keywords..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              style={{
-                borderRadius: '6px',
-                border: '1px solid #d1d5db',
-                padding: '8px 10px',
-                fontSize: '0.8rem',
-                fontFamily: "'Inter', sans-serif"
-              }}
-            />
+          {/* Search Section */}
+          <div className="filter-section">
+            <div className="section-header">
+              <span className="section-icon">🔍</span>
+              <h3>Search Properties</h3>
+            </div>
+            <div className="search-input-container">
+              <Form.Control
+                type="text"
+                placeholder="Search by location, type, or keywords..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="search-input"
+              />
+            </div>
           </div>
 
-          {/* ✨ Smart Filters - Compact */}
-          <div className="mb-4">
-            <h3 style={{
-              color: '#1f2937',
-              fontWeight: '600',
-              fontSize: '0.9rem',
-              marginBottom: '12px',
-              fontFamily: "'Inter', sans-serif",
-              display: 'flex',
-              alignItems: 'center'
-            }}>
-              <span className="me-2" style={{ fontSize: '1rem' }}>✨</span>
-              Smart Filters
-            </h3>
+          {/* Filters Section */}
+          <div className="filter-section">
+            <div className="section-header">
+              <span className="section-icon">✨</span>
+              <h3>Smart Filters</h3>
+            </div>
 
-            {/* 📍 Location */}
-            <div className="mb-3">
-              <Form.Label style={{
-                fontWeight: '600',
-                marginBottom: '5px',
-                fontSize: '0.75rem',
-                color: '#1f2937',
-                fontFamily: "'Inter', sans-serif",
-                display: 'flex',
-                alignItems: 'center'
-              }}>
-                <span className="me-1" style={{ fontSize: '0.8rem' }}>📍</span>
+            <div className="filter-group">
+              <label className="filter-label">
+                <span className="label-icon">📍</span>
                 LOCATION
-              </Form.Label>
+              </label>
               <Form.Select
                 value={filters.location}
                 onChange={(e) => handleFilterChange('location', e.target.value)}
-                style={{
-                  borderRadius: '6px',
-                  border: '1px solid #d1d5db',
-                  padding: '6px 8px',
-                  fontSize: '0.75rem',
-                  fontFamily: "'Inter', sans-serif"
-                }}
+                className="filter-select"
               >
                 {indianLocations.map((location, index) => (
                   <option key={index} value={location === "All Locations" ? "" : location}>
@@ -267,30 +218,15 @@ const FindProperty = () => {
               </Form.Select>
             </div>
 
-            {/* 🏠 Property Type */}
-            <div className="mb-3">
-              <Form.Label style={{
-                fontWeight: '600',
-                marginBottom: '5px',
-                fontSize: '0.75rem',
-                color: '#1f2937',
-                fontFamily: "'Inter', sans-serif",
-                display: 'flex',
-                alignItems: 'center'
-              }}>
-                <span className="me-1" style={{ fontSize: '0.8rem' }}>🏠</span>
+            <div className="filter-group">
+              <label className="filter-label">
+                <span className="label-icon">🏠</span>
                 PROPERTY TYPE
-              </Form.Label>
+              </label>
               <Form.Select
                 value={filters.propertyType}
                 onChange={(e) => handleFilterChange('propertyType', e.target.value)}
-                style={{
-                  borderRadius: '6px',
-                  border: '1px solid #d1d5db',
-                  padding: '6px 8px',
-                  fontSize: '0.75rem',
-                  fontFamily: "'Inter', sans-serif"
-                }}
+                className="filter-select"
               >
                 {propertyTypes.map((type, index) => (
                   <option key={index} value={type === "All Categories" ? "" : type}>
@@ -300,31 +236,16 @@ const FindProperty = () => {
               </Form.Select>
             </div>
 
-            {/* 💰 Price Range */}
-            <div className="mb-3">
-              <Form.Label style={{
-                fontWeight: '600',
-                marginBottom: '5px',
-                fontSize: '0.75rem',
-                color: '#1f2937',
-                fontFamily: "'Inter', sans-serif",
-                display: 'flex',
-                alignItems: 'center'
-              }}>
-                <span className="me-1" style={{ fontSize: '0.8rem' }}>💰</span>
+            <div className="filter-group">
+              <label className="filter-label">
+                <span className="label-icon">💰</span>
                 PRICE RANGE
-                <span className="ms-auto" style={{ fontSize: '0.65rem', color: '#6b7280' }}>per month</span>
-              </Form.Label>
+                <span className="label-suffix">per month</span>
+              </label>
               <Form.Select
                 value={filters.priceRange}
                 onChange={(e) => handleFilterChange('priceRange', e.target.value)}
-                style={{
-                  borderRadius: '6px',
-                  border: '1px solid #d1d5db',
-                  padding: '6px 8px',
-                  fontSize: '0.75rem',
-                  fontFamily: "'Inter', sans-serif"
-                }}
+                className="filter-select"
               >
                 <option value="">All Prices</option>
                 <option value="0-1000">₹0 - ₹1,000</option>
@@ -337,31 +258,16 @@ const FindProperty = () => {
               </Form.Select>
             </div>
 
-            {/* Bedrooms Filter */}
             {shouldShowBedroomFilter() && (
-              <div className="mb-3">
-                <Form.Label style={{
-                  fontWeight: '600',
-                  marginBottom: '5px',
-                  fontSize: '0.75rem',
-                  color: '#1f2937',
-                  fontFamily: "'Inter', sans-serif",
-                  display: 'flex',
-                  alignItems: 'center'
-                }}>
-                  <span className="me-1" style={{ fontSize: '0.8rem' }}>🛏️</span>
+              <div className="filter-group">
+                <label className="filter-label">
+                  <span className="label-icon">🛏️</span>
                   BEDROOMS
-                </Form.Label>
+                </label>
                 <Form.Select
                   value={filters.bedrooms}
                   onChange={(e) => handleFilterChange('bedrooms', e.target.value)}
-                  style={{
-                    borderRadius: '6px',
-                    border: '1px solid #d1d5db',
-                    padding: '6px 8px',
-                    fontSize: '0.75rem',
-                    fontFamily: "'Inter', sans-serif"
-                  }}
+                  className="filter-select"
                 >
                   <option value="">Any Bedrooms</option>
                   <option value="1">1+ BHK</option>
@@ -372,144 +278,75 @@ const FindProperty = () => {
                 </Form.Select>
               </div>
             )}
+
+            <Button
+              onClick={clearFilters}
+              disabled={getActiveFiltersCount() === 0}
+              className="clear-filters-btn"
+            >
+              ✕ Clear All Filters
+            </Button>
           </div>
 
-          {/* Clear Filters */}
-          <Button
-            className="w-100 mb-3"
-            onClick={clearFilters}
-            disabled={getActiveFiltersCount() === 0}
-            style={{
-              background: 'linear-gradient(135deg, #a855f7 0%, #c084fc 100%)',
-              border: 'none',
-              borderRadius: '6px',
-              padding: '8px',
-              fontWeight: '600',
-              fontSize: '0.75rem',
-              fontFamily: "'Inter', sans-serif"
-            }}
-          >
-            ✕ Clear All Filters
-          </Button>
-
-          {/* Available Counter - Compact */}
-          <div style={{
-            background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-            borderRadius: '12px',
-            padding: '18px',
-            textAlign: 'center',
-            color: '#ffffff',
-            fontFamily: "'Inter', sans-serif"
-          }}>
-            <h2 style={{
-              fontSize: '2rem',
-              fontWeight: '800',
-              margin: '0 0 4px 0',
-              lineHeight: '1'
-            }}>
-              {filteredProperties.length}
-            </h2>
-            <p style={{
-              fontSize: '0.8rem',
-              fontWeight: '500',
-              margin: '0'
-            }}>
-              Available
-            </p>
+          {/* Results Counter */}
+          <div className="results-counter">
+            <div className="counter-number">{filteredProperties.length}</div>
+            <div className="counter-label">Available</div>
           </div>
         </div>
 
-        {/* 🎯 MAIN CONTENT */}
-        <div style={{ flex: 1, backgroundColor: '#ffffff' }}>
-          <Container fluid className="py-3 px-3">
-            
-            {/* Header */}
-            <div style={{ 
-              display: 'flex', 
-              justifyContent: 'space-between', 
-              alignItems: 'center', 
-              marginBottom: '20px'
-            }}>
-              <div>
-                <h2 style={{
-                  fontWeight: '800',
-                  marginBottom: '4px',
-                  color: '#1f2937',
-                  fontSize: '1.8rem',
-                  fontFamily: "'Inter', sans-serif"
-                }}>
-                  {filteredProperties.length} Properties Found
-                </h2>
-                <p style={{
-                  color: '#6b7280',
-                  fontSize: '0.85rem',
-                  marginBottom: '0',
-                  fontFamily: "'Inter', sans-serif"
-                }}>
-                  Browse our premium collection • Updated {new Date().toLocaleDateString()} • All verified listings
-                </p>
-              </div>
-
-              {/* View Toggle */}
-              <div style={{
-                display: 'flex',
-                gap: '4px',
-                background: '#f1f5f9',
-                padding: '4px',
-                borderRadius: '8px'
-              }}>
-                <Button
-                  onClick={() => setViewMode('grid')}
-                  style={{
-                    fontWeight: '600',
-                    padding: '6px 12px',
-                    fontSize: '0.75rem',
-                    background: viewMode === 'grid' ? '#7c3aed' : 'transparent',
-                    color: viewMode === 'grid' ? 'white' : '#7c3aed',
-                    border: 'none',
-                    borderRadius: '6px'
-                  }}
-                >
-                  Grid
-                </Button>
-                <Button
-                  onClick={() => setViewMode('list')}
-                  style={{
-                    fontWeight: '600',
-                    padding: '6px 12px',
-                    fontSize: '0.75rem',
-                    background: viewMode === 'list' ? '#7c3aed' : 'transparent',
-                    color: viewMode === 'list' ? 'white' : '#7c3aed',
-                    border: 'none',
-                    borderRadius: '6px'
-                  }}
-                >
-                  List
-                </Button>
-              </div>
+        {/* 🎯 MAIN CONTENT AREA */}
+        <div className="main-content">
+          <div className="content-header">
+            <div className="header-info">
+              <h1 className="page-title">{filteredProperties.length} Properties Found</h1>
+              <p className="page-subtitle">
+                Browse our premium collection • Updated {new Date().toLocaleDateString()} • All verified listings
+              </p>
             </div>
 
-            {/* Properties Display */}
+            <div className="view-toggle">
+              <Button
+                onClick={() => setViewMode('grid')}
+                className={`toggle-btn ${viewMode === 'grid' ? 'active' : ''}`}
+              >
+                ⊞ Grid
+              </Button>
+              <Button
+                onClick={() => setViewMode('list')}
+                className={`toggle-btn ${viewMode === 'list' ? 'active' : ''}`}
+              >
+                ☰ List
+              </Button>
+            </div>
+          </div>
+
+          {/* Properties Display */}
+          <div className="properties-container">
             {filteredProperties.length === 0 ? (
-              <div className="text-center py-5">
+              <div className="empty-state">
+                <div className="empty-icon">🏠</div>
                 <h3>No Properties Found</h3>
-                <Button onClick={clearFilters}>Clear Filters</Button>
+                <p>Try adjusting your search criteria or clear all filters</p>
+                <Button onClick={clearFilters} className="empty-action-btn">
+                  Clear All Filters
+                </Button>
               </div>
             ) : (
               <>
                 {viewMode === 'grid' ? (
-                  <Row className="g-3">
+                  <Row className="properties-grid">
                     {filteredProperties.map((property) => {
                       if (!property || !property._id) return null;
                       return (
-                        <Col key={property._id} lg={4} md={6} sm={12}>
+                        <Col key={property._id} lg={4} md={6} sm={12} className="property-col">
                           <PropertyCard property={property} viewMode="grid" />
                         </Col>
                       );
                     })}
                   </Row>
                 ) : (
-                  <div>
+                  <div className="properties-list">
                     {filteredProperties.map((property) => {
                       if (!property || !property._id) return null;
                       return <PropertyCard key={property._id} property={property} viewMode="list" />;
@@ -518,16 +355,373 @@ const FindProperty = () => {
                 )}
               </>
             )}
-          </Container>
+          </div>
         </div>
       </div>
 
+      {/* 🎨 WORLD-CLASS STYLES */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-        .form-control:focus, .form-select:focus {
-          box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.1) !important;
-          border-color: #7c3aed !important;
+
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+
+        body {
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          background: #f8fafc;
+          color: #1e293b;
+        }
+
+        .app-layout {
+          display: flex;
+          min-height: 100vh;
+        }
+
+        /* 🎯 ULTRA-PROFESSIONAL SIDEBAR */
+        .sidebar-container {
+          width: 320px;
+          min-width: 320px;
+          background: #ffffff;
+          border-right: 1px solid #e2e8f0;
+          padding: 32px 24px;
+          height: 100vh;
+          overflow-y: auto;
+          position: sticky;
+          top: 0;
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.04);
+        }
+
+        .filter-section {
+          margin-bottom: 32px;
+        }
+
+        .section-header {
+          display: flex;
+          align-items: center;
+          margin-bottom: 16px;
+        }
+
+        .section-icon {
+          font-size: 18px;
+          margin-right: 12px;
+        }
+
+        .section-header h3 {
+          font-size: 16px;
+          font-weight: 700;
+          color: #1e293b;
+          margin: 0;
+        }
+
+        .search-input-container {
+          position: relative;
+        }
+
+        .search-input {
+          width: 100%;
+          padding: 12px 16px;
+          border: 2px solid #e2e8f0;
+          border-radius: 12px;
+          font-size: 14px;
+          transition: all 0.3s ease;
+          background: #ffffff;
+        }
+
+        .search-input:focus {
+          border-color: #7c3aed;
+          box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+          outline: none;
+        }
+
+        .filter-group {
+          margin-bottom: 20px;
+        }
+
+        .filter-label {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-size: 12px;
+          font-weight: 700;
+          color: #475569;
+          margin-bottom: 8px;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+
+        .label-icon {
+          margin-right: 8px;
+          font-size: 14px;
+        }
+
+        .label-suffix {
+          font-size: 10px;
+          color: #94a3b8;
+          font-weight: 500;
+        }
+
+        .filter-select {
+          width: 100%;
+          padding: 10px 14px;
+          border: 2px solid #e2e8f0;
+          border-radius: 10px;
+          font-size: 14px;
+          background: #ffffff;
+          transition: all 0.3s ease;
+        }
+
+        .filter-select:focus {
+          border-color: #7c3aed;
+          box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+          outline: none;
+        }
+
+        .clear-filters-btn {
+          width: 100%;
+          padding: 12px;
+          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+          border: none;
+          color: white;
+          font-weight: 700;
+          font-size: 14px;
+          border-radius: 12px;
+          transition: all 0.3s ease;
+          margin-top: 8px;
+        }
+
+        .clear-filters-btn:hover:not(:disabled) {
+          transform: translateY(-1px);
+          box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3);
+        }
+
+        .clear-filters-btn:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+
+        .results-counter {
+          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+          border-radius: 20px;
+          padding: 24px;
+          text-align: center;
+          color: white;
+          margin-top: 24px;
+        }
+
+        .counter-number {
+          font-size: 36px;
+          font-weight: 900;
+          line-height: 1;
+          margin-bottom: 4px;
+        }
+
+        .counter-label {
+          font-size: 14px;
+          font-weight: 600;
+          opacity: 0.9;
+        }
+
+        /* 🎯 MAIN CONTENT */
+        .main-content {
+          flex: 1;
+          background: #ffffff;
+          padding: 32px 40px;
+        }
+
+        .content-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          margin-bottom: 32px;
+          flex-wrap: wrap;
+          gap: 24px;
+        }
+
+        .header-info {
+          flex: 1;
+        }
+
+        .page-title {
+          font-size: 36px;
+          font-weight: 900;
+          color: #1e293b;
+          margin-bottom: 8px;
+          line-height: 1.2;
+        }
+
+        .page-subtitle {
+          font-size: 16px;
+          color: #64748b;
+          margin: 0;
+        }
+
+        .view-toggle {
+          display: flex;
+          background: #f1f5f9;
+          padding: 6px;
+          border-radius: 12px;
+          gap: 4px;
+        }
+
+        .toggle-btn {
+          padding: 10px 20px;
+          font-size: 14px;
+          font-weight: 600;
+          border: none;
+          border-radius: 8px;
+          background: transparent;
+          color: #64748b;
+          transition: all 0.3s ease;
+        }
+
+        .toggle-btn.active {
+          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+          color: white;
+          box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+        }
+
+        .toggle-btn:hover:not(.active) {
+          background: #e2e8f0;
+          color: #1e293b;
+        }
+
+        /* 🎯 PROPERTIES CONTAINER */
+        .properties-container {
+          min-height: 400px;
+        }
+
+        .properties-grid {
+          gap: 24px;
+        }
+
+        .property-col {
+          margin-bottom: 24px;
+        }
+
+        .properties-list {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        /* 🎯 EMPTY STATE */
+        .empty-state {
+          text-align: center;
+          padding: 80px 40px;
+          background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+          border-radius: 24px;
+          border: 1px solid #e2e8f0;
+        }
+
+        .empty-icon {
+          font-size: 64px;
+          margin-bottom: 24px;
+          opacity: 0.7;
+        }
+
+        .empty-state h3 {
+          font-size: 24px;
+          font-weight: 800;
+          color: #1e293b;
+          margin-bottom: 12px;
+        }
+
+        .empty-state p {
+          font-size: 16px;
+          color: #64748b;
+          margin-bottom: 32px;
+        }
+
+        .empty-action-btn {
+          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+          border: none;
+          color: white;
+          font-weight: 700;
+          padding: 16px 32px;
+          border-radius: 12px;
+          font-size: 16px;
+          transition: all 0.3s ease;
+        }
+
+        .empty-action-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 12px 30px rgba(124, 58, 237, 0.3);
+        }
+
+        /* 🎯 LOADING STATE */
+        .loading-container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 100vh;
+          background: #f8fafc;
+        }
+
+        .loading-spinner {
+          text-align: center;
+          padding: 40px;
+        }
+
+        .loading-spinner .spinner-border {
+          color: #7c3aed;
+          width: 3rem;
+          height: 3rem;
+        }
+
+        .loading-spinner p {
+          margin-top: 20px;
+          font-size: 16px;
+          color: #64748b;
+        }
+
+        /* 🎯 ERROR STATE */
+        .error-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          min-height: 100vh;
+          padding: 40px;
+        }
+
+        .retry-button {
+          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+          border: none;
+          color: white;
+          font-weight: 700;
+          padding: 12px 24px;
+          border-radius: 8px;
+          margin-top: 16px;
+        }
+
+        /* 🎯 RESPONSIVE */
+        @media (max-width: 768px) {
+          .app-layout {
+            flex-direction: column;
+          }
+
+          .sidebar-container {
+            width: 100%;
+            height: auto;
+            position: static;
+            padding: 20px;
+          }
+
+          .main-content {
+            padding: 20px;
+          }
+
+          .page-title {
+            font-size: 28px;
+          }
+
+          .content-header {
+            flex-direction: column;
+            gap: 16px;
+          }
         }
       `}</style>
     </>
