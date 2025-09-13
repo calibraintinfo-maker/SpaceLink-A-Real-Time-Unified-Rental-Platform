@@ -193,18 +193,15 @@ const FindProperty = () => {
             <p className="fs-5 opacity-90">Discover verified properties from our premium collection across India</p>
           </Container>
         </section>
-
-        <section>
-          <Container className="py-5">
-            <Alert variant="danger" className="text-center">
-              <Alert.Heading>Error Loading Properties</Alert.Heading>
-              <p>{error}</p>
-              <Button onClick={fetchProperties} style={{ backgroundColor: '#7c3aed', borderColor: '#7c3aed' }}>
-                Try Again
-              </Button>
-            </Alert>
-          </Container>
-        </section>
+        <Container className="py-5">
+          <Alert variant="danger" className="text-center">
+            <Alert.Heading>Error Loading Properties</Alert.Heading>
+            <p>{error}</p>
+            <Button onClick={fetchProperties} style={{ backgroundColor: '#7c3aed', borderColor: '#7c3aed' }}>
+              Try Again
+            </Button>
+          </Alert>
+        </Container>
       </div>
     );
   }
@@ -220,7 +217,6 @@ const FindProperty = () => {
         position: 'relative',
         overflow: 'hidden'
       }}>
-        {/* Floating background elements */}
         <div style={{
           position: 'absolute',
           top: '10%',
