@@ -267,32 +267,32 @@ const FindProperty = () => {
       {/* 🎯 MAIN LAYOUT */}
       <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#f8fafc' }}>
         
-        {/* 🎯 EXACT DASHBOARD FROM REFERENCE IMAGES - Perfect Match */}
+        {/* 🎯 PROFESSIONAL DASHBOARD - Uniform Colors & Perfect Sizing */}
         <div style={{
-          width: '350px',
-          minWidth: '350px',
+          width: '320px',
+          minWidth: '320px',
           backgroundColor: '#ffffff',
-          padding: '30px 25px',
+          padding: '28px 22px',
           borderRight: '1px solid #e5e7eb',
           position: 'sticky',
           top: 0,
           height: '100vh',
           overflowY: 'auto',
-          boxShadow: '2px 0 12px rgba(124, 58, 237, 0.08)'
+          boxShadow: '2px 0 10px rgba(124, 58, 237, 0.08)'
         }}>
           
-          {/* 🔍 Search Properties */}
+          {/* 🔍 Search Properties - Professional Uniform Color */}
           <div className="mb-4">
             <h3 style={{
               color: '#1f2937',
               fontWeight: '600',
-              fontSize: '1.1rem',
+              fontSize: '1rem',
               marginBottom: '12px',
               fontFamily: "'Inter', sans-serif",
               display: 'flex',
               alignItems: 'center'
             }}>
-              <span className="me-2" style={{ fontSize: '1.2rem' }}>🔍</span>
+              <span className="me-2" style={{ fontSize: '1.1rem' }}>🔍</span>
               Search Properties
             </h3>
             <Form.Control
@@ -303,41 +303,42 @@ const FindProperty = () => {
               style={{
                 borderRadius: '8px',
                 border: '1px solid #d1d5db',
-                padding: '12px 16px',
-                fontSize: '0.95rem',
+                padding: '12px 14px',
+                fontSize: '0.9rem',
                 fontFamily: "'Inter', sans-serif",
-                backgroundColor: '#ffffff'
+                backgroundColor: '#ffffff',
+                color: '#1f2937'
               }}
             />
           </div>
 
-          {/* ✨ Smart Filters */}
+          {/* ✨ Smart Filters - Professional Uniform Color */}
           <div className="mb-4">
             <h3 style={{
               color: '#1f2937',
               fontWeight: '600',
-              fontSize: '1.1rem',
-              marginBottom: '18px',
+              fontSize: '1rem',
+              marginBottom: '16px',
               fontFamily: "'Inter', sans-serif",
               display: 'flex',
               alignItems: 'center'
             }}>
-              <span className="me-2" style={{ fontSize: '1.2rem' }}>✨</span>
+              <span className="me-2" style={{ fontSize: '1.1rem' }}>✨</span>
               Smart Filters
             </h3>
 
-            {/* 📍 Location */}
+            {/* 📍 Location - Uniform Color */}
             <div className="mb-3">
               <Form.Label style={{
                 fontWeight: '600',
-                marginBottom: '8px',
-                fontSize: '0.9rem',
-                color: '#e11d48',
+                marginBottom: '6px',
+                fontSize: '0.85rem',
+                color: '#1f2937',
                 fontFamily: "'Inter', sans-serif",
                 display: 'flex',
                 alignItems: 'center'
               }}>
-                <span className="me-2" style={{ fontSize: '1rem' }}>📍</span>
+                <span className="me-2" style={{ fontSize: '0.9rem' }}>📍</span>
                 LOCATION
               </Form.Label>
               <Form.Select
@@ -346,10 +347,11 @@ const FindProperty = () => {
                 style={{
                   borderRadius: '8px',
                   border: '1px solid #d1d5db',
-                  padding: '10px 12px',
-                  fontSize: '0.9rem',
+                  padding: '8px 12px',
+                  fontSize: '0.85rem',
                   fontFamily: "'Inter', sans-serif",
-                  backgroundColor: '#ffffff'
+                  backgroundColor: '#ffffff',
+                  color: '#1f2937'
                 }}
               >
                 {indianLocations.map((location, index) => (
@@ -360,18 +362,18 @@ const FindProperty = () => {
               </Form.Select>
             </div>
 
-            {/* 🏠 Property Type */}
+            {/* 🏠 Property Type - Uniform Color */}
             <div className="mb-3">
               <Form.Label style={{
                 fontWeight: '600',
-                marginBottom: '8px',
-                fontSize: '0.9rem',
-                color: '#ea580c',
+                marginBottom: '6px',
+                fontSize: '0.85rem',
+                color: '#1f2937',
                 fontFamily: "'Inter', sans-serif",
                 display: 'flex',
                 alignItems: 'center'
               }}>
-                <span className="me-2" style={{ fontSize: '1rem' }}>🏠</span>
+                <span className="me-2" style={{ fontSize: '0.9rem' }}>🏠</span>
                 PROPERTY TYPE
               </Form.Label>
               <Form.Select
@@ -380,10 +382,11 @@ const FindProperty = () => {
                 style={{
                   borderRadius: '8px',
                   border: '1px solid #d1d5db',
-                  padding: '10px 12px',
-                  fontSize: '0.9rem',
+                  padding: '8px 12px',
+                  fontSize: '0.85rem',
                   fontFamily: "'Inter', sans-serif",
-                  backgroundColor: '#ffffff'
+                  backgroundColor: '#ffffff',
+                  color: '#1f2937'
                 }}
               >
                 {propertyTypes.map((type, index) => (
@@ -394,21 +397,21 @@ const FindProperty = () => {
               </Form.Select>
             </div>
 
-            {/* 💰 Price Range */}
+            {/* 💰 Price Range - Uniform Color */}
             <div className="mb-3">
               <Form.Label style={{
                 fontWeight: '600',
-                marginBottom: '8px',
-                fontSize: '0.9rem',
-                color: '#d97706',
+                marginBottom: '6px',
+                fontSize: '0.85rem',
+                color: '#1f2937',
                 fontFamily: "'Inter', sans-serif",
                 display: 'flex',
                 alignItems: 'center'
               }}>
-                <span className="me-2" style={{ fontSize: '1rem' }}>💰</span>
+                <span className="me-2" style={{ fontSize: '0.9rem' }}>💰</span>
                 PRICE RANGE
                 <span className="ms-auto" style={{
-                  fontSize: '0.75rem',
+                  fontSize: '0.7rem',
                   color: '#6b7280',
                   fontWeight: '400'
                 }}>
@@ -421,10 +424,11 @@ const FindProperty = () => {
                 style={{
                   borderRadius: '8px',
                   border: '1px solid #d1d5db',
-                  padding: '10px 12px',
-                  fontSize: '0.9rem',
+                  padding: '8px 12px',
+                  fontSize: '0.85rem',
                   fontFamily: "'Inter', sans-serif",
-                  backgroundColor: '#ffffff'
+                  backgroundColor: '#ffffff',
+                  color: '#1f2937'
                 }}
               >
                 <option value="">All Prices</option>
@@ -438,19 +442,19 @@ const FindProperty = () => {
               </Form.Select>
             </div>
 
-            {/* Conditional Bedrooms Filter */}
+            {/* Conditional Bedrooms Filter - Uniform Color */}
             {shouldShowBedroomFilter() && (
               <div className="mb-3">
                 <Form.Label style={{
                   fontWeight: '600',
-                  marginBottom: '8px',
-                  fontSize: '0.9rem',
-                  color: '#7c3aed',
+                  marginBottom: '6px',
+                  fontSize: '0.85rem',
+                  color: '#1f2937',
                   fontFamily: "'Inter', sans-serif",
                   display: 'flex',
                   alignItems: 'center'
                 }}>
-                  <span className="me-2" style={{ fontSize: '1rem' }}>🛏️</span>
+                  <span className="me-2" style={{ fontSize: '0.9rem' }}>🛏️</span>
                   BEDROOMS
                 </Form.Label>
                 <Form.Select
@@ -459,10 +463,11 @@ const FindProperty = () => {
                   style={{
                     borderRadius: '8px',
                     border: '1px solid #d1d5db',
-                    padding: '10px 12px',
-                    fontSize: '0.9rem',
+                    padding: '8px 12px',
+                    fontSize: '0.85rem',
                     fontFamily: "'Inter', sans-serif",
-                    backgroundColor: '#ffffff'
+                    backgroundColor: '#ffffff',
+                    color: '#1f2937'
                   }}
                 >
                   <option value="">Any Bedrooms</option>
@@ -485,9 +490,9 @@ const FindProperty = () => {
               background: 'linear-gradient(135deg, #a855f7 0%, #c084fc 100%)',
               border: 'none',
               borderRadius: '8px',
-              padding: '12px',
+              padding: '10px',
               fontWeight: '600',
-              fontSize: '0.9rem',
+              fontSize: '0.85rem',
               fontFamily: "'Inter', sans-serif",
               color: '#ffffff'
             }}
@@ -496,27 +501,27 @@ const FindProperty = () => {
             Clear All Filters
           </Button>
 
-          {/* 🎯 EXACT Availability Counter (From Reference) */}
+          {/* 🎯 Professional Availability Counter */}
           <div style={{
             background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
             borderRadius: '16px',
-            padding: '28px',
+            padding: '24px',
             textAlign: 'center',
             color: '#ffffff',
             fontFamily: "'Inter', sans-serif",
-            marginTop: '20px'
+            marginTop: '16px'
           }}>
             <h2 style={{
-              fontSize: '3rem',
+              fontSize: '2.5rem',
               fontWeight: '800',
-              margin: '0 0 8px 0',
+              margin: '0 0 6px 0',
               color: '#ffffff',
               lineHeight: '1'
             }}>
               {filteredProperties.length}
             </h2>
             <p style={{
-              fontSize: '1rem',
+              fontSize: '0.9rem',
               fontWeight: '500',
               margin: '0',
               color: '#ffffff'
