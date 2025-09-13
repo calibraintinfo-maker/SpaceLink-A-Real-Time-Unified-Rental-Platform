@@ -186,75 +186,49 @@ const FindProperty = () => {
         background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%)',
         minHeight: '320px',
         display: 'flex',
-        alignItems: 'center',
-        position: 'relative',
-        overflow: 'hidden'
+        alignItems: 'center'
       }}>
-        <div style={{
-          position: 'absolute',
-          top: '10%',
-          right: '5%',
-          width: '200px',
-          height: '200px',
-          background: 'rgba(255, 255, 255, 0.1)',
-          borderRadius: '50%',
-          filter: 'blur(40px)',
-          animation: 'float 8s ease-in-out infinite'
-        }}></div>
-        
-        <Container className="position-relative">
-          <div className="text-center">
-            <div style={{
-              display: 'inline-block',
-              background: 'rgba(255, 255, 255, 0.2)',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
-              borderRadius: '25px',
-              padding: '8px 20px',
-              marginBottom: '20px'
+        <Container className="text-center">
+          <div style={{
+            display: 'inline-block',
+            background: 'rgba(255, 255, 255, 0.2)',
+            borderRadius: '25px',
+            padding: '8px 20px',
+            marginBottom: '20px'
+          }}>
+            <span style={{
+              fontSize: '0.85rem',
+              fontWeight: '700',
+              letterSpacing: '0.5px',
+              textTransform: 'uppercase'
             }}>
-              <span style={{
-                fontSize: '0.85rem',
-                fontWeight: '700',
-                letterSpacing: '0.5px',
-                textTransform: 'uppercase',
-                color: 'white'
-              }}>
-                ⭐ {filteredProperties.length} Premium Properties Available
-              </span>
-            </div>
-            
-            <h1 style={{
-              fontSize: '3.5rem',
-              fontWeight: '900',
-              fontFamily: 'Inter, system-ui, sans-serif',
-              letterSpacing: '-0.025em',
-              lineHeight: '1.1',
-              marginBottom: '24px',
-              color: 'white'
-            }}>
-              Find Your Perfect Property
-            </h1>
-            
-            <p style={{
-              fontSize: '1.25rem',
-              fontWeight: '400',
-              color: 'rgba(255, 255, 255, 0.95)',
-              maxWidth: '600px',
-              margin: '0 auto',
-              lineHeight: '1.6',
-              fontFamily: 'Inter, system-ui, sans-serif'
-            }}>
-              Discover verified properties from our premium collection across India. 
-              From luxury apartments to sports turfs and commercial spaces.
-            </p>
+              ⭐ {filteredProperties.length} Premium Properties Available
+            </span>
           </div>
+          
+          <h1 style={{
+            fontSize: '3.5rem',
+            fontWeight: '900',
+            marginBottom: '24px'
+          }}>
+            Find Your Perfect Property
+          </h1>
+          
+          <p style={{
+            fontSize: '1.25rem',
+            maxWidth: '600px',
+            margin: '0 auto'
+          }}>
+            Discover verified properties from our premium collection across India. 
+            From luxury apartments to sports turfs and commercial spaces.
+          </p>
         </Container>
       </section>
 
-      {/* 🎯 MAIN LAYOUT - FIXED DASHBOARD SIZES */}
+      {/* 🎯 MAIN LAYOUT - FIXED DASHBOARD SIZE */}
       <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#ffffff' }}>
         
-        {/* 🔥 SIDEBAR - EXACT FIXED SIZE */}
+        {/* 🔥 SIDEBAR - EXACT FIXED SIZE 378px */}
         <div style={{
           width: '378px',
           minWidth: '378px',
@@ -262,17 +236,17 @@ const FindProperty = () => {
           minHeight: '100vh',
           background: '#ffffff',
           position: 'sticky',
-          top: '0',
+          top: 0,
           overflowY: 'auto',
           borderRight: '1px solid #e5e7eb',
           zIndex: 10
         }}>
           
-          {/* Header Section */}
+          {/* Header */}
           <div style={{
-            padding: '24px 24px 20px 24px',
+            padding: '23px 24px 18px 24px',
             borderBottom: '1px solid #e5e7eb',
-            backgroundColor: '#ffffff'
+            background: '#ffffff'
           }}>
             <div style={{
               display: 'flex',
@@ -306,8 +280,7 @@ const FindProperty = () => {
             <p style={{
               fontSize: '12px',
               color: '#6b7280',
-              margin: '0',
-              fontFamily: 'Inter, system-ui, sans-serif'
+              margin: '0'
             }}>
               Find your perfect match
             </p>
@@ -325,8 +298,7 @@ const FindProperty = () => {
                 <label style={{
                   fontSize: '14px',
                   fontWeight: '600',
-                  color: '#374151',
-                  fontFamily: 'Inter, system-ui, sans-serif'
+                  color: '#374151'
                 }}>
                   Search Properties
                 </label>
@@ -340,8 +312,7 @@ const FindProperty = () => {
                   padding: '10px 12px',
                   border: '1px solid #d1d5db',
                   borderRadius: '6px',
-                  fontSize: '13px',
-                  fontFamily: 'Inter, system-ui, sans-serif'
+                  fontSize: '13px'
                 }}
               />
             </div>
@@ -359,16 +330,14 @@ const FindProperty = () => {
                   <label style={{
                     fontSize: '13px',
                     fontWeight: '600',
-                    color: '#374151',
-                    fontFamily: 'Inter, system-ui, sans-serif'
+                    color: '#374151'
                   }}>
                     Location
                   </label>
                 </div>
                 <span style={{
                   fontSize: '11px',
-                  color: '#9ca3af',
-                  fontFamily: 'Inter, system-ui, sans-serif'
+                  color: '#9ca3af'
                 }}>
                   {indianLocations.length - 1} cities
                 </span>
@@ -380,8 +349,7 @@ const FindProperty = () => {
                   padding: '10px 12px',
                   border: '1px solid #d1d5db',
                   borderRadius: '6px',
-                  fontSize: '13px',
-                  fontFamily: 'Inter, system-ui, sans-serif'
+                  fontSize: '13px'
                 }}
               >
                 {indianLocations.map((location, index) => (
@@ -405,16 +373,14 @@ const FindProperty = () => {
                   <label style={{
                     fontSize: '13px',
                     fontWeight: '600',
-                    color: '#374151',
-                    fontFamily: 'Inter, system-ui, sans-serif'
+                    color: '#374151'
                   }}>
                     Property Type
                   </label>
                 </div>
                 <span style={{
                   fontSize: '11px',
-                  color: '#9ca3af',
-                  fontFamily: 'Inter, system-ui, sans-serif'
+                  color: '#9ca3af'
                 }}>
                   {propertyTypes.length - 1} categories
                 </span>
@@ -426,8 +392,7 @@ const FindProperty = () => {
                   padding: '10px 12px',
                   border: '1px solid #d1d5db',
                   borderRadius: '6px',
-                  fontSize: '13px',
-                  fontFamily: 'Inter, system-ui, sans-serif'
+                  fontSize: '13px'
                 }}
               >
                 {propertyTypes.map((type, index) => (
@@ -451,16 +416,14 @@ const FindProperty = () => {
                   <label style={{
                     fontSize: '13px',
                     fontWeight: '600',
-                    color: '#374151',
-                    fontFamily: 'Inter, system-ui, sans-serif'
+                    color: '#374151'
                   }}>
                     Price Range
                   </label>
                 </div>
                 <span style={{
                   fontSize: '11px',
-                  color: '#9ca3af',
-                  fontFamily: 'Inter, system-ui, sans-serif'
+                  color: '#9ca3af'
                 }}>
                   per month
                 </span>
@@ -472,8 +435,7 @@ const FindProperty = () => {
                   padding: '10px 12px',
                   border: '1px solid #d1d5db',
                   borderRadius: '6px',
-                  fontSize: '13px',
-                  fontFamily: 'Inter, system-ui, sans-serif'
+                  fontSize: '13px'
                 }}
               >
                 <option value="">All Prices</option>
@@ -498,7 +460,6 @@ const FindProperty = () => {
                 borderRadius: '6px',
                 fontSize: '13px',
                 fontWeight: '600',
-                fontFamily: 'Inter, system-ui, sans-serif',
                 marginBottom: '20px'
               }}
             >
@@ -518,15 +479,13 @@ const FindProperty = () => {
                 fontSize: '40px',
                 fontWeight: '800',
                 lineHeight: '1',
-                marginBottom: '6px',
-                fontFamily: 'Inter, system-ui, sans-serif'
+                marginBottom: '6px'
               }}>
                 {filteredProperties.length}
               </div>
               <div style={{
                 fontSize: '14px',
-                fontWeight: '600',
-                fontFamily: 'Inter, system-ui, sans-serif'
+                fontWeight: '600'
               }}>
                 Available
               </div>
@@ -550,16 +509,14 @@ const FindProperty = () => {
                   fontSize: '32px',
                   fontWeight: '800',
                   color: '#1f2937',
-                  marginBottom: '6px',
-                  fontFamily: 'Inter, system-ui, sans-serif'
+                  marginBottom: '6px'
                 }}>
                   {filteredProperties.length} Properties Found
                 </h2>
                 <p style={{
                   color: '#6b7280',
                   fontSize: '14px',
-                  marginBottom: '0',
-                  fontFamily: 'Inter, system-ui, sans-serif'
+                  marginBottom: '0'
                 }}>
                   Browse our premium collection • Updated {new Date().toLocaleDateString()} • All verified listings
                 </p>
@@ -577,8 +534,7 @@ const FindProperty = () => {
                     borderRadius: '6px 0 0 6px',
                     borderRight: 'none',
                     background: viewMode === 'grid' ? '#8b5cf6' : 'white',
-                    color: viewMode === 'grid' ? 'white' : '#374151',
-                    fontFamily: 'Inter, system-ui, sans-serif'
+                    color: viewMode === 'grid' ? 'white' : '#374151'
                   }}
                 >
                   🔲 GRID VIEW
@@ -592,8 +548,7 @@ const FindProperty = () => {
                     border: '1px solid #d1d5db',
                     borderRadius: '0 6px 6px 0',
                     background: viewMode === 'list' ? '#8b5cf6' : 'white',
-                    color: viewMode === 'list' ? 'white' : '#374151',
-                    fontFamily: 'Inter, system-ui, sans-serif'
+                    color: viewMode === 'list' ? 'white' : '#374151'
                   }}
                 >
                   📋 LIST VIEW
@@ -636,23 +591,9 @@ const FindProperty = () => {
 
       {/* CSS */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-        
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-10px); }
-        }
-        
         .form-control:focus, .form-select:focus {
           border-color: #8b5cf6 !important;
           box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1) !important;
-        }
-        
-        body {
-          font-family: 'Inter', system-ui, sans-serif;
-          font-weight: 400;
-          line-height: 1.5;
-          color: '#1f2937';
         }
       `}</style>
     </>
