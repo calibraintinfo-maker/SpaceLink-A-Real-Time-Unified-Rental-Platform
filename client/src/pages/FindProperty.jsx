@@ -21,8 +21,7 @@ const FindProperty = () => {
 
   const indianLocations = [
     "All Locations", "Mumbai", "Delhi", "Bangalore", "Chennai", "Kolkata", 
-    "Hyderabad", "Pune", "Ahmedabad", "Jaipur", "Surat", "Lucknow", "Kanpur", 
-    "Nagpur", "Indore", "Thane", "Bhopal", "Visakhapatnam", "Patna", "Vadodara"
+    "Hyderabad", "Pune", "Ahmedabad", "Jaipur", "Surat", "Lucknow", "Kanpur"
   ];
 
   const propertyTypes = [
@@ -39,9 +38,7 @@ const FindProperty = () => {
     try {
       setLoading(true);
       setError('');
-      
       const response = await api.properties.getAll();
-      
       let propertiesArray = [];
       
       if (Array.isArray(response)) {
@@ -62,7 +59,6 @@ const FindProperty = () => {
       
       setProperties(propertiesArray);
       setFilteredProperties(propertiesArray);
-      
     } catch (error) {
       setError(handleApiError(error));
     } finally {
@@ -157,9 +153,7 @@ const FindProperty = () => {
       <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '70vh' }}>
         <div className="text-center">
           <Spinner animation="border" style={{ color: '#7c3aed' }} />
-          <p className="mt-3" style={{ fontFamily: "'Inter', sans-serif", fontSize: '1.1rem' }}>
-            Loading properties...
-          </p>
+          <p className="mt-3" style={{ fontFamily: "'Inter', sans-serif" }}>Loading properties...</p>
         </div>
       </div>
     );
@@ -171,128 +165,43 @@ const FindProperty = () => {
         <Alert variant="danger">{error}</Alert>
         <Button onClick={fetchProperties} style={{ 
           background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)', 
-          border: 'none',
-          fontFamily: "'Inter', sans-serif"
-        }}>
-          Try Again
-        </Button>
+          border: 'none'
+        }}>Try Again</Button>
       </Container>
     );
   }
 
   return (
     <>
-      {/* 🔥 HERO SECTION - Keep Beautiful Design */}
-      <section style={{
-        background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%)',
-        color: 'white',
-        padding: '5rem 0',
-        position: 'relative',
-        overflow: 'hidden'
-      }}>
-        {/* Floating background elements */}
-        <div style={{
-          position: 'absolute',
-          top: '10%',
-          right: '5%',
-          width: '200px',
-          height: '200px',
-          background: 'rgba(255, 255, 255, 0.1)',
-          borderRadius: '50%',
-          filter: 'blur(40px)',
-          animation: 'float 8s ease-in-out infinite'
-        }}></div>
-        <div style={{
-          position: 'absolute',
-          bottom: '10%',
-          left: '5%',
-          width: '150px',
-          height: '150px',
-          background: 'rgba(255, 255, 255, 0.08)',
-          borderRadius: '50%',
-          filter: 'blur(30px)',
-          animation: 'float 6s ease-in-out infinite reverse'
-        }}></div>
-        
-        <Container className="position-relative">
-          <div className="text-center">
-            <div style={{
-              display: 'inline-block',
-              background: 'rgba(255, 255, 255, 0.2)',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
-              borderRadius: '25px',
-              padding: '8px 20px',
-              marginBottom: '20px'
-            }}>
-              <span style={{
-                fontSize: '0.85rem',
-                fontWeight: '700',
-                letterSpacing: '0.5px',
-                textTransform: 'uppercase',
-                color: 'white'
-              }}>
-                ✨ {filteredProperties.length} Premium Properties Available
-              </span>
-            </div>
-            
-            <h1 style={{
-              fontSize: '3.5rem',
-              fontWeight: '900',
-              fontFamily: 'Inter, Plus Jakarta Sans, system-ui, sans-serif',
-              letterSpacing: '-0.025em',
-              lineHeight: '1.1',
-              marginBottom: '24px',
-              color: 'white'
-            }}>
-              Find Your Perfect Property
-            </h1>
-            
-            <p style={{
-              fontSize: '1.25rem',
-              fontWeight: '400',
-              color: 'rgba(255, 255, 255, 0.95)',
-              maxWidth: '600px',
-              margin: '0 auto',
-              lineHeight: '1.6',
-              fontFamily: 'Inter, system-ui, sans-serif',
-              textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
-            }}>
-              Discover verified properties from our premium collection across India. 
-              From luxury apartments to sports turfs and commercial spaces.
-            </p>
-          </div>
-        </Container>
-      </section>
-
-      {/* 🎯 MAIN LAYOUT */}
+      {/* 🎯 MAIN LAYOUT - Exactly like Reference */}
       <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#f8fafc' }}>
         
-        {/* 🎯 PROFESSIONAL DASHBOARD - Uniform Colors & Perfect Sizing */}
+        {/* 🎯 PERFECT COMPACT DASHBOARD - Exact Reference Sizing */}
         <div style={{
-          width: '320px',
-          minWidth: '320px',
+          width: '280px',
+          minWidth: '280px',
           backgroundColor: '#ffffff',
-          padding: '28px 22px',
+          padding: '20px 18px',
           borderRight: '1px solid #e5e7eb',
           position: 'sticky',
           top: 0,
           height: '100vh',
           overflowY: 'auto',
-          boxShadow: '2px 0 10px rgba(124, 58, 237, 0.08)'
+          boxShadow: '1px 0 6px rgba(0, 0, 0, 0.05)'
         }}>
           
-          {/* 🔍 Search Properties - Professional Uniform Color */}
+          {/* 🔍 Search Properties - Compact */}
           <div className="mb-4">
             <h3 style={{
               color: '#1f2937',
               fontWeight: '600',
-              fontSize: '1rem',
-              marginBottom: '12px',
+              fontSize: '0.9rem',
+              marginBottom: '10px',
               fontFamily: "'Inter', sans-serif",
               display: 'flex',
               alignItems: 'center'
             }}>
-              <span className="me-2" style={{ fontSize: '1.1rem' }}>🔍</span>
+              <span className="me-2" style={{ fontSize: '1rem' }}>🔍</span>
               Search Properties
             </h3>
             <Form.Control
@@ -301,57 +210,53 @@ const FindProperty = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               style={{
-                borderRadius: '8px',
+                borderRadius: '6px',
                 border: '1px solid #d1d5db',
-                padding: '12px 14px',
-                fontSize: '0.9rem',
-                fontFamily: "'Inter', sans-serif",
-                backgroundColor: '#ffffff',
-                color: '#1f2937'
+                padding: '8px 10px',
+                fontSize: '0.8rem',
+                fontFamily: "'Inter', sans-serif"
               }}
             />
           </div>
 
-          {/* ✨ Smart Filters - Professional Uniform Color */}
+          {/* ✨ Smart Filters - Compact */}
           <div className="mb-4">
             <h3 style={{
               color: '#1f2937',
               fontWeight: '600',
-              fontSize: '1rem',
-              marginBottom: '16px',
+              fontSize: '0.9rem',
+              marginBottom: '12px',
               fontFamily: "'Inter', sans-serif",
               display: 'flex',
               alignItems: 'center'
             }}>
-              <span className="me-2" style={{ fontSize: '1.1rem' }}>✨</span>
+              <span className="me-2" style={{ fontSize: '1rem' }}>✨</span>
               Smart Filters
             </h3>
 
-            {/* 📍 Location - Uniform Color */}
+            {/* 📍 Location */}
             <div className="mb-3">
               <Form.Label style={{
                 fontWeight: '600',
-                marginBottom: '6px',
-                fontSize: '0.85rem',
+                marginBottom: '5px',
+                fontSize: '0.75rem',
                 color: '#1f2937',
                 fontFamily: "'Inter', sans-serif",
                 display: 'flex',
                 alignItems: 'center'
               }}>
-                <span className="me-2" style={{ fontSize: '0.9rem' }}>📍</span>
+                <span className="me-1" style={{ fontSize: '0.8rem' }}>📍</span>
                 LOCATION
               </Form.Label>
               <Form.Select
                 value={filters.location}
                 onChange={(e) => handleFilterChange('location', e.target.value)}
                 style={{
-                  borderRadius: '8px',
+                  borderRadius: '6px',
                   border: '1px solid #d1d5db',
-                  padding: '8px 12px',
-                  fontSize: '0.85rem',
-                  fontFamily: "'Inter', sans-serif",
-                  backgroundColor: '#ffffff',
-                  color: '#1f2937'
+                  padding: '6px 8px',
+                  fontSize: '0.75rem',
+                  fontFamily: "'Inter', sans-serif"
                 }}
               >
                 {indianLocations.map((location, index) => (
@@ -362,31 +267,29 @@ const FindProperty = () => {
               </Form.Select>
             </div>
 
-            {/* 🏠 Property Type - Uniform Color */}
+            {/* 🏠 Property Type */}
             <div className="mb-3">
               <Form.Label style={{
                 fontWeight: '600',
-                marginBottom: '6px',
-                fontSize: '0.85rem',
+                marginBottom: '5px',
+                fontSize: '0.75rem',
                 color: '#1f2937',
                 fontFamily: "'Inter', sans-serif",
                 display: 'flex',
                 alignItems: 'center'
               }}>
-                <span className="me-2" style={{ fontSize: '0.9rem' }}>🏠</span>
+                <span className="me-1" style={{ fontSize: '0.8rem' }}>🏠</span>
                 PROPERTY TYPE
               </Form.Label>
               <Form.Select
                 value={filters.propertyType}
                 onChange={(e) => handleFilterChange('propertyType', e.target.value)}
                 style={{
-                  borderRadius: '8px',
+                  borderRadius: '6px',
                   border: '1px solid #d1d5db',
-                  padding: '8px 12px',
-                  fontSize: '0.85rem',
-                  fontFamily: "'Inter', sans-serif",
-                  backgroundColor: '#ffffff',
-                  color: '#1f2937'
+                  padding: '6px 8px',
+                  fontSize: '0.75rem',
+                  fontFamily: "'Inter', sans-serif"
                 }}
               >
                 {propertyTypes.map((type, index) => (
@@ -397,38 +300,30 @@ const FindProperty = () => {
               </Form.Select>
             </div>
 
-            {/* 💰 Price Range - Uniform Color */}
+            {/* 💰 Price Range */}
             <div className="mb-3">
               <Form.Label style={{
                 fontWeight: '600',
-                marginBottom: '6px',
-                fontSize: '0.85rem',
+                marginBottom: '5px',
+                fontSize: '0.75rem',
                 color: '#1f2937',
                 fontFamily: "'Inter', sans-serif",
                 display: 'flex',
                 alignItems: 'center'
               }}>
-                <span className="me-2" style={{ fontSize: '0.9rem' }}>💰</span>
+                <span className="me-1" style={{ fontSize: '0.8rem' }}>💰</span>
                 PRICE RANGE
-                <span className="ms-auto" style={{
-                  fontSize: '0.7rem',
-                  color: '#6b7280',
-                  fontWeight: '400'
-                }}>
-                  per month
-                </span>
+                <span className="ms-auto" style={{ fontSize: '0.65rem', color: '#6b7280' }}>per month</span>
               </Form.Label>
               <Form.Select
                 value={filters.priceRange}
                 onChange={(e) => handleFilterChange('priceRange', e.target.value)}
                 style={{
-                  borderRadius: '8px',
+                  borderRadius: '6px',
                   border: '1px solid #d1d5db',
-                  padding: '8px 12px',
-                  fontSize: '0.85rem',
-                  fontFamily: "'Inter', sans-serif",
-                  backgroundColor: '#ffffff',
-                  color: '#1f2937'
+                  padding: '6px 8px',
+                  fontSize: '0.75rem',
+                  fontFamily: "'Inter', sans-serif"
                 }}
               >
                 <option value="">All Prices</option>
@@ -442,32 +337,30 @@ const FindProperty = () => {
               </Form.Select>
             </div>
 
-            {/* Conditional Bedrooms Filter - Uniform Color */}
+            {/* Bedrooms Filter */}
             {shouldShowBedroomFilter() && (
               <div className="mb-3">
                 <Form.Label style={{
                   fontWeight: '600',
-                  marginBottom: '6px',
-                  fontSize: '0.85rem',
+                  marginBottom: '5px',
+                  fontSize: '0.75rem',
                   color: '#1f2937',
                   fontFamily: "'Inter', sans-serif",
                   display: 'flex',
                   alignItems: 'center'
                 }}>
-                  <span className="me-2" style={{ fontSize: '0.9rem' }}>🛏️</span>
+                  <span className="me-1" style={{ fontSize: '0.8rem' }}>🛏️</span>
                   BEDROOMS
                 </Form.Label>
                 <Form.Select
                   value={filters.bedrooms}
                   onChange={(e) => handleFilterChange('bedrooms', e.target.value)}
                   style={{
-                    borderRadius: '8px',
+                    borderRadius: '6px',
                     border: '1px solid #d1d5db',
-                    padding: '8px 12px',
-                    fontSize: '0.85rem',
-                    fontFamily: "'Inter', sans-serif",
-                    backgroundColor: '#ffffff',
-                    color: '#1f2937'
+                    padding: '6px 8px',
+                    fontSize: '0.75rem',
+                    fontFamily: "'Inter', sans-serif"
                   }}
                 >
                   <option value="">Any Bedrooms</option>
@@ -481,202 +374,136 @@ const FindProperty = () => {
             )}
           </div>
 
-          {/* Clear Filters Button */}
+          {/* Clear Filters */}
           <Button
-            className="w-100 mb-4"
+            className="w-100 mb-3"
             onClick={clearFilters}
             disabled={getActiveFiltersCount() === 0}
             style={{
               background: 'linear-gradient(135deg, #a855f7 0%, #c084fc 100%)',
               border: 'none',
-              borderRadius: '8px',
-              padding: '10px',
+              borderRadius: '6px',
+              padding: '8px',
               fontWeight: '600',
-              fontSize: '0.85rem',
-              fontFamily: "'Inter', sans-serif",
-              color: '#ffffff'
+              fontSize: '0.75rem',
+              fontFamily: "'Inter', sans-serif"
             }}
           >
-            <span className="me-2">✕</span>
-            Clear All Filters
+            ✕ Clear All Filters
           </Button>
 
-          {/* 🎯 Professional Availability Counter */}
+          {/* Available Counter - Compact */}
           <div style={{
             background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-            borderRadius: '16px',
-            padding: '24px',
+            borderRadius: '12px',
+            padding: '18px',
             textAlign: 'center',
             color: '#ffffff',
-            fontFamily: "'Inter', sans-serif",
-            marginTop: '16px'
+            fontFamily: "'Inter', sans-serif"
           }}>
             <h2 style={{
-              fontSize: '2.5rem',
+              fontSize: '2rem',
               fontWeight: '800',
-              margin: '0 0 6px 0',
-              color: '#ffffff',
+              margin: '0 0 4px 0',
               lineHeight: '1'
             }}>
               {filteredProperties.length}
             </h2>
             <p style={{
-              fontSize: '0.9rem',
+              fontSize: '0.8rem',
               fontWeight: '500',
-              margin: '0',
-              color: '#ffffff'
+              margin: '0'
             }}>
               Available
             </p>
           </div>
         </div>
 
-        {/* 🎯 MAIN CONTENT AREA */}
+        {/* 🎯 MAIN CONTENT */}
         <div style={{ flex: 1, backgroundColor: '#ffffff' }}>
-          <Container fluid className="py-4 px-4">
+          <Container fluid className="py-3 px-3">
             
-            {/* Results Header */}
+            {/* Header */}
             <div style={{ 
               display: 'flex', 
               justifyContent: 'space-between', 
               alignItems: 'center', 
-              marginBottom: '30px',
-              flexWrap: 'wrap',
-              gap: '15px'
+              marginBottom: '20px'
             }}>
               <div>
                 <h2 style={{
                   fontWeight: '800',
-                  marginBottom: '8px',
+                  marginBottom: '4px',
                   color: '#1f2937',
-                  fontSize: '2.2rem',
-                  fontFamily: "'Inter', sans-serif",
-                  letterSpacing: '-0.025em'
+                  fontSize: '1.8rem',
+                  fontFamily: "'Inter', sans-serif"
                 }}>
                   {filteredProperties.length} Properties Found
                 </h2>
                 <p style={{
                   color: '#6b7280',
-                  fontSize: '1rem',
+                  fontSize: '0.85rem',
                   marginBottom: '0',
-                  fontFamily: "'Inter', sans-serif",
-                  fontWeight: '400'
+                  fontFamily: "'Inter', sans-serif"
                 }}>
                   Browse our premium collection • Updated {new Date().toLocaleDateString()} • All verified listings
                 </p>
               </div>
 
-              {/* 🎯 PERFECT VIEW TOGGLE BUTTONS */}
+              {/* View Toggle */}
               <div style={{
                 display: 'flex',
-                gap: '8px',
+                gap: '4px',
                 background: '#f1f5f9',
-                padding: '6px',
-                borderRadius: '12px',
-                border: '1px solid #e2e8f0'
+                padding: '4px',
+                borderRadius: '8px'
               }}>
                 <Button
                   onClick={() => setViewMode('grid')}
                   style={{
                     fontWeight: '600',
-                    padding: '10px 18px',
-                    fontSize: '0.85rem',
-                    background: viewMode === 'grid' ? 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)' : 'transparent',
+                    padding: '6px 12px',
+                    fontSize: '0.75rem',
+                    background: viewMode === 'grid' ? '#7c3aed' : 'transparent',
                     color: viewMode === 'grid' ? 'white' : '#7c3aed',
                     border: 'none',
-                    borderRadius: '8px',
-                    transition: 'all 0.3s ease',
-                    fontFamily: "'Inter', sans-serif",
-                    minWidth: '100px'
+                    borderRadius: '6px'
                   }}
                 >
-                  ⊞ Grid
+                  Grid
                 </Button>
                 <Button
                   onClick={() => setViewMode('list')}
                   style={{
                     fontWeight: '600',
-                    padding: '10px 18px',
-                    fontSize: '0.85rem',
-                    background: viewMode === 'list' ? 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)' : 'transparent',
+                    padding: '6px 12px',
+                    fontSize: '0.75rem',
+                    background: viewMode === 'list' ? '#7c3aed' : 'transparent',
                     color: viewMode === 'list' ? 'white' : '#7c3aed',
                     border: 'none',
-                    borderRadius: '8px',
-                    transition: 'all 0.3s ease',
-                    fontFamily: "'Inter', sans-serif",
-                    minWidth: '100px'
+                    borderRadius: '6px'
                   }}
                 >
-                  ☰ List
+                  List
                 </Button>
               </div>
             </div>
 
             {/* Properties Display */}
             {filteredProperties.length === 0 ? (
-              <div className="text-center py-5" style={{
-                background: 'linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)',
-                borderRadius: '20px',
-                border: '1px solid #e2e8f0',
-                padding: '3rem 2rem'
-              }}>
-                <div className="mb-4" style={{ fontSize: '4rem', opacity: '0.6' }}>
-                  {searchQuery ? '🔍' : getActiveFiltersCount() > 0 ? '🎯' : '🏠'}
-                </div>
-                <h3 style={{
-                  fontWeight: '800',
-                  marginBottom: '16px',
-                  color: '#1f2937',
-                  fontSize: '1.8rem',
-                  fontFamily: "'Inter', sans-serif"
-                }}>
-                  {searchQuery ? 'No Search Results' : 
-                   getActiveFiltersCount() > 0 ? 'No Matching Properties' : 
-                   'No Properties Available'}
-                </h3>
-                <p style={{
-                  color: '#6b7280',
-                  fontSize: '1.1rem',
-                  marginBottom: '24px',
-                  maxWidth: '600px',
-                  margin: '0 auto 24px auto',
-                  fontFamily: "'Inter', sans-serif",
-                  lineHeight: '1.6'
-                }}>
-                  {searchQuery ? `We couldn't find any properties matching "${searchQuery}". Try adjusting your search terms.` :
-                   getActiveFiltersCount() > 0 ? 'No properties match your current filters. Try adjusting or clearing some filters.' :
-                   'No properties are currently available. Please check back later.'}
-                </p>
-                <Button
-                  style={{
-                    background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-                    border: 'none',
-                    fontWeight: '700',
-                    borderRadius: '12px',
-                    padding: '14px 32px',
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: '0.9rem'
-                  }}
-                  size="lg"
-                  onClick={clearFilters}
-                >
-                  {getActiveFiltersCount() > 0 ? 'Clear All Filters' : 'Refresh Properties'}
-                </Button>
+              <div className="text-center py-5">
+                <h3>No Properties Found</h3>
+                <Button onClick={clearFilters}>Clear Filters</Button>
               </div>
             ) : (
               <>
                 {viewMode === 'grid' ? (
-                  <Row className="g-4">
+                  <Row className="g-3">
                     {filteredProperties.map((property) => {
                       if (!property || !property._id) return null;
-                      
                       return (
                         <Col key={property._id} lg={4} md={6} sm={12}>
-                          <PropertyCard 
-                            property={property} 
-                            showOwner={false}
-                            viewMode="grid"
-                          />
+                          <PropertyCard property={property} viewMode="grid" />
                         </Col>
                       );
                     })}
@@ -685,15 +512,7 @@ const FindProperty = () => {
                   <div>
                     {filteredProperties.map((property) => {
                       if (!property || !property._id) return null;
-                      
-                      return (
-                        <PropertyCard 
-                          key={property._id}
-                          property={property} 
-                          showOwner={false}
-                          viewMode="list"
-                        />
-                      );
+                      return <PropertyCard key={property._id} property={property} viewMode="list" />;
                     })}
                   </div>
                 )}
@@ -703,63 +522,12 @@ const FindProperty = () => {
         </div>
       </div>
 
-      {/* 🎯 PERFECT CSS */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-        
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(5deg); }
-        }
-        
-        * {
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-        }
-        
-        body {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-          font-weight: 400;
-          line-height: 1.6;
-          color: '#1f2937';
-          background-color: '#f8fafc';
-        }
-        
-        h1, h2, h3, h4, h5, h6 {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-          font-weight: 800;
-          line-height: 1.2;
-          letter-spacing: -0.025em;
-          margin-bottom: 0.5em;
-          color: '#1f2937';
-        }
-        
-        .btn {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
-          font-weight: 700 !important;
-          letter-spacing: 0.025em !important;
-          transition: all 0.3s ease !important;
-        }
-        
+        body { font-family: 'Inter', sans-serif; }
         .form-control:focus, .form-select:focus {
-          box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1) !important;
+          box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.1) !important;
           border-color: #7c3aed !important;
-        }
-        
-        @media (max-width: 768px) {
-          .d-flex {
-            flex-direction: column;
-            align-items: flex-start !important;
-            gap: 20px;
-          }
-          
-          h1 { 
-            font-size: 2.5rem !important; 
-          }
-          
-          h2 { 
-            font-size: 2rem !important; 
-          }
         }
       `}</style>
     </>
