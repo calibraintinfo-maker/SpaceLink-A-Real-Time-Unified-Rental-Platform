@@ -15,6 +15,7 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid' }) => {
   const getRentType = () => {
     if (!property.price) return 'monthly';
     const price = Number(property.price);
+    // Smart logic: if price > 100k, likely yearly, otherwise monthly
     return price > 100000 ? 'yearly' : 'monthly';
   };
 
@@ -74,7 +75,7 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid' }) => {
             </div>
           </Col>
           
-          <Col md={8}>
+          <Col md={5}>
             <div style={{ padding: '20px' }}>
               <div style={{
                 display: 'flex',
@@ -86,8 +87,7 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid' }) => {
                   fontSize: '11px',
                   color: '#6b7280',
                   fontWeight: '600',
-                  textTransform: 'uppercase',
-                  fontFamily: 'Inter, system-ui, sans-serif'
+                  textTransform: 'uppercase'
                 }}>
                   {property.address?.city || 'Namakkal'}, {property.address?.state || 'Tamil Nadu'}
                 </span>
@@ -97,8 +97,7 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid' }) => {
                 fontSize: '20px',
                 fontWeight: '700',
                 color: '#1f2937',
-                marginBottom: '6px',
-                fontFamily: 'Inter, system-ui, sans-serif'
+                marginBottom: '6px'
               }}>
                 {property.title || 'land'}
               </h3>
@@ -106,8 +105,7 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid' }) => {
               <p style={{
                 fontSize: '13px',
                 color: '#6b7280',
-                marginBottom: '10px',
-                fontFamily: 'Inter, system-ui, sans-serif'
+                marginBottom: '10px'
               }}>
                 {property.description ? 
                   property.description.substring(0, 80) + '...' : 
@@ -128,76 +126,67 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid' }) => {
                 </Badge>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div>
-                  {/* 🎯 FIXED PRICE DISPLAY */}
-                  <div style={{
-                    fontSize: '20px',
-                    fontWeight: '800',
-                    color: '#059669',
-                    marginBottom: '2px',
-                    fontFamily: 'Inter, system-ui, sans-serif'
-                  }}>
-                    ₹{formatPrice(property.price) || '1,22,345'}/{getRentType()}
-                  </div>
-                  <div style={{
+              {/* 🎯 FIXED PRICE DISPLAY - NO MORE DUPLICATES */}
+              <div style={{
+                fontSize: '20px',
+                fontWeight: '800',
+                color: '#059669',
+                marginBottom: '2px'
+              }}>
+                ₹{formatPrice(property.price) || '1,22,345'}/{getRentType()}
+              </div>
+              <div style={{
+                fontSize: '11px',
+                color: '#6b7280'
+              }}>
+                Available for {getRentType()}
+              </div>
+            </div>
+          </Col>
+          
+          <Col md={3}>
+            <div style={{ 
+              padding: '20px', 
+              display: 'flex', 
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'end',
+              height: '100%'
+            }}>
+              {/* 🎯 FIXED BUTTON DESIGN */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
+                <Button
+                  onClick={handleViewDetails}
+                  style={{
+                    padding: '8px 16px',
                     fontSize: '11px',
-                    color: '#6b7280',
-                    fontFamily: 'Inter, system-ui, sans-serif'
-                  }}>
-                    Available for {getRentType()}
-                  </div>
-                </div>
-                
-                {/* 🎯 FIXED BUTTON DESIGN */}
-                <div style={{ display: 'flex', gap: '6px' }}>
-                  <Button
-                    onClick={handleViewDetails}
-                    style={{
-                      padding: '6px 14px',
-                      fontSize: '11px',
-                      fontWeight: '600',
-                      borderRadius: '4px',
-                      border: '1px solid #8b5cf6',
-                      backgroundColor: 'transparent',
-                      color: '#8b5cf6',
-                      fontFamily: 'Inter, system-ui, sans-serif',
-                      transition: 'all 0.2s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = '#8b5cf6';
-                      e.target.style.color = 'white';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = 'transparent';
-                      e.target.style.color = '#8b5cf6';
-                    }}
-                  >
-                    VIEW DETAILS
-                  </Button>
-                  <Button
-                    onClick={handleBookNow}
-                    style={{
-                      padding: '6px 14px',
-                      fontSize: '11px',
-                      fontWeight: '600',
-                      borderRadius: '4px',
-                      border: 'none',
-                      backgroundColor: '#8b5cf6',
-                      color: 'white',
-                      fontFamily: 'Inter, system-ui, sans-serif',
-                      transition: 'all 0.2s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = '#7c3aed';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = '#8b5cf6';
-                    }}
-                  >
-                    BOOK NOW
-                  </Button>
-                </div>
+                    fontWeight: '600',
+                    borderRadius: '4px',
+                    border: '1px solid #8b5cf6',
+                    backgroundColor: 'transparent',
+                    color: '#8b5cf6',
+                    transition: 'all 0.2s ease',
+                    width: '100%'
+                  }}
+                >
+                  VIEW DETAILS
+                </Button>
+                <Button
+                  onClick={handleBookNow}
+                  style={{
+                    padding: '8px 16px',
+                    fontSize: '11px',
+                    fontWeight: '600',
+                    borderRadius: '4px',
+                    border: 'none',
+                    backgroundColor: '#8b5cf6',
+                    color: 'white',
+                    transition: 'all 0.2s ease',
+                    width: '100%'
+                  }}
+                >
+                  BOOK NOW
+                </Button>
               </div>
             </div>
           </Col>
@@ -215,14 +204,6 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid' }) => {
       height: '100%',
       boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
       transition: 'all 0.2s ease'
-    }}
-    onMouseEnter={(e) => {
-      e.currentTarget.style.boxShadow = '0 4px 12px rgba(139, 92, 246, 0.15)';
-      e.currentTarget.style.transform = 'translateY(-2px)';
-    }}
-    onMouseLeave={(e) => {
-      e.currentTarget.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.05)';
-      e.currentTarget.style.transform = 'translateY(0)';
     }}>
       <div style={{ position: 'relative', height: '180px' }}>
         <img
@@ -276,8 +257,7 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid' }) => {
             fontSize: '11px',
             color: '#6b7280',
             fontWeight: '600',
-            textTransform: 'uppercase',
-            fontFamily: 'Inter, system-ui, sans-serif'
+            textTransform: 'uppercase'
           }}>
             {property.address?.city || 'Namakkal'}, {property.address?.state || 'Tamil Nadu'}
           </span>
@@ -287,8 +267,7 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid' }) => {
           fontSize: '16px',
           fontWeight: '700',
           color: '#1f2937',
-          marginBottom: '6px',
-          fontFamily: 'Inter, system-ui, sans-serif'
+          marginBottom: '6px'
         }}>
           {property.title || 'land'}
         </h3>
@@ -296,8 +275,7 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid' }) => {
         <p style={{
           fontSize: '12px',
           color: '#6b7280',
-          marginBottom: '10px',
-          fontFamily: 'Inter, system-ui, sans-serif'
+          marginBottom: '10px'
         }}>
           {property.description ? 
             property.description.substring(0, 50) + '...' : 
@@ -318,21 +296,19 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid' }) => {
           </Badge>
         </div>
 
-        {/* 🎯 FIXED PRICE DISPLAY */}
+        {/* 🎯 FIXED PRICE DISPLAY - NO MORE DUPLICATES */}
         <div style={{
           fontSize: '18px',
           fontWeight: '800',
           color: '#059669',
-          marginBottom: '2px',
-          fontFamily: 'Inter, system-ui, sans-serif'
+          marginBottom: '2px'
         }}>
           ₹{formatPrice(property.price) || '1,22,345'}/{getRentType()}
         </div>
         <div style={{
           fontSize: '10px',
           color: '#6b7280',
-          marginBottom: '12px',
-          fontFamily: 'Inter, system-ui, sans-serif'
+          marginBottom: '12px'
         }}>
           Available for {getRentType()}
         </div>
@@ -350,16 +326,7 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid' }) => {
               border: '1px solid #8b5cf6',
               backgroundColor: 'transparent',
               color: '#8b5cf6',
-              fontFamily: 'Inter, system-ui, sans-serif',
               transition: 'all 0.2s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.backgroundColor = '#8b5cf6';
-              e.target.style.color = 'white';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.backgroundColor = 'transparent';
-              e.target.style.color = '#8b5cf6';
             }}
           >
             VIEW DETAILS
@@ -375,14 +342,7 @@ const PropertyCard = React.memo(({ property, viewMode = 'grid' }) => {
               border: 'none',
               backgroundColor: '#8b5cf6',
               color: 'white',
-              fontFamily: 'Inter, system-ui, sans-serif',
               transition: 'all 0.2s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.backgroundColor = '#7c3aed';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.backgroundColor = '#8b5cf6';
             }}
           >
             BOOK NOW
