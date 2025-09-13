@@ -21,8 +21,7 @@ const FindProperty = () => {
 
   const indianLocations = [
     "All Locations", "Mumbai", "Delhi", "Bangalore", "Chennai", "Kolkata", 
-    "Hyderabad", "Pune", "Ahmedabad", "Jaipur", "Surat", "Lucknow", "Kanpur", 
-    "Nagpur", "Indore", "Thane", "Bhopal", "Visakhapatnam", "Patna", "Vadodara"
+    "Hyderabad", "Pune", "Ahmedabad", "Jaipur", "Surat", "Lucknow", "Kanpur"
   ];
 
   const propertyTypes = [
@@ -149,74 +148,9 @@ const FindProperty = () => {
     return filterCount + (searchQuery.trim() ? 1 : 0);
   };
 
-  const handleViewDetails = (propertyId) => {
-    navigate(`/property/${propertyId}`);
-  };
-
-  const handleBookNow = (propertyId) => {
-    navigate(`/book/${propertyId}`);
-  };
-
-  const handleImageError = (e) => {
-    e.target.src = 'https://via.placeholder.com/400x240/e2e8f0/64748b?text=Property+Image';
-  };
-
-  const renderPropertyDetails = (property) => {
-    if (!property) return [];
-    
-    const details = [];
-    
-    if (property.subtype && residentialTypes.includes(property.subtype)) {
-      if (property.bedrooms > 0) {
-        details.push(
-          <Badge key="bedrooms" bg="light" text="dark" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
-            {property.bedrooms} BHK
-          </Badge>
-        );
-      }
-      if (property.bathrooms > 0) {
-        details.push(
-          <Badge key="bathrooms" bg="light" text="dark" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
-            {property.bathrooms} Bath
-          </Badge>
-        );
-      }
-    }
-
-    if (property.size) {
-      details.push(
-        <Badge key="area" bg="light" text="dark" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
-          {property.size}
-        </Badge>
-      );
-    }
-
-    if (property.capacity) {
-      details.push(
-        <Badge key="capacity" bg="info" className="me-2 mb-2" style={{ fontSize: '0.8rem' }}>
-          {property.capacity}
-        </Badge>
-      );
-    }
-
-    return details;
-  };
-
-  const getSafeRentType = (property) => {
-    if (!property?.rentType) return 'rental';
-    return Array.isArray(property.rentType) ? property.rentType[0] : property.rentType;
-  };
-
-  const getSafeRentTypes = (property) => {
-    if (!property?.rentType) return ['rental'];
-    return Array.isArray(property.rentType) ? property.rentType : [property.rentType];
-  };
-
-  // Loading state
   if (loading) {
     return (
       <div style={{ minHeight: '100vh', backgroundColor: '#ffffff' }}>
-        {/* Hero Section */}
         <section className="py-5 text-white" style={{
           background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%)',
           minHeight: '300px',
@@ -228,7 +162,6 @@ const FindProperty = () => {
             <p className="fs-5 opacity-90">Discover verified properties from our premium collection across India</p>
           </Container>
         </section>
-
         <Container className="py-5 text-center">
           <Spinner animation="border" style={{ color: '#7c3aed' }} />
           <p className="mt-3 fs-5 fw-semibold">Loading properties...</p>
@@ -237,35 +170,12 @@ const FindProperty = () => {
     );
   }
 
-  // Error state
   if (error) {
     return (
-      <div style={{ minHeight: '100vh', backgroundColor: '#ffffff' }}>
-        {/* Hero Section */}
-        <section className="py-5 text-white" style={{
-          background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%)',
-          minHeight: '300px',
-          display: 'flex',
-          alignItems: 'center'
-        }}>
-          <Container className="text-center">
-            <h1 className="display-4 fw-bold mb-4">Find Your Perfect Property</h1>
-            <p className="fs-5 opacity-90">Discover verified properties from our premium collection across India</p>
-          </Container>
-        </section>
-
-        <section>
-          <Container className="py-5">
-            <Alert variant="danger" className="text-center">
-              <Alert.Heading>Error Loading Properties</Alert.Heading>
-              <p>{error}</p>
-              <Button onClick={fetchProperties} style={{ backgroundColor: '#7c3aed', borderColor: '#7c3aed' }}>
-                Try Again
-              </Button>
-            </Alert>
-          </Container>
-        </section>
-      </div>
+      <Container className="py-5 text-center">
+        <Alert variant="danger">{error}</Alert>
+        <Button onClick={fetchProperties}>Try Again</Button>
+      </Container>
     );
   }
 
@@ -280,7 +190,6 @@ const FindProperty = () => {
         position: 'relative',
         overflow: 'hidden'
       }}>
-        {/* Floating background elements */}
         <div style={{
           position: 'absolute',
           top: '10%',
@@ -321,7 +230,7 @@ const FindProperty = () => {
                 textTransform: 'uppercase',
                 color: 'white'
               }}>
-                ✨ {filteredProperties.length} Premium Properties Available
+                ⭐ {filteredProperties.length} Premium Properties Available
               </span>
             </div>
             
@@ -357,11 +266,11 @@ const FindProperty = () => {
       {/* 🎯 MAIN LAYOUT */}
       <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#ffffff' }}>
         
-        {/* 🔥 PROFESSIONAL SIDEBAR - FIXED COLORS */}
+        {/* 🔥 PROFESSIONAL WHITE SIDEBAR - FIXED! */}
         <div style={{
           width: '400px',
           minHeight: '100vh',
-          background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)',
+          background: '#ffffff',
           position: 'sticky',
           top: 0,
           overflowY: 'auto',
@@ -369,10 +278,10 @@ const FindProperty = () => {
           boxShadow: '4px 0 20px rgba(0, 0, 0, 0.08)'
         }}>
           
-          {/* 🎯 FIXED DASHBOARD HEADER - Better Color Combination */}
+          {/* 🎯 WHITE DASHBOARD HEADER - FIXED! */}
           <div className="p-4 border-bottom" style={{
-            background: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)',
-            color: 'white'
+            background: '#ffffff',
+            color: '#1f2937'
           }}>
             <div className="d-flex align-items-center justify-content-between">
               <div>
@@ -387,7 +296,7 @@ const FindProperty = () => {
                   Smart Property Filters
                 </h5>
                 <small style={{
-                  color: 'white',
+                  color: '#6b7280',
                   fontSize: '0.9rem',
                   fontWeight: '500',
                   fontFamily: 'Inter, system-ui, sans-serif'
@@ -396,12 +305,12 @@ const FindProperty = () => {
                 </small>
               </div>
               <div style={{
-                background: 'rgba(255, 255, 255, 0.15)',
+                background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
                 borderRadius: '20px',
                 padding: '8px 12px',
                 fontSize: '0.85rem',
                 fontWeight: '700',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
+                color: 'white',
                 fontFamily: 'Inter, system-ui, sans-serif'
               }}>
                 {filteredProperties.length} found
@@ -446,14 +355,6 @@ const FindProperty = () => {
                   e.target.style.boxShadow = 'none';
                 }}
               />
-              {searchQuery && (
-                <small className="text-muted mt-2 d-block" style={{
-                  fontFamily: 'Inter, system-ui, sans-serif',
-                  fontSize: '0.85rem'
-                }}>
-                  <span className="fw-semibold">{filteredProperties.length} results</span> for "{searchQuery}"
-                </small>
-              )}
             </div>
 
             {/* Location Filter */}
@@ -538,23 +439,6 @@ const FindProperty = () => {
                   </option>
                 ))}
               </Form.Select>
-              
-              {/* Property Type Info */}
-              {filters.propertyType && filters.propertyType !== "All Categories" && (
-                <div className="mt-2 p-2 bg-light rounded" style={{
-                  fontSize: '0.8rem',
-                  fontFamily: 'Inter, system-ui, sans-serif'
-                }}>
-                  <span className="text-muted">
-                    {filters.propertyType === 'Property Rentals' && "Includes: Villa, Apartment, House, Studio, Flat"}
-                    {filters.propertyType === 'Commercial' && "Includes: Office, Shop, Warehouse, Showroom"}
-                    {filters.propertyType === 'Event' && "Includes: Banquet Hall, Garden, Meeting Room"}
-                    {filters.propertyType === 'Turf' && "Includes: Football Turf, Cricket Ground, Multi-Sport, Tennis Court"}
-                    {filters.propertyType === 'Parking' && "Includes: Car Parking, Bike Parking, Garage"}
-                    {filters.propertyType === 'Land' && "Includes: Agricultural, Commercial Plot, Residential Plot"}
-                  </span>
-                </div>
-              )}
             </div>
 
             {/* Price Range Filter */}
@@ -616,14 +500,6 @@ const FindProperty = () => {
                 }}>
                   <span className="me-2" style={{ fontSize: '1.1rem' }}>🛏️</span>
                   Bedrooms
-                  <span className="ms-auto" style={{
-                    fontSize: '0.75rem',
-                    fontWeight: '500',
-                    color: '#6b7280',
-                    fontFamily: 'Inter, system-ui, sans-serif'
-                  }}>
-                    residential only
-                  </span>
                 </Form.Label>
                 <Form.Select
                   value={filters.bedrooms}
@@ -667,127 +543,30 @@ const FindProperty = () => {
               Clear All Filters {getActiveFiltersCount() > 0 && `(${getActiveFiltersCount()})`}
             </Button>
 
-            {/* Active Filters Summary */}
+            {/* Available Counter */}
             <div style={{
-              background: 'linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%)',
-              padding: '20px',
+              background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
               borderRadius: '16px',
-              border: '1px solid #cbd5e1'
+              padding: '24px',
+              textAlign: 'center',
+              color: 'white'
             }}>
-              <div className="d-flex justify-content-between align-items-center mb-3">
-                <span style={{
-                  fontWeight: '700',
-                  color: '#1f2937',
-                  fontSize: '1rem',
-                  fontFamily: 'Inter, system-ui, sans-serif',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}>
-                  <span className="me-2">🎯</span>
-                  Active Filters
-                </span>
-                <div style={{
-                  background: getActiveFiltersCount() > 0 ? 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)' : '#6b7280',
-                  color: 'white',
-                  fontSize: '0.8rem',
-                  fontWeight: '600',
-                  padding: '6px 12px',
-                  borderRadius: '20px',
-                  minWidth: '30px',
-                  textAlign: 'center',
-                  fontFamily: 'Inter, system-ui, sans-serif'
-                }}>
-                  {getActiveFiltersCount()}
-                </div>
+              <div style={{
+                fontSize: '48px',
+                fontWeight: '800',
+                lineHeight: '1',
+                marginBottom: '8px',
+                fontFamily: "'Inter', sans-serif"
+              }}>
+                {filteredProperties.length}
               </div>
-              
-              <div className="d-flex flex-wrap gap-2">
-                {searchQuery && (
-                  <div style={{
-                    background: '#3b82f6',
-                    color: 'white',
-                    padding: '4px 10px',
-                    borderRadius: '20px',
-                    fontSize: '0.8rem',
-                    fontWeight: '500',
-                    fontFamily: 'Inter, system-ui, sans-serif'
-                  }}>
-                    {searchQuery.substring(0, 15)}{searchQuery.length > 15 ? '...' : ''}
-                  </div>
-                )}
-                
-                {filters.location && (
-                  <div style={{
-                    background: '#10b981',
-                    color: 'white',
-                    padding: '4px 10px',
-                    borderRadius: '20px',
-                    fontSize: '0.8rem',
-                    fontWeight: '500',
-                    fontFamily: 'Inter, system-ui, sans-serif'
-                  }}>
-                    📍 {filters.location}
-                  </div>
-                )}
-                
-                {filters.propertyType && (
-                  <div style={{
-                    background: '#f59e0b',
-                    color: 'white',
-                    padding: '4px 10px',
-                    borderRadius: '20px',
-                    fontSize: '0.8rem',
-                    fontWeight: '500',
-                    fontFamily: 'Inter, system-ui, sans-serif'
-                  }}>
-                    🏠 {filters.propertyType}
-                  </div>
-                )}
-                
-                {filters.priceRange && (
-                  <div style={{
-                    background: '#ef4444',
-                    color: 'white',
-                    padding: '4px 10px',
-                    borderRadius: '20px',
-                    fontSize: '0.8rem',
-                    fontWeight: '500',
-                    fontFamily: 'Inter, system-ui, sans-serif'
-                  }}>
-                    💰 ₹{filters.priceRange.replace('-', ' - ₹')}
-                  </div>
-                )}
-                
-                {filters.bedrooms && (
-                  <div style={{
-                    background: '#8b5cf6',
-                    color: 'white',
-                    padding: '4px 10px',
-                    borderRadius: '20px',
-                    fontSize: '0.8rem',
-                    fontWeight: '500',
-                    fontFamily: 'Inter, system-ui, sans-serif'
-                  }}>
-                    🛏️ {filters.bedrooms}+ BHK
-                  </div>
-                )}
+              <div style={{
+                fontSize: '16px',
+                fontWeight: '600',
+                fontFamily: "'Inter', sans-serif"
+              }}>
+                Available
               </div>
-              
-              {getActiveFiltersCount() === 0 && (
-                <div className="text-center">
-                  <p className="text-muted mb-0" style={{
-                    fontSize: '0.85rem',
-                    fontFamily: 'Inter, system-ui, sans-serif'
-                  }}>
-                    No active filters
-                  </p>
-                  <small className="text-muted" style={{
-                    fontFamily: 'Inter, system-ui, sans-serif'
-                  }}>
-                    Use filters above to refine your search
-                  </small>
-                </div>
-              )}
             </div>
           </div>
         </div>
@@ -820,310 +599,77 @@ const FindProperty = () => {
                 </p>
               </div>
 
-              {/* View Toggle Buttons */}
-              <div className="btn-group shadow-sm" role="group" style={{
+              {/* 🎯 FIXED VIEW TOGGLE BUTTONS - NO OVERLAP! */}
+              <div style={{
+                display: 'flex',
+                background: '#f1f5f9',
+                padding: '6px',
                 borderRadius: '12px',
-                overflow: 'hidden'
+                gap: '4px'
               }}>
                 <Button
-                  variant={viewMode === 'grid' ? 'primary' : 'outline-secondary'}
                   onClick={() => setViewMode('grid')}
                   style={{
-                    fontWeight: '700',
-                    padding: '14px 24px',
-                    fontSize: '0.9rem',
-                    backgroundColor: viewMode === 'grid' ? '#7c3aed' : 'white',
-                    borderColor: viewMode === 'grid' ? '#7c3aed' : '#d1d5db',
-                    color: viewMode === 'grid' ? 'white' : '#4b5563',
-                    borderRadius: '12px 0 0 12px',
-                    transition: 'all 0.3s ease',
+                    padding: '12px 24px',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    border: 'none',
+                    borderRadius: '8px',
+                    background: viewMode === 'grid' ? 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)' : 'transparent',
+                    color: viewMode === 'grid' ? 'white' : '#7c3aed',
                     fontFamily: 'Inter, system-ui, sans-serif',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.025em'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (viewMode !== 'grid') {
-                      e.target.style.backgroundColor = '#f3f4f6';
-                      e.target.style.color = '#1f2937';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (viewMode !== 'grid') {
-                      e.target.style.backgroundColor = 'white';
-                      e.target.style.color = '#4b5563';
-                    }
+                    minWidth: '120px'
                   }}
                 >
-                  ⊞ GRID VIEW
+                  🔲 GRID VIEW
                 </Button>
                 <Button
-                  variant={viewMode === 'list' ? 'primary' : 'outline-secondary'}
                   onClick={() => setViewMode('list')}
                   style={{
-                    fontWeight: '700',
-                    padding: '14px 24px',
-                    fontSize: '0.9rem',
-                    backgroundColor: viewMode === 'list' ? '#7c3aed' : 'white',
-                    borderColor: viewMode === 'list' ? '#7c3aed' : '#d1d5db',
-                    color: viewMode === 'list' ? 'white' : '#4b5563',
-                    borderRadius: '0 12px 12px 0',
-                    transition: 'all 0.3s ease',
+                    padding: '12px 24px',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    border: 'none',
+                    borderRadius: '8px',
+                    background: viewMode === 'list' ? 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)' : 'transparent',
+                    color: viewMode === 'list' ? 'white' : '#7c3aed',
                     fontFamily: 'Inter, system-ui, sans-serif',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.025em'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (viewMode !== 'list') {
-                      e.target.style.backgroundColor = '#f3f4f6';
-                      e.target.style.color = '#1f2937';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (viewMode !== 'list') {
-                      e.target.style.backgroundColor = 'white';
-                      e.target.style.color = '#4b5563';
-                    }
+                    minWidth: '120px'
                   }}
                 >
-                  ☰ LIST VIEW
+                  📋 LIST VIEW
                 </Button>
               </div>
             </div>
 
-            {/* Properties Grid/List */}
+            {/* Properties Display */}
             {filteredProperties.length === 0 ? (
-              <div className="text-center py-5" style={{
-                background: 'linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)',
-                borderRadius: '20px',
-                border: '1px solid #e2e8f0',
-                padding: '3rem'
-              }}>
-                <div className="mb-4" style={{ fontSize: '5rem', opacity: '0.6' }}>
-                  {searchQuery ? '🔍' : getActiveFiltersCount() > 0 ? '🎯' : '🏠'}
-                </div>
-                <h3 style={{
-                  fontWeight: '800',
-                  marginBottom: '16px',
-                  color: '#111827',
-                  fontSize: '1.8rem',
-                  fontFamily: 'Inter, system-ui, sans-serif'
-                }}>
-                  {searchQuery ? 'No Search Results' : 
-                   getActiveFiltersCount() > 0 ? 'No Matching Properties' : 
-                   'No Properties Available'}
-                </h3>
-                <p style={{
-                  color: '#6b7280',
-                  fontSize: '1.05rem',
-                  marginBottom: '24px',
-                  maxWidth: '500px',
-                  margin: '0 auto 24px auto',
-                  fontFamily: 'Inter, system-ui, sans-serif',
-                  lineHeight: '1.6'
-                }}>
-                  {searchQuery ? `We couldn't find any properties matching "${searchQuery}". Try adjusting your search terms.` :
-                   getActiveFiltersCount() > 0 ? 'No properties match your current filters. Try adjusting or clearing some filters.' :
-                   'No properties are currently available. Please check back later.'}
-                </p>
-                <Button
-                  style={{
-                    background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-                    border: 'none',
-                    fontWeight: '700',
-                    borderRadius: '12px',
-                    padding: '12px 30px',
-                    fontFamily: 'Inter, system-ui, sans-serif',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.025em'
-                  }}
-                  size="lg"
-                  onClick={clearFilters}
-                >
-                  {getActiveFiltersCount() > 0 ? 'Clear All Filters' : 'Refresh Properties'}
-                </Button>
+              <div className="text-center py-5">
+                <h3>No Properties Found</h3>
+                <Button onClick={clearFilters}>Clear All Filters</Button>
               </div>
             ) : (
-              <Row className={viewMode === 'grid' ? 'row-cols-1 row-cols-md-2 row-cols-xl-3 g-4' : 'g-3'}>
-                {filteredProperties.map((property) => {
-                  if (!property || !property._id) return null;
-                  
-                  return (
-                    <Col key={property._id} className={viewMode === 'list' ? 'col-12' : ''}>
-                      {viewMode === 'list' ? (
-                        // 🔥 PROFESSIONAL COMPACT LIST VIEW
-                        <Card className="border-0 shadow-sm" style={{
-                          borderRadius: '16px',
-                          transition: 'all 0.3s ease',
-                          cursor: 'pointer',
-                          minHeight: '160px',
-                          backgroundColor: '#ffffff',
-                          border: '1px solid #e5e7eb'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.transform = 'translateY(-2px)';
-                          e.currentTarget.style.boxShadow = '0 8px 20px rgba(124, 58, 237, 0.12)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.transform = 'translateY(0)';
-                          e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.08)';
-                        }}>
-                          <Row className="g-0 align-items-center">
-                            <Col md={4}>
-                              <div style={{ position: 'relative', height: '160px', overflow: 'hidden' }}>
-                                <img
-                                  src={getImageUrl((Array.isArray(property.images) ? property.images[0] : property.image))}
-                                  alt={property.title || 'Property'}
-                                  onError={handleImageError}
-                                  style={{
-                                    width: '100%',
-                                    height: '100%',
-                                    objectFit: 'cover',
-                                    borderRadius: '16px 0 0 16px'
-                                  }}
-                                />
-                                <div className="position-absolute top-0 start-0 p-2">
-                                  <Badge bg="success" className="me-1 fw-semibold shadow-sm" style={{
-                                    borderRadius: '15px',
-                                    padding: '4px 8px',
-                                    fontSize: '0.65rem',
-                                    fontFamily: 'Inter, system-ui, sans-serif',
-                                    fontWeight: '600',
-                                    textTransform: 'uppercase'
-                                  }}>
-                                    Available
-                                  </Badge>
-                                  <Badge bg="primary" className="fw-semibold shadow-sm" style={{
-                                    borderRadius: '15px',
-                                    padding: '4px 8px',
-                                    fontSize: '0.65rem',
-                                    fontFamily: 'Inter, system-ui, sans-serif',
-                                    fontWeight: '600',
-                                    textTransform: 'uppercase'
-                                  }}>
-                                    Verified
-                                  </Badge>
-                                </div>
-                              </div>
-                            </Col>
-                            
-                            <Col md={8}>
-                              <Card.Body className="p-3" style={{
-                                minHeight: '160px',
-                                display: 'flex',
-                                flexDirection: 'column'
-                              }}>
-                                <div className="d-flex align-items-center mb-2">
-                                  <span className="me-2" style={{ color: '#7c3aed', fontSize: '0.9rem' }}>📍</span>
-                                  <span style={{
-                                    fontSize: '0.75rem',
-                                    color: '#64748b',
-                                    fontFamily: 'Inter, system-ui, sans-serif',
-                                    fontWeight: '500',
-                                    textTransform: 'uppercase',
-                                    letterSpacing: '0.3px'
-                                  }}>
-                                    {property.address?.city || 'City'}, {property.address?.state || 'State'}
-                                  </span>
-                                </div>
-                                
-                                <Card.Title style={{
-                                  color: '#111827',
-                                  fontSize: '1.1rem',
-                                  lineHeight: '1.3',
-                                  fontWeight: '700',
-                                  marginBottom: '8px',
-                                  fontFamily: 'Inter, system-ui, sans-serif'
-                                }}>
-                                  {property.title || 'Property Title'}
-                                </Card.Title>
-                                
-                                <p className="mb-2" style={{
-                                  fontSize: '0.8rem',
-                                  lineHeight: '1.5',
-                                  flexGrow: 1,
-                                  color: '#374151',
-                                  fontFamily: 'Inter, system-ui, sans-serif',
-                                  fontWeight: '400'
-                                }}>
-                                  {property.description ? 
-                                    property.description.substring(0, 80) + '...' : 
-                                    'Premium property with modern amenities.'
-                                  }
-                                </p>
-                                
-                                <div className="mb-2">
-                                  <div className="d-flex flex-wrap gap-1">
-                                    {renderPropertyDetails(property)}
-                                  </div>
-                                </div>
-                                
-                                <div className="d-flex justify-content-between align-items-center mt-auto">
-                                  <div>
-                                    <div style={{
-                                      fontSize: '1.2rem',
-                                      fontWeight: '800',
-                                      color: '#059669',
-                                      marginBottom: '2px',
-                                      fontFamily: 'Inter, system-ui, sans-serif'
-                                    }}>
-                                      ₹{formatPrice(property.price)}/{getSafeRentType(property)}
-                                    </div>
-                                    <small style={{
-                                      color: '#64748b',
-                                      fontSize: '0.7rem',
-                                      fontFamily: 'Inter, system-ui, sans-serif',
-                                      fontWeight: '500'
-                                    }}>
-                                      Available for {getSafeRentTypes(property).join(', ') || 'rental'}
-                                    </small>
-                                  </div>
-                                  
-                                  <div className="d-flex gap-2">
-                                    <Button
-                                      variant="outline-primary"
-                                      size="sm"
-                                      style={{
-                                        borderRadius: '8px',
-                                        padding: '6px 12px',
-                                        borderWidth: '1px',
-                                        fontWeight: '600',
-                                        fontSize: '0.7rem',
-                                        borderColor: '#7c3aed',
-                                        color: '#7c3aed',
-                                        fontFamily: 'Inter, system-ui, sans-serif'
-                                      }}
-                                      onClick={() => handleViewDetails(property._id)}
-                                    >
-                                      VIEW
-                                    </Button>
-                                    <Button
-                                      size="sm"
-                                      style={{
-                                        background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-                                        border: 'none',
-                                        borderRadius: '8px',
-                                        padding: '6px 12px',
-                                        fontWeight: '600',
-                                        fontSize: '0.7rem',
-                                        fontFamily: 'Inter, system-ui, sans-serif'
-                                      }}
-                                      onClick={() => handleBookNow(property._id)}
-                                    >
-                                      BOOK
-                                    </Button>
-                                  </div>
-                                </div>
-                              </Card.Body>
-                            </Col>
-                          </Row>
-                        </Card>
-                      ) : (
-                        <PropertyCard property={property} showOwner={false} />
-                      )}
-                    </Col>
-                  );
-                })}
-              </Row>
+              <>
+                {viewMode === 'grid' ? (
+                  <Row className="g-4">
+                    {filteredProperties.map((property) => {
+                      if (!property || !property._id) return null;
+                      return (
+                        <Col key={property._id} lg={4} md={6} sm={12}>
+                          <PropertyCard property={property} viewMode="grid" />
+                        </Col>
+                      );
+                    })}
+                  </Row>
+                ) : (
+                  <div>
+                    {filteredProperties.map((property) => {
+                      if (!property || !property._id) return null;
+                      return <PropertyCard key={property._id} property={property} viewMode="list" />;
+                    })}
+                  </div>
+                )}
+              </>
             )}
           </Container>
         </div>
@@ -1136,10 +682,6 @@ const FindProperty = () => {
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
           50% { transform: translateY(-20px) rotate(5deg); }
-        }
-        
-        .btn-group .btn:focus {
-          box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.3) !important;
         }
         
         .form-control:focus, .form-select:focus {
@@ -1157,7 +699,6 @@ const FindProperty = () => {
           font-weight: 400;
           line-height: 1.6;
           color: '#1f2937';
-          letter-spacing: 0.005em;
         }
         
         h1, h2, h3, h4, h5, h6 {
@@ -1167,49 +708,6 @@ const FindProperty = () => {
           letter-spacing: -0.025em;
           margin-bottom: 0.5em;
           color: '#0f172a';
-        }
-        
-        .card-title {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
-          font-weight: 800 !important;
-          color: '#111827' !important;
-          letter-spacing: -0.02em !important;
-          line-height: 1.3 !important;
-        }
-        
-        .card-text {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
-          color: '#374151' !important;
-          font-weight: 400 !important;
-          line-height: 1.6 !important;
-        }
-        
-        .btn {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
-          font-weight: 700 !important;
-          letter-spacing: 0.025em !important;
-          transition: all 0.3s ease !important;
-          border-radius: 12px !important;
-        }
-        
-        @media (max-width: 768px) {
-          .btn-group {
-            flex-direction: column !important;
-            width: 100% !important;
-          }
-          
-          .btn-group .btn {
-            border-radius: 8px !important;
-            margin-bottom: 4px;
-          }
-          
-          h1 { 
-            font-size: 2.5rem !important; 
-          }
-          
-          h2 { 
-            font-size: 2rem !important; 
-          }
         }
       `}</style>
     </>
