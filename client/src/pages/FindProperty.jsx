@@ -357,7 +357,7 @@ const FindProperty = () => {
       {/* 🎯 MAIN LAYOUT */}
       <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#ffffff' }}>
         
-        {/* 🔥 PROFESSIONAL SIDEBAR */}
+        {/* 🔥 PROFESSIONAL SIDEBAR - FIXED COLORS */}
         <div style={{
           width: '400px',
           minHeight: '100vh',
@@ -369,9 +369,9 @@ const FindProperty = () => {
           boxShadow: '4px 0 20px rgba(0, 0, 0, 0.08)'
         }}>
           
-          {/* DASHBOARD Header */}
+          {/* 🎯 FIXED DASHBOARD HEADER - Better Color Combination */}
           <div className="p-4 border-bottom" style={{
-            background: 'linear-gradient(135deg, #6b46c1 0%, #805ad5 100%)',
+            background: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)',
             color: 'white'
           }}>
             <div className="d-flex align-items-center justify-content-between">
@@ -396,12 +396,12 @@ const FindProperty = () => {
                 </small>
               </div>
               <div style={{
-                background: 'rgba(255, 255, 255, 0.2)',
+                background: 'rgba(255, 255, 255, 0.15)',
                 borderRadius: '20px',
                 padding: '8px 12px',
                 fontSize: '0.85rem',
                 fontWeight: '700',
-                border: '1px solid rgba(255, 255, 255, 0.3)',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
                 fontFamily: 'Inter, system-ui, sans-serif'
               }}>
                 {filteredProperties.length} found
@@ -950,26 +950,26 @@ const FindProperty = () => {
                   return (
                     <Col key={property._id} className={viewMode === 'list' ? 'col-12' : ''}>
                       {viewMode === 'list' ? (
-                        // 🔥 PROFESSIONAL LIST VIEW
+                        // 🔥 PROFESSIONAL COMPACT LIST VIEW
                         <Card className="border-0 shadow-sm" style={{
-                          borderRadius: '20px',
+                          borderRadius: '16px',
                           transition: 'all 0.3s ease',
                           cursor: 'pointer',
-                          minHeight: '240px',
+                          minHeight: '160px',
                           backgroundColor: '#ffffff',
                           border: '1px solid #e5e7eb'
                         }}
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.transform = 'translateY(-4px)';
-                          e.currentTarget.style.boxShadow = '0 12px 30px rgba(124, 58, 237, 0.15)';
+                          e.currentTarget.style.transform = 'translateY(-2px)';
+                          e.currentTarget.style.boxShadow = '0 8px 20px rgba(124, 58, 237, 0.12)';
                         }}
                         onMouseLeave={(e) => {
                           e.currentTarget.style.transform = 'translateY(0)';
-                          e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.08)';
+                          e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.08)';
                         }}>
                           <Row className="g-0 align-items-center">
                             <Col md={4}>
-                              <div style={{ position: 'relative', height: '240px', overflow: 'hidden' }}>
+                              <div style={{ position: 'relative', height: '160px', overflow: 'hidden' }}>
                                 <img
                                   src={getImageUrl((Array.isArray(property.images) ? property.images[0] : property.image))}
                                   alt={property.title || 'Property'}
@@ -978,29 +978,27 @@ const FindProperty = () => {
                                     width: '100%',
                                     height: '100%',
                                     objectFit: 'cover',
-                                    borderRadius: '20px 0 0 20px'
+                                    borderRadius: '16px 0 0 16px'
                                   }}
                                 />
-                                <div className="position-absolute top-0 start-0 p-3">
-                                  <Badge bg="success" className="me-2 fw-semibold shadow-sm" style={{
-                                    borderRadius: '20px',
-                                    padding: '8px 14px',
-                                    fontSize: '0.75rem',
+                                <div className="position-absolute top-0 start-0 p-2">
+                                  <Badge bg="success" className="me-1 fw-semibold shadow-sm" style={{
+                                    borderRadius: '15px',
+                                    padding: '4px 8px',
+                                    fontSize: '0.65rem',
                                     fontFamily: 'Inter, system-ui, sans-serif',
                                     fontWeight: '600',
-                                    textTransform: 'uppercase',
-                                    letterSpacing: '0.025em'
+                                    textTransform: 'uppercase'
                                   }}>
                                     Available
                                   </Badge>
                                   <Badge bg="primary" className="fw-semibold shadow-sm" style={{
-                                    borderRadius: '20px',
-                                    padding: '8px 14px',
-                                    fontSize: '0.75rem',
+                                    borderRadius: '15px',
+                                    padding: '4px 8px',
+                                    fontSize: '0.65rem',
                                     fontFamily: 'Inter, system-ui, sans-serif',
                                     fontWeight: '600',
-                                    textTransform: 'uppercase',
-                                    letterSpacing: '0.025em'
+                                    textTransform: 'uppercase'
                                   }}>
                                     Verified
                                   </Badge>
@@ -1009,55 +1007,52 @@ const FindProperty = () => {
                             </Col>
                             
                             <Col md={8}>
-                              <Card.Body className="p-4" style={{
-                                minHeight: '240px',
+                              <Card.Body className="p-3" style={{
+                                minHeight: '160px',
                                 display: 'flex',
                                 flexDirection: 'column'
                               }}>
-                                <div className="d-flex align-items-center mb-3">
-                                  <span className="me-2" style={{ color: '#7c3aed', fontSize: '1.1rem' }}>📍</span>
+                                <div className="d-flex align-items-center mb-2">
+                                  <span className="me-2" style={{ color: '#7c3aed', fontSize: '0.9rem' }}>📍</span>
                                   <span style={{
-                                    fontSize: '0.9rem',
+                                    fontSize: '0.75rem',
                                     color: '#64748b',
                                     fontFamily: 'Inter, system-ui, sans-serif',
                                     fontWeight: '500',
                                     textTransform: 'uppercase',
-                                    letterSpacing: '0.5px'
+                                    letterSpacing: '0.3px'
                                   }}>
                                     {property.address?.city || 'City'}, {property.address?.state || 'State'}
                                   </span>
                                 </div>
                                 
-                                {/* PROFESSIONAL Enhanced card title */}
                                 <Card.Title style={{
                                   color: '#111827',
-                                  fontSize: '1.5rem',
+                                  fontSize: '1.1rem',
                                   lineHeight: '1.3',
-                                  fontWeight: '800',
-                                  marginBottom: '12px',
-                                  fontFamily: 'Inter, system-ui, sans-serif',
-                                  letterSpacing: '-0.015em'
+                                  fontWeight: '700',
+                                  marginBottom: '8px',
+                                  fontFamily: 'Inter, system-ui, sans-serif'
                                 }}>
                                   {property.title || 'Property Title'}
                                 </Card.Title>
                                 
-                                {/* PROFESSIONAL Enhanced description */}
-                                <p className="mb-3" style={{
-                                  fontSize: '0.95rem',
-                                  lineHeight: '1.6',
+                                <p className="mb-2" style={{
+                                  fontSize: '0.8rem',
+                                  lineHeight: '1.5',
                                   flexGrow: 1,
                                   color: '#374151',
                                   fontFamily: 'Inter, system-ui, sans-serif',
                                   fontWeight: '400'
                                 }}>
                                   {property.description ? 
-                                    property.description.substring(0, 140) + '...' : 
-                                    'Premium property with modern amenities and excellent location.'
+                                    property.description.substring(0, 80) + '...' : 
+                                    'Premium property with modern amenities.'
                                   }
                                 </p>
                                 
-                                <div className="mb-3">
-                                  <div className="d-flex flex-wrap gap-2">
+                                <div className="mb-2">
+                                  <div className="d-flex flex-wrap gap-1">
                                     {renderPropertyDetails(property)}
                                   </div>
                                 </div>
@@ -1065,61 +1060,56 @@ const FindProperty = () => {
                                 <div className="d-flex justify-content-between align-items-center mt-auto">
                                   <div>
                                     <div style={{
-                                      fontSize: '1.6rem',
+                                      fontSize: '1.2rem',
                                       fontWeight: '800',
                                       color: '#059669',
-                                      marginBottom: '4px',
-                                      fontFamily: 'Inter, system-ui, sans-serif',
-                                      letterSpacing: '-0.01em'
+                                      marginBottom: '2px',
+                                      fontFamily: 'Inter, system-ui, sans-serif'
                                     }}>
                                       ₹{formatPrice(property.price)}/{getSafeRentType(property)}
                                     </div>
                                     <small style={{
                                       color: '#64748b',
-                                      fontSize: '0.8rem',
+                                      fontSize: '0.7rem',
                                       fontFamily: 'Inter, system-ui, sans-serif',
-                                      fontWeight: '500',
-                                      textTransform: 'uppercase',
-                                      letterSpacing: '0.5px'
+                                      fontWeight: '500'
                                     }}>
                                       Available for {getSafeRentTypes(property).join(', ') || 'rental'}
                                     </small>
                                   </div>
                                   
-                                  <div className="d-flex gap-3">
+                                  <div className="d-flex gap-2">
                                     <Button
                                       variant="outline-primary"
+                                      size="sm"
                                       style={{
-                                        borderRadius: '12px',
-                                        padding: '12px 20px',
-                                        borderWidth: '2px',
-                                        fontWeight: '700',
-                                        fontSize: '0.8rem',
+                                        borderRadius: '8px',
+                                        padding: '6px 12px',
+                                        borderWidth: '1px',
+                                        fontWeight: '600',
+                                        fontSize: '0.7rem',
                                         borderColor: '#7c3aed',
                                         color: '#7c3aed',
-                                        fontFamily: 'Inter, system-ui, sans-serif',
-                                        textTransform: 'uppercase',
-                                        letterSpacing: '0.05em'
+                                        fontFamily: 'Inter, system-ui, sans-serif'
                                       }}
                                       onClick={() => handleViewDetails(property._id)}
                                     >
-                                      View Details
+                                      VIEW
                                     </Button>
                                     <Button
+                                      size="sm"
                                       style={{
                                         background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
                                         border: 'none',
-                                        borderRadius: '12px',
-                                        padding: '12px 20px',
-                                        fontWeight: '700',
-                                        fontSize: '0.8rem',
-                                        fontFamily: 'Inter, system-ui, sans-serif',
-                                        textTransform: 'uppercase',
-                                        letterSpacing: '0.05em'
+                                        borderRadius: '8px',
+                                        padding: '6px 12px',
+                                        fontWeight: '600',
+                                        fontSize: '0.7rem',
+                                        fontFamily: 'Inter, system-ui, sans-serif'
                                       }}
                                       onClick={() => handleBookNow(property._id)}
                                     >
-                                      Book Now
+                                      BOOK
                                     </Button>
                                   </div>
                                 </div>
