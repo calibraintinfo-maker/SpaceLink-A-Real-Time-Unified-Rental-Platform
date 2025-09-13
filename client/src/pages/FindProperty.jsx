@@ -251,34 +251,37 @@ const FindProperty = () => {
         </Container>
       </section>
 
-      {/* 🎯 MAIN LAYOUT - EXACT REFERENCE MATCH */}
+      {/* 🎯 MAIN LAYOUT - FIXED DASHBOARD SIZES */}
       <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#ffffff' }}>
         
-        {/* 🔥 SIDEBAR - EXACTLY LIKE REFERENCE */}
+        {/* 🔥 SIDEBAR - EXACT FIXED SIZE */}
         <div style={{
           width: '378px',
           minWidth: '378px',
+          maxWidth: '378px',
           minHeight: '100vh',
           background: '#ffffff',
           position: 'sticky',
-          top: 0,
+          top: '0',
           overflowY: 'auto',
-          borderRight: '1px solid #e5e7eb'
+          borderRight: '1px solid #e5e7eb',
+          zIndex: 10
         }}>
           
           {/* Header Section */}
           <div style={{
-            padding: '24px',
-            borderBottom: '1px solid #e5e7eb'
+            padding: '24px 24px 20px 24px',
+            borderBottom: '1px solid #e5e7eb',
+            backgroundColor: '#ffffff'
           }}>
             <div style={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              marginBottom: '8px'
+              marginBottom: '6px'
             }}>
               <h4 style={{
-                fontSize: '18px',
+                fontSize: '16px',
                 fontWeight: '700',
                 color: '#1f2937',
                 margin: '0',
@@ -286,22 +289,22 @@ const FindProperty = () => {
                 display: 'flex',
                 alignItems: 'center'
               }}>
-                <span style={{ marginRight: '8px', fontSize: '16px' }}>✨</span>
+                <span style={{ marginRight: '8px', fontSize: '14px' }}>✨</span>
                 Smart Property Filters
               </h4>
               <div style={{
                 backgroundColor: '#8b5cf6',
                 color: 'white',
-                padding: '6px 12px',
-                borderRadius: '20px',
-                fontSize: '14px',
+                padding: '4px 10px',
+                borderRadius: '14px',
+                fontSize: '12px',
                 fontWeight: '600'
               }}>
                 {filteredProperties.length} found
               </div>
             </div>
             <p style={{
-              fontSize: '14px',
+              fontSize: '12px',
               color: '#6b7280',
               margin: '0',
               fontFamily: 'Inter, system-ui, sans-serif'
@@ -312,15 +315,15 @@ const FindProperty = () => {
 
           <div style={{ padding: '24px' }}>
             {/* Search */}
-            <div style={{ marginBottom: '24px' }}>
+            <div style={{ marginBottom: '20px' }}>
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
                 marginBottom: '8px'
               }}>
-                <span style={{ marginRight: '8px', fontSize: '16px' }}>🔍</span>
+                <span style={{ marginRight: '8px', fontSize: '14px' }}>🔍</span>
                 <label style={{
-                  fontSize: '16px',
+                  fontSize: '14px',
                   fontWeight: '600',
                   color: '#374151',
                   fontFamily: 'Inter, system-ui, sans-serif'
@@ -334,17 +337,17 @@ const FindProperty = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 style={{
-                  padding: '12px 16px',
+                  padding: '10px 12px',
                   border: '1px solid #d1d5db',
-                  borderRadius: '8px',
-                  fontSize: '14px',
+                  borderRadius: '6px',
+                  fontSize: '13px',
                   fontFamily: 'Inter, system-ui, sans-serif'
                 }}
               />
             </div>
 
             {/* Location */}
-            <div style={{ marginBottom: '20px' }}>
+            <div style={{ marginBottom: '18px' }}>
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -352,9 +355,9 @@ const FindProperty = () => {
                 marginBottom: '8px'
               }}>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <span style={{ marginRight: '8px', color: '#ef4444', fontSize: '16px' }}>📍</span>
+                  <span style={{ marginRight: '8px', color: '#ef4444', fontSize: '14px' }}>📍</span>
                   <label style={{
-                    fontSize: '14px',
+                    fontSize: '13px',
                     fontWeight: '600',
                     color: '#374151',
                     fontFamily: 'Inter, system-ui, sans-serif'
@@ -363,7 +366,7 @@ const FindProperty = () => {
                   </label>
                 </div>
                 <span style={{
-                  fontSize: '12px',
+                  fontSize: '11px',
                   color: '#9ca3af',
                   fontFamily: 'Inter, system-ui, sans-serif'
                 }}>
@@ -374,10 +377,10 @@ const FindProperty = () => {
                 value={filters.location}
                 onChange={(e) => handleFilterChange('location', e.target.value)}
                 style={{
-                  padding: '12px 16px',
+                  padding: '10px 12px',
                   border: '1px solid #d1d5db',
-                  borderRadius: '8px',
-                  fontSize: '14px',
+                  borderRadius: '6px',
+                  fontSize: '13px',
                   fontFamily: 'Inter, system-ui, sans-serif'
                 }}
               >
@@ -390,7 +393,7 @@ const FindProperty = () => {
             </div>
 
             {/* Property Type */}
-            <div style={{ marginBottom: '20px' }}>
+            <div style={{ marginBottom: '18px' }}>
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -398,9 +401,9 @@ const FindProperty = () => {
                 marginBottom: '8px'
               }}>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <span style={{ marginRight: '8px', color: '#f59e0b', fontSize: '16px' }}>🏠</span>
+                  <span style={{ marginRight: '8px', color: '#f59e0b', fontSize: '14px' }}>🏠</span>
                   <label style={{
-                    fontSize: '14px',
+                    fontSize: '13px',
                     fontWeight: '600',
                     color: '#374151',
                     fontFamily: 'Inter, system-ui, sans-serif'
@@ -409,7 +412,7 @@ const FindProperty = () => {
                   </label>
                 </div>
                 <span style={{
-                  fontSize: '12px',
+                  fontSize: '11px',
                   color: '#9ca3af',
                   fontFamily: 'Inter, system-ui, sans-serif'
                 }}>
@@ -420,10 +423,10 @@ const FindProperty = () => {
                 value={filters.propertyType}
                 onChange={(e) => handleFilterChange('propertyType', e.target.value)}
                 style={{
-                  padding: '12px 16px',
+                  padding: '10px 12px',
                   border: '1px solid #d1d5db',
-                  borderRadius: '8px',
-                  fontSize: '14px',
+                  borderRadius: '6px',
+                  fontSize: '13px',
                   fontFamily: 'Inter, system-ui, sans-serif'
                 }}
               >
@@ -436,7 +439,7 @@ const FindProperty = () => {
             </div>
 
             {/* Price Range */}
-            <div style={{ marginBottom: '20px' }}>
+            <div style={{ marginBottom: '18px' }}>
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -444,9 +447,9 @@ const FindProperty = () => {
                 marginBottom: '8px'
               }}>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <span style={{ marginRight: '8px', color: '#f59e0b', fontSize: '16px' }}>💰</span>
+                  <span style={{ marginRight: '8px', color: '#f59e0b', fontSize: '14px' }}>💰</span>
                   <label style={{
-                    fontSize: '14px',
+                    fontSize: '13px',
                     fontWeight: '600',
                     color: '#374151',
                     fontFamily: 'Inter, system-ui, sans-serif'
@@ -455,7 +458,7 @@ const FindProperty = () => {
                   </label>
                 </div>
                 <span style={{
-                  fontSize: '12px',
+                  fontSize: '11px',
                   color: '#9ca3af',
                   fontFamily: 'Inter, system-ui, sans-serif'
                 }}>
@@ -466,10 +469,10 @@ const FindProperty = () => {
                 value={filters.priceRange}
                 onChange={(e) => handleFilterChange('priceRange', e.target.value)}
                 style={{
-                  padding: '12px 16px',
+                  padding: '10px 12px',
                   border: '1px solid #d1d5db',
-                  borderRadius: '8px',
-                  fontSize: '14px',
+                  borderRadius: '6px',
+                  fontSize: '13px',
                   fontFamily: 'Inter, system-ui, sans-serif'
                 }}
               >
@@ -491,37 +494,37 @@ const FindProperty = () => {
               disabled={getActiveFiltersCount() === 0}
               style={{
                 width: '100%',
-                padding: '12px',
-                borderRadius: '8px',
-                fontSize: '14px',
+                padding: '10px',
+                borderRadius: '6px',
+                fontSize: '13px',
                 fontWeight: '600',
                 fontFamily: 'Inter, system-ui, sans-serif',
-                marginBottom: '24px'
+                marginBottom: '20px'
               }}
             >
-              <span style={{ marginRight: '8px' }}>✕</span>
+              <span style={{ marginRight: '6px' }}>✕</span>
               Clear All Filters
             </Button>
 
             {/* Available Counter */}
             <div style={{
               background: 'linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%)',
-              borderRadius: '16px',
-              padding: '24px',
+              borderRadius: '12px',
+              padding: '20px',
               textAlign: 'center',
               color: 'white'
             }}>
               <div style={{
-                fontSize: '48px',
+                fontSize: '40px',
                 fontWeight: '800',
                 lineHeight: '1',
-                marginBottom: '8px',
+                marginBottom: '6px',
                 fontFamily: 'Inter, system-ui, sans-serif'
               }}>
                 {filteredProperties.length}
               </div>
               <div style={{
-                fontSize: '16px',
+                fontSize: '14px',
                 fontWeight: '600',
                 fontFamily: 'Inter, system-ui, sans-serif'
               }}>
@@ -544,17 +547,17 @@ const FindProperty = () => {
             }}>
               <div>
                 <h2 style={{
-                  fontSize: '36px',
+                  fontSize: '32px',
                   fontWeight: '800',
                   color: '#1f2937',
-                  marginBottom: '8px',
+                  marginBottom: '6px',
                   fontFamily: 'Inter, system-ui, sans-serif'
                 }}>
                   {filteredProperties.length} Properties Found
                 </h2>
                 <p style={{
                   color: '#6b7280',
-                  fontSize: '16px',
+                  fontSize: '14px',
                   marginBottom: '0',
                   fontFamily: 'Inter, system-ui, sans-serif'
                 }}>
@@ -562,16 +565,16 @@ const FindProperty = () => {
                 </p>
               </div>
 
-              {/* 🎯 FIXED VIEW BUTTONS - NO OVERLAP */}
+              {/* 🎯 FIXED VIEW BUTTONS */}
               <div style={{ display: 'flex', gap: '0' }}>
                 <Button
                   onClick={() => setViewMode('grid')}
                   style={{
-                    padding: '12px 24px',
-                    fontSize: '14px',
+                    padding: '10px 20px',
+                    fontSize: '12px',
                     fontWeight: '600',
                     border: '1px solid #d1d5db',
-                    borderRadius: '8px 0 0 8px',
+                    borderRadius: '6px 0 0 6px',
                     borderRight: 'none',
                     background: viewMode === 'grid' ? '#8b5cf6' : 'white',
                     color: viewMode === 'grid' ? 'white' : '#374151',
@@ -583,11 +586,11 @@ const FindProperty = () => {
                 <Button
                   onClick={() => setViewMode('list')}
                   style={{
-                    padding: '12px 24px',
-                    fontSize: '14px',
+                    padding: '10px 20px',
+                    fontSize: '12px',
                     fontWeight: '600',
                     border: '1px solid #d1d5db',
-                    borderRadius: '0 8px 8px 0',
+                    borderRadius: '0 6px 6px 0',
                     background: viewMode === 'list' ? '#8b5cf6' : 'white',
                     color: viewMode === 'list' ? 'white' : '#374151',
                     fontFamily: 'Inter, system-ui, sans-serif'
