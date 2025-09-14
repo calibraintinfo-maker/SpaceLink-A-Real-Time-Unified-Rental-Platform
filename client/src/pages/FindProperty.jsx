@@ -216,10 +216,17 @@ const FindProperty = () => {
     const rentType = rentTypes[0] || 'monthly';
     
     // Format like in your image: ₹1,22,345/yearly
+    const formatter = new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    });
+    
     if (rentType === 'yearly') {
-      return `₹${price.toLocaleString('en-IN')}/yearly`;
+      return `${formatter.format(price)}/yearly`;
     } else {
-      return `₹${price.toLocaleString('en-IN')}/monthly`;
+      return `${formatter.format(price)}/monthly`;
     }
   };
 
@@ -230,8 +237,8 @@ const FindProperty = () => {
 
   if (loading) {
     return (
-      <div className="enterprise-dashboard">
-        <section className="hero-loading">
+      <div className="dashboard-wrapper">
+        <section className="hero-section">
           <Container>
             <div className="loading-content text-center py-5">
               <Spinner animation="border" className="mb-3" style={{color: '#7c3aed'}} />
@@ -246,8 +253,8 @@ const FindProperty = () => {
 
   if (error) {
     return (
-      <div className="enterprise-dashboard">
-        <section className="hero-loading">
+      <div className="dashboard-wrapper">
+        <section className="hero-section">
           <Container>
             <Alert variant="danger" className="text-center my-5">
               <h3>Connection Error</h3>
@@ -261,8 +268,8 @@ const FindProperty = () => {
   }
 
   return (
-    <div className="enterprise-dashboard">
-      {/* HERO SECTION - EXACTLY AS IN YOUR IMAGE */}
+    <div className="dashboard-wrapper">
+      {/* COMPACT HERO SECTION - EXACT SIZE & COLOR */}
       <section className="hero-section">
         <Container>
           <div className="hero-content">
@@ -279,7 +286,7 @@ const FindProperty = () => {
               commercial spaces.
             </p>
             
-            {/* Stats - Exactly as in image */}
+            {/* Stats */}
             <div className="hero-stats">
               <div className="stat-item">
                 <div className="stat-number">{properties.length}+</div>
@@ -298,11 +305,11 @@ const FindProperty = () => {
         </Container>
       </section>
 
-      {/* DASHBOARD - EXACTLY AS IN YOUR IMAGE */}
+      {/* DASHBOARD SECTION */}
       <section className="dashboard-section">
         <Container fluid>
           <Row>
-            {/* LEFT SIDEBAR */}
+            {/* LEFT SIDEBAR - LEFT ALIGNED FILTERS */}
             <Col lg={3} className="sidebar-column">
               <div className="search-section">
                 <div className="search-header">
@@ -324,7 +331,7 @@ const FindProperty = () => {
                   <span className="filters-title">Smart Filters</span>
                 </div>
 
-                {/* Location Filter */}
+                {/* Location Filter - LEFT ALIGNED */}
                 <div className="filter-group">
                   <div className="filter-header">
                     <span className="filter-icon">📍</span>
@@ -344,7 +351,7 @@ const FindProperty = () => {
                   </Form.Select>
                 </div>
 
-                {/* Property Type Filter */}
+                {/* Property Type Filter - LEFT ALIGNED */}
                 <div className="filter-group">
                   <div className="filter-header">
                     <span className="filter-icon">🏠</span>
@@ -364,7 +371,7 @@ const FindProperty = () => {
                   </Form.Select>
                 </div>
 
-                {/* Price Range Filter */}
+                {/* Price Range Filter - LEFT ALIGNED */}
                 <div className="filter-group">
                   <div className="filter-header">
                     <span className="filter-icon">💰</span>
@@ -387,6 +394,29 @@ const FindProperty = () => {
                   </Form.Select>
                 </div>
 
+                {/* Bedrooms Filter */}
+                {shouldShowBedroomFilter() && (
+                  <div className="filter-group">
+                    <div className="filter-header">
+                      <span className="filter-icon">🛏️</span>
+                      <span className="filter-label">BEDROOMS</span>
+                      <span className="filter-count">residential only</span>
+                    </div>
+                    <Form.Select
+                      value={filters.bedrooms}
+                      onChange={(e) => handleFilterChange('bedrooms', e.target.value)}
+                      className="filter-select"
+                    >
+                      <option value="">Any Bedrooms</option>
+                      <option value="1">1+ BHK</option>
+                      <option value="2">2+ BHK</option>
+                      <option value="3">3+ BHK</option>
+                      <option value="4">4+ BHK</option>
+                      <option value="5">5+ BHK</option>
+                    </Form.Select>
+                  </div>
+                )}
+
                 {/* Clear Filters Button */}
                 <Button
                   onClick={clearFilters}
@@ -396,7 +426,7 @@ const FindProperty = () => {
                   ✕ Clear All Filters
                 </Button>
 
-                {/* Counter Box */}
+                {/* SMALLER Counter Box */}
                 <div className="counter-box">
                   <div className="counter-number">{filteredProperties.length}</div>
                   <div className="counter-text">Available</div>
@@ -408,7 +438,7 @@ const FindProperty = () => {
             <Col lg={9} className="main-column">
               {/* Results Header */}
               <div className="results-header">
-                <div>
+                <div className="results-info">
                   <h2 className="results-title">{filteredProperties.length} Properties Found</h2>
                   <p className="results-subtitle">
                     Browse our premium collection • Updated {new Date().toLocaleDateString('en-US', {month: 'numeric', day: 'numeric', year: 'numeric'})} • All verified listings
@@ -430,23 +460,9 @@ const FindProperty = () => {
                 </div>
               </div>
 
-              {/* Featured Properties Section */}
-              <div className="featured-section">
-                <div className="featured-header">
-                  <span className="featured-icon">💎</span>
-                  <h3 className="featured-title">Featured Properties</h3>
-                </div>
-                <p className="featured-subtitle">
-                  Handpicked premium properties that match your search criteria
-                </p>
-                <div className="featured-tags">
-                  <Badge className="featured-tag">Luxury Villas in Mumbai</Badge>
-                  <Badge className="featured-tag">Modern Apartments in Bangalore</Badge>
-                  <Badge className="featured-tag">Commercial Spaces in Delhi</Badge>
-                </div>
-              </div>
+              {/* NO FEATURED PROPERTIES SECTION - REMOVED */}
 
-              {/* Properties Display */}
+              {/* Properties Display - SMALLER CARDS */}
               {filteredProperties.length === 0 ? (
                 <div className="no-results">
                   <div className="no-results-icon">🔍</div>
@@ -490,7 +506,7 @@ const FindProperty = () => {
                             
                             <div className="property-meta">
                               <Badge className="category-badge">{property.category}</Badge>
-                              <div className="size-info">{property.size}</div>
+                              <div className="size-info">📐 {property.size}</div>
                             </div>
                             
                             <div className="pricing-section">
@@ -524,26 +540,28 @@ const FindProperty = () => {
         </Container>
       </section>
 
-      {/* COMPLETE ENTERPRISE CSS STYLES */}
+      {/* COMPLETE FIXED CSS STYLES */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
-        .enterprise-dashboard {
+        .dashboard-wrapper {
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
           background: #f8fafc;
           min-height: 100vh;
+          line-height: 1.5;
+          color: #374151;
         }
         
-        /* HERO SECTION - EXACT MATCH */
+        /* COMPACT HERO SECTION - EXACT SIZE */
         .hero-section {
           background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-          padding: 5rem 0;
+          padding: 2.5rem 0;
           text-align: center;
           color: white;
         }
         
         .hero-content {
-          max-width: 900px;
+          max-width: 800px;
           margin: 0 auto;
         }
         
@@ -552,9 +570,9 @@ const FindProperty = () => {
           background: rgba(255, 255, 255, 0.2);
           border: 1px solid rgba(255, 255, 255, 0.3);
           border-radius: 50px;
-          padding: 0.5rem 1.5rem;
-          margin-bottom: 2rem;
-          font-size: 0.875rem;
+          padding: 0.5rem 1.25rem;
+          margin-bottom: 1.5rem;
+          font-size: 0.8rem;
           font-weight: 700;
           text-transform: uppercase;
           letter-spacing: 0.05em;
@@ -562,10 +580,10 @@ const FindProperty = () => {
         }
         
         .hero-title {
-          font-size: clamp(2.5rem, 5vw, 4.5rem);
+          font-size: clamp(2.2rem, 4vw, 3.5rem);
           font-weight: 900;
           line-height: 1.1;
-          margin-bottom: 1.5rem;
+          margin-bottom: 1rem;
           letter-spacing: -0.02em;
         }
         
@@ -577,20 +595,17 @@ const FindProperty = () => {
         }
         
         .hero-subtitle {
-          font-size: 1.125rem;
-          line-height: 1.6;
+          font-size: 1rem;
+          line-height: 1.5;
           opacity: 0.9;
-          margin-bottom: 3rem;
-          max-width: 700px;
-          margin-left: auto;
-          margin-right: auto;
+          margin-bottom: 2rem;
         }
         
         .hero-stats {
           display: flex;
           justify-content: center;
-          gap: 4rem;
-          margin-top: 3rem;
+          gap: 3rem;
+          margin-top: 2rem;
         }
         
         .stat-item {
@@ -598,18 +613,18 @@ const FindProperty = () => {
         }
         
         .stat-number {
-          font-size: 3.5rem;
+          font-size: 2.5rem;
           font-weight: 900;
           line-height: 1;
-          margin-bottom: 0.5rem;
+          margin-bottom: 0.25rem;
         }
         
         .stat-label {
-          font-size: 0.875rem;
+          font-size: 0.75rem;
           font-weight: 600;
           opacity: 0.8;
           text-transform: uppercase;
-          letter-spacing: 0.1em;
+          letter-spacing: 0.05em;
         }
         
         /* DASHBOARD SECTION */
@@ -619,7 +634,7 @@ const FindProperty = () => {
         }
         
         .sidebar-column {
-          padding: 0 1rem 0 0;
+          padding-right: 1.5rem;
         }
         
         .main-column {
@@ -629,7 +644,7 @@ const FindProperty = () => {
           padding: 2rem;
         }
         
-        /* SIDEBAR STYLES */
+        /* SIDEBAR STYLES - LEFT ALIGNED */
         .search-section {
           background: white;
           border-radius: 12px;
@@ -647,6 +662,7 @@ const FindProperty = () => {
           color: #374151;
           text-transform: uppercase;
           font-size: 0.875rem;
+          text-align: left;
         }
         
         .search-input {
@@ -682,10 +698,12 @@ const FindProperty = () => {
           color: #374151;
           text-transform: uppercase;
           font-size: 0.875rem;
+          text-align: left;
         }
         
         .filter-group {
           margin-bottom: 1.5rem;
+          text-align: left;
         }
         
         .filter-header {
@@ -693,6 +711,12 @@ const FindProperty = () => {
           align-items: center;
           justify-content: space-between;
           margin-bottom: 0.5rem;
+          text-align: left;
+        }
+        
+        .filter-icon {
+          font-size: 0.875rem;
+          margin-right: 0.25rem;
         }
         
         .filter-label {
@@ -703,6 +727,8 @@ const FindProperty = () => {
           display: flex;
           align-items: center;
           gap: 0.25rem;
+          flex: 1;
+          text-align: left;
         }
         
         .filter-count {
@@ -749,16 +775,17 @@ const FindProperty = () => {
           cursor: not-allowed;
         }
         
+        /* SMALLER COUNTER BOX */
         .counter-box {
           background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
           color: white;
           border-radius: 12px;
-          padding: 1.5rem;
+          padding: 1rem;
           text-align: center;
         }
         
         .counter-number {
-          font-size: 2.5rem;
+          font-size: 2rem;
           font-weight: 900;
           line-height: 1;
           margin-bottom: 0.25rem;
@@ -824,52 +851,7 @@ const FindProperty = () => {
           border-color: #9ca3af;
         }
         
-        /* FEATURED SECTION */
-        .featured-section {
-          background: #f8fafc;
-          border: 1px solid #e5e7eb;
-          border-radius: 12px;
-          padding: 1.5rem;
-          margin-bottom: 2rem;
-        }
-        
-        .featured-header {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          margin-bottom: 0.5rem;
-        }
-        
-        .featured-title {
-          font-size: 1rem;
-          font-weight: 700;
-          color: #111827;
-          margin: 0;
-        }
-        
-        .featured-subtitle {
-          font-size: 0.875rem;
-          color: #6b7280;
-          margin-bottom: 1rem;
-        }
-        
-        .featured-tags {
-          display: flex;
-          gap: 0.75rem;
-          flex-wrap: wrap;
-        }
-        
-        .featured-tag {
-          background: #e5e7eb;
-          color: #374151;
-          border: none;
-          padding: 0.5rem 1rem;
-          border-radius: 20px;
-          font-size: 0.75rem;
-          font-weight: 500;
-        }
-        
-        /* PROPERTY CARDS - ENTERPRISE DESIGN */
+        /* SMALLER PROPERTY CARDS */
         .properties-grid, .properties-list {
           margin: 0;
         }
@@ -885,18 +867,19 @@ const FindProperty = () => {
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
           transition: all 0.3s ease;
           cursor: pointer;
-          height: 100%;
+          height: auto;
+          background: white;
         }
         
         .property-card:hover {
-          transform: translateY(-4px);
+          transform: translateY(-2px);
           box-shadow: 0 8px 25px rgba(124, 58, 237, 0.15);
           border-color: #7c3aed;
         }
         
         .card-image-wrapper {
           position: relative;
-          height: 200px;
+          height: 180px;
           overflow: hidden;
         }
         
@@ -941,10 +924,7 @@ const FindProperty = () => {
         }
         
         .card-body {
-          padding: 1.5rem;
-          display: flex;
-          flex-direction: column;
-          height: calc(100% - 200px);
+          padding: 1.25rem;
         }
         
         .property-location {
@@ -967,10 +947,9 @@ const FindProperty = () => {
         
         .property-description {
           font-size: 0.875rem;
-          line-height: 1.5;
+          line-height: 1.4;
           color: #6b7280;
           margin-bottom: 1rem;
-          flex-grow: 1;
         }
         
         .property-meta {
@@ -998,7 +977,7 @@ const FindProperty = () => {
         }
         
         .pricing-section {
-          margin-bottom: 1.5rem;
+          margin-bottom: 1.25rem;
         }
         
         .price {
@@ -1020,7 +999,6 @@ const FindProperty = () => {
         .card-actions {
           display: flex;
           gap: 0.75rem;
-          margin-top: auto;
         }
         
         .details-btn, .book-btn {
@@ -1084,19 +1062,11 @@ const FindProperty = () => {
           font-size: 1rem;
         }
         
-        /* LOADING STATES */
-        .hero-loading {
-          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-          color: white;
-          padding: 4rem 0;
-          text-align: center;
-        }
-        
         /* RESPONSIVE DESIGN */
         @media (max-width: 992px) {
           .sidebar-column {
             margin-bottom: 2rem;
-            padding: 0;
+            padding-right: 0;
           }
           
           .hero-stats {
@@ -1105,7 +1075,7 @@ const FindProperty = () => {
           }
           
           .stat-number {
-            font-size: 2.5rem;
+            font-size: 2rem;
           }
           
           .results-header {
@@ -1119,10 +1089,6 @@ const FindProperty = () => {
           
           .view-btn {
             flex: 1;
-          }
-          
-          .featured-tags {
-            justify-content: center;
           }
         }
         
@@ -1141,7 +1107,7 @@ const FindProperty = () => {
           }
           
           .hero-title {
-            font-size: 2.5rem;
+            font-size: 2rem;
           }
           
           .card-actions {
@@ -1155,7 +1121,7 @@ const FindProperty = () => {
         
         @media (max-width: 576px) {
           .hero-section {
-            padding: 3rem 0;
+            padding: 2rem 0;
           }
           
           .hero-badge {
@@ -1164,8 +1130,8 @@ const FindProperty = () => {
           }
           
           .hero-subtitle {
-            font-size: 1rem;
-            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
           }
           
           .search-section, .filters-section {
