@@ -273,7 +273,7 @@ const FindProperty = () => {
 
   return (
     <div className="dashboard-wrapper">
-      {/* HERO SECTION - INCREASED SIZE + RIGHT-SHIFTED GRADIENT */}
+      {/* HERO SECTION - PERFECT AS IS */}
       <section className="hero-section">
         <Container>
           <div className="hero-content">
@@ -296,7 +296,7 @@ const FindProperty = () => {
       <section className="dashboard-section">
         <Container fluid>
           <Row>
-            {/* LEFT SIDEBAR */}
+            {/* LEFT SIDEBAR - PERFECT AS IS */}
             <Col lg={3} className="sidebar-column">
               <div className="search-section">
                 <div className="search-header">
@@ -421,7 +421,7 @@ const FindProperty = () => {
               </div>
             </Col>
 
-            {/* RIGHT MAIN CONTENT */}
+            {/* RIGHT MAIN CONTENT - PERFECT AS IS */}
             <Col lg={9} className="main-column">
               {/* Results Header */}
               <div className="results-header">
@@ -447,7 +447,7 @@ const FindProperty = () => {
                 </div>
               </div>
 
-              {/* GLASSMORPHISM PROPERTY CARDS */}
+              {/* ENHANCED GLASSMORPHISM PROPERTY CARDS - INCREASED HEIGHT */}
               {filteredProperties.length === 0 ? (
                 <div className="no-results">
                   <div className="no-results-icon">🔍</div>
@@ -471,7 +471,7 @@ const FindProperty = () => {
                         className="property-col"
                       >
                         {viewMode === 'list' ? (
-                          <div className="glass-card list-card">
+                          <div className="premium-glass-card list-card">
                             <Row className="g-0 h-100">
                               <Col md={4}>
                                 <div className="card-image-container">
@@ -508,13 +508,13 @@ const FindProperty = () => {
                                   <div className="card-actions">
                                     <Button
                                       onClick={() => handleViewDetails(property._id)}
-                                      className="glass-btn secondary"
+                                      className="premium-glass-btn secondary"
                                     >
                                       View Details
                                     </Button>
                                     <Button
                                       onClick={() => handleBookNow(property._id)}
-                                      className="glass-btn primary"
+                                      className="premium-glass-btn primary"
                                     >
                                       Book Now
                                     </Button>
@@ -524,7 +524,7 @@ const FindProperty = () => {
                             </Row>
                           </div>
                         ) : (
-                          <div className="glass-card grid-card">
+                          <div className="premium-glass-card grid-card">
                             <div className="card-image-container">
                               <img
                                 src={property.images?.[0]}
@@ -558,13 +558,13 @@ const FindProperty = () => {
                               <div className="card-actions">
                                 <Button
                                   onClick={() => handleViewDetails(property._id)}
-                                  className="glass-btn secondary"
+                                  className="premium-glass-btn secondary"
                                 >
                                   View Details
                                 </Button>
                                 <Button
                                   onClick={() => handleBookNow(property._id)}
-                                  className="glass-btn primary"
+                                  className="premium-glass-btn primary"
                                 >
                                   Book Now
                                 </Button>
@@ -582,7 +582,7 @@ const FindProperty = () => {
         </Container>
       </section>
 
-      {/* COMPLETE GLASSMORPHISM CSS STYLES */}
+      {/* ENHANCED PREMIUM GLASSMORPHISM CSS */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
@@ -882,80 +882,98 @@ const FindProperty = () => {
           border-color: #9ca3af;
         }
         
-        /* GLASSMORPHISM PROPERTY CARDS */
+        /* PREMIUM GLASSMORPHISM PROPERTY CARDS - INCREASED HEIGHT */
         .properties-grid, .properties-list {
           margin: 0;
         }
         
         .property-col {
-          margin-bottom: 1.5rem;
+          margin-bottom: 1.75rem;
         }
         
-        .glass-card {
-          background: rgba(255, 255, 255, 0.25);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
-          border: 1px solid rgba(255, 255, 255, 0.3);
-          border-radius: 20px;
-          box-shadow: 0 8px 32px rgba(124, 58, 237, 0.1);
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .premium-glass-card {
+          background: rgba(255, 255, 255, 0.24);
+          backdrop-filter: saturate(180%) blur(20px);
+          -webkit-backdrop-filter: saturate(180%) blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.32);
+          border-radius: 22px;
+          box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
           cursor: pointer;
           overflow: hidden;
           position: relative;
         }
         
-        .glass-card:hover {
-          transform: translateY(-4px) scale(1.02);
-          box-shadow: 0 12px 40px rgba(124, 58, 237, 0.2);
-          background: rgba(255, 255, 255, 0.35);
+        .premium-glass-card:hover {
+          transform: translateY(-6px) scale(1.02);
+          box-shadow: 0 16px 48px rgba(124, 58, 237, 0.25);
+          background: rgba(255, 255, 255, 0.32);
+          border-color: rgba(255, 255, 255, 0.4);
         }
         
-        .glass-card::before {
+        .premium-glass-card::before {
           content: '';
           position: absolute;
           top: 0;
           left: 0;
           right: 0;
           height: 1px;
-          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
           pointer-events: none;
         }
         
-        /* GRID CARDS - COMPACT VERTICAL SIZE */
+        .premium-glass-card::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+          pointer-events: none;
+          opacity: 0;
+          transition: opacity 0.4s ease;
+        }
+        
+        .premium-glass-card:hover::after {
+          opacity: 1;
+        }
+        
+        /* GRID CARDS - INCREASED VERTICAL SIZE */
         .grid-card {
-          height: 280px;
+          height: 340px;
           display: flex;
           flex-direction: column;
         }
         
         .grid-card .card-image-container {
-          height: 140px;
+          height: 180px;
           position: relative;
           overflow: hidden;
-          border-radius: 20px 20px 0 0;
+          border-radius: 22px 22px 0 0;
         }
         
         .grid-card .glass-content {
           flex: 1;
-          padding: 1rem 1.25rem 1.25rem 1.25rem;
+          padding: 1.5rem 1.5rem 1.75rem 1.5rem;
           display: flex;
           flex-direction: column;
         }
         
-        /* LIST CARDS - IMPROVED LAYOUT */
+        /* LIST CARDS - INCREASED HEIGHT */
         .list-card {
-          height: 160px;
+          height: 200px;
         }
         
         .list-card .card-image-container {
           height: 100%;
           position: relative;
           overflow: hidden;
-          border-radius: 20px 0 0 20px;
+          border-radius: 22px 0 0 22px;
         }
         
         .list-card .glass-content {
-          padding: 1.25rem;
+          padding: 1.75rem;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
@@ -966,57 +984,60 @@ const FindProperty = () => {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          transition: transform 0.4s ease;
+          transition: transform 0.5s ease;
         }
         
-        .glass-card:hover .card-image {
-          transform: scale(1.08);
+        .premium-glass-card:hover .card-image {
+          transform: scale(1.1);
         }
         
         .status-overlay {
           position: absolute;
-          top: 10px;
-          right: 10px;
+          top: 12px;
+          right: 12px;
           z-index: 3;
         }
         
         .status-badge {
-          font-size: 0.6rem;
-          font-weight: 700;
-          padding: 0.3rem 0.7rem;
-          border-radius: 15px;
+          font-size: 0.65rem;
+          font-weight: 800;
+          padding: 0.4rem 0.8rem;
+          border-radius: 18px;
           text-transform: uppercase;
           letter-spacing: 0.05em;
           border: none;
-          backdrop-filter: blur(10px);
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+          backdrop-filter: blur(15px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
         }
         
         .status-badge.active {
           background: rgba(34, 197, 94, 0.9);
           color: white;
+          border: 1px solid rgba(34, 197, 94, 0.3);
         }
         
         .status-badge.sold {
           background: rgba(239, 68, 68, 0.9);
           color: white;
+          border: 1px solid rgba(239, 68, 68, 0.3);
         }
         
         .status-badge.pending {
           background: rgba(59, 130, 246, 0.9);
           color: white;
+          border: 1px solid rgba(59, 130, 246, 0.3);
         }
         
         .property-header {
           display: flex;
           justify-content: space-between;
           align-items: flex-start;
-          margin-bottom: 0.75rem;
+          margin-bottom: 1rem;
           gap: 1rem;
         }
         
         .property-name {
-          font-size: 1rem;
+          font-size: 1.1rem;
           font-weight: 700;
           color: #1f2937;
           margin: 0;
@@ -1026,7 +1047,7 @@ const FindProperty = () => {
         }
         
         .property-price {
-          font-size: 1.1rem;
+          font-size: 1.2rem;
           font-weight: 800;
           color: #059669;
           white-space: nowrap;
@@ -1034,71 +1055,74 @@ const FindProperty = () => {
         }
         
         .property-location {
-          font-size: 0.75rem;
+          font-size: 0.8rem;
           color: #6b7280;
-          margin-bottom: 0.75rem;
+          margin-bottom: 1rem;
           font-weight: 500;
         }
         
         .property-details {
           display: flex;
           flex-wrap: wrap;
-          gap: 0.5rem;
-          margin-bottom: 1rem;
+          gap: 0.6rem;
+          margin-bottom: 1.25rem;
         }
         
         .detail-chip {
-          font-size: 0.7rem;
+          font-size: 0.75rem;
           color: #374151;
-          font-weight: 500;
-          background: rgba(255, 255, 255, 0.4);
-          backdrop-filter: blur(10px);
-          padding: 0.2rem 0.6rem;
-          border-radius: 10px;
-          border: 1px solid rgba(255, 255, 255, 0.3);
+          font-weight: 600;
+          background: rgba(255, 255, 255, 0.45);
+          backdrop-filter: blur(15px);
+          padding: 0.35rem 0.8rem;
+          border-radius: 12px;
+          border: 1px solid rgba(255, 255, 255, 0.35);
         }
         
         .card-actions {
           display: flex;
-          gap: 0.75rem;
+          gap: 0.8rem;
           margin-top: auto;
         }
         
-        .glass-btn {
+        .premium-glass-btn {
           flex: 1;
-          padding: 0.6rem 0.9rem;
-          border-radius: 12px;
-          font-size: 0.75rem;
-          font-weight: 600;
+          padding: 0.75rem 1rem;
+          border-radius: 14px;
+          font-size: 0.8rem;
+          font-weight: 700;
           text-align: center;
           transition: all 0.3s ease;
           border: none;
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(15px);
+          -webkit-backdrop-filter: blur(15px);
+          text-transform: uppercase;
+          letter-spacing: 0.025em;
         }
         
-        .glass-btn.secondary {
-          background: rgba(255, 255, 255, 0.3);
+        .premium-glass-btn.secondary {
+          background: rgba(255, 255, 255, 0.35);
           color: #7c3aed;
-          border: 1px solid rgba(124, 58, 237, 0.3);
+          border: 1px solid rgba(124, 58, 237, 0.35);
         }
         
-        .glass-btn.secondary:hover {
-          background: rgba(124, 58, 237, 0.1);
-          border-color: #7c3aed;
-          transform: translateY(-1px);
+        .premium-glass-btn.secondary:hover {
+          background: rgba(124, 58, 237, 0.15);
+          border-color: rgba(124, 58, 237, 0.5);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(124, 58, 237, 0.2);
         }
         
-        .glass-btn.primary {
-          background: rgba(124, 58, 237, 0.8);
+        .premium-glass-btn.primary {
+          background: rgba(124, 58, 237, 0.85);
           color: white;
-          border: 1px solid rgba(124, 58, 237, 0.5);
+          border: 1px solid rgba(124, 58, 237, 0.6);
         }
         
-        .glass-btn.primary:hover {
-          background: rgba(124, 58, 237, 0.9);
-          transform: translateY(-1px);
-          box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+        .premium-glass-btn.primary:hover {
+          background: rgba(124, 58, 237, 0.95);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(124, 58, 237, 0.4);
         }
         
         /* NO RESULTS */
@@ -1156,7 +1180,7 @@ const FindProperty = () => {
           
           .list-card .card-actions {
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.6rem;
           }
         }
         
@@ -1179,7 +1203,7 @@ const FindProperty = () => {
           
           .card-actions {
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.6rem;
           }
           
           .grid-card {
@@ -1187,7 +1211,7 @@ const FindProperty = () => {
           }
           
           .grid-card .card-image-container {
-            height: 120px;
+            height: 160px;
           }
         }
         
@@ -1216,7 +1240,11 @@ const FindProperty = () => {
           }
           
           .property-price {
-            font-size: 1rem;
+            font-size: 1.1rem;
+          }
+          
+          .property-col {
+            margin-bottom: 1.25rem;
           }
         }
       `}</style>
