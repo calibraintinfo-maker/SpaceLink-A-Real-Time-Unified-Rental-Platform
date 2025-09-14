@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Container, Row, Col, Card, Badge, Button, Form, Spinner, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { api, handleApiError, formatPrice, getImageUrl } from '../utils/api';
 import PropertyCard from '../components/PropertyCard';
 
 const FindProperty = () => {
@@ -34,102 +35,36 @@ const FindProperty = () => {
 
   const residentialTypes = ["Villa", "Apartment", "House", "Studio", "Flat"];
 
-  // 🔥 REAL API FETCHING WITH PROPER TIMEOUT AND ERROR HANDLING
+  // 🔥 FIXED API FETCHING FOR YOUR AXIOS SETUP
   const fetchProperties = async () => {
     try {
       setLoading(true);
       setError('');
       
-      console.log('🚀 Starting API call...');
+      console.log('🚀 Starting API call to your Render backend...');
       
-      // Create AbortController for timeout
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => {
-        controller.abort();
-        console.log('⏰ API call timed out');
-      }, 15000); // 15 second timeout
+      // Call your API using the existing structure
+      const response = await api.properties.getAll();
       
-      // 🔥 MULTIPLE API ENDPOINTS TO TRY
-      const apiEndpoints = [
-        `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/properties`,
-        `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/property`,
-        `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/properties`,
-        `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/property`,
-        `/api/properties`,
-        `/api/property`
-      ];
+      console.log('📦 Raw API Response:', response);
       
-      let response = null;
-      let lastError = null;
-      
-      // Try different endpoints
-      for (const endpoint of apiEndpoints) {
-        try {
-          console.log(`🔗 Trying endpoint: ${endpoint}`);
-          
-          response = await fetch(endpoint, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-              // Add auth headers if needed
-              // 'Authorization': `Bearer ${localStorage.getItem('token')}`
-            },
-            signal: controller.signal,
-            credentials: 'include', // Include cookies if needed
-          });
-          
-          if (response.ok) {
-            console.log(`✅ Success with endpoint: ${endpoint}`);
-            break;
-          } else {
-            console.log(`❌ Failed with endpoint: ${endpoint}, Status: ${response.status}`);
-            lastError = new Error(`HTTP ${response.status}: ${response.statusText}`);
-          }
-        } catch (err) {
-          console.log(`❌ Network error with endpoint: ${endpoint}`, err.message);
-          lastError = err;
-          continue;
-        }
-      }
-      
-      clearTimeout(timeoutId);
-      
-      if (!response || !response.ok) {
-        throw lastError || new Error('All API endpoints failed');
-      }
-      
-      const contentType = response.headers.get('content-type');
-      if (!contentType || !contentType.includes('application/json')) {
-        throw new Error('Server returned non-JSON response');
-      }
-      
-      const data = await response.json();
-      console.log('📦 Raw API Response:', data);
-      
-      // 🔥 HANDLE DIFFERENT API RESPONSE STRUCTURES
+      // Handle axios response - data is in response.data
       let propertiesArray = [];
       
-      if (Array.isArray(data)) {
-        propertiesArray = data;
-      } else if (data && typeof data === 'object') {
-        // Try different possible property names
-        const possibleKeys = ['data', 'properties', 'results', 'items', 'property', 'listings'];
-        
-        for (const key of possibleKeys) {
-          if (Array.isArray(data[key])) {
-            propertiesArray = data[key];
-            console.log(`✅ Found properties in data.${key}`);
-            break;
-          }
-        }
-        
-        // If nested deeper
-        if (propertiesArray.length === 0 && data.data && typeof data.data === 'object') {
+      if (response.data) {
+        if (Array.isArray(response.data)) {
+          propertiesArray = response.data;
+        } else if (Array.isArray(response.data.data)) {
+          propertiesArray = response.data.data;
+        } else if (Array.isArray(response.data.properties)) {
+          propertiesArray = response.data.properties;
+        } else if (response.data && typeof response.data === 'object') {
+          // Check for other possible property names
+          const possibleKeys = ['results', 'items', 'listings'];
           for (const key of possibleKeys) {
-            if (Array.isArray(data.data[key])) {
-              propertiesArray = data.data[key];
-              console.log(`✅ Found properties in data.data.${key}`);
+            if (Array.isArray(response.data[key])) {
+              propertiesArray = response.data[key];
+              console.log(`✅ Found properties in response.data.${key}`);
               break;
             }
           }
@@ -149,7 +84,8 @@ const FindProperty = () => {
         description: property.description || 'No description available',
         category: property.category || 'Property',
         address: property.address || { city: 'Unknown', state: 'Unknown' },
-        images: Array.isArray(property.images) ? property.images : property.image ? [property.image] : []
+        images: Array.isArray(property.images) ? property.images : 
+                property.image ? [property.image] : []
       }));
       
       setProperties(validProperties);
@@ -163,12 +99,14 @@ const FindProperty = () => {
       
       let errorMessage = 'Failed to load properties. ';
       
-      if (error.name === 'AbortError') {
-        errorMessage += 'Request timed out after 15 seconds.';
-      } else if (error.message.includes('Failed to fetch')) {
+      if (error.code === 'NETWORK_ERROR' || error.message.includes('Network Error')) {
+        errorMessage += 'Network connection failed. Please check your internet connection.';
+      } else if (error.response) {
+        // Server responded with error status
+        errorMessage += `Server error: ${error.response.status} ${error.response.statusText}`;
+      } else if (error.request) {
+        // Network error
         errorMessage += 'Unable to connect to server. Please check if the backend is running.';
-      } else if (error.message.includes('JSON')) {
-        errorMessage += 'Server returned invalid data format.';
       } else {
         errorMessage += error.message;
       }
@@ -193,11 +131,11 @@ const FindProperty = () => {
         setRetryCount(attempt + 1);
         
         if (attempt === maxRetries) {
-          setError(`Failed after ${maxRetries + 1} attempts. ${error.message}`);
+          setError(`Failed after ${maxRetries + 1} attempts. Please try again later.`);
           return;
         }
         
-        // Exponential backoff: wait 1s, 2s, 4s, 8s...
+        // Exponential backoff: wait 1s, 2s, 4s...
         const delay = Math.pow(2, attempt) * 1000;
         console.log(`⏳ Waiting ${delay}ms before retry...`);
         await new Promise(resolve => setTimeout(resolve, delay));
@@ -209,7 +147,7 @@ const FindProperty = () => {
     fetchWithRetry();
   }, []);
 
-  // 🔥 OPTIMIZED FILTERING WITH DEBOUNCE
+  // 🔥 OPTIMIZED FILTERING
   const applyFilters = useCallback(() => {
     if (!Array.isArray(properties)) return;
     
@@ -361,19 +299,7 @@ const FindProperty = () => {
     return details;
   };
 
-  const formatPrice = (price, rentType = 'monthly') => {
-    const numPrice = Number(price) || 0;
-    const formatted = numPrice.toLocaleString('en-IN');
-    return `₹${formatted}/${rentType}`;
-  };
-
-  const getImageUrl = (image) => {
-    if (!image) return 'https://via.placeholder.com/400x240/e2e8f0/64748b?text=Property+Image';
-    if (image.startsWith('http')) return image;
-    return `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}${image}`;
-  };
-
-  // 🔥 ENHANCED LOADING STATE WITH PROGRESS
+  // 🔥 LOADING STATE
   if (loading) {
     return (
       <div className="dashboard-wrapper">
@@ -386,7 +312,7 @@ const FindProperty = () => {
             <div className="hero-content">
               <div className="hero-badge">
                 <span className="hero-badge-text">
-                  ⭐ {filteredProperties.length} Premium Properties Available
+                  ⭐ Loading Premium Properties...
                 </span>
               </div>
               <h1 className="hero-title">Find Your Perfect Property</h1>
@@ -402,7 +328,7 @@ const FindProperty = () => {
             <Spinner animation="border" className="loading-spinner" />
             <h4 className="loading-title">Loading Properties...</h4>
             <p className="loading-subtitle">
-              {retryCount > 0 ? `Retry attempt ${retryCount}...` : 'Fetching latest property listings...'}
+              {retryCount > 0 ? `Retry attempt ${retryCount}...` : 'Fetching latest property listings from your Render backend...'}
             </p>
             <div className="loading-progress">
               <div className="progress-bar"></div>
@@ -413,7 +339,7 @@ const FindProperty = () => {
     );
   }
 
-  // 🔥 ENHANCED ERROR STATE WITH DIAGNOSTICS
+  // 🔥 ERROR STATE
   if (error) {
     return (
       <div className="dashboard-wrapper">
@@ -429,7 +355,7 @@ const FindProperty = () => {
               </div>
               <h1 className="hero-title">Find Your Perfect Property</h1>
               <p className="hero-subtitle">
-                We're having trouble loading properties. Please try again.
+                We're having trouble connecting to your backend. Please try again.
               </p>
             </div>
           </Container>
@@ -469,9 +395,9 @@ const FindProperty = () => {
             <details className="error-details mt-3">
               <summary>🔧 Troubleshooting</summary>
               <ul className="mt-2">
-                <li>Check if your backend server is running</li>
-                <li>Verify the API endpoint URL</li>
-                <li>Check your internet connection</li>
+                <li>Check if your Render backend is awake and running</li>
+                <li>Verify the API endpoint URL in utils/api.js</li>
+                <li>Check CORS settings on your backend</li>
                 <li>Try refreshing the page</li>
               </ul>
             </details>
