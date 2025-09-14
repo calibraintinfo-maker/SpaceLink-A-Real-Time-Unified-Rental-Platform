@@ -447,7 +447,7 @@ const FindProperty = () => {
                 </div>
               </div>
 
-              {/* REFINED GLASSMORPHISM PROPERTY CARDS */}
+              {/* PROFESSIONAL & INNOVATIVE PROPERTY CARDS */}
               {filteredProperties.length === 0 ? (
                 <div className="no-results">
                   <div className="no-results-icon">🔍</div>
@@ -471,9 +471,9 @@ const FindProperty = () => {
                         className="property-col"
                       >
                         {viewMode === 'list' ? (
-                          <div className="refined-glass-card list-card">
+                          <div className="innovative-glass-card list-card">
                             <Row className="g-0 h-100">
-                              <Col md={5}>
+                              <Col md={4}>
                                 <div className="card-image-container">
                                   <img
                                     src={property.images?.[0]}
@@ -488,35 +488,51 @@ const FindProperty = () => {
                                   </div>
                                 </div>
                               </Col>
-                              <Col md={7} className="d-flex">
-                                <div className="refined-glass-content">
-                                  <div>
+                              <Col md={8} className="d-flex">
+                                <div className="innovative-glass-content">
+                                  <div className="content-main">
                                     <div className="property-header">
                                       <h3 className="property-name">{property.title}</h3>
-                                      <div className="property-price">{getFormattedPrice(property)}</div>
+                                      <div className="innovative-price-tag">
+                                        <span className="price-amount">{getFormattedPrice(property)}</span>
+                                      </div>
                                     </div>
                                     
-                                    <div className="property-location">
-                                      📍 {property.address?.city}, {property.address?.state}
+                                    <div className="professional-location-badge">
+                                      <span className="location-icon">📍</span>
+                                      <span className="location-text">{property.address?.city}, {property.address?.state}</span>
                                     </div>
                                     
-                                    <div className="property-details">
-                                      {property.bedrooms > 0 && <span className="detail-chip">🛏 {property.bedrooms} bed</span>}
-                                      {property.bathrooms > 0 && <span className="detail-chip">🚿 {property.bathrooms} bath</span>}
-                                      <span className="detail-chip">📐 {property.size}</span>
+                                    <div className="property-features">
+                                      {property.bedrooms > 0 && (
+                                        <div className="feature-item">
+                                          <span className="feature-icon">🛏</span>
+                                          <span className="feature-text">{property.bedrooms} Beds</span>
+                                        </div>
+                                      )}
+                                      {property.bathrooms > 0 && (
+                                        <div className="feature-item">
+                                          <span className="feature-icon">🚿</span>
+                                          <span className="feature-text">{property.bathrooms} Baths</span>
+                                        </div>
+                                      )}
+                                      <div className="feature-item">
+                                        <span className="feature-icon">📏</span>
+                                        <span className="feature-text">{property.size} sq ft</span>
+                                      </div>
                                     </div>
                                   </div>
                                   
-                                  <div className="card-actions">
+                                  <div className="enhanced-card-actions">
                                     <Button
                                       onClick={() => handleViewDetails(property._id)}
-                                      className="refined-glass-btn secondary"
+                                      className="innovative-glass-btn secondary large"
                                     >
                                       View Details
                                     </Button>
                                     <Button
                                       onClick={() => handleBookNow(property._id)}
-                                      className="refined-glass-btn primary"
+                                      className="innovative-glass-btn primary large"
                                     >
                                       Book Now
                                     </Button>
@@ -526,7 +542,7 @@ const FindProperty = () => {
                             </Row>
                           </div>
                         ) : (
-                          <div className="refined-glass-card grid-card">
+                          <div className="innovative-glass-card grid-card">
                             <div className="card-image-container">
                               <img
                                 src={property.images?.[0]}
@@ -541,34 +557,50 @@ const FindProperty = () => {
                               </div>
                             </div>
                             
-                            <div className="refined-glass-content">
-                              <div>
+                            <div className="innovative-glass-content">
+                              <div className="content-main">
                                 <div className="property-header">
                                   <h3 className="property-name">{property.title}</h3>
-                                  <div className="property-price">{getFormattedPrice(property)}</div>
+                                  <div className="innovative-price-tag">
+                                    <span className="price-amount">{getFormattedPrice(property)}</span>
+                                  </div>
                                 </div>
                                 
-                                <div className="property-location">
-                                  📍 {property.address?.city}, {property.address?.state}
+                                <div className="professional-location-badge">
+                                  <span className="location-icon">📍</span>
+                                  <span className="location-text">{property.address?.city}, {property.address?.state}</span>
                                 </div>
                                 
-                                <div className="property-details">
-                                  {property.bedrooms > 0 && <span className="detail-chip">🛏 {property.bedrooms} bed</span>}
-                                  {property.bathrooms > 0 && <span className="detail-chip">🚿 {property.bathrooms} bath</span>}
-                                  <span className="detail-chip">📐 {property.size}</span>
+                                <div className="property-features">
+                                  {property.bedrooms > 0 && (
+                                    <div className="feature-item">
+                                      <span className="feature-icon">🛏</span>
+                                      <span className="feature-text">{property.bedrooms} Beds</span>
+                                    </div>
+                                  )}
+                                  {property.bathrooms > 0 && (
+                                    <div className="feature-item">
+                                      <span className="feature-icon">🚿</span>
+                                      <span className="feature-text">{property.bathrooms} Baths</span>
+                                    </div>
+                                  )}
+                                  <div className="feature-item">
+                                    <span className="feature-icon">📏</span>
+                                    <span className="feature-text">{property.size} sq ft</span>
+                                  </div>
                                 </div>
                               </div>
                               
-                              <div className="card-actions">
+                              <div className="enhanced-card-actions">
                                 <Button
                                   onClick={() => handleViewDetails(property._id)}
-                                  className="refined-glass-btn secondary"
+                                  className="innovative-glass-btn secondary"
                                 >
                                   View Details
                                 </Button>
                                 <Button
                                   onClick={() => handleBookNow(property._id)}
-                                  className="refined-glass-btn primary"
+                                  className="innovative-glass-btn primary"
                                 >
                                   Book Now
                                 </Button>
@@ -586,7 +618,7 @@ const FindProperty = () => {
         </Container>
       </section>
 
-      {/* REFINED GLASSMORPHISM CSS WITH FIXED ELEMENTS */}
+      {/* PROFESSIONAL & INNOVATIVE CSS STYLING */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
@@ -886,7 +918,7 @@ const FindProperty = () => {
           border-color: #9ca3af;
         }
         
-        /* REFINED GLASSMORPHISM PROPERTY CARDS - FIXED ELEMENTS */
+        /* INNOVATIVE GLASSMORPHISM PROPERTY CARDS */
         .properties-grid, .properties-list {
           margin: 0;
         }
@@ -895,7 +927,7 @@ const FindProperty = () => {
           margin-bottom: 1.75rem;
         }
         
-        .refined-glass-card {
+        .innovative-glass-card {
           background: rgba(255, 255, 255, 0.28);
           backdrop-filter: saturate(200%) blur(30px);
           -webkit-backdrop-filter: saturate(200%) blur(30px);
@@ -908,14 +940,14 @@ const FindProperty = () => {
           position: relative;
         }
         
-        .refined-glass-card:hover {
+        .innovative-glass-card:hover {
           transform: translateY(-8px) scale(1.025);
           box-shadow: 0 20px 60px rgba(124, 58, 237, 0.25);
           background: rgba(255, 255, 255, 0.35);
           border-color: rgba(255, 255, 255, 0.45);
         }
         
-        .refined-glass-card::before {
+        .innovative-glass-card::before {
           content: '';
           position: absolute;
           top: 0;
@@ -926,7 +958,7 @@ const FindProperty = () => {
           pointer-events: none;
         }
         
-        /* GRID CARDS - PERFECT PROPORTIONS */
+        /* GRID CARDS - PERFECT PROPORTIONS (NO CHANGES) */
         .grid-card {
           height: 360px;
           display: flex;
@@ -940,7 +972,7 @@ const FindProperty = () => {
           border-radius: 24px 24px 0 0;
         }
         
-        .grid-card .refined-glass-content {
+        .grid-card .innovative-glass-content {
           flex: 1;
           padding: 1.5rem 1.75rem 1.75rem 1.75rem;
           display: flex;
@@ -950,7 +982,7 @@ const FindProperty = () => {
         
         /* LIST CARDS - IMPROVED LAYOUT */
         .list-card {
-          height: 200px;
+          height: 240px;
         }
         
         .list-card .card-image-container {
@@ -960,8 +992,8 @@ const FindProperty = () => {
           border-radius: 24px 0 0 24px;
         }
         
-        .list-card .refined-glass-content {
-          padding: 1.5rem 1.75rem;
+        .list-card .innovative-glass-content {
+          padding: 2rem 2.25rem;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
@@ -975,7 +1007,7 @@ const FindProperty = () => {
           transition: transform 0.5s ease;
         }
         
-        .refined-glass-card:hover .card-image {
+        .innovative-glass-card:hover .card-image {
           transform: scale(1.1);
         }
         
@@ -1016,12 +1048,16 @@ const FindProperty = () => {
           border: 1px solid rgba(59, 130, 246, 0.4);
         }
         
-        /* FIXED TEXT PLACEMENT & SIZING */
+        /* INNOVATIVE CONTENT STYLING */
+        .content-main {
+          flex: 1;
+        }
+        
         .property-header {
           display: flex;
           justify-content: space-between;
           align-items: flex-start;
-          margin-bottom: 0.75rem;
+          margin-bottom: 1rem;
           gap: 1rem;
         }
         
@@ -1035,52 +1071,90 @@ const FindProperty = () => {
           flex: 1;
         }
         
-        .property-price {
-          font-size: 1.25rem;
+        /* INNOVATIVE PRICE TAG */
+        .innovative-price-tag {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          padding: 0.5rem 1rem;
+          border-radius: 16px;
+          font-size: 1rem;
           font-weight: 800;
-          color: #16a34a;
-          letter-spacing: -0.02em;
           white-space: nowrap;
-          line-height: 1.2;
+          box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          backdrop-filter: blur(10px);
         }
         
-        .property-location {
-          font-size: 0.8rem;
-          color: #64748b;
-          margin-bottom: 0.75rem;
-          font-weight: 500;
+        .price-amount {
+          letter-spacing: -0.02em;
         }
         
-        .property-details {
+        /* PROFESSIONAL LOCATION BADGE */
+        .professional-location-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: rgba(99, 102, 241, 0.1);
+          border: 1px solid rgba(99, 102, 241, 0.2);
+          padding: 0.6rem 1rem;
+          border-radius: 12px;
+          margin-bottom: 1.25rem;
+          backdrop-filter: blur(10px);
+        }
+        
+        .location-icon {
+          font-size: 0.9rem;
+          color: #6366f1;
+        }
+        
+        .location-text {
+          font-size: 0.9rem;
+          font-weight: 600;
+          color: #4338ca;
+          text-transform: capitalize;
+        }
+        
+        /* PROFESSIONAL PROPERTY FEATURES */
+        .property-features {
           display: flex;
           flex-wrap: wrap;
-          gap: 0.5rem;
-          margin-bottom: 1rem;
+          gap: 0.75rem;
+          margin-bottom: 1.5rem;
         }
         
-        .detail-chip {
-          font-size: 0.7rem;
-          color: #374151;
-          font-weight: 600;
-          background: rgba(255, 255, 255, 0.5);
-          backdrop-filter: blur(20px);
-          padding: 0.25rem 0.6rem;
+        .feature-item {
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+          background: rgba(255, 255, 255, 0.6);
+          backdrop-filter: blur(15px);
+          padding: 0.4rem 0.8rem;
           border-radius: 10px;
           border: 1px solid rgba(255, 255, 255, 0.4);
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
         
-        /* FIXED BUTTON SIZES */
-        .card-actions {
-          display: flex;
-          gap: 0.75rem;
+        .feature-icon {
+          font-size: 0.8rem;
+          opacity: 0.8;
         }
         
-        .refined-glass-btn {
-          flex: 1;
-          padding: 0.75rem 1rem;
-          border-radius: 14px;
+        .feature-text {
           font-size: 0.8rem;
+          font-weight: 600;
+          color: #374151;
+        }
+        
+        /* ENHANCED CARD ACTIONS */
+        .enhanced-card-actions {
+          display: flex;
+          gap: 0.9rem;
+        }
+        
+        .innovative-glass-btn {
+          flex: 1;
+          border-radius: 14px;
+          font-size: 0.85rem;
           font-weight: 700;
           text-align: center;
           transition: all 0.3s ease;
@@ -1089,28 +1163,34 @@ const FindProperty = () => {
           -webkit-backdrop-filter: blur(20px);
           text-transform: uppercase;
           letter-spacing: 0.025em;
+          padding: 0.8rem 1.2rem;
         }
         
-        .refined-glass-btn.secondary {
+        .innovative-glass-btn.large {
+          padding: 1rem 1.5rem;
+          font-size: 0.9rem;
+        }
+        
+        .innovative-glass-btn.secondary {
           background: rgba(255, 255, 255, 0.4);
           color: #7c3aed;
           border: 1px solid rgba(124, 58, 237, 0.4);
         }
         
-        .refined-glass-btn.secondary:hover {
+        .innovative-glass-btn.secondary:hover {
           background: rgba(124, 58, 237, 0.2);
           border-color: rgba(124, 58, 237, 0.6);
           transform: translateY(-2px);
           box-shadow: 0 8px 25px rgba(124, 58, 237, 0.25);
         }
         
-        .refined-glass-btn.primary {
+        .innovative-glass-btn.primary {
           background: rgba(124, 58, 237, 0.9);
           color: white;
           border: 1px solid rgba(124, 58, 237, 0.7);
         }
         
-        .refined-glass-btn.primary:hover {
+        .innovative-glass-btn.primary:hover {
           background: rgba(124, 58, 237, 1);
           transform: translateY(-2px);
           box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
@@ -1169,9 +1249,9 @@ const FindProperty = () => {
             height: auto;
           }
           
-          .list-card .card-actions {
+          .list-card .enhanced-card-actions {
             flex-direction: column;
-            gap: 0.6rem;
+            gap: 0.7rem;
           }
         }
         
@@ -1192,9 +1272,9 @@ const FindProperty = () => {
             font-size: 1rem;
           }
           
-          .card-actions {
+          .enhanced-card-actions {
             flex-direction: column;
-            gap: 0.6rem;
+            gap: 0.7rem;
           }
           
           .grid-card {
@@ -1203,6 +1283,12 @@ const FindProperty = () => {
           
           .grid-card .card-image-container {
             height: 160px;
+          }
+          
+          .property-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.75rem;
           }
         }
         
@@ -1224,18 +1310,17 @@ const FindProperty = () => {
             font-size: 1.5rem;
           }
           
-          .property-header {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 0.5rem;
-          }
-          
-          .property-price {
-            font-size: 1.2rem;
-          }
-          
           .property-col {
             margin-bottom: 1.25rem;
+          }
+          
+          .innovative-price-tag {
+            font-size: 0.9rem;
+            padding: 0.4rem 0.8rem;
+          }
+          
+          .professional-location-badge {
+            padding: 0.5rem 0.8rem;
           }
         }
       `}</style>
