@@ -447,7 +447,7 @@ const FindProperty = () => {
                 </div>
               </div>
 
-              {/* IMPROVED GLASSMORPHISM PROPERTY CARDS */}
+              {/* REFINED GLASSMORPHISM PROPERTY CARDS */}
               {filteredProperties.length === 0 ? (
                 <div className="no-results">
                   <div className="no-results-icon">🔍</div>
@@ -471,7 +471,7 @@ const FindProperty = () => {
                         className="property-col"
                       >
                         {viewMode === 'list' ? (
-                          <div className="enhanced-glass-card list-card">
+                          <div className="refined-glass-card list-card">
                             <Row className="g-0 h-100">
                               <Col md={5}>
                                 <div className="card-image-container">
@@ -489,32 +489,34 @@ const FindProperty = () => {
                                 </div>
                               </Col>
                               <Col md={7} className="d-flex">
-                                <div className="enhanced-glass-content">
-                                  <div className="property-header">
-                                    <h3 className="property-name">{property.title}</h3>
-                                    <div className="property-price">{getFormattedPrice(property)}</div>
-                                  </div>
-                                  
-                                  <div className="property-location">
-                                    📍 {property.address?.city}, {property.address?.state}
-                                  </div>
-                                  
-                                  <div className="property-details">
-                                    {property.bedrooms > 0 && <span className="detail-chip">🛏 {property.bedrooms} bed</span>}
-                                    {property.bathrooms > 0 && <span className="detail-chip">🚿 {property.bathrooms} bath</span>}
-                                    <span className="detail-chip">📐 {property.size}</span>
+                                <div className="refined-glass-content">
+                                  <div>
+                                    <div className="property-header">
+                                      <h3 className="property-name">{property.title}</h3>
+                                      <div className="property-price">{getFormattedPrice(property)}</div>
+                                    </div>
+                                    
+                                    <div className="property-location">
+                                      📍 {property.address?.city}, {property.address?.state}
+                                    </div>
+                                    
+                                    <div className="property-details">
+                                      {property.bedrooms > 0 && <span className="detail-chip">🛏 {property.bedrooms} bed</span>}
+                                      {property.bathrooms > 0 && <span className="detail-chip">🚿 {property.bathrooms} bath</span>}
+                                      <span className="detail-chip">📐 {property.size}</span>
+                                    </div>
                                   </div>
                                   
                                   <div className="card-actions">
                                     <Button
                                       onClick={() => handleViewDetails(property._id)}
-                                      className="enhanced-glass-btn secondary"
+                                      className="refined-glass-btn secondary"
                                     >
                                       View Details
                                     </Button>
                                     <Button
                                       onClick={() => handleBookNow(property._id)}
-                                      className="enhanced-glass-btn primary"
+                                      className="refined-glass-btn primary"
                                     >
                                       Book Now
                                     </Button>
@@ -524,7 +526,7 @@ const FindProperty = () => {
                             </Row>
                           </div>
                         ) : (
-                          <div className="enhanced-glass-card grid-card">
+                          <div className="refined-glass-card grid-card">
                             <div className="card-image-container">
                               <img
                                 src={property.images?.[0]}
@@ -539,32 +541,34 @@ const FindProperty = () => {
                               </div>
                             </div>
                             
-                            <div className="enhanced-glass-content">
-                              <div className="property-header">
-                                <h3 className="property-name">{property.title}</h3>
-                                <div className="property-price">{getFormattedPrice(property)}</div>
-                              </div>
-                              
-                              <div className="property-location">
-                                📍 {property.address?.city}, {property.address?.state}
-                              </div>
-                              
-                              <div className="property-details">
-                                {property.bedrooms > 0 && <span className="detail-chip">🛏 {property.bedrooms} bed</span>}
-                                {property.bathrooms > 0 && <span className="detail-chip">🚿 {property.bathrooms} bath</span>}
-                                <span className="detail-chip">📐 {property.size}</span>
+                            <div className="refined-glass-content">
+                              <div>
+                                <div className="property-header">
+                                  <h3 className="property-name">{property.title}</h3>
+                                  <div className="property-price">{getFormattedPrice(property)}</div>
+                                </div>
+                                
+                                <div className="property-location">
+                                  📍 {property.address?.city}, {property.address?.state}
+                                </div>
+                                
+                                <div className="property-details">
+                                  {property.bedrooms > 0 && <span className="detail-chip">🛏 {property.bedrooms} bed</span>}
+                                  {property.bathrooms > 0 && <span className="detail-chip">🚿 {property.bathrooms} bath</span>}
+                                  <span className="detail-chip">📐 {property.size}</span>
+                                </div>
                               </div>
                               
                               <div className="card-actions">
                                 <Button
                                   onClick={() => handleViewDetails(property._id)}
-                                  className="enhanced-glass-btn secondary"
+                                  className="refined-glass-btn secondary"
                                 >
                                   View Details
                                 </Button>
                                 <Button
                                   onClick={() => handleBookNow(property._id)}
-                                  className="enhanced-glass-btn primary"
+                                  className="refined-glass-btn primary"
                                 >
                                   Book Now
                                 </Button>
@@ -582,7 +586,7 @@ const FindProperty = () => {
         </Container>
       </section>
 
-      {/* ENHANCED GLASSMORPHISM CSS WITH IMPROVED STYLING */}
+      {/* REFINED GLASSMORPHISM CSS WITH FIXED ELEMENTS */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
@@ -882,7 +886,7 @@ const FindProperty = () => {
           border-color: #9ca3af;
         }
         
-        /* ENHANCED GLASSMORPHISM PROPERTY CARDS - DRIBBBLE STYLE */
+        /* REFINED GLASSMORPHISM PROPERTY CARDS - FIXED ELEMENTS */
         .properties-grid, .properties-list {
           margin: 0;
         }
@@ -891,7 +895,7 @@ const FindProperty = () => {
           margin-bottom: 1.75rem;
         }
         
-        .enhanced-glass-card {
+        .refined-glass-card {
           background: rgba(255, 255, 255, 0.28);
           backdrop-filter: saturate(200%) blur(30px);
           -webkit-backdrop-filter: saturate(200%) blur(30px);
@@ -904,14 +908,14 @@ const FindProperty = () => {
           position: relative;
         }
         
-        .enhanced-glass-card:hover {
+        .refined-glass-card:hover {
           transform: translateY(-8px) scale(1.025);
           box-shadow: 0 20px 60px rgba(124, 58, 237, 0.25);
           background: rgba(255, 255, 255, 0.35);
           border-color: rgba(255, 255, 255, 0.45);
         }
         
-        .enhanced-glass-card::before {
+        .refined-glass-card::before {
           content: '';
           position: absolute;
           top: 0;
@@ -922,24 +926,7 @@ const FindProperty = () => {
           pointer-events: none;
         }
         
-        .enhanced-glass-card::after {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
-          pointer-events: none;
-          opacity: 0;
-          transition: opacity 0.4s ease;
-        }
-        
-        .enhanced-glass-card:hover::after {
-          opacity: 1;
-        }
-        
-        /* GRID CARDS - DRIBBBLE-INSPIRED PROPORTIONS */
+        /* GRID CARDS - PERFECT PROPORTIONS */
         .grid-card {
           height: 360px;
           display: flex;
@@ -947,22 +934,23 @@ const FindProperty = () => {
         }
         
         .grid-card .card-image-container {
-          height: 200px;
+          height: 180px;
           position: relative;
           overflow: hidden;
           border-radius: 24px 24px 0 0;
         }
         
-        .grid-card .enhanced-glass-content {
+        .grid-card .refined-glass-content {
           flex: 1;
-          padding: 1.75rem 1.75rem 2rem 1.75rem;
+          padding: 1.5rem 1.75rem 1.75rem 1.75rem;
           display: flex;
           flex-direction: column;
+          justify-content: space-between;
         }
         
         /* LIST CARDS - IMPROVED LAYOUT */
         .list-card {
-          height: 220px;
+          height: 200px;
         }
         
         .list-card .card-image-container {
@@ -972,8 +960,8 @@ const FindProperty = () => {
           border-radius: 24px 0 0 24px;
         }
         
-        .list-card .enhanced-glass-content {
-          padding: 2rem;
+        .list-card .refined-glass-content {
+          padding: 1.5rem 1.75rem;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
@@ -987,7 +975,7 @@ const FindProperty = () => {
           transition: transform 0.5s ease;
         }
         
-        .enhanced-glass-card:hover .card-image {
+        .refined-glass-card:hover .card-image {
           transform: scale(1.1);
         }
         
@@ -1028,16 +1016,17 @@ const FindProperty = () => {
           border: 1px solid rgba(59, 130, 246, 0.4);
         }
         
+        /* FIXED TEXT PLACEMENT & SIZING */
         .property-header {
           display: flex;
           justify-content: space-between;
           align-items: flex-start;
-          margin-bottom: 1rem;
-          gap: 1.25rem;
+          margin-bottom: 0.75rem;
+          gap: 1rem;
         }
         
         .property-name {
-          font-size: 1.15rem;
+          font-size: 1.1rem;
           font-weight: 700;
           color: #1e293b;
           margin: 0;
@@ -1047,51 +1036,51 @@ const FindProperty = () => {
         }
         
         .property-price {
-          font-size: 1.3rem;
+          font-size: 1.25rem;
           font-weight: 800;
-          color: #22c55e;
+          color: #16a34a;
           letter-spacing: -0.02em;
           white-space: nowrap;
           line-height: 1.2;
         }
         
         .property-location {
-          font-size: 0.85rem;
+          font-size: 0.8rem;
           color: #64748b;
-          margin-bottom: 1rem;
+          margin-bottom: 0.75rem;
           font-weight: 500;
         }
         
         .property-details {
           display: flex;
           flex-wrap: wrap;
-          gap: 0.6rem;
-          margin-bottom: 1.5rem;
+          gap: 0.5rem;
+          margin-bottom: 1rem;
         }
         
         .detail-chip {
-          font-size: 0.75rem;
+          font-size: 0.7rem;
           color: #374151;
           font-weight: 600;
           background: rgba(255, 255, 255, 0.5);
           backdrop-filter: blur(20px);
-          padding: 0.35rem 0.8rem;
-          border-radius: 12px;
+          padding: 0.25rem 0.6rem;
+          border-radius: 10px;
           border: 1px solid rgba(255, 255, 255, 0.4);
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
         
+        /* FIXED BUTTON SIZES */
         .card-actions {
           display: flex;
-          gap: 0.9rem;
-          margin-top: auto;
+          gap: 0.75rem;
         }
         
-        .enhanced-glass-btn {
+        .refined-glass-btn {
           flex: 1;
-          padding: 0.8rem 1.2rem;
-          border-radius: 16px;
-          font-size: 0.85rem;
+          padding: 0.75rem 1rem;
+          border-radius: 14px;
+          font-size: 0.8rem;
           font-weight: 700;
           text-align: center;
           transition: all 0.3s ease;
@@ -1102,26 +1091,26 @@ const FindProperty = () => {
           letter-spacing: 0.025em;
         }
         
-        .enhanced-glass-btn.secondary {
+        .refined-glass-btn.secondary {
           background: rgba(255, 255, 255, 0.4);
           color: #7c3aed;
           border: 1px solid rgba(124, 58, 237, 0.4);
         }
         
-        .enhanced-glass-btn.secondary:hover {
+        .refined-glass-btn.secondary:hover {
           background: rgba(124, 58, 237, 0.2);
           border-color: rgba(124, 58, 237, 0.6);
           transform: translateY(-2px);
           box-shadow: 0 8px 25px rgba(124, 58, 237, 0.25);
         }
         
-        .enhanced-glass-btn.primary {
+        .refined-glass-btn.primary {
           background: rgba(124, 58, 237, 0.9);
           color: white;
           border: 1px solid rgba(124, 58, 237, 0.7);
         }
         
-        .enhanced-glass-btn.primary:hover {
+        .refined-glass-btn.primary:hover {
           background: rgba(124, 58, 237, 1);
           transform: translateY(-2px);
           box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
@@ -1213,7 +1202,7 @@ const FindProperty = () => {
           }
           
           .grid-card .card-image-container {
-            height: 180px;
+            height: 160px;
           }
         }
         
