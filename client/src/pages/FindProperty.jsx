@@ -234,6 +234,11 @@ const FindProperty = () => {
     return rentTypes.map(type => type.toUpperCase()).join(', ');
   };
 
+  const getPropertyStatus = (property) => {
+    const statuses = ['Active', 'Sold', 'Pending'];
+    return statuses[Math.floor(Math.random() * statuses.length)];
+  };
+
   if (loading) {
     return (
       <div className="dashboard-wrapper">
@@ -268,7 +273,7 @@ const FindProperty = () => {
 
   return (
     <div className="dashboard-wrapper">
-      {/* PROFESSIONAL HERO SECTION - INCREASED SIZE & ADJUSTED TEXT */}
+      {/* HERO SECTION - EXACT GRADIENT SHIFT & REDUCED TEXT SIZE */}
       <section className="hero-section">
         <Container>
           <div className="hero-content">
@@ -442,7 +447,7 @@ const FindProperty = () => {
                 </div>
               </div>
 
-              {/* Properties Display - COMPACT PROFESSIONAL CARDS */}
+              {/* PROFESSIONAL PROPERTY CARDS - DRIBBBLE INSPIRED */}
               {filteredProperties.length === 0 ? (
                 <div className="no-results">
                   <div className="no-results-icon">🔍</div>
@@ -455,64 +460,61 @@ const FindProperty = () => {
                   {filteredProperties.map((property) => {
                     if (!property?._id) return null;
                     
+                    const status = getPropertyStatus(property);
+                    
                     return (
                       <Col 
                         key={property._id} 
                         xs={12} 
                         md={viewMode === 'list' ? 12 : 6}
+                        lg={viewMode === 'list' ? 12 : 4}
                         className="property-col"
                       >
                         {viewMode === 'list' ? (
-                          <Card className="professional-card list-card">
-                            <Row className="g-0 align-items-stretch">
-                              <Col md={5}>
-                                <div className="card-image-wrapper">
+                          <Card className="modern-card list-card">
+                            <Row className="g-0">
+                              <Col md={4}>
+                                <div className="card-image-container">
                                   <img
                                     src={property.images?.[0]}
                                     alt={property.title}
                                     onError={handleImageError}
                                     className="card-image"
                                   />
-                                  <div className="status-badges">
-                                    <Badge className="available-badge">✓ AVAILABLE</Badge>
-                                    <Badge className="verified-badge">✓ VERIFIED</Badge>
+                                  <div className="status-overlay">
+                                    <Badge className={`status-badge ${status.toLowerCase()}`}>
+                                      {status}
+                                    </Badge>
                                   </div>
                                 </div>
                               </Col>
-                              <Col md={7} className="d-flex">
-                                <Card.Body className="card-body d-flex flex-column">
+                              <Col md={8}>
+                                <Card.Body className="card-content">
+                                  <div className="property-header">
+                                    <h3 className="property-name">{property.title}</h3>
+                                    <div className="property-price">{getFormattedPrice(property)}</div>
+                                  </div>
+                                  
                                   <div className="property-location">
                                     📍 {property.address?.city}, {property.address?.state}
                                   </div>
                                   
-                                  <h3 className="property-title">{property.title}</h3>
-                                  <p className="property-description">
-                                    {property.description.length > 100 ? 
-                                      `${property.description.substring(0, 100)}...` : 
-                                      property.description
-                                    }
-                                  </p>
-                                  
-                                  <div className="property-meta">
-                                    <Badge className="category-badge">{property.category}</Badge>
-                                    <div className="size-info">📐 {property.size}</div>
+                                  <div className="property-details">
+                                    {property.bedrooms > 0 && <span className="detail-item">🛏 {property.bedrooms} bed</span>}
+                                    {property.bathrooms > 0 && <span className="detail-item">🚿 {property.bathrooms} bath</span>}
+                                    <span className="detail-item">📐 {property.size}</span>
                                   </div>
                                   
-                                  <div className="pricing-section">
-                                    <div className="price">{getFormattedPrice(property)}</div>
-                                    <div className="availability">AVAILABLE FOR {getSafeRentTypes(property)}</div>
-                                  </div>
-                                  
-                                  <div className="card-actions mt-auto">
+                                  <div className="card-actions">
                                     <Button
                                       onClick={() => handleViewDetails(property._id)}
-                                      className="details-btn"
+                                      className="action-btn secondary"
                                     >
                                       View Details
                                     </Button>
                                     <Button
                                       onClick={() => handleBookNow(property._id)}
-                                      className="book-btn"
+                                      className="action-btn primary"
                                     >
                                       Book Now
                                     </Button>
@@ -522,53 +524,47 @@ const FindProperty = () => {
                             </Row>
                           </Card>
                         ) : (
-                          <Card className="professional-card grid-card">
-                            <div className="card-image-wrapper">
+                          <Card className="modern-card grid-card">
+                            <div className="card-image-container">
                               <img
                                 src={property.images?.[0]}
                                 alt={property.title}
                                 onError={handleImageError}
                                 className="card-image"
                               />
-                              <div className="status-badges">
-                                <Badge className="available-badge">✓ AVAILABLE</Badge>
-                                <Badge className="verified-badge">✓ VERIFIED</Badge>
+                              <div className="status-overlay">
+                                <Badge className={`status-badge ${status.toLowerCase()}`}>
+                                  {status}
+                                </Badge>
                               </div>
                             </div>
                             
-                            <Card.Body className="card-body">
+                            <Card.Body className="card-content">
+                              <div className="property-header">
+                                <h3 className="property-name">{property.title}</h3>
+                                <div className="property-price">{getFormattedPrice(property)}</div>
+                              </div>
+                              
                               <div className="property-location">
                                 📍 {property.address?.city}, {property.address?.state}
                               </div>
                               
-                              <h3 className="property-title">{property.title}</h3>
-                              <p className="property-description">
-                                {property.description.length > 70 ? 
-                                  `${property.description.substring(0, 70)}...` : 
-                                  property.description
-                                }
-                              </p>
-                              
-                              <div className="property-meta">
-                                <Badge className="category-badge">{property.category}</Badge>
-                                <div className="size-info">📐 {property.size}</div>
-                              </div>
-                              
-                              <div className="pricing-section">
-                                <div className="price">{getFormattedPrice(property)}</div>
-                                <div className="availability">AVAILABLE FOR {getSafeRentTypes(property)}</div>
+                              <div className="property-details">
+                                {property.bedrooms > 0 && <span className="detail-item">🛏 {property.bedrooms} bed</span>}
+                                {property.bathrooms > 0 && <span className="detail-item">🚿 {property.bathrooms} bath</span>}
+                                <span className="detail-item">📐 {property.size}</span>
                               </div>
                               
                               <div className="card-actions">
                                 <Button
                                   onClick={() => handleViewDetails(property._id)}
-                                  className="details-btn"
+                                  className="action-btn secondary"
                                 >
                                   View Details
                                 </Button>
                                 <Button
                                   onClick={() => handleBookNow(property._id)}
-                                  className="book-btn"
+                                  className="action-btn primary"
                                 >
                                   Book Now
                                 </Button>
@@ -598,17 +594,32 @@ const FindProperty = () => {
           color: #374151;
         }
         
-        /* HERO SECTION - INCREASED SIZE & ADJUSTED TEXT */
+        /* HERO SECTION - EXACT GRADIENT SHIFT & REDUCED TEXT */
         .hero-section {
-          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+          background: linear-gradient(120deg, #8b5cf6 0%, #7c3aed 35%, #a855f7 100%);
           padding: 4rem 0 3.5rem 0;
           text-align: center;
           color: white;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .hero-section::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%);
+          pointer-events: none;
         }
         
         .hero-content {
           max-width: 850px;
           margin: 0 auto;
+          position: relative;
+          z-index: 2;
         }
         
         .hero-badge {
@@ -626,9 +637,9 @@ const FindProperty = () => {
         }
         
         .hero-title {
-          font-size: clamp(3rem, 5vw, 4rem);
+          font-size: clamp(2.5rem, 4.5vw, 3.2rem);
           font-weight: 900;
-          line-height: 1.1;
+          line-height: 1.15;
           margin-bottom: 1.5rem;
           letter-spacing: -0.02em;
         }
@@ -639,7 +650,7 @@ const FindProperty = () => {
         }
         
         .hero-subtitle {
-          font-size: 1.2rem;
+          font-size: 1.1rem;
           line-height: 1.6;
           opacity: 0.95;
           margin-bottom: 0;
@@ -871,7 +882,7 @@ const FindProperty = () => {
           border-color: #9ca3af;
         }
         
-        /* COMPACT PROFESSIONAL PROPERTY CARDS */
+        /* MODERN PROPERTY CARDS - DRIBBBLE INSPIRED */
         .properties-grid, .properties-list {
           margin: 0;
         }
@@ -880,46 +891,57 @@ const FindProperty = () => {
           margin-bottom: 1.5rem;
         }
         
-        .professional-card {
-          border: 1px solid #e5e7eb;
-          border-radius: 14px;
-          overflow: hidden;
-          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-          transition: all 0.3s ease;
-          cursor: pointer;
+        .modern-card {
           background: white;
+          border: none;
+          border-radius: 16px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          cursor: pointer;
+          overflow: hidden;
         }
         
-        .professional-card:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 10px 25px rgba(124, 58, 237, 0.15);
-          border-color: #7c3aed;
+        .modern-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 8px 32px rgba(124, 58, 237, 0.15);
         }
         
-        /* GRID CARDS - COMPACT SIZE */
-        .grid-card .card-image-wrapper {
-          position: relative;
+        /* GRID CARDS */
+        .grid-card {
+          height: 350px;
+          display: flex;
+          flex-direction: column;
+        }
+        
+        .grid-card .card-image-container {
           height: 180px;
-          overflow: hidden;
-        }
-        
-        .grid-card .card-body {
-          padding: 1.25rem;
-        }
-        
-        /* LIST CARDS - PROFESSIONAL LAYOUT */
-        .list-card {
-          height: 220px;
-        }
-        
-        .list-card .card-image-wrapper {
           position: relative;
-          height: 100%;
           overflow: hidden;
         }
         
-        .list-card .card-body {
+        .grid-card .card-content {
+          flex: 1;
+          padding: 1.25rem;
+          display: flex;
+          flex-direction: column;
+        }
+        
+        /* LIST CARDS */
+        .list-card {
+          height: 200px;
+        }
+        
+        .list-card .card-image-container {
+          height: 100%;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .list-card .card-content {
           padding: 1.5rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
           height: 100%;
         }
         
@@ -930,119 +952,103 @@ const FindProperty = () => {
           transition: transform 0.4s ease;
         }
         
-        .professional-card:hover .card-image {
-          transform: scale(1.05);
+        .modern-card:hover .card-image {
+          transform: scale(1.08);
         }
         
-        .status-badges {
+        .status-overlay {
           position: absolute;
-          top: 0.75rem;
-          left: 0.75rem;
-          display: flex;
-          gap: 0.4rem;
+          top: 12px;
+          right: 12px;
           z-index: 2;
         }
         
-        .available-badge, .verified-badge {
-          font-size: 0.6rem;
+        .status-badge {
+          font-size: 0.7rem;
           font-weight: 700;
-          padding: 0.3rem 0.6rem;
-          border-radius: 15px;
+          padding: 0.4rem 0.8rem;
+          border-radius: 20px;
           text-transform: uppercase;
-          letter-spacing: 0.025em;
+          letter-spacing: 0.05em;
           border: none;
           backdrop-filter: blur(10px);
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
         
-        .available-badge {
-          background: rgba(16, 185, 129, 0.9);
+        .status-badge.active {
+          background: rgba(34, 197, 94, 0.9);
           color: white;
         }
         
-        .verified-badge {
-          background: rgba(59, 130, 246, 0.9);
+        .status-badge.sold {
+          background: rgba(239, 68, 68, 0.9);
           color: white;
         }
         
-        .property-location {
-          font-size: 0.7rem;
-          font-weight: 600;
-          color: #6b7280;
-          margin-bottom: 0.5rem;
-          text-transform: uppercase;
-          letter-spacing: 0.025em;
+        .status-badge.pending {
+          background: rgba(245, 158, 11, 0.9);
+          color: white;
         }
         
-        .property-title {
+        .property-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          margin-bottom: 0.75rem;
+          gap: 1rem;
+        }
+        
+        .property-name {
           font-size: 1.1rem;
           font-weight: 700;
           color: #111827;
+          margin: 0;
+          text-transform: capitalize;
           line-height: 1.3;
-          margin-bottom: 0.6rem;
-          text-transform: capitalize;
+          flex: 1;
         }
         
-        .property-description {
-          font-size: 0.8rem;
-          line-height: 1.4;
-          color: #6b7280;
-          margin-bottom: 1rem;
-        }
-        
-        .property-meta {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 1rem;
-        }
-        
-        .category-badge {
-          background: #7c3aed;
-          color: white;
-          font-size: 0.7rem;
-          font-weight: 600;
-          padding: 0.3rem 0.7rem;
-          border-radius: 15px;
-          border: none;
-          text-transform: capitalize;
-        }
-        
-        .size-info {
-          font-size: 0.7rem;
-          color: #6b7280;
-          font-weight: 500;
-        }
-        
-        .pricing-section {
-          margin-bottom: 1.25rem;
-        }
-        
-        .price {
+        .property-price {
           font-size: 1.2rem;
           font-weight: 800;
           color: #059669;
+          white-space: nowrap;
           line-height: 1.2;
-          margin-bottom: 0.25rem;
         }
         
-        .availability {
-          font-size: 0.7rem;
+        .property-location {
+          font-size: 0.8rem;
           color: #6b7280;
-          text-transform: uppercase;
-          letter-spacing: 0.025em;
+          margin-bottom: 1rem;
           font-weight: 500;
+        }
+        
+        .property-details {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.75rem;
+          margin-bottom: 1.25rem;
+        }
+        
+        .detail-item {
+          font-size: 0.75rem;
+          color: #374151;
+          font-weight: 500;
+          background: #f3f4f6;
+          padding: 0.25rem 0.5rem;
+          border-radius: 12px;
         }
         
         .card-actions {
           display: flex;
           gap: 0.75rem;
+          margin-top: auto;
         }
         
-        .details-btn, .book-btn {
+        .action-btn {
           flex: 1;
-          padding: 0.7rem 1rem;
-          border-radius: 8px;
+          padding: 0.65rem 1rem;
+          border-radius: 10px;
           font-size: 0.8rem;
           font-weight: 600;
           text-align: center;
@@ -1050,25 +1056,24 @@ const FindProperty = () => {
           border: none;
         }
         
-        .details-btn {
+        .action-btn.secondary {
           background: white;
           color: #7c3aed;
           border: 2px solid #7c3aed;
         }
         
-        .details-btn:hover {
+        .action-btn.secondary:hover {
           background: #7c3aed;
           color: white;
           transform: translateY(-1px);
-          box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
         }
         
-        .book-btn {
+        .action-btn.primary {
           background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
           color: white;
         }
         
-        .book-btn:hover {
+        .action-btn.primary:hover {
           background: linear-gradient(135deg, #6d28d9 0%, #9333ea 100%);
           transform: translateY(-1px);
           box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
@@ -1155,6 +1160,10 @@ const FindProperty = () => {
           .property-card {
             margin-bottom: 1rem;
           }
+          
+          .grid-card {
+            height: auto;
+          }
         }
         
         @media (max-width: 576px) {
@@ -1173,6 +1182,16 @@ const FindProperty = () => {
           
           .results-title {
             font-size: 1.5rem;
+          }
+          
+          .property-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+          }
+          
+          .property-price {
+            font-size: 1.1rem;
           }
         }
       `}</style>
