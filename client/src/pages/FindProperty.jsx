@@ -215,7 +215,6 @@ const FindProperty = () => {
     const rentTypes = Array.isArray(property.rentType) ? property.rentType : ['monthly'];
     const rentType = rentTypes[0] || 'monthly';
     
-    // Format Indian currency
     const formatter = new Intl.NumberFormat('en-IN', {
       style: 'currency',
       currency: 'INR',
@@ -269,7 +268,7 @@ const FindProperty = () => {
 
   return (
     <div className="dashboard-wrapper">
-      {/* PROFESSIONAL HERO SECTION - EXACT GRADIENT, NO STATS */}
+      {/* PROFESSIONAL HERO SECTION - INCREASED SIZE & ADJUSTED TEXT */}
       <section className="hero-section">
         <Container>
           <div className="hero-content">
@@ -443,7 +442,7 @@ const FindProperty = () => {
                 </div>
               </div>
 
-              {/* Properties Display - PROFESSIONAL CARDS */}
+              {/* Properties Display - COMPACT PROFESSIONAL CARDS */}
               {filteredProperties.length === 0 ? (
                 <div className="no-results">
                   <div className="no-results-icon">🔍</div>
@@ -465,7 +464,7 @@ const FindProperty = () => {
                       >
                         {viewMode === 'list' ? (
                           <Card className="professional-card list-card">
-                            <Row className="g-0">
+                            <Row className="g-0 align-items-stretch">
                               <Col md={5}>
                                 <div className="card-image-wrapper">
                                   <img
@@ -480,14 +479,19 @@ const FindProperty = () => {
                                   </div>
                                 </div>
                               </Col>
-                              <Col md={7}>
-                                <Card.Body className="card-body">
+                              <Col md={7} className="d-flex">
+                                <Card.Body className="card-body d-flex flex-column">
                                   <div className="property-location">
                                     📍 {property.address?.city}, {property.address?.state}
                                   </div>
                                   
                                   <h3 className="property-title">{property.title}</h3>
-                                  <p className="property-description">{property.description}</p>
+                                  <p className="property-description">
+                                    {property.description.length > 100 ? 
+                                      `${property.description.substring(0, 100)}...` : 
+                                      property.description
+                                    }
+                                  </p>
                                   
                                   <div className="property-meta">
                                     <Badge className="category-badge">{property.category}</Badge>
@@ -499,7 +503,7 @@ const FindProperty = () => {
                                     <div className="availability">AVAILABLE FOR {getSafeRentTypes(property)}</div>
                                   </div>
                                   
-                                  <div className="card-actions">
+                                  <div className="card-actions mt-auto">
                                     <Button
                                       onClick={() => handleViewDetails(property._id)}
                                       className="details-btn"
@@ -538,7 +542,12 @@ const FindProperty = () => {
                               </div>
                               
                               <h3 className="property-title">{property.title}</h3>
-                              <p className="property-description">{property.description}</p>
+                              <p className="property-description">
+                                {property.description.length > 70 ? 
+                                  `${property.description.substring(0, 70)}...` : 
+                                  property.description
+                                }
+                              </p>
                               
                               <div className="property-meta">
                                 <Badge className="category-badge">{property.category}</Badge>
@@ -577,7 +586,7 @@ const FindProperty = () => {
         </Container>
       </section>
 
-      {/* PROFESSIONAL CSS STYLES */}
+      {/* COMPLETE PROFESSIONAL CSS STYLES */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
@@ -589,16 +598,16 @@ const FindProperty = () => {
           color: #374151;
         }
         
-        /* PROFESSIONAL HERO SECTION - EXACT GRADIENT */
+        /* HERO SECTION - INCREASED SIZE & ADJUSTED TEXT */
         .hero-section {
           background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-          padding: 3.5rem 0;
+          padding: 4rem 0 3.5rem 0;
           text-align: center;
           color: white;
         }
         
         .hero-content {
-          max-width: 800px;
+          max-width: 850px;
           margin: 0 auto;
         }
         
@@ -607,9 +616,9 @@ const FindProperty = () => {
           background: rgba(255, 255, 255, 0.2);
           border: 1px solid rgba(255, 255, 255, 0.3);
           border-radius: 50px;
-          padding: 0.5rem 1.25rem;
-          margin-bottom: 1.5rem;
-          font-size: 0.8rem;
+          padding: 0.6rem 1.4rem;
+          margin-bottom: 1.75rem;
+          font-size: 0.9rem;
           font-weight: 700;
           text-transform: uppercase;
           letter-spacing: 0.05em;
@@ -617,7 +626,7 @@ const FindProperty = () => {
         }
         
         .hero-title {
-          font-size: clamp(2.5rem, 4vw, 3.5rem);
+          font-size: clamp(3rem, 5vw, 4rem);
           font-weight: 900;
           line-height: 1.1;
           margin-bottom: 1.5rem;
@@ -630,11 +639,11 @@ const FindProperty = () => {
         }
         
         .hero-subtitle {
-          font-size: 1.125rem;
+          font-size: 1.2rem;
           line-height: 1.6;
-          opacity: 0.9;
+          opacity: 0.95;
           margin-bottom: 0;
-          max-width: 600px;
+          max-width: 650px;
           margin-left: auto;
           margin-right: auto;
         }
@@ -862,18 +871,18 @@ const FindProperty = () => {
           border-color: #9ca3af;
         }
         
-        /* PROFESSIONAL PROPERTY CARDS */
+        /* COMPACT PROFESSIONAL PROPERTY CARDS */
         .properties-grid, .properties-list {
           margin: 0;
         }
         
         .property-col {
-          margin-bottom: 2rem;
+          margin-bottom: 1.5rem;
         }
         
         .professional-card {
           border: 1px solid #e5e7eb;
-          border-radius: 16px;
+          border-radius: 14px;
           overflow: hidden;
           box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
           transition: all 0.3s ease;
@@ -882,19 +891,36 @@ const FindProperty = () => {
         }
         
         .professional-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 12px 28px rgba(124, 58, 237, 0.15);
+          transform: translateY(-3px);
+          box-shadow: 0 10px 25px rgba(124, 58, 237, 0.15);
           border-color: #7c3aed;
         }
         
-        .card-image-wrapper {
+        /* GRID CARDS - COMPACT SIZE */
+        .grid-card .card-image-wrapper {
           position: relative;
-          height: 220px;
+          height: 180px;
           overflow: hidden;
         }
         
+        .grid-card .card-body {
+          padding: 1.25rem;
+        }
+        
+        /* LIST CARDS - PROFESSIONAL LAYOUT */
+        .list-card {
+          height: 220px;
+        }
+        
         .list-card .card-image-wrapper {
-          height: 200px;
+          position: relative;
+          height: 100%;
+          overflow: hidden;
+        }
+        
+        .list-card .card-body {
+          padding: 1.5rem;
+          height: 100%;
         }
         
         .card-image {
@@ -910,18 +936,18 @@ const FindProperty = () => {
         
         .status-badges {
           position: absolute;
-          top: 1rem;
-          left: 1rem;
+          top: 0.75rem;
+          left: 0.75rem;
           display: flex;
-          gap: 0.5rem;
+          gap: 0.4rem;
           z-index: 2;
         }
         
         .available-badge, .verified-badge {
-          font-size: 0.625rem;
+          font-size: 0.6rem;
           font-weight: 700;
-          padding: 0.375rem 0.75rem;
-          border-radius: 20px;
+          padding: 0.3rem 0.6rem;
+          border-radius: 15px;
           text-transform: uppercase;
           letter-spacing: 0.025em;
           border: none;
@@ -939,72 +965,61 @@ const FindProperty = () => {
           color: white;
         }
         
-        .card-body {
-          padding: 1.75rem;
-        }
-        
-        .list-card .card-body {
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          height: 200px;
-        }
-        
         .property-location {
-          font-size: 0.75rem;
+          font-size: 0.7rem;
           font-weight: 600;
           color: #6b7280;
-          margin-bottom: 0.75rem;
+          margin-bottom: 0.5rem;
           text-transform: uppercase;
           letter-spacing: 0.025em;
         }
         
         .property-title {
-          font-size: 1.25rem;
+          font-size: 1.1rem;
           font-weight: 700;
           color: #111827;
           line-height: 1.3;
-          margin-bottom: 0.75rem;
+          margin-bottom: 0.6rem;
           text-transform: capitalize;
         }
         
         .property-description {
-          font-size: 0.875rem;
-          line-height: 1.5;
+          font-size: 0.8rem;
+          line-height: 1.4;
           color: #6b7280;
-          margin-bottom: 1.25rem;
+          margin-bottom: 1rem;
         }
         
         .property-meta {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          margin-bottom: 1.25rem;
+          margin-bottom: 1rem;
         }
         
         .category-badge {
           background: #7c3aed;
           color: white;
-          font-size: 0.75rem;
+          font-size: 0.7rem;
           font-weight: 600;
-          padding: 0.375rem 0.875rem;
-          border-radius: 20px;
+          padding: 0.3rem 0.7rem;
+          border-radius: 15px;
           border: none;
           text-transform: capitalize;
         }
         
         .size-info {
-          font-size: 0.75rem;
+          font-size: 0.7rem;
           color: #6b7280;
           font-weight: 500;
         }
         
         .pricing-section {
-          margin-bottom: 1.5rem;
+          margin-bottom: 1.25rem;
         }
         
         .price {
-          font-size: 1.375rem;
+          font-size: 1.2rem;
           font-weight: 800;
           color: #059669;
           line-height: 1.2;
@@ -1012,7 +1027,7 @@ const FindProperty = () => {
         }
         
         .availability {
-          font-size: 0.75rem;
+          font-size: 0.7rem;
           color: #6b7280;
           text-transform: uppercase;
           letter-spacing: 0.025em;
@@ -1021,18 +1036,14 @@ const FindProperty = () => {
         
         .card-actions {
           display: flex;
-          gap: 0.875rem;
-        }
-        
-        .list-card .card-actions {
-          margin-top: auto;
+          gap: 0.75rem;
         }
         
         .details-btn, .book-btn {
           flex: 1;
-          padding: 0.875rem 1.25rem;
-          border-radius: 10px;
-          font-size: 0.875rem;
+          padding: 0.7rem 1rem;
+          border-radius: 8px;
+          font-size: 0.8rem;
           font-weight: 600;
           text-align: center;
           transition: all 0.3s ease;
@@ -1048,7 +1059,7 @@ const FindProperty = () => {
         .details-btn:hover {
           background: #7c3aed;
           color: white;
-          transform: translateY(-2px);
+          transform: translateY(-1px);
           box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
         }
         
@@ -1059,7 +1070,7 @@ const FindProperty = () => {
         
         .book-btn:hover {
           background: linear-gradient(135deg, #6d28d9 0%, #9333ea 100%);
-          transform: translateY(-2px);
+          transform: translateY(-1px);
           box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
         }
         
@@ -1110,6 +1121,14 @@ const FindProperty = () => {
           .view-btn {
             flex: 1;
           }
+          
+          .list-card {
+            height: auto;
+          }
+          
+          .list-card .card-actions {
+            flex-direction: column;
+          }
         }
         
         @media (max-width: 768px) {
@@ -1125,6 +1144,10 @@ const FindProperty = () => {
             font-size: 2.5rem;
           }
           
+          .hero-subtitle {
+            font-size: 1rem;
+          }
+          
           .card-actions {
             flex-direction: column;
           }
@@ -1136,17 +1159,12 @@ const FindProperty = () => {
         
         @media (max-width: 576px) {
           .hero-section {
-            padding: 2.5rem 0;
+            padding: 3rem 0 2.5rem 0;
           }
           
           .hero-badge {
-            padding: 0.375rem 1rem;
-            font-size: 0.75rem;
-          }
-          
-          .hero-subtitle {
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
+            padding: 0.5rem 1.2rem;
+            font-size: 0.8rem;
           }
           
           .search-section, .filters-section {
