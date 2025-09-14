@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Container, Row, Col, Card, Badge, Button, Form, Spinner, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { api, handleApiError, formatPrice, getImageUrl } from '../utils/api';
 import PropertyCard from '../components/PropertyCard';
 
 const FindProperty = () => {
@@ -11,6 +10,7 @@ const FindProperty = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [retryCount, setRetryCount] = useState(0);
   const [filters, setFilters] = useState({
     location: '',
     propertyType: '',
@@ -34,111 +34,258 @@ const FindProperty = () => {
 
   const residentialTypes = ["Villa", "Apartment", "House", "Studio", "Flat"];
 
-  useEffect(() => {
-    fetchProperties();
-  }, []);
-
+  // 🔥 REAL API FETCHING WITH PROPER TIMEOUT AND ERROR HANDLING
   const fetchProperties = async () => {
     try {
       setLoading(true);
       setError('');
-      const response = await api.properties.getAll();
+      
+      console.log('🚀 Starting API call...');
+      
+      // Create AbortController for timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => {
+        controller.abort();
+        console.log('⏰ API call timed out');
+      }, 15000); // 15 second timeout
+      
+      // 🔥 MULTIPLE API ENDPOINTS TO TRY
+      const apiEndpoints = [
+        `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/properties`,
+        `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/property`,
+        `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/properties`,
+        `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/property`,
+        `/api/properties`,
+        `/api/property`
+      ];
+      
+      let response = null;
+      let lastError = null;
+      
+      // Try different endpoints
+      for (const endpoint of apiEndpoints) {
+        try {
+          console.log(`🔗 Trying endpoint: ${endpoint}`);
+          
+          response = await fetch(endpoint, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              // Add auth headers if needed
+              // 'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            signal: controller.signal,
+            credentials: 'include', // Include cookies if needed
+          });
+          
+          if (response.ok) {
+            console.log(`✅ Success with endpoint: ${endpoint}`);
+            break;
+          } else {
+            console.log(`❌ Failed with endpoint: ${endpoint}, Status: ${response.status}`);
+            lastError = new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+        } catch (err) {
+          console.log(`❌ Network error with endpoint: ${endpoint}`, err.message);
+          lastError = err;
+          continue;
+        }
+      }
+      
+      clearTimeout(timeoutId);
+      
+      if (!response || !response.ok) {
+        throw lastError || new Error('All API endpoints failed');
+      }
+      
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('Server returned non-JSON response');
+      }
+      
+      const data = await response.json();
+      console.log('📦 Raw API Response:', data);
+      
+      // 🔥 HANDLE DIFFERENT API RESPONSE STRUCTURES
       let propertiesArray = [];
       
-      if (Array.isArray(response)) {
-        propertiesArray = response;
-      } else if (Array.isArray(response?.data)) {
-        propertiesArray = response.data;
-      } else if (Array.isArray(response?.data?.properties)) {
-        propertiesArray = response.data.properties;
-      } else if (response?.data && typeof response.data === 'object') {
-        const dataObj = response.data;
-        for (const key in dataObj) {
-          if (Array.isArray(dataObj[key])) {
-            propertiesArray = dataObj[key];
+      if (Array.isArray(data)) {
+        propertiesArray = data;
+      } else if (data && typeof data === 'object') {
+        // Try different possible property names
+        const possibleKeys = ['data', 'properties', 'results', 'items', 'property', 'listings'];
+        
+        for (const key of possibleKeys) {
+          if (Array.isArray(data[key])) {
+            propertiesArray = data[key];
+            console.log(`✅ Found properties in data.${key}`);
             break;
+          }
+        }
+        
+        // If nested deeper
+        if (propertiesArray.length === 0 && data.data && typeof data.data === 'object') {
+          for (const key of possibleKeys) {
+            if (Array.isArray(data.data[key])) {
+              propertiesArray = data.data[key];
+              console.log(`✅ Found properties in data.data.${key}`);
+              break;
+            }
           }
         }
       }
       
-      setProperties(propertiesArray);
-      setFilteredProperties(propertiesArray);
+      console.log(`📊 Processed ${propertiesArray.length} properties`);
+      
+      // Validate and clean property data
+      const validProperties = propertiesArray.filter(property => {
+        return property && (property._id || property.id) && property.title;
+      }).map(property => ({
+        ...property,
+        _id: property._id || property.id,
+        price: Number(property.price) || 0,
+        title: property.title || 'Untitled Property',
+        description: property.description || 'No description available',
+        category: property.category || 'Property',
+        address: property.address || { city: 'Unknown', state: 'Unknown' },
+        images: Array.isArray(property.images) ? property.images : property.image ? [property.image] : []
+      }));
+      
+      setProperties(validProperties);
+      setFilteredProperties(validProperties);
+      setRetryCount(0);
+      
+      console.log(`✅ Successfully loaded ${validProperties.length} valid properties`);
+      
     } catch (error) {
-      setError(handleApiError(error));
+      console.error('❌ API Error:', error);
+      
+      let errorMessage = 'Failed to load properties. ';
+      
+      if (error.name === 'AbortError') {
+        errorMessage += 'Request timed out after 15 seconds.';
+      } else if (error.message.includes('Failed to fetch')) {
+        errorMessage += 'Unable to connect to server. Please check if the backend is running.';
+      } else if (error.message.includes('JSON')) {
+        errorMessage += 'Server returned invalid data format.';
+      } else {
+        errorMessage += error.message;
+      }
+      
+      setError(errorMessage);
+      setProperties([]);
+      setFilteredProperties([]);
+      
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    if (!Array.isArray(properties)) {
-      setFilteredProperties([]);
-      return;
+  // 🔥 RETRY WITH EXPONENTIAL BACKOFF
+  const fetchWithRetry = async (maxRetries = 3) => {
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+      try {
+        await fetchProperties();
+        return; // Success
+      } catch (error) {
+        console.log(`Retry attempt ${attempt + 1} failed:`, error);
+        setRetryCount(attempt + 1);
+        
+        if (attempt === maxRetries) {
+          setError(`Failed after ${maxRetries + 1} attempts. ${error.message}`);
+          return;
+        }
+        
+        // Exponential backoff: wait 1s, 2s, 4s, 8s...
+        const delay = Math.pow(2, attempt) * 1000;
+        console.log(`⏳ Waiting ${delay}ms before retry...`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+      }
     }
+  };
 
-    let filtered = properties;
+  useEffect(() => {
+    fetchWithRetry();
+  }, []);
 
+  // 🔥 OPTIMIZED FILTERING WITH DEBOUNCE
+  const applyFilters = useCallback(() => {
+    if (!Array.isArray(properties)) return;
+    
+    let filtered = [...properties];
+    
+    // Search filter
     if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
       filtered = filtered.filter(property => {
-        if (!property) return false;
-        const searchFields = [
-          property.title, 
-          property.description, 
+        const searchableFields = [
+          property.title,
+          property.description,
           property.address?.city,
-          property.address?.state, 
-          property.address?.street, 
-          property.category, 
+          property.address?.state,
+          property.address?.street,
+          property.category,
           property.subtype
         ].filter(Boolean);
-        return searchFields.some(field => 
-          field.toLowerCase().includes(searchQuery.toLowerCase())
+        
+        return searchableFields.some(field => 
+          field.toLowerCase().includes(query)
         );
       });
     }
-
+    
+    // Location filter
     if (filters.location && filters.location !== "All Locations") {
       filtered = filtered.filter(property => {
         if (!property?.address) return false;
         const locationFields = [
-          property.address.city, 
-          property.address.state, 
+          property.address.city,
+          property.address.state,
           property.address.street
         ].filter(Boolean);
+        
         return locationFields.some(field =>
           field.toLowerCase().includes(filters.location.toLowerCase())
         );
       });
     }
-
+    
+    // Property type filter
     if (filters.propertyType && filters.propertyType !== "All Categories") {
-      filtered = filtered.filter(property => {
-        if (!property) return false;
-        return property.category === filters.propertyType || property.subtype === filters.propertyType;
-      });
+      filtered = filtered.filter(property =>
+        property.category === filters.propertyType || 
+        property.subtype === filters.propertyType
+      );
     }
-
+    
+    // Price range filter
     if (filters.priceRange) {
       const [min, max] = filters.priceRange.split('-').map(Number);
       filtered = filtered.filter(property => {
-        if (!property?.price) return false;
-        const price = Number(property.price);
+        const price = Number(property.price) || 0;
         return price >= min && (max ? price <= max : true);
       });
     }
-
+    
+    // Bedrooms filter
     if (filters.bedrooms) {
       const minBedrooms = parseInt(filters.bedrooms);
       filtered = filtered.filter(property => {
-        if (!property?.subtype) return false;
         if (residentialTypes.includes(property.subtype)) {
-          return property.bedrooms >= minBedrooms;
+          return (property.bedrooms || 0) >= minBedrooms;
         }
         return true;
       });
     }
-
+    
     setFilteredProperties(filtered);
-  }, [searchQuery, filters, properties]);
+  }, [properties, searchQuery, filters]);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(applyFilters, 300);
+    return () => clearTimeout(timeoutId);
+  }, [applyFilters]);
 
   const handleFilterChange = (filterType, value) => {
     setFilters(prev => ({ ...prev, [filterType]: value }));
@@ -150,8 +297,8 @@ const FindProperty = () => {
   };
 
   const shouldShowBedroomFilter = () => {
-    if (!filters.propertyType || filters.propertyType === "All Categories") return false;
-    return filters.propertyType === 'Property Rentals' || residentialTypes.includes(filters.propertyType);
+    return filters.propertyType === 'Property Rentals' || 
+           residentialTypes.includes(filters.propertyType);
   };
 
   const getActiveFiltersCount = () => {
@@ -184,7 +331,6 @@ const FindProperty = () => {
   };
 
   const renderPropertyDetails = (property) => {
-    if (!property) return [];
     const details = [];
     
     if (property.subtype && residentialTypes.includes(property.subtype)) {
@@ -212,28 +358,22 @@ const FindProperty = () => {
       );
     }
     
-    if (property.capacity) {
-      details.push(
-        <Badge key="capacity" bg="info" className="me-2 mb-2" style={{ fontSize: '0.75rem' }}>
-          {property.capacity}
-        </Badge>
-      );
-    }
-    
     return details;
   };
 
-  const getSafeRentType = (property) => {
-    if (!property?.rentType) return 'rental';
-    return Array.isArray(property.rentType) ? property.rentType[0] : property.rentType;
+  const formatPrice = (price, rentType = 'monthly') => {
+    const numPrice = Number(price) || 0;
+    const formatted = numPrice.toLocaleString('en-IN');
+    return `₹${formatted}/${rentType}`;
   };
 
-  const getSafeRentTypes = (property) => {
-    if (!property?.rentType) return ['rental'];
-    return Array.isArray(property.rentType) ? property.rentType : [property.rentType];
+  const getImageUrl = (image) => {
+    if (!image) return 'https://via.placeholder.com/400x240/e2e8f0/64748b?text=Property+Image';
+    if (image.startsWith('http')) return image;
+    return `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}${image}`;
   };
 
-  // Loading state
+  // 🔥 ENHANCED LOADING STATE WITH PROGRESS
   if (loading) {
     return (
       <div className="dashboard-wrapper">
@@ -251,21 +391,29 @@ const FindProperty = () => {
               </div>
               <h1 className="hero-title">Find Your Perfect Property</h1>
               <p className="hero-subtitle">
-                Discover verified properties from our premium collection across India. 
-                From luxury apartments to sports turfs and commercial spaces.
+                Discover verified properties from our premium collection across India.
               </p>
             </div>
           </Container>
         </section>
+        
         <Container className="loading-container">
-          <Spinner animation="border" className="loading-spinner" />
-          <p className="loading-text">Loading properties...</p>
+          <div className="loading-content">
+            <Spinner animation="border" className="loading-spinner" />
+            <h4 className="loading-title">Loading Properties...</h4>
+            <p className="loading-subtitle">
+              {retryCount > 0 ? `Retry attempt ${retryCount}...` : 'Fetching latest property listings...'}
+            </p>
+            <div className="loading-progress">
+              <div className="progress-bar"></div>
+            </div>
+          </div>
         </Container>
       </div>
     );
   }
 
-  // Error state
+  // 🔥 ENHANCED ERROR STATE WITH DIAGNOSTICS
   if (error) {
     return (
       <div className="dashboard-wrapper">
@@ -277,25 +425,56 @@ const FindProperty = () => {
           <Container className="hero-container">
             <div className="hero-content">
               <div className="hero-badge">
-                <span className="hero-badge-text">
-                  ⭐ {filteredProperties.length} Premium Properties Available
-                </span>
+                <span className="hero-badge-text">⚠️ Connection Issue</span>
               </div>
               <h1 className="hero-title">Find Your Perfect Property</h1>
               <p className="hero-subtitle">
-                Discover verified properties from our premium collection across India. 
-                From luxury apartments to sports turfs and commercial spaces.
+                We're having trouble loading properties. Please try again.
               </p>
             </div>
           </Container>
         </section>
+
         <Container className="error-container">
           <Alert variant="danger" className="error-alert">
-            <Alert.Heading>Error Loading Properties</Alert.Heading>
-            <p>{error}</p>
-            <Button onClick={fetchProperties} className="retry-button">
-              Try Again
-            </Button>
+            <Alert.Heading>🚨 Connection Error</Alert.Heading>
+            <p className="error-message">{error}</p>
+            
+            {retryCount > 0 && (
+              <p className="retry-info">
+                <strong>Attempts made:</strong> {retryCount}
+              </p>
+            )}
+            
+            <div className="error-actions">
+              <Button 
+                onClick={() => fetchWithRetry()} 
+                className="retry-button"
+                disabled={loading}
+              >
+                <span className="me-2">🔄</span>
+                {loading ? 'Retrying...' : 'Try Again'}
+              </Button>
+              
+              <Button 
+                variant="outline-primary"
+                onClick={() => window.location.reload()}
+                className="refresh-button"
+              >
+                <span className="me-2">⟳</span>
+                Refresh Page
+              </Button>
+            </div>
+            
+            <details className="error-details mt-3">
+              <summary>🔧 Troubleshooting</summary>
+              <ul className="mt-2">
+                <li>Check if your backend server is running</li>
+                <li>Verify the API endpoint URL</li>
+                <li>Check your internet connection</li>
+                <li>Try refreshing the page</li>
+              </ul>
+            </details>
           </Alert>
         </Container>
       </div>
@@ -319,8 +498,7 @@ const FindProperty = () => {
             </div>
             <h1 className="hero-title">Find Your Perfect Property</h1>
             <p className="hero-subtitle">
-              Discover verified properties from our premium collection across India. 
-              From luxury apartments to sports turfs and commercial spaces.
+              Discover verified properties from our premium collection across India.
             </p>
           </div>
         </Container>
@@ -351,7 +529,6 @@ const FindProperty = () => {
               )}
             </div>
 
-            {/* Smart Filters Header */}
             <div className="filters-header">
               <span className="filter-icon">✨</span>
               <h6 className="filters-title">Smart Filters</h6>
@@ -360,8 +537,8 @@ const FindProperty = () => {
             {/* Location Filter */}
             <div className="filter-section">
               <div className="filter-header">
-                <span className="filter-icon location-icon">📍</span>
-                <label className="filter-label location-label">LOCATION</label>
+                <span className="filter-icon">📍</span>
+                <label className="filter-label">LOCATION</label>
                 <small className="filter-count">{indianLocations.length - 1} cities</small>
               </div>
               <Form.Select
@@ -380,8 +557,8 @@ const FindProperty = () => {
             {/* Property Type Filter */}
             <div className="filter-section">
               <div className="filter-header">
-                <span className="filter-icon property-icon">🏠</span>
-                <label className="filter-label property-label">PROPERTY TYPE</label>
+                <span className="filter-icon">🏠</span>
+                <label className="filter-label">PROPERTY TYPE</label>
                 <small className="filter-count">{propertyTypes.length - 1} categories</small>
               </div>
               <Form.Select
@@ -395,25 +572,13 @@ const FindProperty = () => {
                   </option>
                 ))}
               </Form.Select>
-              {filters.propertyType && filters.propertyType !== "All Categories" && (
-                <div className="category-hint">
-                  <span className="hint-text">
-                    {filters.propertyType === 'Property Rentals' && 'Includes: Villa, Apartment, House, Studio, Flat'}
-                    {filters.propertyType === 'Commercial' && 'Includes: Office, Shop, Warehouse, Showroom'}
-                    {filters.propertyType === 'Event' && 'Includes: Banquet Hall, Garden, Meeting Room'}
-                    {filters.propertyType === 'Turf' && 'Includes: Football Turf, Cricket Ground, Multi-Sport, Tennis Court'}
-                    {filters.propertyType === 'Parking' && 'Includes: Car Parking, Bike Parking, Garage'}
-                    {filters.propertyType === 'Land' && 'Includes: Agricultural, Commercial Plot, Residential Plot'}
-                  </span>
-                </div>
-              )}
             </div>
 
             {/* Price Range Filter */}
             <div className="filter-section">
               <div className="filter-header">
-                <span className="filter-icon price-icon">💰</span>
-                <label className="filter-label price-label">PRICE RANGE</label>
+                <span className="filter-icon">💰</span>
+                <label className="filter-label">PRICE RANGE</label>
                 <small className="filter-count">per month</small>
               </div>
               <Form.Select
@@ -466,46 +631,6 @@ const FindProperty = () => {
               Clear All Filters {getActiveFiltersCount() > 0 && `(${getActiveFiltersCount()})`}
             </Button>
 
-            {/* Active Filters */}
-            <div className="active-filters-section">
-              <div className="active-filters-header">
-                <span className="active-filters-title">
-                  <span className="active-icon">⚡</span>
-                  Active Filters
-                </span>
-                <div className="active-count">{getActiveFiltersCount()}</div>
-              </div>
-              <div className="active-filters-tags">
-                {searchQuery && (
-                  <div className="filter-tag search-tag">
-                    🔍 {searchQuery.substring(0, 10)}{searchQuery.length > 10 ? '...' : ''}
-                  </div>
-                )}
-                {filters.location && (
-                  <div className="filter-tag location-tag">📍 {filters.location}</div>
-                )}
-                {filters.propertyType && (
-                  <div className="filter-tag property-tag">
-                    {getCategoryIcon(filters.propertyType)} {filters.propertyType}
-                  </div>
-                )}
-                {filters.priceRange && (
-                  <div className="filter-tag price-tag">
-                    💰 ₹{filters.priceRange.replace('-', ' - ₹')}
-                  </div>
-                )}
-                {filters.bedrooms && (
-                  <div className="filter-tag bedroom-tag">🛏️ {filters.bedrooms}+ BHK</div>
-                )}
-              </div>
-              {getActiveFiltersCount() === 0 && (
-                <div className="no-filters">
-                  <p className="no-filters-text">No active filters</p>
-                  <small className="no-filters-hint">Use filters above to refine your search</small>
-                </div>
-              )}
-            </div>
-
             {/* Available Counter */}
             <div className="available-counter">
               <h2 className="available-number">{filteredProperties.length}</h2>
@@ -529,14 +654,14 @@ const FindProperty = () => {
                 <Button
                   variant={viewMode === 'grid' ? 'primary' : 'outline-primary'}
                   onClick={() => setViewMode('grid')}
-                  className={`view-btn grid-btn ${viewMode === 'grid' ? 'active' : ''}`}
+                  className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`}
                 >
                   🔲 GRID VIEW
                 </Button>
                 <Button
                   variant={viewMode === 'list' ? 'primary' : 'outline-primary'}
                   onClick={() => setViewMode('list')}
-                  className={`view-btn list-btn ${viewMode === 'list' ? 'active' : ''}`}
+                  className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
                 >
                   📋 LIST VIEW
                 </Button>
@@ -554,10 +679,10 @@ const FindProperty = () => {
                 </h3>
                 <p className="no-results-text">
                   {searchQuery ? 
-                    `We couldn't find any properties matching "${searchQuery}". Try adjusting your search terms.` : 
+                    `We couldn't find any properties matching "${searchQuery}".` : 
                     (getActiveFiltersCount() > 0 ? 
-                      'No properties match your current filters. Try adjusting or clearing some filters.' : 
-                      'No properties are currently available. Please check back later.'
+                      'No properties match your current filters.' : 
+                      'No properties are currently available.'
                     )
                   }
                 </p>
@@ -575,11 +700,11 @@ const FindProperty = () => {
                       {viewMode === 'list' ? (
                         <Card className="property-list-card">
                           <Row className="card-row">
-                            <Col md={4} className="image-col">
+                            <Col md={4}>
                               <div className="property-image-container">
                                 <img
-                                  src={getImageUrl(property.images && Array.isArray(property.images) ? property.images[0] : property.image)}
-                                  alt={property.title || 'Property'}
+                                  src={getImageUrl(property.images?.[0])}
+                                  alt={property.title}
                                   onError={handleImageError}
                                   className="property-image"
                                 />
@@ -589,26 +714,24 @@ const FindProperty = () => {
                                 </div>
                               </div>
                             </Col>
-                            <Col md={8} className="content-col">
+                            <Col md={8}>
                               <Card.Body className="property-card-body">
                                 <div className="property-location">
                                   <span className="location-icon">📍</span>
                                   <span className="location-text">
-                                    {property.address?.city || 'City'}, {property.address?.state || 'State'}
+                                    {property.address?.city}, {property.address?.state}
                                   </span>
                                 </div>
-                                <Card.Title className="property-title">
-                                  {property.title || 'Property Title'}
-                                </Card.Title>
+                                <Card.Title className="property-title">{property.title}</Card.Title>
                                 <p className="property-description">
-                                  {property.description ? 
+                                  {property.description.length > 120 ? 
                                     property.description.substring(0, 120) + '...' : 
-                                    'Premium property with modern amenities and excellent location.'
+                                    property.description
                                   }
                                 </p>
                                 <div className="property-details">
-                                  <Badge className="category-badge">{property.category || 'Land'}</Badge>
-                                  <small className="property-size">{property.size || '10000'}</small>
+                                  <Badge className="category-badge">{property.category}</Badge>
+                                  {property.size && <small className="property-size">{property.size}</small>}
                                   <div className="property-badges-details">
                                     {renderPropertyDetails(property)}
                                   </div>
@@ -616,11 +739,9 @@ const FindProperty = () => {
                                 <div className="property-footer">
                                   <div className="property-pricing">
                                     <div className="property-price">
-                                      {formatPrice(property.price, getSafeRentType(property))}
+                                      {formatPrice(property.price)}
                                     </div>
-                                    <small className="property-availability">
-                                      Available for {getSafeRentTypes(property).join(', ') || 'rental'}
-                                    </small>
+                                    <small className="property-availability">Available for rental</small>
                                   </div>
                                   <div className="property-actions">
                                     <Button
@@ -645,7 +766,6 @@ const FindProperty = () => {
                       ) : (
                         <PropertyCard 
                           property={property} 
-                          showOwner={false}
                           onViewDetails={() => handleViewDetails(property._id)}
                           onBookNow={() => handleBookNow(property._id)}
                         />
@@ -672,11 +792,8 @@ const FindProperty = () => {
         .dashboard-wrapper {
           min-height: 100vh;
           background-color: #ffffff;
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-          font-weight: 400;
-          line-height: 1.6;
+          font-family: 'Inter', sans-serif;
           color: #1f2937;
-          letter-spacing: 0.005em;
         }
         
         .hero-section {
@@ -725,7 +842,7 @@ const FindProperty = () => {
         
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-1.25rem) rotate(5deg); }
+          50% { transform: translateY(-20px) rotate(5deg); }
         }
         
         .hero-container {
@@ -742,15 +859,15 @@ const FindProperty = () => {
           display: inline-block;
           background: rgba(255, 255, 255, 0.2);
           border: 1px solid rgba(255, 255, 255, 0.3);
-          border-radius: 1.5625rem;
-          padding: 0.5rem 1.25rem;
-          margin-bottom: 1.25rem;
+          border-radius: 25px;
+          padding: 8px 20px;
+          margin-bottom: 20px;
         }
         
         .hero-badge-text {
           font-size: 0.85rem;
           font-weight: 700;
-          letter-spacing: 0.03125rem;
+          letter-spacing: 0.5px;
           text-transform: uppercase;
           color: white;
         }
@@ -758,22 +875,133 @@ const FindProperty = () => {
         .hero-title {
           font-size: 3.5rem;
           font-weight: 900;
-          font-family: 'Inter', sans-serif;
-          letter-spacing: -0.015625rem;
+          letter-spacing: -0.025em;
           line-height: 1.1;
-          margin-bottom: 1.5rem;
+          margin-bottom: 24px;
           color: white;
-          text-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         
         .hero-subtitle {
           font-size: 1.25rem;
           font-weight: 400;
           color: rgba(255, 255, 255, 0.95);
-          max-width: 37.5rem;
+          max-width: 600px;
           margin: 0 auto;
           line-height: 1.6;
-          text-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .loading-container {
+          padding: 4rem 0;
+          text-align: center;
+        }
+        
+        .loading-content {
+          max-width: 400px;
+          margin: 0 auto;
+        }
+        
+        .loading-spinner {
+          color: #7c3aed;
+          width: 3rem;
+          height: 3rem;
+          margin-bottom: 1.5rem;
+        }
+        
+        .loading-title {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: #111827;
+          margin-bottom: 0.5rem;
+        }
+        
+        .loading-subtitle {
+          color: #6b7280;
+          margin-bottom: 2rem;
+        }
+        
+        .loading-progress {
+          width: 100%;
+          height: 4px;
+          background: #e5e7eb;
+          border-radius: 2px;
+          overflow: hidden;
+        }
+        
+        .progress-bar {
+          height: 100%;
+          background: linear-gradient(90deg, #7c3aed, #a855f7);
+          border-radius: 2px;
+          animation: progress 2s ease-in-out infinite;
+        }
+        
+        @keyframes progress {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(400%); }
+        }
+        
+        .error-container {
+          padding: 3rem 0;
+        }
+        
+        .error-alert {
+          max-width: 600px;
+          margin: 0 auto;
+          text-align: center;
+          border-radius: 12px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .error-message {
+          font-size: 1rem;
+          margin-bottom: 1rem;
+        }
+        
+        .retry-info {
+          font-size: 0.9rem;
+          color: #6b7280;
+          margin-bottom: 1.5rem;
+        }
+        
+        .error-actions {
+          display: flex;
+          gap: 1rem;
+          justify-content: center;
+          margin-bottom: 1.5rem;
+        }
+        
+        .retry-button {
+          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+          border: none;
+          font-weight: 600;
+          border-radius: 8px;
+          padding: 10px 20px;
+        }
+        
+        .refresh-button {
+          border-color: #7c3aed;
+          color: #7c3aed;
+          font-weight: 600;
+          border-radius: 8px;
+          padding: 10px 20px;
+        }
+        
+        .error-details {
+          text-align: left;
+          max-width: 400px;
+          margin: 0 auto;
+        }
+        
+        .error-details summary {
+          cursor: pointer;
+          font-weight: 600;
+          color: #7c3aed;
+        }
+        
+        .error-details ul {
+          list-style-type: disc;
+          padding-left: 1.5rem;
         }
         
         .dashboard-main {
@@ -787,7 +1015,7 @@ const FindProperty = () => {
           min-width: 22rem;
           background: #ffffff;
           border-right: 1px solid #e2e8f0;
-          box-shadow: 0.25rem 0 1.25rem rgba(0, 0, 0, 0.08);
+          box-shadow: 4px 0 20px rgba(0, 0, 0, 0.08);
           position: sticky;
           top: 0;
           height: fit-content;
@@ -824,18 +1052,6 @@ const FindProperty = () => {
           margin: 0;
         }
         
-        .location-label {
-          color: #dc3545;
-        }
-        
-        .property-label {
-          color: #f97316;
-        }
-        
-        .price-label {
-          color: #f97316;
-        }
-        
         .filter-count {
           font-size: 0.7rem;
           font-weight: 500;
@@ -843,11 +1059,10 @@ const FindProperty = () => {
         }
         
         .search-input, .filter-select {
-          border-radius: 0.5rem;
+          border-radius: 8px;
           border: 1px solid #d1d5db;
-          padding: 0.625rem 0.75rem;
+          padding: 10px 12px;
           font-size: 0.9rem;
-          font-family: 'Inter', sans-serif;
           transition: all 0.3s ease;
           background: white;
           width: 100%;
@@ -879,128 +1094,27 @@ const FindProperty = () => {
           font-weight: 600;
           color: #374151;
           margin: 0;
-          display: inline-block;
           margin-left: 0.5rem;
-        }
-        
-        .category-hint {
-          margin-top: 0.5rem;
-          padding: 0.5rem;
-          background: #f8f9fa;
-          border-radius: 0.375rem;
-        }
-        
-        .hint-text {
-          font-size: 0.75rem;
-          color: #6b7280;
         }
         
         .clear-filters-btn {
           width: 100%;
-          border-radius: 0.5rem;
-          padding: 0.625rem;
+          border-radius: 8px;
+          padding: 10px;
           font-weight: 600;
           font-size: 0.85rem;
           margin-bottom: 1.5rem;
           transition: all 0.3s ease;
-          border-width: 1px;
         }
         
         .clear-icon {
-          margin-right: 0.375rem;
-        }
-        
-        .active-filters-section {
-          background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-          padding: 1rem;
-          border-radius: 0.75rem;
-          border: 1px solid #cbd5e1;
-          margin-bottom: 1.5rem;
-        }
-        
-        .active-filters-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 0.75rem;
-        }
-        
-        .active-filters-title {
-          font-weight: 600;
-          color: #1f2937;
-          font-size: 0.9rem;
-          display: flex;
-          align-items: center;
-        }
-        
-        .active-icon {
-          margin-right: 0.375rem;
-        }
-        
-        .active-count {
-          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-          color: white;
-          font-size: 0.75rem;
-          font-weight: 600;
-          padding: 0.25rem 0.5rem;
-          border-radius: 0.75rem;
-          min-width: 1.25rem;
-          text-align: center;
-        }
-        
-        .active-filters-tags {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.375rem;
-        }
-        
-        .filter-tag {
-          padding: 0.125rem 0.375rem;
-          border-radius: 0.625rem;
-          font-size: 0.7rem;
-          font-weight: 500;
-          color: white;
-        }
-        
-        .search-tag {
-          background: #3b82f6;
-        }
-        
-        .location-tag {
-          background: #10b981;
-        }
-        
-        .property-tag {
-          background: #f59e0b;
-        }
-        
-        .price-tag {
-          background: #ef4444;
-        }
-        
-        .bedroom-tag {
-          background: #8b5cf6;
-        }
-        
-        .no-filters {
-          text-align: center;
-        }
-        
-        .no-filters-text {
-          font-size: 0.8rem;
-          color: #6b7280;
-          margin: 0;
-        }
-        
-        .no-filters-hint {
-          font-size: 0.7rem;
-          color: #9ca3af;
+          margin-right: 6px;
         }
         
         .available-counter {
           background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-          border-radius: 0.75rem;
-          padding: 1.25rem;
+          border-radius: 12px;
+          padding: 20px;
           text-align: center;
           color: white;
         }
@@ -1009,8 +1123,8 @@ const FindProperty = () => {
           font-size: 2.5rem;
           font-weight: 800;
           margin: 0;
-          margin-bottom: 0.375rem;
-          text-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+          margin-bottom: 6px;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
           color: white;
         }
         
@@ -1029,7 +1143,7 @@ const FindProperty = () => {
         
         .content-container {
           padding: 1.5rem;
-          max-width: 75rem;
+          max-width: 1200px;
         }
         
         .results-header {
@@ -1043,43 +1157,39 @@ const FindProperty = () => {
         
         .results-info {
           flex: 1;
-          min-width: 18.75rem;
+          min-width: 300px;
         }
         
         .results-title {
           font-weight: 800;
-          margin-bottom: 0.5rem;
+          margin-bottom: 8px;
           color: #111827;
           font-size: 2rem;
-          font-family: 'Inter', sans-serif;
-          letter-spacing: -0.0125rem;
+          letter-spacing: -0.02em;
         }
         
         .results-subtitle {
           color: #6b7280;
           font-size: 0.9rem;
           margin: 0;
-          font-family: 'Inter', sans-serif;
           font-weight: 400;
         }
         
         .view-toggle {
           display: flex;
-          gap: 0.5rem;
+          gap: 8px;
           flex-shrink: 0;
         }
         
         .view-btn {
           font-weight: 600;
-          padding: 0.625rem 1.125rem;
+          padding: 10px 18px;
           font-size: 0.85rem;
-          border-radius: 0.5rem;
+          border-radius: 8px;
           transition: all 0.3s ease;
-          font-family: 'Inter', sans-serif;
           text-transform: uppercase;
-          letter-spacing: 0.015625rem;
-          min-width: 7.5rem;
-          border-width: 1px;
+          letter-spacing: 0.025em;
+          min-width: 120px;
         }
         
         .view-btn.active {
@@ -1103,7 +1213,7 @@ const FindProperty = () => {
           text-align: center;
           padding: 3rem 2rem;
           background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
-          border-radius: 1rem;
+          border-radius: 16px;
           border: 1px solid #e2e8f0;
         }
         
@@ -1118,14 +1228,13 @@ const FindProperty = () => {
           margin-bottom: 1rem;
           color: #111827;
           font-size: 1.5rem;
-          font-family: 'Inter', sans-serif;
         }
         
         .no-results-text {
           color: #6b7280;
           font-size: 0.95rem;
           margin-bottom: 1.5rem;
-          max-width: 31.25rem;
+          max-width: 500px;
           margin-left: auto;
           margin-right: auto;
           line-height: 1.5;
@@ -1135,11 +1244,10 @@ const FindProperty = () => {
           background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
           border: none;
           font-weight: 600;
-          border-radius: 0.625rem;
-          padding: 0.625rem 1.5rem;
-          font-family: 'Inter', sans-serif;
+          border-radius: 10px;
+          padding: 10px 24px;
           text-transform: uppercase;
-          letter-spacing: 0.015625rem;
+          letter-spacing: 0.025em;
         }
         
         .properties-grid.grid-view {
@@ -1162,8 +1270,8 @@ const FindProperty = () => {
         
         .property-list-card {
           border: none;
-          border-radius: 1rem;
-          box-shadow: 0 0.25rem 0.9375rem rgba(0, 0, 0, 0.08);
+          border-radius: 16px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
           transition: all 0.3s ease;
           cursor: pointer;
           background: #ffffff;
@@ -1171,21 +1279,17 @@ const FindProperty = () => {
         }
         
         .property-list-card:hover {
-          transform: translateY(-0.125rem);
-          box-shadow: 0 0.5rem 1.5625rem rgba(124, 58, 237, 0.12);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(124, 58, 237, 0.12);
         }
         
         .card-row {
           margin: 0;
         }
         
-        .image-col {
-          padding: 0;
-        }
-        
         .property-image-container {
           position: relative;
-          height: 11.25rem;
+          height: 180px;
           overflow: hidden;
         }
         
@@ -1193,25 +1297,25 @@ const FindProperty = () => {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          border-radius: 1rem 0 0 1rem;
+          border-radius: 16px 0 0 16px;
         }
         
         .property-badges {
           position: absolute;
-          top: 0.75rem;
-          left: 0.75rem;
+          top: 12px;
+          left: 12px;
           display: flex;
-          gap: 0.375rem;
+          gap: 6px;
         }
         
         .available-badge, .verified-badge {
           font-size: 0.65rem;
-          padding: 0.25rem 0.5rem;
-          border-radius: 0.75rem;
+          padding: 4px 8px;
+          border-radius: 12px;
           font-weight: 600;
           text-transform: uppercase;
-          letter-spacing: 0.015625rem;
-          box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+          letter-spacing: 0.025em;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         
         .available-badge {
@@ -1224,36 +1328,31 @@ const FindProperty = () => {
           color: white;
         }
         
-        .content-col {
-          padding: 0;
-        }
-        
         .property-card-body {
-          padding: 1.25rem;
+          padding: 20px;
           display: flex;
           flex-direction: column;
-          height: 11.25rem;
+          height: 180px;
         }
         
         .property-location {
           display: flex;
           align-items: center;
-          margin-bottom: 0.5rem;
+          margin-bottom: 8px;
         }
         
         .location-icon {
           color: #7c3aed;
           font-size: 0.875rem;
-          margin-right: 0.375rem;
+          margin-right: 6px;
         }
         
         .location-text {
           font-size: 0.8rem;
           color: #64748b;
-          font-family: 'Inter', sans-serif;
           font-weight: 500;
           text-transform: uppercase;
-          letter-spacing: 0.03125rem;
+          letter-spacing: 0.5px;
         }
         
         .property-title {
@@ -1261,26 +1360,24 @@ const FindProperty = () => {
           font-size: 1.25rem;
           line-height: 1.3;
           font-weight: 700;
-          margin-bottom: 0.5rem;
-          font-family: 'Inter', sans-serif;
-          letter-spacing: -0.009375rem;
+          margin-bottom: 8px;
+          letter-spacing: -0.015em;
         }
         
         .property-description {
           font-size: 0.85rem;
           line-height: 1.5;
           color: #374151;
-          font-family: 'Inter', sans-serif;
           font-weight: 400;
-          margin-bottom: 0.75rem;
+          margin-bottom: 12px;
           flex-grow: 1;
         }
         
         .property-details {
           display: flex;
           align-items: center;
-          gap: 0.5rem;
-          margin-bottom: 0.75rem;
+          gap: 8px;
+          margin-bottom: 12px;
           flex-wrap: wrap;
         }
         
@@ -1288,8 +1385,8 @@ const FindProperty = () => {
           background-color: #7c3aed;
           color: white;
           font-size: 0.7rem;
-          padding: 0.25rem 0.5rem;
-          border-radius: 0.5rem;
+          padding: 4px 8px;
+          border-radius: 8px;
         }
         
         .property-size {
@@ -1299,7 +1396,7 @@ const FindProperty = () => {
         
         .property-badges-details {
           display: flex;
-          gap: 0.25rem;
+          gap: 4px;
           flex-wrap: wrap;
         }
         
@@ -1318,33 +1415,30 @@ const FindProperty = () => {
           font-size: 1.3rem;
           font-weight: 700;
           color: #059669;
-          margin-bottom: 0.125rem;
-          font-family: 'Inter', sans-serif;
-          letter-spacing: -0.00625rem;
+          margin-bottom: 2px;
+          letter-spacing: -0.01em;
         }
         
         .property-availability {
           color: #64748b;
           font-size: 0.75rem;
-          font-family: 'Inter', sans-serif;
           font-weight: 500;
           text-transform: uppercase;
-          letter-spacing: 0.03125rem;
+          letter-spacing: 0.5px;
         }
         
         .property-actions {
           display: flex;
-          gap: 0.5rem;
+          gap: 8px;
         }
         
         .view-details-btn {
-          border-radius: 0.5rem;
-          padding: 0.375rem 0.75rem;
+          border-radius: 8px;
+          padding: 6px 12px;
           font-weight: 600;
           font-size: 0.75rem;
           border-color: #7c3aed;
           color: #7c3aed;
-          font-family: 'Inter', sans-serif;
           transition: all 0.3s ease;
         }
         
@@ -1356,12 +1450,11 @@ const FindProperty = () => {
         .book-now-btn {
           background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
           border: none;
-          border-radius: 0.5rem;
-          padding: 0.375rem 0.75rem;
+          border-radius: 8px;
+          padding: 6px 12px;
           font-weight: 600;
           font-size: 0.75rem;
           color: white;
-          font-family: 'Inter', sans-serif;
           transition: all 0.3s ease;
         }
         
@@ -1370,48 +1463,13 @@ const FindProperty = () => {
           transform: translateY(-1px);
         }
         
-        .loading-container {
-          padding: 3rem 0;
-          text-align: center;
-        }
-        
-        .loading-spinner {
-          color: #7c3aed;
-        }
-        
-        .loading-text {
-          margin-top: 1rem;
-          font-size: 1.125rem;
-          font-weight: 600;
-        }
-        
-        .error-container {
-          padding: 3rem 0;
-        }
-        
-        .error-alert {
-          text-align: center;
-        }
-        
-        .retry-button {
-          background-color: #7c3aed;
-          border-color: #7c3aed;
-        }
-        
-        @media (max-width: 1200px) {
-          .sidebar {
-            width: 20rem;
-            min-width: 20rem;
+        @media (max-width: 768px) {
+          .hero-title {
+            font-size: 2.5rem;
           }
-          .content-container {
-            padding: 1.25rem;
+          .hero-subtitle {
+            font-size: 1.125rem;
           }
-          .results-title {
-            font-size: 1.75rem;
-          }
-        }
-        
-        @media (max-width: 992px) {
           .dashboard-main {
             flex-direction: column;
           }
@@ -1424,99 +1482,12 @@ const FindProperty = () => {
           .results-header {
             flex-direction: column;
             align-items: flex-start;
-            gap: 1rem;
           }
           .view-toggle {
-            align-self: stretch;
+            width: 100%;
           }
           .view-btn {
             flex: 1;
-            min-width: auto;
-          }
-        }
-        
-        @media (max-width: 768px) {
-          .hero-section {
-            min-height: 20rem;
-            padding: 2rem 0;
-          }
-          .hero-title {
-            font-size: 2.5rem;
-          }
-          .hero-subtitle {
-            font-size: 1.125rem;
-          }
-          .results-title {
-            font-size: 1.5rem;
-          }
-          .content-container {
-            padding: 1rem;
-          }
-          .properties-grid.grid-view {
-            --bs-gutter-x: 0.5rem;
-            --bs-gutter-y: 0.5rem;
-          }
-        }
-        
-        @media (max-width: 576px) {
-          .hero-title {
-            font-size: 2rem;
-          }
-          .hero-subtitle {
-            font-size: 1rem;
-          }
-          .sidebar-content {
-            padding: 1rem;
-          }
-          .filter-section {
-            margin-bottom: 1rem;
-          }
-          .view-toggle {
-            flex-direction: column;
-            gap: 0.5rem;
-          }
-          .view-btn {
-            width: 100%;
-          }
-        }
-        
-        @media (min-width: 1400px) {
-          .content-container {
-            max-width: 90rem;
-            padding: 2rem 3rem;
-          }
-          .hero-title {
-            font-size: 4rem;
-          }
-          .hero-subtitle {
-            font-size: 1.375rem;
-          }
-          .results-title {
-            font-size: 2.25rem;
-          }
-          .sidebar {
-            width: 24rem;
-            min-width: 24rem;
-          }
-        }
-        
-        @media (min-width: 1920px) {
-          .content-container {
-            max-width: 120rem;
-            padding: 2.5rem 4rem;
-          }
-          .hero-title {
-            font-size: 4.5rem;
-          }
-          .hero-subtitle {
-            font-size: 1.5rem;
-          }
-          .sidebar {
-            width: 26rem;
-            min-width: 26rem;
-          }
-          .sidebar-content {
-            padding: 2rem;
           }
         }
       `}</style>
