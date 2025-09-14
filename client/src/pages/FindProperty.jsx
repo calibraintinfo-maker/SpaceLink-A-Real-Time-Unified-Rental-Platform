@@ -237,13 +237,11 @@ const FindProperty = () => {
   if (loading) {
     return (
       <div className="dashboard-wrapper">
-        {/* PROFESSIONAL HERO SECTION - FIXED RESPONSIVE */}
         <section className="hero-section">
           <div className="hero-floating-elements">
             <div className="floating-element floating-element-1"></div>
             <div className="floating-element floating-element-2"></div>
           </div>
-          
           <Container className="hero-container">
             <div className="hero-content">
               <div className="hero-badge">
@@ -251,11 +249,7 @@ const FindProperty = () => {
                   ⭐ {filteredProperties.length} Premium Properties Available
                 </span>
               </div>
-              
-              <h1 className="hero-title">
-                Find Your Perfect Property
-              </h1>
-              
+              <h1 className="hero-title">Find Your Perfect Property</h1>
               <p className="hero-subtitle">
                 Discover verified properties from our premium collection across India. 
                 From luxury apartments to sports turfs and commercial spaces.
@@ -263,7 +257,6 @@ const FindProperty = () => {
             </div>
           </Container>
         </section>
-        
         <Container className="loading-container">
           <Spinner animation="border" className="loading-spinner" />
           <p className="loading-text">Loading properties...</p>
@@ -276,13 +269,11 @@ const FindProperty = () => {
   if (error) {
     return (
       <div className="dashboard-wrapper">
-        {/* PROFESSIONAL HERO SECTION - FIXED RESPONSIVE */}
         <section className="hero-section">
           <div className="hero-floating-elements">
             <div className="floating-element floating-element-1"></div>
             <div className="floating-element floating-element-2"></div>
           </div>
-          
           <Container className="hero-container">
             <div className="hero-content">
               <div className="hero-badge">
@@ -290,11 +281,7 @@ const FindProperty = () => {
                   ⭐ {filteredProperties.length} Premium Properties Available
                 </span>
               </div>
-              
-              <h1 className="hero-title">
-                Find Your Perfect Property
-              </h1>
-              
+              <h1 className="hero-title">Find Your Perfect Property</h1>
               <p className="hero-subtitle">
                 Discover verified properties from our premium collection across India. 
                 From luxury apartments to sports turfs and commercial spaces.
@@ -302,7 +289,6 @@ const FindProperty = () => {
             </div>
           </Container>
         </section>
-
         <Container className="error-container">
           <Alert variant="danger" className="error-alert">
             <Alert.Heading>Error Loading Properties</Alert.Heading>
@@ -318,13 +304,12 @@ const FindProperty = () => {
 
   return (
     <div className="dashboard-wrapper">
-      {/* PROFESSIONAL HERO SECTION - FIXED RESPONSIVE */}
+      {/* HERO SECTION */}
       <section className="hero-section">
         <div className="hero-floating-elements">
           <div className="floating-element floating-element-1"></div>
           <div className="floating-element floating-element-2"></div>
         </div>
-        
         <Container className="hero-container">
           <div className="hero-content">
             <div className="hero-badge">
@@ -332,11 +317,7 @@ const FindProperty = () => {
                 ⭐ {filteredProperties.length} Premium Properties Available
               </span>
             </div>
-            
-            <h1 className="hero-title">
-              Find Your Perfect Property
-            </h1>
-            
+            <h1 className="hero-title">Find Your Perfect Property</h1>
             <p className="hero-subtitle">
               Discover verified properties from our premium collection across India. 
               From luxury apartments to sports turfs and commercial spaces.
@@ -345,13 +326,12 @@ const FindProperty = () => {
         </Container>
       </section>
 
-      {/* MAIN DASHBOARD LAYOUT */}
+      {/* MAIN DASHBOARD */}
       <div className="dashboard-main">
-        
-        {/* PROFESSIONAL SIDEBAR */}
+        {/* SIDEBAR */}
         <div className="sidebar">
           <div className="sidebar-content">
-            {/* Search Section */}
+            {/* Search */}
             <div className="filter-section">
               <div className="filter-header">
                 <span className="filter-icon">🔍</span>
@@ -415,8 +395,6 @@ const FindProperty = () => {
                   </option>
                 ))}
               </Form.Select>
-              
-              {/* Category hint */}
               {filters.propertyType && filters.propertyType !== "All Categories" && (
                 <div className="category-hint">
                   <span className="hint-text">
@@ -454,7 +432,7 @@ const FindProperty = () => {
               </Form.Select>
             </div>
 
-            {/* Conditional Bedrooms Filter */}
+            {/* Bedrooms Filter */}
             {shouldShowBedroomFilter() && (
               <div className="filter-section">
                 <div className="filter-header">
@@ -477,7 +455,7 @@ const FindProperty = () => {
               </div>
             )}
 
-            {/* Clear Filters Button */}
+            {/* Clear Filters */}
             <Button
               variant="outline-secondary"
               onClick={clearFilters}
@@ -488,18 +466,15 @@ const FindProperty = () => {
               Clear All Filters {getActiveFiltersCount() > 0 && `(${getActiveFiltersCount()})`}
             </Button>
 
-            {/* Active Filters Summary */}
+            {/* Active Filters */}
             <div className="active-filters-section">
               <div className="active-filters-header">
                 <span className="active-filters-title">
                   <span className="active-icon">⚡</span>
                   Active Filters
                 </span>
-                <div className="active-count">
-                  {getActiveFiltersCount()}
-                </div>
+                <div className="active-count">{getActiveFiltersCount()}</div>
               </div>
-              
               <div className="active-filters-tags">
                 {searchQuery && (
                   <div className="filter-tag search-tag">
@@ -507,9 +482,7 @@ const FindProperty = () => {
                   </div>
                 )}
                 {filters.location && (
-                  <div className="filter-tag location-tag">
-                    📍 {filters.location}
-                  </div>
+                  <div className="filter-tag location-tag">📍 {filters.location}</div>
                 )}
                 {filters.propertyType && (
                   <div className="filter-tag property-tag">
@@ -522,12 +495,9 @@ const FindProperty = () => {
                   </div>
                 )}
                 {filters.bedrooms && (
-                  <div className="filter-tag bedroom-tag">
-                    🛏️ {filters.bedrooms}+ BHK
-                  </div>
+                  <div className="filter-tag bedroom-tag">🛏️ {filters.bedrooms}+ BHK</div>
                 )}
               </div>
-              
               {getActiveFiltersCount() === 0 && (
                 <div className="no-filters">
                   <p className="no-filters-text">No active filters</p>
@@ -536,7 +506,7 @@ const FindProperty = () => {
               )}
             </div>
 
-            {/* PROFESSIONAL AVAILABLE COUNTER */}
+            {/* Available Counter */}
             <div className="available-counter">
               <h2 className="available-number">{filteredProperties.length}</h2>
               <p className="available-text">Available</p>
@@ -544,22 +514,17 @@ const FindProperty = () => {
           </div>
         </div>
 
-        {/* MAIN CONTENT AREA */}
+        {/* MAIN CONTENT */}
         <div className="main-content">
           <Container fluid className="content-container">
-            
-            {/* PROFESSIONAL RESULTS HEADER */}
+            {/* Results Header */}
             <div className="results-header">
               <div className="results-info">
-                <h2 className="results-title">
-                  {filteredProperties.length} Properties Found
-                </h2>
+                <h2 className="results-title">{filteredProperties.length} Properties Found</h2>
                 <p className="results-subtitle">
                   Browse our premium collection • Updated {new Date().toLocaleDateString()} • All verified listings
                 </p>
               </div>
-
-              {/* FIXED VIEW TOGGLE BUTTONS */}
               <div className="view-toggle">
                 <Button
                   variant={viewMode === 'grid' ? 'primary' : 'outline-primary'}
@@ -578,7 +543,7 @@ const FindProperty = () => {
               </div>
             </div>
 
-            {/* PROPERTIES DISPLAY */}
+            {/* Properties Display */}
             {filteredProperties.length === 0 ? (
               <div className="no-results">
                 <div className="no-results-icon">
@@ -608,7 +573,6 @@ const FindProperty = () => {
                   return (
                     <Col key={property._id} className={`property-col ${viewMode === 'list' ? 'list-col' : 'grid-col'}`}>
                       {viewMode === 'list' ? (
-                        // PROFESSIONAL LIST VIEW CARD
                         <Card className="property-list-card">
                           <Row className="card-row">
                             <Col md={4} className="image-col">
@@ -633,28 +597,22 @@ const FindProperty = () => {
                                     {property.address?.city || 'City'}, {property.address?.state || 'State'}
                                   </span>
                                 </div>
-                                
                                 <Card.Title className="property-title">
                                   {property.title || 'Property Title'}
                                 </Card.Title>
-                                
                                 <p className="property-description">
                                   {property.description ? 
                                     property.description.substring(0, 120) + '...' : 
                                     'Premium property with modern amenities and excellent location.'
                                   }
                                 </p>
-                                
                                 <div className="property-details">
-                                  <Badge className="category-badge">
-                                    {property.category || 'Land'}
-                                  </Badge>
+                                  <Badge className="category-badge">{property.category || 'Land'}</Badge>
                                   <small className="property-size">{property.size || '10000'}</small>
                                   <div className="property-badges-details">
                                     {renderPropertyDetails(property)}
                                   </div>
                                 </div>
-                                
                                 <div className="property-footer">
                                   <div className="property-pricing">
                                     <div className="property-price">
@@ -664,7 +622,6 @@ const FindProperty = () => {
                                       Available for {getSafeRentTypes(property).join(', ') || 'rental'}
                                     </small>
                                   </div>
-                                  
                                   <div className="property-actions">
                                     <Button
                                       variant="outline-primary"
@@ -686,7 +643,6 @@ const FindProperty = () => {
                           </Row>
                         </Card>
                       ) : (
-                        // PROFESSIONAL GRID VIEW CARD
                         <PropertyCard 
                           property={property} 
                           showOwner={false}
@@ -703,9 +659,8 @@ const FindProperty = () => {
         </div>
       </div>
 
-      {/* COMPLETE PROFESSIONAL CSS STYLES */}
-      <style jsx>{`
-        /* PROFESSIONAL DASHBOARD CSS - ALL BUGS FIXED */
+      {/* COMPLETE CSS STYLES */}
+      <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
         * {
@@ -724,7 +679,6 @@ const FindProperty = () => {
           letter-spacing: 0.005em;
         }
         
-        /* PROFESSIONAL HERO SECTION - FIXED RESPONSIVE */
         .hero-section {
           background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%);
           min-height: 25rem;
@@ -822,28 +776,12 @@ const FindProperty = () => {
           text-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
         }
         
-        /* RESPONSIVE HERO SECTION */
-        @media (max-width: 768px) {
-          .hero-title {
-            font-size: 2.5rem;
-          }
-          .hero-subtitle {
-            font-size: 1.125rem;
-          }
-          .hero-section {
-            min-height: 20rem;
-            padding: 2rem 0;
-          }
-        }
-        
-        /* DASHBOARD MAIN LAYOUT */
         .dashboard-main {
           display: flex;
           min-height: calc(100vh - 25rem);
           background-color: #ffffff;
         }
         
-        /* PROFESSIONAL SIDEBAR */
         .sidebar {
           width: 22rem;
           min-width: 22rem;
@@ -1084,7 +1022,6 @@ const FindProperty = () => {
           color: white;
         }
         
-        /* MAIN CONTENT AREA */
         .main-content {
           flex: 1;
           background-color: #ffffff;
@@ -1162,7 +1099,6 @@ const FindProperty = () => {
           color: #1f2937;
         }
         
-        /* NO RESULTS SECTION */
         .no-results {
           text-align: center;
           padding: 3rem 2rem;
@@ -1206,7 +1142,6 @@ const FindProperty = () => {
           letter-spacing: 0.015625rem;
         }
         
-        /* PROPERTIES GRID */
         .properties-grid.grid-view {
           --bs-gutter-x: 1rem;
           --bs-gutter-y: 1rem;
@@ -1225,7 +1160,6 @@ const FindProperty = () => {
           padding: 0.375rem 0;
         }
         
-        /* PROFESSIONAL LIST VIEW CARD */
         .property-list-card {
           border: none;
           border-radius: 1rem;
@@ -1436,7 +1370,6 @@ const FindProperty = () => {
           transform: translateY(-1px);
         }
         
-        /* LOADING AND ERROR STATES */
         .loading-container {
           padding: 3rem 0;
           text-align: center;
@@ -1465,17 +1398,14 @@ const FindProperty = () => {
           border-color: #7c3aed;
         }
         
-        /* RESPONSIVE DESIGN - FIXED F11 FULLSCREEN ISSUES */
         @media (max-width: 1200px) {
           .sidebar {
             width: 20rem;
             min-width: 20rem;
           }
-          
           .content-container {
             padding: 1.25rem;
           }
-          
           .results-title {
             font-size: 1.75rem;
           }
@@ -1485,24 +1415,20 @@ const FindProperty = () => {
           .dashboard-main {
             flex-direction: column;
           }
-          
           .sidebar {
             width: 100%;
             min-width: 100%;
             max-height: none;
             position: relative;
           }
-          
           .results-header {
             flex-direction: column;
             align-items: flex-start;
             gap: 1rem;
           }
-          
           .view-toggle {
             align-self: stretch;
           }
-          
           .view-btn {
             flex: 1;
             min-width: auto;
@@ -1514,23 +1440,18 @@ const FindProperty = () => {
             min-height: 20rem;
             padding: 2rem 0;
           }
-          
           .hero-title {
             font-size: 2.5rem;
           }
-          
           .hero-subtitle {
             font-size: 1.125rem;
           }
-          
           .results-title {
             font-size: 1.5rem;
           }
-          
           .content-container {
             padding: 1rem;
           }
-          
           .properties-grid.grid-view {
             --bs-gutter-x: 0.5rem;
             --bs-gutter-y: 0.5rem;
@@ -1541,138 +1462,65 @@ const FindProperty = () => {
           .hero-title {
             font-size: 2rem;
           }
-          
           .hero-subtitle {
             font-size: 1rem;
           }
-          
           .sidebar-content {
             padding: 1rem;
           }
-          
           .filter-section {
             margin-bottom: 1rem;
           }
-          
           .view-toggle {
             flex-direction: column;
             gap: 0.5rem;
           }
-          
           .view-btn {
             width: 100%;
           }
         }
         
-        /* FULLSCREEN (F11) OPTIMIZATIONS */
         @media (min-width: 1400px) {
           .content-container {
             max-width: 90rem;
             padding: 2rem 3rem;
           }
-          
           .hero-title {
             font-size: 4rem;
           }
-          
           .hero-subtitle {
             font-size: 1.375rem;
           }
-          
           .results-title {
             font-size: 2.25rem;
           }
-          
           .sidebar {
             width: 24rem;
             min-width: 24rem;
           }
         }
         
-        /* HIGH RESOLUTION DISPLAYS */
         @media (min-width: 1920px) {
           .content-container {
             max-width: 120rem;
             padding: 2.5rem 4rem;
           }
-          
           .hero-title {
             font-size: 4.5rem;
           }
-          
           .hero-subtitle {
             font-size: 1.5rem;
           }
-          
           .sidebar {
             width: 26rem;
             min-width: 26rem;
           }
-          
           .sidebar-content {
             padding: 2rem;
           }
         }
-        
-        /* PRINT STYLES */
-        @media print {
-          .sidebar {
-            display: none;
-          }
-          
-          .dashboard-main {
-            flex-direction: column;
-          }
-          
-          .hero-section {
-            background: #7c3aed;
-            color: white;
-            -webkit-print-color-adjust: exact;
-          }
-        }
-        
-        /* FOCUS STYLES FOR ACCESSIBILITY */
-        .search-input:focus,
-        .filter-select:focus,
-        .clear-filters-btn:focus,
-        .view-btn:focus,
-        .view-details-btn:focus,
-        .book-now-btn:focus,
-        .no-results-btn:focus,
-        .retry-button:focus {
-          outline: 2px solid #7c3aed;
-          outline-offset: 2px;
-        }
-        
-        /* REDUCED MOTION */
-        @media (prefers-reduced-motion: reduce) {
-          .floating-element,
-          .property-list-card,
-          .view-btn,
-          .book-now-btn,
-          .view-details-btn {
-            animation: none;
-            transition: none;
-          }
-        }
-        
-        /* HIGH CONTRAST MODE */
-        @media (prefers-contrast: high) {
-          .hero-section {
-            background: #000;
-            color: #fff;
-          }
-          
-          .property-list-card {
-            border: 2px solid #000;
-          }
-          
-          .filter-tag {
-            border: 1px solid #000;
-          }
-        }
       `}</style>
-    </>
+    </div>
   );
 };
 
