@@ -200,7 +200,6 @@ const FindProperty = () => {
     navigate(`/book/${propertyId}`);
   };
 
-  // ✅ FIX: Handle card click to navigate to details
   const handleCardClick = (propertyId) => {
     navigate(`/property/${propertyId}`);
   };
@@ -452,7 +451,7 @@ const FindProperty = () => {
                 </div>
               </div>
 
-              {/* FIXED PROPERTY CARDS - CLICKABLE WITH SMALLER BUTTONS */}
+              {/* PROPERTY CARDS WITH PERFECT BUTTON SIZES */}
               {filteredProperties.length === 0 ? (
                 <div className="no-results">
                   <div className="no-results-icon">🔍</div>
@@ -531,16 +530,16 @@ const FindProperty = () => {
                                     </div>
                                   </div>
                                   
-                                  <div className="fixed-card-actions" onClick={(e) => e.stopPropagation()}>
+                                  <div className="perfect-card-actions" onClick={(e) => e.stopPropagation()}>
                                     <Button
                                       onClick={() => handleViewDetails(property._id)}
-                                      className="fixed-small-btn secondary"
+                                      className="perfect-btn secondary"
                                     >
                                       View
                                     </Button>
                                     <Button
                                       onClick={() => handleBookNow(property._id)}
-                                      className="fixed-small-btn primary"
+                                      className="perfect-btn primary"
                                     >
                                       Book
                                     </Button>
@@ -602,16 +601,16 @@ const FindProperty = () => {
                                 </div>
                               </div>
                               
-                              <div className="fixed-card-actions" onClick={(e) => e.stopPropagation()}>
+                              <div className="perfect-card-actions" onClick={(e) => e.stopPropagation()}>
                                 <Button
                                   onClick={() => handleViewDetails(property._id)}
-                                  className="fixed-small-btn secondary"
+                                  className="perfect-btn secondary"
                                 >
                                   View Details
                                 </Button>
                                 <Button
                                   onClick={() => handleBookNow(property._id)}
-                                  className="fixed-small-btn primary"
+                                  className="perfect-btn primary"
                                 >
                                   Book Now
                                 </Button>
@@ -629,7 +628,7 @@ const FindProperty = () => {
         </Container>
       </section>
 
-      {/* FIXED CSS WITH ALL SPECIFIC SOLUTIONS */}
+      {/* COMPLETE CSS WITH PERFECT LIST VIEW BUTTON SIZES */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
@@ -931,7 +930,7 @@ const FindProperty = () => {
           color: #374151;
         }
         
-        /* ✅ FIX: Clickable Property Cards */
+        /* CLICKABLE PROPERTY CARDS */
         .properties-grid, .properties-list {
           margin: 0;
         }
@@ -1159,17 +1158,17 @@ const FindProperty = () => {
           color: #6d28d9;
         }
         
-        /* ✅ FIX: Smaller Button Sizes & Stop Propagation */
-        .fixed-card-actions {
+        /* ✅ PERFECT LIST VIEW BUTTON SIZES */
+        .perfect-card-actions {
           display: flex;
-          gap: 0.8rem;
+          gap: 0.75rem;
           margin-top: auto;
         }
         
-        .fixed-small-btn {
+        .perfect-btn {
           flex: 1;
           border-radius: 12px;
-          font-size: 0.75rem;
+          font-size: 0.8rem;
           font-weight: 600;
           text-align: center;
           transition: all 0.3s ease;
@@ -1178,30 +1177,30 @@ const FindProperty = () => {
           -webkit-backdrop-filter: blur(20px);
           text-transform: uppercase;
           letter-spacing: 0.025em;
-          padding: 0.5rem 0.9rem;
+          padding: 0.45rem 0.85rem;
           pointer-events: all;
         }
         
-        .fixed-small-btn.secondary {
+        .perfect-btn.secondary {
           background: rgba(255, 255, 255, 0.4);
           color: #7c3aed;
           border: 1px solid rgba(124, 58, 237, 0.4);
         }
         
-        .fixed-small-btn.secondary:hover {
+        .perfect-btn.secondary:hover {
           background: rgba(124, 58, 237, 0.2);
           border-color: rgba(124, 58, 237, 0.6);
           transform: translateY(-2px);
           box-shadow: 0 8px 25px rgba(124, 58, 237, 0.25);
         }
         
-        .fixed-small-btn.primary {
+        .perfect-btn.primary {
           background: rgba(124, 58, 237, 0.9);
           color: white;
           border: 1px solid rgba(124, 58, 237, 0.7);
         }
         
-        .fixed-small-btn.primary:hover {
+        .perfect-btn.primary:hover {
           background: rgba(124, 58, 237, 1);
           transform: translateY(-2px);
           box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
@@ -1261,14 +1260,14 @@ const FindProperty = () => {
             min-height: 200px;
           }
           
-          .list-card .fixed-card-actions {
+          .list-card .perfect-card-actions {
             flex-direction: column;
             gap: 0.6rem;
           }
           
-          .list-card .fixed-small-btn {
-            padding: 0.7rem 1rem;
-            font-size: 0.8rem;
+          .list-card .perfect-btn {
+            padding: 0.5rem 0.9rem;
+            font-size: 0.75rem;
           }
         }
         
@@ -1289,7 +1288,7 @@ const FindProperty = () => {
             font-size: 1rem;
           }
           
-          .fixed-card-actions {
+          .perfect-card-actions {
             flex-direction: column;
             gap: 0.6rem;
           }
@@ -1338,6 +1337,11 @@ const FindProperty = () => {
           
           .professional-location-badge {
             padding: 0.45rem 0.8rem;
+          }
+          
+          .perfect-btn {
+            padding: 0.6rem 1rem;
+            font-size: 0.8rem;
           }
         }
       `}</style>
