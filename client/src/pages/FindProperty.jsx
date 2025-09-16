@@ -200,6 +200,11 @@ const FindProperty = () => {
     navigate(`/book/${propertyId}`);
   };
 
+  // ✅ FIX: Handle card click to navigate to details
+  const handleCardClick = (propertyId) => {
+    navigate(`/property/${propertyId}`);
+  };
+
   const handleImageError = (e) => {
     const fallbackImages = [
       'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&h=400&fit=crop&auto=format&q=80',
@@ -447,7 +452,7 @@ const FindProperty = () => {
                 </div>
               </div>
 
-              {/* FIXED LIST VIEW LAYOUT PROPERTY CARDS */}
+              {/* FIXED PROPERTY CARDS - CLICKABLE WITH SMALLER BUTTONS */}
               {filteredProperties.length === 0 ? (
                 <div className="no-results">
                   <div className="no-results-icon">🔍</div>
@@ -471,71 +476,84 @@ const FindProperty = () => {
                         className="property-col"
                       >
                         {viewMode === 'list' ? (
-                          <div className="fixed-list-glass-card list-card">
-                            <div className="list-image-section">
-                              <img
-                                src={property.images?.[0]}
-                                alt={property.title}
-                                onError={handleImageError}
-                                className="list-card-image"
-                              />
-                              <div className="status-overlay">
-                                <Badge className={`status-badge ${status.toLowerCase()}`}>
-                                  {status.toUpperCase()}
-                                </Badge>
-                              </div>
-                            </div>
-                            
-                            <div className="list-content-section">
-                              <div className="list-card-header">
-                                <h3 className="list-card-title">{property.title}</h3>
-                                <div className="list-price-tag">
-                                  {getFormattedPrice(property)}
+                          <div 
+                            className="clickable-property-card list-card"
+                            onClick={() => handleCardClick(property._id)}
+                          >
+                            <Row className="g-0 h-100">
+                              <Col md={5}>
+                                <div className="card-image-container">
+                                  <img
+                                    src={property.images?.[0]}
+                                    alt={property.title}
+                                    onError={handleImageError}
+                                    className="card-image"
+                                  />
+                                  <div className="status-overlay">
+                                    <Badge className={`status-badge ${status.toLowerCase()}`}>
+                                      {status.toUpperCase()}
+                                    </Badge>
+                                  </div>
                                 </div>
-                              </div>
-                              
-                              <div className="list-location-badge">
-                                <span className="location-icon">📍</span>
-                                <span className="location-text">{property.address?.city}, {property.address?.state}</span>
-                              </div>
-                              
-                              <div className="list-property-features">
-                                {property.bedrooms > 0 && (
-                                  <span className="list-feature-chip">
-                                    <span className="feature-icon">🛏</span>
-                                    <span className="feature-label">{property.bedrooms} Beds</span>
-                                  </span>
-                                )}
-                                {property.bathrooms > 0 && (
-                                  <span className="list-feature-chip">
-                                    <span className="feature-icon">🚿</span>
-                                    <span className="feature-label">{property.bathrooms} Baths</span>
-                                  </span>
-                                )}
-                                <span className="list-feature-chip">
-                                  <span className="feature-icon">📏</span>
-                                  <span className="feature-label">{property.size} sq ft</span>
-                                </span>
-                              </div>
-                              
-                              <div className="list-card-actions">
-                                <Button
-                                  onClick={() => handleViewDetails(property._id)}
-                                  className="list-card-btn secondary"
-                                >
-                                  View
-                                </Button>
-                                <Button
-                                  onClick={() => handleBookNow(property._id)}
-                                  className="list-card-btn primary"
-                                >
-                                  Book
-                                </Button>
-                              </div>
-                            </div>
+                              </Col>
+                              <Col md={7} className="d-flex">
+                                <div className="clickable-property-content">
+                                  <div className="content-main">
+                                    <div className="property-header">
+                                      <h3 className="property-name">{property.title}</h3>
+                                      <div className="professional-price-tag">
+                                        <span className="price-amount">{getFormattedPrice(property)}</span>
+                                      </div>
+                                    </div>
+                                    
+                                    <div className="professional-location-badge">
+                                      <span className="location-icon">📍</span>
+                                      <span className="location-text">{property.address?.city}, {property.address?.state}</span>
+                                    </div>
+                                    
+                                    <div className="property-features">
+                                      {property.bedrooms > 0 && (
+                                        <div className="professional-feature-item">
+                                          <span className="feature-icon">🛏</span>
+                                          <span className="feature-text">{property.bedrooms} Beds</span>
+                                        </div>
+                                      )}
+                                      {property.bathrooms > 0 && (
+                                        <div className="professional-feature-item">
+                                          <span className="feature-icon">🚿</span>
+                                          <span className="feature-text">{property.bathrooms} Baths</span>
+                                        </div>
+                                      )}
+                                      <div className="professional-feature-item">
+                                        <span className="feature-icon">📏</span>
+                                        <span className="feature-text">{property.size} sq ft</span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  
+                                  <div className="fixed-card-actions" onClick={(e) => e.stopPropagation()}>
+                                    <Button
+                                      onClick={() => handleViewDetails(property._id)}
+                                      className="fixed-small-btn secondary"
+                                    >
+                                      View
+                                    </Button>
+                                    <Button
+                                      onClick={() => handleBookNow(property._id)}
+                                      className="fixed-small-btn primary"
+                                    >
+                                      Book
+                                    </Button>
+                                  </div>
+                                </div>
+                              </Col>
+                            </Row>
                           </div>
                         ) : (
-                          <div className="professional-glass-card grid-card">
+                          <div 
+                            className="clickable-property-card grid-card"
+                            onClick={() => handleCardClick(property._id)}
+                          >
                             <div className="card-image-container">
                               <img
                                 src={property.images?.[0]}
@@ -550,8 +568,8 @@ const FindProperty = () => {
                               </div>
                             </div>
                             
-                            <div className="professional-glass-content">
-                              <div className="content-section">
+                            <div className="clickable-property-content">
+                              <div className="content-main">
                                 <div className="property-header">
                                   <h3 className="property-name">{property.title}</h3>
                                   <div className="professional-price-tag">
@@ -584,16 +602,16 @@ const FindProperty = () => {
                                 </div>
                               </div>
                               
-                              <div className="professional-card-actions">
+                              <div className="fixed-card-actions" onClick={(e) => e.stopPropagation()}>
                                 <Button
                                   onClick={() => handleViewDetails(property._id)}
-                                  className="professional-glass-btn secondary"
+                                  className="fixed-small-btn secondary"
                                 >
                                   View Details
                                 </Button>
                                 <Button
                                   onClick={() => handleBookNow(property._id)}
-                                  className="professional-glass-btn primary"
+                                  className="fixed-small-btn primary"
                                 >
                                   Book Now
                                 </Button>
@@ -611,7 +629,7 @@ const FindProperty = () => {
         </Container>
       </section>
 
-      {/* COMPLETE CSS WITH FIXED LIST VIEW LAYOUT */}
+      {/* FIXED CSS WITH ALL SPECIFIC SOLUTIONS */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
@@ -887,6 +905,7 @@ const FindProperty = () => {
           gap: 0.5rem;
         }
         
+        /* ✅ FIX: View Toggle Buttons - Fixed Hover State */
         .view-btn {
           padding: 0.75rem 1.5rem;
           border: 1px solid #d1d5db;
@@ -907,11 +926,12 @@ const FindProperty = () => {
         }
         
         .view-btn:hover:not(.active) {
-          background: #f3f4f6;
+          background: #e5e7eb;
           border-color: #9ca3af;
+          color: #374151;
         }
         
-        /* PROPERTY CARDS - GRID & LIST */
+        /* ✅ FIX: Clickable Property Cards */
         .properties-grid, .properties-list {
           margin: 0;
         }
@@ -920,184 +940,7 @@ const FindProperty = () => {
           margin-bottom: 1.75rem;
         }
         
-        /* FIXED LIST VIEW CARD LAYOUT */
-        .fixed-list-glass-card {
-          background: rgba(255, 255, 255, 0.28);
-          backdrop-filter: saturate(200%) blur(30px);
-          -webkit-backdrop-filter: saturate(200%) blur(30px);
-          border: 1px solid rgba(255, 255, 255, 0.35);
-          border-radius: 24px;
-          box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          cursor: pointer;
-          overflow: hidden;
-          position: relative;
-          display: flex;
-          height: 240px;
-        }
-        
-        .fixed-list-glass-card:hover {
-          transform: translateY(-8px) scale(1.025);
-          box-shadow: 0 20px 60px rgba(124, 58, 237, 0.25);
-          background: rgba(255, 255, 255, 0.35);
-          border-color: rgba(255, 255, 255, 0.45);
-        }
-        
-        .fixed-list-glass-card::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 1px;
-          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
-          pointer-events: none;
-        }
-        
-        .list-image-section {
-          flex: 0 0 40%;
-          position: relative;
-          overflow: hidden;
-          border-radius: 24px 0 0 24px;
-        }
-        
-        .list-card-image {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          transition: transform 0.5s ease;
-        }
-        
-        .fixed-list-glass-card:hover .list-card-image {
-          transform: scale(1.1);
-        }
-        
-        .list-content-section {
-          flex: 1;
-          padding: 1.5rem 2rem;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-        }
-        
-        .list-card-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-start;
-          margin-bottom: 0.5rem;
-          gap: 1rem;
-        }
-        
-        .list-card-title {
-          font-size: 1.25rem;
-          font-weight: 800;
-          color: #1e1e2f;
-          margin: 0;
-          text-transform: capitalize;
-          line-height: 1.2;
-          letter-spacing: 0;
-          flex: 1;
-        }
-        
-        .list-price-tag {
-          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-          color: white;
-          font-weight: 700;
-          font-size: 1rem;
-          padding: 0.4rem 0.9rem;
-          border-radius: 14px;
-          box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
-          white-space: nowrap;
-          align-self: flex-start;
-        }
-        
-        .list-location-badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.4rem;
-          background: rgba(124, 58, 237, 0.12);
-          border: 1px solid rgba(124, 58, 237, 0.2);
-          border-radius: 12px;
-          padding: 0.4rem 0.9rem;
-          color: #7c3aed;
-          font-weight: 600;
-          font-size: 0.9rem;
-          margin-bottom: 0.75rem;
-          user-select: none;
-          align-self: flex-start;
-        }
-        
-        .list-property-features {
-          display: flex;
-          gap: 0.75rem;
-          flex-wrap: wrap;
-          margin-bottom: 1rem;
-        }
-        
-        .list-feature-chip {
-          background: rgba(238, 236, 255, 0.7);
-          border: 1px solid rgba(124, 58, 237, 0.15);
-          border-radius: 12px;
-          padding: 0.35rem 0.8rem;
-          color: #5c4dff;
-          font-size: 0.85rem;
-          font-weight: 600;
-          box-shadow: 0 3px 10px rgba(80, 71, 229, 0.15);
-          user-select: none;
-          display: inline-flex;
-          align-items: center;
-          gap: 0.35rem;
-        }
-        
-        .list-feature-chip .feature-icon {
-          font-size: 0.9rem;
-        }
-        
-        .list-card-actions {
-          display: flex;
-          gap: 0.75rem;
-          margin-top: auto;
-        }
-        
-        .list-card-btn {
-          flex: 1;
-          padding: 0.6rem 0;
-          font-size: 0.95rem;
-          font-weight: 700;
-          border-radius: 12px;
-          transition: all 0.3s ease;
-          user-select: none;
-          text-align: center;
-        }
-        
-        .list-card-btn.primary {
-          background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-          border: none;
-          color: white;
-          box-shadow: 0 6px 15px rgba(124, 58, 237, 0.4);
-        }
-        
-        .list-card-btn.primary:hover {
-          background: linear-gradient(135deg, #6b21a8 0%, #9d4edd 100%);
-          box-shadow: 0 8px 20px rgba(124, 58, 237, 0.6);
-          transform: translateY(-2px);
-        }
-        
-        .list-card-btn.secondary {
-          background: transparent;
-          border: 2px solid #7c3aed;
-          color: #7c3aed;
-        }
-        
-        .list-card-btn.secondary:hover {
-          background: #7c3aed;
-          color: white;
-          box-shadow: 0 6px 15px rgba(124, 58, 237, 0.5);
-          transform: translateY(-2px);
-        }
-        
-        /* GRID CARDS - KEEP EXISTING STYLING */
-        .professional-glass-card {
+        .clickable-property-card {
           background: rgba(255, 255, 255, 0.28);
           backdrop-filter: saturate(200%) blur(30px);
           -webkit-backdrop-filter: saturate(200%) blur(30px);
@@ -1110,14 +953,14 @@ const FindProperty = () => {
           position: relative;
         }
         
-        .professional-glass-card:hover {
+        .clickable-property-card:hover {
           transform: translateY(-8px) scale(1.025);
           box-shadow: 0 20px 60px rgba(124, 58, 237, 0.25);
           background: rgba(255, 255, 255, 0.35);
           border-color: rgba(255, 255, 255, 0.45);
         }
         
-        .professional-glass-card::before {
+        .clickable-property-card::before {
           content: '';
           position: absolute;
           top: 0;
@@ -1128,6 +971,7 @@ const FindProperty = () => {
           pointer-events: none;
         }
         
+        /* GRID CARDS - PERFECT PROPORTIONS */
         .grid-card {
           height: 360px;
           display: flex;
@@ -1141,12 +985,32 @@ const FindProperty = () => {
           border-radius: 24px 24px 0 0;
         }
         
-        .grid-card .professional-glass-content {
+        .grid-card .clickable-property-content {
           flex: 1;
           padding: 1.25rem 1.5rem 1.5rem 1.5rem;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
+        }
+        
+        /* LIST CARDS - IMPROVED LAYOUT */
+        .list-card {
+          height: 250px;
+        }
+        
+        .list-card .card-image-container {
+          height: 100%;
+          position: relative;
+          overflow: hidden;
+          border-radius: 24px 0 0 24px;
+        }
+        
+        .list-card .clickable-property-content {
+          padding: 2rem 2.25rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          height: 100%;
         }
         
         .card-image {
@@ -1156,7 +1020,7 @@ const FindProperty = () => {
           transition: transform 0.5s ease;
         }
         
-        .professional-glass-card:hover .card-image {
+        .clickable-property-card:hover .card-image {
           transform: scale(1.1);
         }
         
@@ -1197,7 +1061,8 @@ const FindProperty = () => {
           border: 1px solid rgba(59, 130, 246, 0.4);
         }
         
-        .content-section {
+        /* CONTENT STYLING */
+        .content-main {
           flex: 1;
         }
         
@@ -1219,6 +1084,7 @@ const FindProperty = () => {
           flex: 1;
         }
         
+        /* PRICE TAG */
         .professional-price-tag {
           background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
           color: white;
@@ -1236,6 +1102,7 @@ const FindProperty = () => {
           letter-spacing: -0.02em;
         }
         
+        /* LOCATION BADGE */
         .professional-location-badge {
           display: inline-flex;
           align-items: center;
@@ -1260,6 +1127,7 @@ const FindProperty = () => {
           text-transform: capitalize;
         }
         
+        /* PROPERTY FEATURES */
         .property-features {
           display: flex;
           flex-wrap: wrap;
@@ -1291,16 +1159,17 @@ const FindProperty = () => {
           color: #6d28d9;
         }
         
-        .professional-card-actions {
+        /* ✅ FIX: Smaller Button Sizes & Stop Propagation */
+        .fixed-card-actions {
           display: flex;
           gap: 0.8rem;
           margin-top: auto;
         }
         
-        .professional-glass-btn {
+        .fixed-small-btn {
           flex: 1;
           border-radius: 12px;
-          font-size: 0.8rem;
+          font-size: 0.75rem;
           font-weight: 600;
           text-align: center;
           transition: all 0.3s ease;
@@ -1309,29 +1178,30 @@ const FindProperty = () => {
           -webkit-backdrop-filter: blur(20px);
           text-transform: uppercase;
           letter-spacing: 0.025em;
-          padding: 0.6rem 1rem;
+          padding: 0.5rem 0.9rem;
+          pointer-events: all;
         }
         
-        .professional-glass-btn.secondary {
+        .fixed-small-btn.secondary {
           background: rgba(255, 255, 255, 0.4);
           color: #7c3aed;
           border: 1px solid rgba(124, 58, 237, 0.4);
         }
         
-        .professional-glass-btn.secondary:hover {
+        .fixed-small-btn.secondary:hover {
           background: rgba(124, 58, 237, 0.2);
           border-color: rgba(124, 58, 237, 0.6);
           transform: translateY(-2px);
           box-shadow: 0 8px 25px rgba(124, 58, 237, 0.25);
         }
         
-        .professional-glass-btn.primary {
+        .fixed-small-btn.primary {
           background: rgba(124, 58, 237, 0.9);
           color: white;
           border: 1px solid rgba(124, 58, 237, 0.7);
         }
         
-        .professional-glass-btn.primary:hover {
+        .fixed-small-btn.primary:hover {
           background: rgba(124, 58, 237, 1);
           transform: translateY(-2px);
           box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
@@ -1386,30 +1256,19 @@ const FindProperty = () => {
             flex: 1;
           }
           
-          .fixed-list-glass-card {
-            flex-direction: column;
+          .list-card {
             height: auto;
-            min-height: 300px;
+            min-height: 200px;
           }
           
-          .list-image-section {
-            flex: none;
-            height: 180px;
-            border-radius: 24px 24px 0 0;
-          }
-          
-          .list-content-section {
-            padding: 1.5rem;
-          }
-          
-          .list-card-actions {
+          .list-card .fixed-card-actions {
             flex-direction: column;
             gap: 0.6rem;
           }
           
-          .list-card-btn {
-            padding: 0.8rem;
-            font-size: 1rem;
+          .list-card .fixed-small-btn {
+            padding: 0.7rem 1rem;
+            font-size: 0.8rem;
           }
         }
         
@@ -1430,7 +1289,7 @@ const FindProperty = () => {
             font-size: 1rem;
           }
           
-          .professional-card-actions {
+          .fixed-card-actions {
             flex-direction: column;
             gap: 0.6rem;
           }
@@ -1472,12 +1331,12 @@ const FindProperty = () => {
             margin-bottom: 1.25rem;
           }
           
-          .list-price-tag, .professional-price-tag {
+          .professional-price-tag {
             font-size: 0.85rem;
             padding: 0.35rem 0.8rem;
           }
           
-          .list-location-badge, .professional-location-badge {
+          .professional-location-badge {
             padding: 0.45rem 0.8rem;
           }
         }
