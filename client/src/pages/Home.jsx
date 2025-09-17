@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { api, formatPrice, getImageUrl } from '../utils/api';
+import PropertyCard from '../components/PropertyCard'; // ✅ Add this import
 
 const Home = () => {
   const { isAuthenticated } = useAuth();
@@ -150,7 +151,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* ✅ FIXED RENTAL CATEGORIES SECTION WITH PERFECT BUTTON ALIGNMENT */}
+      {/* RENTAL CATEGORIES SECTION */}
       <section className="rental-categories-section">
         <div className="section-background-elements">
           <div className="bg-element-1"></div>
@@ -288,14 +289,14 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* ✅ FEATURED PROPERTIES SECTION */}
+      {/* ✅ PROFESSIONAL FEATURED PROPERTIES SECTION */}
       <section className="featured-properties-section">
         <Container>
           <div className="section-header">
             <div className="section-badge">FEATURED LISTINGS</div>
-            <h2 className="section-title">Featured Properties</h2>
+            <h2 className="section-title">Premium Properties</h2>
             <p className="section-description">
-              Handpicked premium properties from our expert team
+              Handpicked luxury properties from our expert curation team
             </p>
           </div>
           
@@ -307,76 +308,16 @@ const Home = () => {
               <p className="loading-text">Loading featured properties...</p>
             </div>
           ) : (
-            <Row className="justify-content-center">
+            <Row className="justify-content-center g-4">
               {featuredProperties.length > 0 ? (
                 featuredProperties.map((property, index) => (
                   <Col lg={4} md={6} className="featured-property-col" key={property._id || index}>
-                    <div className="featured-property-card">
-                      <div className="property-image-container">
-                        <img 
-                          src={getImageUrl(
-                            (property.images && Array.isArray(property.images) && property.images[0]) || 
-                            property.image || 
-                            'https://via.placeholder.com/400x240?text=Property+Image'
-                          )}
-                          alt={property.title || 'Property'}
-                          className="property-image"
-                          onError={(e) => {
-                            e.target.src = 'https://via.placeholder.com/400x240?text=Property+Image';
-                          }}
-                        />
-                        <div className="property-status-badge">For Rent</div>
-                      </div>
-                      
-                      <div className="property-content">
-                        <div className="property-info">
-                          <div className="property-location">
-                            <span>📍</span>
-                            {property.address?.city || 'City'}, {property.address?.state || 'State'}
-                          </div>
-                          
-                          <h3 className="property-title">{property.title || 'Property Title'}</h3>
-                          
-                          <p className="property-description">
-                            {property.description ? 
-                              property.description.substring(0, 100) + '...' : 
-                              'Spacious luxury property with premium amenities and modern design'
-                            }
-                          </p>
-                          
-                          <div className="property-features">
-                            <div className="property-feature">
-                              <span>🏠</span>
-                              {property.category || 'Property'}
-                            </div>
-                            <div className="property-feature">
-                              <span>📐</span>
-                              {property.size || 'N/A'}
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <div className="property-footer">
-                          <div className="property-price">
-                            {property.price ? formatPrice(property.price, getSafeRentType(property)) : '₹N/A'}
-                          </div>
-                          
-                          <div className="property-actions">
-                            <Link to={`/property/${property._id}`} className="property-button secondary">
-                              View Details
-                            </Link>
-                            <Link to={`/book/${property._id}`} className="property-button primary">
-                              Book Now
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <PropertyCard property={property} />
                   </Col>
                 ))
               ) : (
                 <div className="no-properties">
-                  <p>No featured properties available</p>
+                  <p>No featured properties available at the moment</p>
                   <Link to="/find-property" className="browse-all-button">
                     Browse All Properties
                   </Link>
@@ -402,7 +343,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* ✅ COMPLETE RESPONSIVE CSS WITH PERFECT BUTTON ALIGNMENT */}
+      {/* ✅ COMPLETE RESPONSIVE CSS */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
@@ -921,203 +862,96 @@ const Home = () => {
         }
         
         /* ===============================
-           FEATURED PROPERTIES SECTION
+           ✅ PROFESSIONAL FEATURED PROPERTIES SECTION
            =============================== */
         .featured-properties-section {
-          padding: 80px 0;
-          background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-        }
-        
-        .loading-container {
-          text-align: center;
-          padding: 3rem 2rem;
-        }
-        
-        .spinner-border {
-          color: #7c3aed !important;
-        }
-        
-        .loading-text {
-          margin-top: 1rem;
-          color: #64748b;
-        }
-        
-        .featured-property-col {
-          margin-bottom: 3rem;
-        }
-        
-        .featured-property-card {
-          background: white;
-          border-radius: 16px;
-          overflow: hidden;
-          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-          border: 1px solid #f1f5f9;
-          transition: all 0.3s ease;
-          min-height: 520px;
-          display: flex;
-          flex-direction: column;
-        }
-        
-        .featured-property-card:hover {
-          transform: translateY(-6px);
-          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
-        }
-        
-        .property-image-container {
+          padding: 100px 0;
+          background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
           position: relative;
-          height: 220px;
-          overflow: hidden;
-          flex-shrink: 0;
         }
-        
-        .property-image {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-        
-        .property-status-badge {
+
+        .featured-properties-section::before {
+          content: '';
           position: absolute;
-          top: 16px;
-          left: 16px;
-          background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, rgba(0,0,0,0.1), transparent);
+        }
+
+        .featured-properties-section .section-badge {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
           color: white;
-          padding: 6px 14px;
-          border-radius: 12px;
+          padding: 8px 20px;
+          border-radius: 25px;
           font-size: 0.75rem;
           font-weight: 700;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-        
-        .property-content {
-          padding: 32px;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-        }
-        
-        .property-location {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          color: #64748b;
-          font-size: 0.9rem;
-          margin-bottom: 16px;
-        }
-        
-        .property-title {
-          font-size: 1.5rem;
-          font-weight: 800;
-          color: #1e293b;
-          margin-bottom: 16px;
-        }
-        
-        .property-description {
-          color: #64748b;
-          font-size: 1rem;
-          line-height: 1.6;
-          margin-bottom: 20px;
-        }
-        
-        .property-features {
-          display: flex;
-          gap: 20px;
+          text-transform: uppercase;
+          letter-spacing: 1px;
           margin-bottom: 24px;
-          font-size: 0.85rem;
-          color: #64748b;
+          box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
         }
-        
-        .property-feature {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-        }
-        
-        .property-footer {
-          padding-top: 20px;
-          border-top: 2px solid #f1f5f9;
-        }
-        
-        .property-price {
-          font-size: 1.6rem;
-          font-weight: 900;
-          color: #10b981;
+
+        .featured-properties-section .section-title {
+          font-size: 3.5rem;
+          font-weight: 800;
+          color: #111827;
           margin-bottom: 20px;
+          letter-spacing: -0.02em;
         }
-        
-        .property-actions {
-          display: flex;
-          gap: 12px;
-          justify-content: space-between;
+
+        .featured-properties-section .section-description {
+          font-size: 1.125rem;
+          color: #6b7280;
+          max-width: 600px;
+          margin: 0 auto;
+          line-height: 1.6;
         }
-        
-        .property-button {
-          padding: 12px 20px;
-          border-radius: 8px;
-          font-size: 0.85rem;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          white-space: nowrap;
-          flex: 1;
-          max-width: 130px;
-          text-decoration: none;
+
+        .loading-container {
           text-align: center;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          padding: 60px 0;
         }
-        
-        .property-button.secondary {
-          background: transparent;
-          border: 2px solid #e5e7eb;
-          color: #64748b;
-        }
-        
-        .property-button.secondary:hover {
-          border-color: #667eea;
+
+        .spinner-border {
           color: #667eea;
-          transform: translateY(-1px);
-          text-decoration: none;
+          width: 3rem;
+          height: 3rem;
         }
-        
-        .property-button.primary {
-          background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-          border: none;
-          color: white;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+        .loading-text {
+          margin-top: 20px;
+          color: #6b7280;
+          font-size: 1.1rem;
         }
-        
-        .property-button.primary:hover {
-          transform: translateY(-1px);
-          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-          color: white;
-          text-decoration: none;
-        }
-        
+
         .no-properties {
           text-align: center;
-          padding: 3rem 2rem;
+          padding: 60px 20px;
         }
-        
+
         .no-properties p {
-          color: #64748b;
-          margin-bottom: 2rem;
+          color: #6b7280;
+          font-size: 1.1rem;
+          margin-bottom: 30px;
         }
-        
+
         .browse-all-button {
-          background: #7c3aed;
-          border: none;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
           color: white;
-          padding: 12px 24px;
-          border-radius: 8px;
+          padding: 14px 32px;
+          border-radius: 16px;
           text-decoration: none;
           font-weight: 600;
+          display: inline-block;
+          box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+          transition: all 0.3s ease;
         }
-        
+
         .browse-all-button:hover {
-          background: #6d28d9;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
           color: white;
           text-decoration: none;
         }
@@ -1195,6 +1029,10 @@ const Home = () => {
           .section-title {
             font-size: 3rem;
           }
+          
+          .featured-properties-section .section-title {
+            font-size: 3.75rem;
+          }
         }
         
         /* Desktop */
@@ -1256,6 +1094,14 @@ const Home = () => {
           
           .cta-title {
             font-size: 2.5rem;
+          }
+          
+          .featured-properties-section {
+            padding: 80px 0;
+          }
+
+          .featured-properties-section .section-title {
+            font-size: 3rem;
           }
         }
         
@@ -1321,14 +1167,13 @@ const Home = () => {
           .featured-properties-section {
             padding: 60px 0;
           }
-          
-          .property-actions {
-            flex-direction: column;
-            gap: 12px;
+
+          .featured-properties-section .section-title {
+            font-size: 2.5rem;
           }
-          
-          .property-button {
-            max-width: 100%;
+
+          .featured-properties-section .section-header {
+            margin-bottom: 50px;
           }
         }
         
@@ -1414,21 +1259,16 @@ const Home = () => {
             font-size: 1.3rem;
           }
           
-          .featured-property-card {
-            min-height: auto;
-          }
-          
-          .property-content {
-            padding: 24px 20px;
-          }
-          
-          .property-features {
-            flex-direction: column;
-            gap: 10px;
-          }
-          
           .hero-floating-card {
             display: none;
+          }
+
+          .featured-properties-section {
+            padding: 50px 0;
+          }
+
+          .featured-properties-section .section-title {
+            font-size: 2rem;
           }
         }
         
@@ -1447,6 +1287,10 @@ const Home = () => {
           .category-explore-button {
             padding: 10px 18px;
             font-size: 0.8rem;
+          }
+
+          .featured-properties-section .section-title {
+            font-size: 1.8rem;
           }
         }
       `}</style>
